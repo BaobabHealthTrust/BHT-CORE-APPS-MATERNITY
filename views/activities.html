@@ -1,5 +1,4 @@
 
-
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
@@ -143,8 +142,13 @@ function isEmpty(str){
 
       <form action="post">
 
-        <select id="activity" tt_pageStyleClass="NoKeyboard NoInput small" 
-          multiple="multiple" helpText="Activities" name="activities" tt_onLoad="changeNextBTN();getActivities();">
+        <select id="activity" name="activities" tt_onLoad="changeNextBTN();" helpText ="Select ward"> 
+          <option>Ante-natal ward</option>
+          <option>Labour ward</option>
+          <option>Gynaecology ward</option>
+          <option>Post-natal ward(High risk)</option>
+           <option>Post-natal ward(Low risk)</option>
+            <option>Registration</option>
         </select>
 
       </form>
