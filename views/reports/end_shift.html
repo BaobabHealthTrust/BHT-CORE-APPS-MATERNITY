@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+    <link rel="stylesheet" href="../../../../assets/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/fixedHeader.dataTables.min.css">
+    <style type="text/css">
+        
+        thead{
+          background-color:#6281A7;
+          font-size: 16px;
+          font-weight: 800;
+          color:#fff;
+        }
+
+      .head_td{
+            font-weight: 800;
+            font-size :16px;
+      }
+      .sub_td{
+          font-size: 16px;
+          padding-left: 15px;
+      }
+      .scrollit {
+        overflow:scroll;
+        height:100px;
+    }
+    </style>
+  </head>
+  <body id="mateme">
+    <div id="container">
+      <div class="panel panel-default" style="border-color:#fff;">
+        <div class="panel-heading" style="background-color: #6281A7; margin-left: 0.9%;margin-right: 0.9%;"><h2 style="color:#fff;text-align: center; font-weight: 800;">End of Shift Report</h2>
+        </div>
+    <div>
+      <div class="panel-body">
+      <table class="" style="width:100%" cellspacing="1">
+        <tbody>
+        <tr>
+        <td colspan="2" align="left;"><h2><span class="label label-default" style="background-color: #000000; height: 5px;">Start Date: 25/Jan/2019 01:00</span></h2></td>
+       <td colspan="2" align="right;" ><h2><span class="label label-default" style="float:right; background-color: #000000;">End Date: 25/Jan/2019 05:00</span></h2></td>
+      </tr>
+        </tbody>
+      </table>     
+    <table id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px; border-style: dotted;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>01:00 - 09:05</th>
+        <th></th>
+        <th>Total</th>
+          </tr>
+    </thead>
+    <tbody style="border-style: dotted;">
+
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Admissions</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+         <td class="head_td">Delivery Mode</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="sub_td">SVD</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="sub_td">C/Section</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+         <td class="sub_td">Vacuum Extraction</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="sub_td">Breech Delivery</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Twins</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Triplets</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="head_td">Baby Outcome</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="sub_td">Live Births</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Still Births (Macerated)</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="sub_td">Still Births (Fresh)</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+        <tr>
+          <td class="sub_td">Neonatal Death</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+        <tr>
+          <td class="head_td">Maternal Death</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+        <tr>
+          <td class="sub_td">Maternal Death</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+        <tr>
+          <td class="head_td">Born Before Arrival</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Born before Arrival Babies</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Referrals Outcomes</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Referral Out</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Referral In</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Discharges</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Ante-Natal Ward</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Post-Natal (Low Risk)</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="sub_td">Post-Natal (High Risk)</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Absocndees</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Absocndees</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="head_td">Postnatal Clients</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Postnatal Mothers</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Postnatal Babies</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Internal Transfers</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Antenatal - Labour</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Post-Natal - Labour</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Labour - Post-Natal(High Risk)</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+     <tr>
+          <td class="sub_td">Labour - Post-Natal(Low Risk)</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Labour - Antenatal</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Theatre - Post-Natal (High Risk)</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+       <tr>
+          <td class="sub_td">Ante-Natal - Theatre</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td">Labour - Gynaecology</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr> 
+          <td class="sub_td">Gynaecology</td>
+          <td>0</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="sub_td"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+        <div id="footer">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type="text/javascript">
+
+
+  function changeNextButton(){
+    __$("nextButton").removeAttribute("onmousedown")
+    __$("nextButton").onmousedown = function(){
+
+  value = $('touchscreenInput' + tstCurrentPage).value;
+ if (value.length  > 0) {
+
+           submitSearchResults();
+ }else {
+   showMessage("You must enter a value to continue");
+ }
+
+    }
+  }
+
+  var patientID = ''
+  jQuery(document).ready(function(){
+
+    var checkExist = setInterval(function() {
+      if (jQuery('#cancelButton').length) {
+        jQuery('#cancelButton').click(function () {
+          yesButton = jQuery("#messageBar button")[0];
+          yesButton.onmousedown = function(){
+            hideMessage();
+            if (patientID.length > 0){
+              window.top.location.href = "/patients/show/" + patientID;
+            } else {
+              window.top.location.href = "/";
+            }
+            
+          }
+        });
+        clearInterval(checkExist);
+      }
+    }, 100); // check every 100ms
+  });
+
+</script>
+<script src="../../../../assets/js/jquery.min.js"></script>
+<script src="../../../../assets/js/bootstrap/bootstrap.min.js"></script>
+<script src="../../../../assets/js/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../../assets/js/datatables/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript">
+  $('#shiftTable').DataTable( {
+        fixedHeader: true,
+        searching: false,
+        ordering: false,
+        paging: false,
+
+} );
+</script>
+

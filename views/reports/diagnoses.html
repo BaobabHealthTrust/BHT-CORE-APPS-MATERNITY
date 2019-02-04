@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+    <link rel="stylesheet" href="../../../../assets/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/fixedHeader.dataTables.min.css">
+    <style type="text/css">
+        
+        thead{
+          background-color:#6281A7;
+          font-size: 16px;
+          font-weight: 800;
+          color:#fff;
+        }
+
+      .head_td{
+            font-weight: 800;
+            font-size :16px;
+      }
+      .sub_td{
+          font-size: 16px;
+          padding-left: 15px;
+      }
+      .scrollit {
+        overflow:scroll;
+        height:100px;
+    }
+    </style>
+  </head>
+  <body id="mateme">
+    <div id="container">
+      <div class="panel panel-default" style="border-color:#fff;">
+        <div class="panel-heading" style="background-color: #6281A7; margin-left: 0.9%;margin-right: 0.9%;"><h2 style="color:#fff;text-align: center; font-weight: 800;">Diagnoses Report</h2>
+        </div>
+    <div>
+      <div class="panel-body">
+      <table class="" style="width:100%" cellspacing="1">
+        <tbody>
+        <tr>
+        <td colspan="2" align="left;"><h2><span class="label label-default" style="background-color: #000000; height: 5px;">Start Date: 25/Jan/2019 01:00</span></h2></td>
+       <td colspan="2" align="right;" ><h2><span class="label label-default" style="float:right;background-color: #000000;">End Date: 25/Jan/2019 05:00</span></h2></td>
+      </tr>
+        </tbody>
+      </table>     
+    <table id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px; border-style: dotted;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>01:00 - 09:05</th>
+        <th></th>
+        <th>Total</th>
+          </tr>
+    </thead>
+    <tbody style="border-style: dotted;">
+
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+          <td class="head_td">Premature Labour</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Abortions</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+       <tr>
+          <td class="head_td">Cancer of Cervix</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Molar Pregnancy</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Fibroids</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Pelvic Inflammatory Disease</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Anameia</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Malaria</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Post Partum Haemorrhage</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Ante Partum Haemorrhage</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Pre-Eclampsia</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Eclamsia</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+       <tr>
+          <td class="head_td">Premature Membranes Rapture</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+       <tr>
+          <td class="head_td">Laparatomy</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      <tr>
+          <td class="head_td">Raptured Uterus</td>
+          <td>0</td>
+          <td></td>
+          <td style="font-weight: 800;">0</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+        <div id="footer">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type="text/javascript">
+
+
+  function changeNextButton(){
+    __$("nextButton").removeAttribute("onmousedown")
+    __$("nextButton").onmousedown = function(){
+
+  value = $('touchscreenInput' + tstCurrentPage).value;
+ if (value.length  > 0) {
+
+           submitSearchResults();
+ }else {
+   showMessage("You must enter a value to continue");
+ }
+
+    }
+  }
+
+  var patientID = ''
+  jQuery(document).ready(function(){
+
+    var checkExist = setInterval(function() {
+      if (jQuery('#cancelButton').length) {
+        jQuery('#cancelButton').click(function () {
+          yesButton = jQuery("#messageBar button")[0];
+          yesButton.onmousedown = function(){
+            hideMessage();
+            if (patientID.length > 0){
+              window.top.location.href = "/patients/show/" + patientID;
+            } else {
+              window.top.location.href = "/";
+            }
+            
+          }
+        });
+        clearInterval(checkExist);
+      }
+    }, 100); // check every 100ms
+  });
+
+</script>
+<script src="../../../../assets/js/jquery.min.js"></script>
+<script src="../../../../assets/js/bootstrap/bootstrap.min.js"></script>
+<script src="../../../../assets/js/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../../assets/js/datatables/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript">
+  $('#shiftTable').DataTable( {
+        fixedHeader: true,
+        searching: false,
+        ordering: false,
+        paging: false,
+
+} );
+</script>
+

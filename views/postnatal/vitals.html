@@ -1,0 +1,191 @@
+<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+
+<style>
+
+
+.inputFrameClass {
+  width: 96% !important;
+}
+
+#clearButton {
+  display: none;
+}
+
+</style>
+
+<script>
+  var timedEvent;
+function redirectTo(obj) {
+  sessionStorage.setItem("userActivities", obj.property_value);
+  document.location = "/";
+}
+
+function isEmpty(str){
+  try {
+    return (str.replace(/\s+/g, '').length < 1);
+  }catch(e){
+    return true;
+  }
+}
+var patientID = sessionStorage.getItem("patientID");
+var programID = sessionStorage.getItem("programID");
+var tt_cancel_destination = "/";
+var apiProtocol = sessionStorage.apiProtocol;
+var apiURL = sessionStorage.apiURL;
+var apiPort = sessionStorage.apiPort;
+var patient_id = sessionStorage.patientID;
+var previousActivities = null;
+function getActivities(){
+  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
+  var req = new XMLHttpRequest();
+  req.onreadystatechange = function(){
+
+  if (this.readyState == 4) {
+    if (this.status == 200) {
+      var results = JSON.parse(this.responseText);
+        previousActivities = results.property_value;
+        loadActivities(previousActivities);
+    }else {
+
+        loadActivities("");
+    }
+    }
+    };
+    try {
+      req.open('GET', url, true);
+      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
+      req.send(null);
+    } catch (e) {
+    
+    }
+}
+
+function loadActivities(previousActivities) {
+  var activities = [];
+  jQuery.getJSON("/apps/MATERNITY/application.json")
+    .done(function (data) {
+      activities = data.activities.tasks;
+      renderActivities(activities, previousActivities);
+
+    })
+    .fail(function () {
+      console.log("The application " + applicationName + "'s application.json file is not available");
+  });
+
+}
+/*
+<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
+*/
+
+function renderActivities(activities, previousActivities) {
+  var ul = document.getElementById("tt_currentUnorderedListOptions");
+  for(var i = 0 ; i < activities.sort().length ; i++){
+    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
+    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
+    innerHTML += ' id="optionValue' + i + '">';
+    innerHTML+= activities[i][0] + "</div></div></div>";
+    
+    var li = document.createElement("li");
+    li.setAttribute("id", i );
+    li.setAttribute("tstvalue", activities[i][1]);
+    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
+    li.setAttribute("style","");
+    li.setAttribute("class","even");
+    li.innerHTML = innerHTML;
+    ul.appendChild(li); 
+     if(previousActivities.search(activities[i][0]) >= 0) {
+      updateInputs(i);
+    }
+  } 
+}
+
+function updateInputs(i) {
+  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
+}
+// function changeNextBTN() {
+//   var nextBTN = document.getElementById("nextButton");
+//   nextButton.setAttribute("onmousedown","setActivities();");
+
+// }
+
+function setActivities() {
+  var values = document.getElementById("touchscreenInput0").value;
+  if(isEmpty(values))
+    return;
+
+  var regex = new RegExp(";", "g");
+  values = values.replace(regex, ",");
+
+  var parameters = { property: "Activities", property_value: values }
+
+  submitParameters(parameters, "/user_properties", "redirectTo"); 
+}
+
+  function calculateBP(pos){
+    var bp;
+    
+ 
+    if(!$('bp')){
+      var div = document.createElement("div");
+      div.id = "bp";
+      div.className = "statusLabel";
+
+      $("inputFrame" + tstCurrentPage).appendChild(div);
+    }
+
+    if(pos == 1){
+      bp = ($("touchscreenInput" + tstCurrentPage).value.trim().length > 0 ? $("touchscreenInput" +
+        tstCurrentPage).value.trim() : "?") +
+        "/" + ($("diastolic_blood_pressure").value.trim().length > 0 ? $("diastolic_blood_pressure").value.trim() : "?");
+    } else if(pos == 2){
+      bp = ($("systolic_blood_pressure").value.trim().length > 0 ? $("systolic_blood_pressure").value.trim() : "?") +
+        "/" + ($("touchscreenInput" + tstCurrentPage).value.trim().length > 0 ? $("touchscreenInput" +
+        tstCurrentPage).value.trim() : "?");
+    }
+    
+    $("bp").innerHTML = "Blood Pressure: <i style='font-size: 1.2em; float: right;'>" + bp + "</i>";
+
+       timedEvent = setTimeout('calculateBP(' + pos + ')', 500);
+
+  }
+</script>
+
+<body id="mateme">
+  <div id="container">
+    <div id="content">
+
+
+      <form action="../../../../views/patient_dashboard.html">
+
+          <input type="text" name="systolic_bp" id="systolic_blood_pressure" helpText="Systolic Blood Pressure"
+           field_type="number" tt_onLoad="calculateBP(2)" tt_pageStyleClass="NumbersWithUnknownAndDecimal" min="number_with_precision(90, :precision => 1" max="number_with_precision(140, :precision => 1)" absoluteMin ="50" absoluteMax="250" />
+
+           <input type="text" name="diastolic_bp" id="diastolic_blood_pressure"
+            helpText="Diastolic Blood Pressure" field_type="number"
+            tt_onUnload ="clearTimeout(timedEvent);" tt_pageStyleClass="NumbersWithUnknownAndDecimal"  min="60" max="90" absoluteMin ="35" absoluteMax="135" />
+
+           <input type="text" name="pulse" id="pulse" helpText="Pulse" field_type="number" tt_onLoad="" tt_pageStyleClass="NumbersWithUnknownAndDecimal"  min="12" max="20" absoluteMin ="0" absoluteMax="200" />
+
+            <input type="text" name="respiration_rate"
+           id="respiration_rate" helpText="Respiration Rate" field_type="number" tt_onLoad="" tt_pageStyleClass="NumbersWithUnknownAndDecimal" min="36.5" max="37.5" 
+            absoluteMin ="0" absoluteMax="100" />
+
+             <input type="text" name="temperature" id="temperature" 
+             helpText="Temperature" field_type="number" tt_onLoad="" 
+             tt_pageStyleClass="NumbersWithUnknownAndDecimal" max="200" absoluteMin ="0" />
+             
+       </form>
+
+   </div>
+ </div>
+</body>

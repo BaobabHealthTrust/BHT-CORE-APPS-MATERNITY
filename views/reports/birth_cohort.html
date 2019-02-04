@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+    <link rel="stylesheet" href="../../../../assets/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/fixedHeader.dataTables.min.css">
+    <style type="text/css">
+        
+        thead{
+          background-color:#6281A7;
+          font-size: 16px;
+          font-weight: 800;
+          color:#fff;
+        }
+
+      .head_td{
+            font-weight: 800;
+            font-size :16px;
+      }
+      .sub_td{
+          font-size: 16px;
+          padding-left: 15px;
+      }
+      .scrollit {
+        overflow:scroll;
+        height:100px;
+    }
+      .width1{
+        width: 60%;
+/*        font-weight: 800;
+*/        background-color: #d7d2d2;
+      }
+      .width2{
+        width: 20%;
+        background-color: #d7d2d2;
+        }
+        .green{
+           color: #6c6;
+           font-weight:800; 
+        }
+
+        table  {
+     
+          border-collapse: separate;
+          border-spacing: 2.5px;
+      }
+    </style>
+  </head>
+  <body id="mateme" style="font-size: 30px;">
+    <div id="container">
+      <div class="panel panel-default" style="border-color:#fff;">
+        <div class="panel-heading" style="background-color: #fff; margin-left: 0.9%;margin-right: 0.9%;">
+            <img src="../../assets/images/logo.gif">
+            <small style="position: relative;bottom: 0px;top: 75px;right: 130px;font-size: 19px;"> Republic of Malawi</small>
+          <h2 style="color:#6281A7;text-align: right; font-weight: 800; float: right;">Birth Cohort <br>Q4, 2018</h2>
+        <h3 style="color:#000000;text-align: right; font-weight: 800;">Bwaila Maternity Unit</h3>
+        <p style="color:#000000;text-align: right; font-size: 18px;">Cumulative figures from 1 Feb, 2019</p>
+        </div>
+    <div>
+   <div class="panel-body">
+        <table class="table table-striped table-hover table-bordered table-spacing" style="font-size:16px; empty-cells: show;">
+        <thead>
+          <tr>
+            <th class="width1" style="background-color:#6281A7; font-size:20px;">Category</th>
+            <th class="width2"style="background-color:#6281A7; font-size:20px;" >Total</th>
+            <th class="width2" style="background-color:#6281A7; font-size:20px; ">Cumulative Total</th>
+         </tr>
+        </thead>
+        <tbody st>
+
+          <tr style="background-color: #95f2c7; color: #000000; font-weight: 800">
+            <td>Total Women Who Delivered</td>
+            <td>0</td>
+            <td>46050</td>
+          </tr>
+          </tbody>
+        </table>
+         <h4 style="font-weight: 600;">Pregnancy Delivery Terms</h4>
+         <table  class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Post Term<sub>(>42 wks)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">1576</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Full Term<sub>(32-42 wks)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">31678</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Near Term <sub>(32-37 wks)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">7685</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Pre Term<sub>(<32 wks)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">1748</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Unknown</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">3367</td>
+          </tr>
+          </tbody>
+        </table>
+          <h4 style="font-weight: 600;">Gestation Type</h4>
+         <table class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Singletons</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">1576</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Twins</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">31678</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Triplets</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">7685</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Greater than 3 babies</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">1748</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Unknown</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">3367</td>
+          </tr>
+          </tbody>
+        </table>
+          <h4 style="font-weight: 600;">Maternal Outcomes</h4>
+         <table class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Dead</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">0</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Alive</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">41678</td>
+          </tr>
+          </tbody>
+        </table>
+
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr style="background-color: #95f2c7; color: #000000; font-weight: 800">
+            <td style="width: 60%;">Total Births</td>
+            <td style="width: 20%;">0</td>
+            <td style="width: 20%;">45576</td>
+          </tr>
+
+          </tbody>
+        </table>
+        <h4 style="font-weight: 600;">Births by Sex</h4>
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Males</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">25140</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Females</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">23956</td>
+          </tr>
+          </tbody>
+        </table>
+        <h4 style="font-weight: 600;">Outcome Delivery</h4>
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Alive</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">48096</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Fresh still birth</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">480</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Macerated still birth</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">685</td>
+          </tr>
+          </tbody>
+        </table>
+        <h4 style="font-weight: 600;">Outcome Discharge</h4>
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Alive</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">19482</td>
+          </tr>
+          <tr>
+            <td class="width1">Still births</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">482</td>
+          </tr>
+          <tr>
+            <td class="width1">Still deaths</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">123</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Unknown</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">23180</td>
+          </tr>
+          </tbody>
+        </table>
+        <h4 style="font-weight: 600;">Birth Weight</h4>
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Low<sub>(<2500g)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">48096</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Normal<sub>(2500g-4500g)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">480</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">High<sub>(>2500g)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">685</td>
+          </tr>
+         <tr>
+            <td class="width1">Unknown<sub>(+born dead)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">19482</td>
+          </tr>
+          </tbody>
+        </table>
+        <h4 style="font-weight: 600;">First Minute APGAR<h4>
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Low<sub>(0-3)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">48096</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Fairly Low<sub>(4-6)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">480</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Normal<sub>(7-10)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">685</td>
+          </tr>
+         <tr>
+            <td class="width1">Unknown<sub>(+born dead)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">19482</td>
+          </tr>
+          </tbody>
+        </table>
+        <h4 style="font-weight: 600;">Second Minute APGAR<h4>
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Low<sub>(0-3)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">139</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Fairly Low<sub>(4-6)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">480</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Normal<sub>(7-10)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">68500</td>
+          </tr>
+         <tr>
+            <td class="width1">Unknown<sub>(+born dead)</sub></td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">19482</td>
+          </tr>
+          </tbody>
+        </table>
+        <h4 style="font-weight: 600;">Birth Status Report<h4>
+         <table  id="shiftTable" class="table table-striped table-hover table-bordered" style="font-size:16px;">
+          <tbody>
+          <tr>
+            <td class="width1">Sent</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">496</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Unattempted</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">4800</td>
+          </tr>
+          
+          <tr>
+            <td class="width1">Pending</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">23000</td>
+          </tr>
+         <tr>
+            <td class="width1">Unknown</td>
+            <td class="width2 green">0</td>
+            <td class="width2 green">182</td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
+        <div id="footer">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type="text/javascript">
+
+
+  function changeNextButton(){
+    __$("nextButton").removeAttribute("onmousedown")
+    __$("nextButton").onmousedown = function(){
+
+  value = $('touchscreenInput' + tstCurrentPage).value;
+ if (value.length  > 0) {
+
+           submitSearchResults();
+ }else {
+   showMessage("You must enter a value to continue");
+ }
+
+    }
+  }
+
+  var patientID = ''
+  jQuery(document).ready(function(){
+
+    var checkExist = setInterval(function() {
+      if (jQuery('#cancelButton').length) {
+        jQuery('#cancelButton').click(function () {
+          yesButton = jQuery("#messageBar button")[0];
+          yesButton.onmousedown = function(){
+            hideMessage();
+            if (patientID.length > 0){
+              window.top.location.href = "/patients/show/" + patientID;
+            } else {
+              window.top.location.href = "/";
+            }
+            
+          }
+        });
+        clearInterval(checkExist);
+      }
+    }, 100); // check every 100ms
+  });
+
+</script>
+<script src="../../../../assets/js/jquery.min.js"></script>
+<script src="../../../../assets/js/bootstrap/bootstrap.min.js"></script>
+<script src="../../../../assets/js/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../../assets/js/datatables/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript">
+  $('#shiftTable').DataTable( {
+        fixedHeader: true,
+        searching: false,
+        ordering: false,
+        paging: false,
+
+} );
+</script>
+

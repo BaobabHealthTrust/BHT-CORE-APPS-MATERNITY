@@ -1,0 +1,130 @@
+{
+  "encounters": {
+   "Ante-Natal": {
+      "available": true,
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/antenatal_tasks.html"
+    },
+    "Post-Natal": {
+      "available": true,
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "#",
+      "subtasks":[
+        {
+          "available": true,
+          "activitiesIcon": "/assets/images/testing.png",
+          "url": "/apps/MATERNITY/views/testing.html"
+        }, {
+          "available": true,
+          "activitiesIcon": "/assets/images/testing.png",
+          "url": "/apps/MATERNITY/views/testing2.html"
+        }
+      ] 
+    },
+    "Update Outcome": {
+      "available": true,
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/encounters/update_outcome.html"
+    },
+    "Update Hiv status": {
+      "available": true,
+      "activitiesIcon": "/assets/images/dispensing.png",
+      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
+    }
+  },
+  "Ante-natal":{
+    "Social History": {
+      "available": true,
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/encounters/social_history.html"
+    },
+    "Admission Details": {
+      "available": true,
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/encounters/admission.html"
+    },
+    "Vitals": {
+      "available": true,
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/encounters/vitals.html"
+    },
+    "Patient History": {
+      "available": true,
+      "activitiesIcon": "/assets/images/dispensing.png",
+      "url": "/apps/MATERNITY/views/encounters/patient.html"
+    }
+
+  },
+  "activities": {
+    "url": "/apps/MATERNITY/views/activities.html",
+    "tasks": [
+      ["Ante-natal","ante_natal"],
+      ["Post-Natal","post_natal"],
+      ["Update Outcome","update_outcome"],
+      ["Update Hiv status","update_hiv_status"]
+     ]
+  },
+
+    
+  "others": [
+    {
+      "activitiesName": "National Health ID (Print)",
+      "available": false,
+      "activitiesIcon": "/assets/images/barcode.png",
+      "activitiesDescription": "Print Patient National Health ID",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },
+    {
+      "activitiesName": "Lab activities",
+      "available": false,
+      "activitiesIcon": "/assets/images/lab.png",
+      "url": "/views/patient/labs.html",
+      "activitiesDescription": "Print Patient Visit Summary",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },
+    {
+      "activitiesName": "Demographics (Print)",
+      "available": false,
+      "activitiesIcon": "/assets/images/print.png",
+      "activitiesDescription": "Print Patient Demographics",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },
+    {
+      "activitiesName": "Demographics (Edit)",
+      "available": false,
+      "activitiesIcon": "/assets/images/edit.png",
+      "url": "/views/patient/edit_demographics.html",
+      "activitiesDescription": "Print Patient Demographics",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },
+    {
+      "activitiesName": "Change session date",
+      "available": false,
+      "activitiesIcon": "/assets/images/time.png",
+      "url": "/views/change_session_date.html",
+      "activitiesDescription": "Change session date (for retrospective entry)",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },
+    {
+      "activitiesName": "Program(s)",
+      "available": false,
+      "activitiesIcon": "/assets/images/programs.png",
+      "url": "/views/patient/programs.html",
+      "activitiesDescription": "View / update patient's programs",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },{
+      "activitiesName": "Filing Number (Print)",
+      "available": false,
+      "activitiesIcon": "/assets/images/folder.png",
+      "activitiesDescription": "Print Patient Filing Number",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },{
+      "activitiesName": "Visit Summary (Print)",
+      "available": false,
+      "activitiesIcon": "/assets/images/folder.png",
+      "activitiesDescription": "Print Patient Visit Summary",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    }
+
+  ]
+}

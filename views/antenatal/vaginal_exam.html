@@ -1,0 +1,232 @@
+
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+
+<style>
+
+.inputFrameClass {
+  width: 96% !important;
+}
+
+#clearButton {
+  display: none;
+}
+
+</style>
+
+<script>
+
+var patientID = sessionStorage.getItem("patientID");
+var programID = sessionStorage.getItem("programID");
+var tt_cancel_destination = "/";
+var apiProtocol = sessionStorage.apiProtocol;
+var apiURL = sessionStorage.apiURL;
+var apiPort = sessionStorage.apiPort;
+var patient_id = sessionStorage.patientID;
+var previousActivities = null;
+function getActivities(){
+  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
+  var req = new XMLHttpRequest();
+  req.onreadystatechange = function(){
+
+  if (this.readyState == 4) {
+    if (this.status == 200) {
+      var results = JSON.parse(this.responseText);
+        previousActivities = results.property_value;
+        loadActivities(previousActivities);
+    }else {
+
+        loadActivities("");
+    }
+    }
+    };
+    try {
+      req.open('GET', url, true);
+      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
+      req.send(null);
+    } catch (e) {
+    
+    }
+}
+
+function loadActivities(previousActivities) {
+  var activities = [];
+  jQuery.getJSON("/apps/ART/application.json")
+    .done(function (data) {
+      activities = data.activities.tasks;
+      renderActivities(activities, previousActivities);
+
+    })
+    .fail(function () {
+      console.log("The application " + applicationName + "'s application.json file is not available");
+  });
+
+}
+/*
+<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
+*/
+
+function renderActivities(activities, previousActivities) {
+  var ul = document.getElementById("tt_currentUnorderedListOptions");
+  for(var i = 0 ; i < activities.sort().length ; i++){
+    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
+    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
+    innerHTML += ' id="optionValue' + i + '">';
+    innerHTML+= activities[i][0] + "</div></div></div>";
+    
+    var li = document.createElement("li");
+    li.setAttribute("id", i );
+    li.setAttribute("tstvalue", activities[i][1]);
+    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
+    li.setAttribute("style","");
+    li.setAttribute("class","even");
+    li.innerHTML = innerHTML;
+    ul.appendChild(li); 
+     if(previousActivities.search(activities[i][0]) >= 0) {
+      updateInputs(i);
+    }
+  } 
+}
+
+function updateInputs(i) {
+  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
+}
+// function changeNextBTN() {
+//   var nextBTN = document.getElementById("nextButton");
+//   nextButton.setAttribute("onmousedown","setActivities();");
+
+// }
+
+function setActivities() {
+  var values = document.getElementById("touchscreenInput0").value;
+  if(isEmpty(values))
+    return;
+
+  var regex = new RegExp(";", "g");
+  values = values.replace(regex, ",");
+
+  var parameters = { property: "Activities", property_value: values }
+
+  submitParameters(parameters, "/user_properties", "redirectTo"); 
+  
+}
+
+function redirectTo(obj) {
+  sessionStorage.setItem("userActivities", obj.property_value);
+  document.location = "/";
+}
+
+function isEmpty(str){
+  try {
+    return (str.replace(/\s+/g, '').length < 1);
+  }catch(e){
+    return true;
+  }
+}
+
+</script>
+
+<body id="mateme">
+  <div id="container">
+    <div id="content">
+
+
+         <form action="../../../../views/patient_dashboard.html">
+          <input type="text" name="person[birth_year]" id="person_birth_year" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
+
+          <select id="genetalia_inspection" name="genetalia_inspection" tt_onLoad="changeNextBTN();" helpText="Genetalia Inspection"> 
+            <option>Not done</option>
+            <option>Scar</option>
+            <option>Sores</option>
+            <option>Warts</option>
+            <option>Bleeding</option>
+            <option>Liqour</option>
+            <option>Varicose Veins</option>
+            <option>Nothing Abnormal Detected</option>
+            <option>Show</option>
+          </select>    
+
+         <select id="station" name="station" tt_onLoad="changeNextBTN();" helpText="Station"> 
+            <option>-3</option>
+            <option>-2</option>
+            <option>-1</option>
+            <option>0</option>
+            <option>+1</option>
+            <option>+2</option>
+            <option>+3</option>
+            <option>N/A</option>
+          </select>
+
+          <select id="cervical_dilation" name="cervical_dilation" tt_onLoad="changeNextBTN();" helpText="Cervical Dilation"> 
+            <option>Not done</option>
+            <option>Finger tip</option>
+            <option>Open</option>
+            <option>Closed</option>
+          </select>
+
+          <select id="caput" name="caput" tt_onLoad="changeNextBTN();" helpText="Caput"> 
+            <option>0</option>
+            <option>1+</option>
+            <option>2+</option>
+            <option>3+</option>
+            <option>N/A</option>
+          </select>
+
+           <input type="text" name="moulding" 
+          id="moulding" field_type="text" 
+          key="moulding" helpText="Moulding"  
+          allowFreeText="true" 
+          /> 
+        
+          <select id="membranes" name="membranes" tt_onLoad="changeNextBTN();" helpText="Membranes"> 
+          <option>Intact</option>
+          <option>Raptured</option>
+          </select>
+
+
+          <input type="text" name="rupture_time" 
+          id="rupture_time" field_type="advancedTime" 
+          helpText="Membrane Rapture Time"  
+          allowFreeText="true" optional = "true"
+          condition ="__$('membranes').value == 'Raptured'"  /> 
+
+          <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="number"  condition ="$('membranes').value.toLowerCase() == 'ruptured'"tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
+
+           <select id="colour_of_liqour" name="colour_of_liqour" tt_onLoad="changeNextBTN();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'"> 
+          <option>Clear</option>
+          <option>Meconium Grade 1</option>
+          <option>Meconium Grade 2</option>
+          <option>Meconium Grade 3</option>
+          <option>Blood</option>
+          <option>Absent</option>
+          <option>Pus</option>
+          </select>
+
+          <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextBTN();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'"> 
+          <option>Not Done</option>
+          <option>Vertex</option>
+          <option>Sacrum</option>
+          <option>Breech</option>
+          <option>Hand</option>
+          <option>Foot</option>
+          <option>Shoulder</option>
+          <option>Cord</option>
+          </select>
+   
+          condition="$(&quot;given_name&quot;).value == &quot;&quot;" />
+      </form>
+
+   </div>
+ </div>
+</body>
+

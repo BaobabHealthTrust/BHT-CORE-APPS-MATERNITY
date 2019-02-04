@@ -1,0 +1,171 @@
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<style>
+
+.inputFrameClass {
+  width: 96% !important;
+}
+
+#clearButton {
+  display: none;
+}
+
+</style>
+
+<script>
+
+var patientID = sessionStorage.getItem("patientID");
+var programID = sessionStorage.getItem("programID");
+var tt_cancel_destination = "/";
+var apiProtocol = sessionStorage.apiProtocol;
+var apiURL = sessionStorage.apiURL;
+var apiPort = sessionStorage.apiPort;
+var patient_id = sessionStorage.patientID;
+var previousActivities = null;
+function getActivities(){
+  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
+  var req = new XMLHttpRequest();
+  req.onreadystatechange = function(){
+
+  if (this.readyState == 4) {
+    if (this.status == 200) {
+      var results = JSON.parse(this.responseText);
+        previousActivities = results.property_value;
+        loadActivities(previousActivities);
+    }else {
+
+        loadActivities("");
+    }
+    }
+    };
+    try {
+      req.open('GET', url, true);
+      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
+      req.send(null);
+    } catch (e) {
+    
+    }
+}
+
+function loadActivities(previousActivities) {
+  var activities = [];
+  jQuery.getJSON("/apps/ART/application.json")
+    .done(function (data) {
+      activities = data.activities.tasks;
+      renderActivities(activities, previousActivities);
+
+    })
+    .fail(function () {
+      console.log("The application " + applicationName + "'s application.json file is not available");
+  });
+
+}
+/*
+<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
+*/
+
+function renderActivities(activities, previousActivities) {
+  var ul = document.getElementById("tt_currentUnorderedListOptions");
+  for(var i = 0 ; i < activities.sort().length ; i++){
+    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
+    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
+    innerHTML += ' id="optionValue' + i + '">';
+    innerHTML+= activities[i][0] + "</div></div></div>";
+    
+    var li = document.createElement("li");
+    li.setAttribute("id", i );
+    li.setAttribute("tstvalue", activities[i][1]);
+    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
+    li.setAttribute("style","");
+    li.setAttribute("class","even");
+    li.innerHTML = innerHTML;
+    ul.appendChild(li); 
+     if(previousActivities.search(activities[i][0]) >= 0) {
+      updateInputs(i);
+    }
+  } 
+}
+
+function updateInputs(i) {
+  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
+}
+// function changeNextBTN() {
+//   var nextBTN = document.getElementById("nextButton");
+//   nextButton.setAttribute("onmousedown","setActivities();");
+
+// }
+
+function setActivities() {
+  var values = document.getElementById("touchscreenInput0").value;
+  if(isEmpty(values))
+    return;
+
+  var regex = new RegExp(";", "g");
+  values = values.replace(regex, ",");
+
+  var parameters = { property: "Activities", property_value: values }
+
+  submitParameters(parameters, "/user_properties", "redirectTo"); 
+  
+}
+
+function redirectTo(obj) {
+  sessionStorage.setItem("userActivities", obj.property_value);
+  document.location = "/";
+}
+
+function isEmpty(str){
+  try {
+    return (str.replace(/\s+/g, '').length < 1);
+  }catch(e){
+    return true;
+  }
+}
+
+</script>
+<body id="mateme">
+  <div id="container">
+    <div id="content">
+
+
+      <form action.="./../../../views/patient_dashboard.html">
+   
+     <input type="text" name="gravida" id="gravida_value" helpText="Gravida" field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "1" max="15" />
+
+     <select id="multiple_pregnancy" name="multiple_pregnancy" tt_onLoad="changeNextBTN();" helpText="Ever had multiple pregnancies" >   
+            <option>Yes</option>
+            <option>No</option>
+      </select>
+      <input type="text" name="num_of_deliveries" id="parity_value" helpText="Number of deliveries" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin ="0" max="15"   />
+
+      <input type="text" name="no_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin="0"
+      max ="5" />
+
+      <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Select Religion"> 
+            <option>Spontaneous Delivery</option>
+            <option>Casarean Section</option>
+            <option>Breech Delivery</option>
+      </select>
+
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "0" max ="5" />
+
+     <input type="text" name="menstruation_date" 
+        id="menstruation_date" field_type="date" 
+        helpText="Last Menstruation Date"  
+        allowFreeText="true" 
+        condition="$(&quot;menstruation_date&quot;).value == &quot;&quot;" /> 
+
+     <input type="text" name="kin_last" 
+          id="kin_last" field_type="alpha" 
+          helpText="Next of kin Last name" 
+          ajaxURL="/search/?search_string=" 
+          allowFreeText="true" 
+          condition="$(&quot;kin_last&quot;).value == &quot;&quot;" /> 
+      </form>
+
+   </div>
+ </div>
+</body>
+

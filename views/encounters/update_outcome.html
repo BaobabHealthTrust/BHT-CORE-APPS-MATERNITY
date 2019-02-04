@@ -1,0 +1,637 @@
+
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+
+<style>
+
+.inputFrameClass {
+  width: 96% !important;
+}
+
+#clearButton {
+  display: none;
+}
+
+</style>
+
+<script>
+  var currentWeight;
+  var baby_date_map = "";
+  var displayText = "";
+  var apgarScore = 0; 
+  displaySummary = 'false'; 
+  var timedEvent;
+  var baby;
+  var maxi;
+  var mini;
+  var gender;
+  
+
+function weightAlert(){
+    if(!$('weight_label')){
+      var div = document.createElement("div");
+      div.id = "weight_label";
+      div.className = "statusLabel";  
+      var sel = document.getElementById("baby_gender");
+      var gender= sel.options[sel.selectedIndex].text;
+      if (gender == "Male"){
+        maxi = 4500.0;
+        mini = 2500.0;
+      }else if (gender == "Female"){
+        maxi = 4400.0;
+        mini = 2400.0;
+      }
+      $("inputFrame" + tstCurrentPage).appendChild(div);
+
+    }
+    weight = $("touchscreenInput" + tstCurrentPage).value.trim();
+    if (weight != ""){
+      $('weight_label').innerHTML = ((weight > maxi )? "<i style='font-size: 1.2em;color: red;float: right;'> Over Weight</i>" : ((weight < mini)? "<i  style='font-size: 1.2em;float: right;color: red;'>Under Weight</i>"  : ""));
+      if (weight < maxi && weight > mini){$('weight_label').innerHTML = "<i style='float:right;font-size:1.2em;'>  Normal Weight</i>";}
+    }else {       
+      $('weight_label').innerHTML = "<i style='float:left;font-size:1.2em;'>  Enter Weight</i>";
+    }   
+  }
+
+
+  function growthIndicators(){
+    $('inputFrame'+tstCurrentPage).innerHTML = "";
+    //These values pulled from the tt_onLoad bit in the third form...
+    if (__$('discharge_outcome').value.toUpperCase()=='DELIVERED'){
+
+      headers = ["    ", "WEIGHT", "APGAR"];
+      var alertsTable = document.createElement("div");
+      alertsTable.id = "alertsTable";
+      var alertsHeaderRow = document.createElement("div");
+      alertsHeaderRow.setAttribute("class", "alertsHeaderRow");
+      for (j = 0; j < headers.length; j++){
+        var alertsHeader = document.createElement("div");
+        alertsHeader.setAttribute("class", "alertsHeader");
+        alertsHeader.innerHTML = headers[j];
+        alertsHeaderRow.appendChild(alertsHeader);
+      }
+      alertsTable.appendChild(alertsHeaderRow);
+      
+      for (i = 1; i <= parseInt(document.getElementById("number_of_babies").value); i++){
+        currentWeight = $('weight' + i).value;
+        gender = $("baby_gender" + i).value;
+        if (gender == "Male"){
+          maxi = 4500.0;
+          mini = 2500.0;
+        }else if (gender == "Female"){
+          maxi = 4400.0;
+          mini = 2400.0;
+        }
+
+        var alertsRow = document.createElement("div");
+        alertsRow.setAttribute("class", "alertsRow");
+        // add the left title of the table row
+        var alertsTitle = document.createElement("div");
+        alertsTitle.setAttribute("class", "alertsTitle");
+        alertsTitle.innerHTML = "<span>BABY " + i + "<span>";
+        alertsRow.appendChild(alertsTitle);
+        // add cell figures
+     
+        var alertsCell = document.createElement("div");
+        alertsCell.setAttribute("class", "alertsCell");
+        alertsCell.innerHTML = showWeightForAge(i);
+        alertsRow.appendChild(alertsCell);
+
+        var alertsCell2 = document.createElement("div");
+        alertsCell2.setAttribute("class", "alertsCell");
+        alertsCell2.innerHTML = showApgarScore(i);
+        alertsRow.appendChild(alertsCell2);
+        
+        //add row to table
+        alertsTable.appendChild(alertsRow);
+      }
+      $('inputFrame'+tstCurrentPage).appendChild(alertsTable);
+      displayText = "";
+    }
+  }
+  function showApgarScore(n){
+    displayText = ""
+    apgarScore = parseFloat($("apgar" + n).value);
+    if (apgarScore >= 7){
+      displayText = "<span class='normal'> " + apgarScore.toFixed(0) + "/10 - Normal APGAR</span>";
+    } else if (apgarScore <=3) {
+      displayText = "<span class='red_alert'> " + apgarScore.toFixed(0) + "/10 - Low APGAR</span>";
+    } else {
+      displayText = "<span class='yellow_alert'> " + apgarScore.toFixed(0) + "/10 - Fairly Low </span>";
+    }
+    return displayText
+  }
+  function showApgarControl(baby){
+    apgarScore = 0;
+    var apgar = {"APPEARANCE": 0,
+      "PULSE" : 0,
+      "GRIMANCE": 0,
+      "ACTIVITY": 0,
+      "RESPIRATION": 0
+    };
+    var apgarCheck = {"APPEARANCE": "?",
+      "PULSE" : "?",
+      "GRIMANCE": "?",
+      "ACTIVITY": "?",
+      "RESPIRATION": "?"
+    };
+   
+    alert = document.createElement("div");
+
+    $("clearButton").onclick = function(){
+      apgarScore = 0
+      updateApgarAlert(apgarScore)
+      cells = document.getElementsByClassName("butt");
+      for( i = 0; 0 < cells.length; i++){
+        cells[i].setAttribute("selected", "false");
+        cells[i].style.background = "url('/images/btn_blue.png'";
+        apgar["APPEARANCE"] = 0; apgar["PULSE"] = 0; apgar["GRIMANCE"] = 0; apgar["ACTIVITY"] = 0; apgar["RESPIRATION"] = 0;
+        apgarCheck["APPEARANCE"] = "?"; apgarCheck["PULSE"] = "?"; apgarCheck["GRIMANCE"] = "?";
+        apgarCheck["ACTIVITY"] = "?"; apgarCheck["RESPIRATION"] = "?";
+        showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> = " + apgarCheck['APPEARANCE'] + "+" + apgarCheck['PULSE'] +"+"+ apgarCheck['GRIMANCE']
+          + "+" + apgarCheck['ACTIVITY'] + "+" + apgarCheck['RESPIRATION']);
+      }
+    }
+    $("clearButton").onclick.apply($("clearButton"));
+    updateApgarAlert(apgarScore);
+    scoreWindow = document.createElement("div");
+    scoreWindow.setAttribute("id", "selectWindow");
+    
+
+    arr = ["Appearance", "Pulse", "Grimance", "Activity", "Respiration"]
+    /*
+    arr_val = ['Pale/blue', "Baby pink/</br>blue extremities", "Completely </br> pink",
+      "None", "Slow -</br>Below 100 bpm", "Above </br>100 bpm",
+      "Flaccid", "Some flexion </br> of Extremities", "Active Motion",
+      "None", "Grimance", "Vigorous </br>cry",
+      "Absent", "Slow - </br> irregular", "Good crying"];
+     */
+    // arr_labels = ["Color", "Heart Rate", "Muscle Tone", "Reflex Irritability", "Respiratory Effort"]
+    arr_val = ['Blue, Pale', "Pink </br> Extreme blue", "Completely </br> pink",
+      "Absent", "Below </br>100 bpm", "Over </br>100 bpm",
+      "Flaccid", "Some Flexion </br> of Extremities", "Active motion",
+      "Absent", "Arms and legs</br> flexed", "Active movement",
+      "Absent", "Slow, </br> irregular", "Vigorous cry"];
+
+    val_index = 0;
+    values = [0, 1, 2]
+    var labels = document.createElement("div");
+    labels.id = "row1";
+    
+    placebo = document.createElement("div");
+    placebo.id = "placebo";
+    labels.appendChild(placebo);
+
+    for(i = 0; i < values.length; i++){
+      var lblCell = document.createElement("div");
+      lblCell.setAttribute("class", "value");
+      lblCell.innerHTML = (i == 2)? (i + " Points") : (i + " Point")
+      labels.appendChild(lblCell);
+    }
+    scoreWindow.appendChild(labels);
+   
+    for (i = 0; i < arr.length; i ++){
+      var row = document.createElement("div");
+      row.id = "apgar_row_" + i
+      row.setAttribute("class", "boardRow");
+
+      for (j = 0; j < 4; j++){
+        var control = document.createElement("div");
+        control.id = "" + i + j;
+        if (j != 0){
+          
+          control.setAttribute("class", "butt");
+          control.setAttribute("value", j-1);
+          control.setAttribute("apgar_field", arr[i]);
+          // update/set selection status of the control
+          if ((apgarCheck[arr[i].toUpperCase()] != "?") && ("" + i + (parseInt(apgarCheck[arr[i].toUpperCase()]) + 1) == control.id)){
+            control.setAttribute("selected", "true");
+          }else{ control.setAttribute("selected", "false"); }
+          control.setAttribute("i", i);
+          control.setAttribute("j", j);
+          
+          control.innerHTML = arr_val[val_index];
+          val_index ++;
+         
+          control.onclick = function(){
+            var num = __$(this.id).getAttribute("value");
+            var field = __$(this.id).getAttribute("apgar_field");
+            var key = field.toUpperCase();
+            apgar[key] = num;
+            apgarCheck[key] = apgar[key];
+            //update row selections
+            
+            if (__$(this.id).getAttribute("selected") == "false"){
+              
+              for(k = 1; k < 4; k++){
+                var x = this.getAttribute("i");
+                __$("" + x + k).setAttribute("selected", ( this.id != "" + x + k)? "false": "true");
+                
+                __$("" + x + k).style.background = ( this.id != "" + x + k)? "url('/images/btn_blue.png')" : "url('/images/click_btn.png')";
+                __$("" + x + k).style.Color= ( this.id != "" + x + k)? "black" : "white";
+              }
+            }
+            __$(key.toLowerCase() + baby).value = apgar[key];
+            apgarScore = parseInt(apgar['APPEARANCE']) + parseInt(apgar['PULSE'])
+              + parseInt(apgar['GRIMANCE']) + parseInt(apgar['ACTIVITY']) + parseInt(apgar['RESPIRATION']);
+            showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> = " + apgarCheck['APPEARANCE'] + "+" + apgarCheck['PULSE'] +"+"+ apgarCheck['GRIMANCE']
+              + "+" + apgarCheck['ACTIVITY'] + "+" + apgarCheck['RESPIRATION']);
+            if (apgarCheck["APPEARANCE"] != "?" && apgarCheck["PULSE"] != "?" && apgarCheck["GRIMANCE"] != "?" && apgarCheck["ACTIVITY"] != "?" && apgarCheck["RESPIRATION"] != "?"){
+              $('touchscreenInput'+tstCurrentPage).value = apgarScore;
+            }
+            updateApgarAlert(apgarScore);
+          };
+          
+          
+        }else{control.innerHTML = arr[i];
+          control.setAttribute("class", "leftButt");
+        }
+        row.appendChild(control);
+      }
+      scoreWindow.appendChild(row);    }
+
+    $('inputFrame' + tstCurrentPage).style.display = "none";
+    $('page' + tstCurrentPage).style.minHeight = "650px";
+    $('page' + tstCurrentPage).appendChild(scoreWindow);
+    $("page" + tstCurrentPage).appendChild(alert);
+    
+  }
+
+  function updateApgarAlert(apgarScore){
+    if (apgarScore >= 7){
+      text = "" + apgarScore.toFixed(0) + "/10 - Normal APGAR</span>";
+      alert.id = "normal_apgar_alert";
+    } else if (apgarScore <=3) {
+      text = "" + apgarScore.toFixed(0) + "/10 - Low APGAR</span>";
+      alert.id = "red_apgar_alert";
+    } else {
+      text = "" + apgarScore.toFixed(0) + "/10 - Fairly Low </span>";
+      alert.id = "yellow_apgar_alert";
+    }
+    alert.innerHTML = text;
+  }
+
+</script>
+
+<body id="mateme">
+  <div id="container">
+    <div id="content">
+
+
+      <form action="../../../../views/patient_dashboard.html">
+
+        <select id="discharge_outcome" name="discharge_outcome" tt_onLoad="changeNextBTN();" helpText="Outcome">   
+            <option>Absconded</option>
+            <option>Delivered</option>
+            <option>Patient died</option>
+        </select>
+        
+        <!-- <select id="discharged_to_where" name="discharged_to_where" tt_onLoad="changeNextBTN();" helpText="Discharged to Where?"
+          condition = "__$('discharge_outcome').value == 'Absconded'"> 
+            <option>Home- Waiting</option>
+            <option>Another Health Facility</option>
+        </select>
+        <input type="text" name="health_facility" 
+        id="health_facility" field_type="alpha" 
+        key="health_facility" helpText="Which Health Facility"  
+        ajaxURL="/search/location?search_string=" 
+        key=health_facility" allowFreeText="true" 
+        condition = "__$('discharged_to_where').value == 'Another Health Facility'" />  -->
+
+        <input type="text" name="admission_section" 
+        id="admission_section" field_type="alpha" 
+        key="admission_section" helpText="Select Admission section"  
+        ajaxURL="/search/admission_section?search_string=" 
+        key=admission_section" allowFreeText="true" 
+        condition = "($('discharge_outcome').value.toUpperCase() == 'ADMITTED')" /> 
+
+        <select id="perineum" name="perineum" tt_onLoad="changeNextBTN();" 
+        helpText="Perineum" condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED')"> 
+            <option>Intact</option>
+            <option>Tear</option>
+            <option>Episotomy</option>
+            <option>Laceration</option>
+        </select>
+        <select id="tear" name="tear" tt_onLoad="changeNextBTN();" 
+        helpText="Tear Extent" condition ="($('perineum').value.toUpperCase() == 'TEAR')"> 
+            <option>1&#176</option>
+            <option>2&#176</option>
+            <option>3&#176</option>
+            <option>4&#176</option>
+        </select>
+
+        <select id="procedure_done" name="procedure_done" tt_onLoad="changeNextBTN();" 
+        helpText="1<sup>st</sup> Procedure done" condition ="($('perineum').value.toUpperCase() == 'TEAR')"  condition="$('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED'"> 
+            <option>None</option>
+            <option>Bilateral tubal ligation</option>
+            <option>Biopsy</option>
+            <option>Ceclage</option>
+        </select>
+        
+        <select id="procedure_done" name="procedure_done" tt_onLoad="changeNextBTN();" 
+        helpText="Reason For Procedure" condition ="$('procedure_done').value.toUpperCase() == 'BILATERAL TUBAL LIGATION'"> 
+            <option>Family Planning</option>
+            <option>Medical</option>
+            <option>Ceclage</option>
+        </select>
+
+        <select id="procedure_done" name="procedure_done" tt_onLoad="changeNextBTN();" 
+        helpText="Reason For Procedure" condition ="$('procedure_done').value.toUpperCase() == 'BIOPSY'"> 
+            <option>Cancer of cervix</option>
+            <option>Edometrial cancer</option>
+            <option>Cancer of polyps</option>
+            <option>Other</option>
+        </select>
+        <select id="procedure_done" name="procedure_done" tt_onLoad="changeNextBTN();" 
+        helpText="2<sup>st</sup> Procedure done" condition ="($('perineum').value.toUpperCase() == 'TEAR')"  condition="$('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED'"> 
+            <option>None</option>
+            <option>Bilateral tubal ligation</option>
+            <option>Biopsy</option>
+            <option>Ceclage</option>
+        </select>
+        <select id="procedure_done" name="procedure_done" tt_onLoad="changeNextBTN();" 
+        helpText="Reason For Procedure" condition ="$('procedure_done').value.toUpperCase() == 'CECLAGE'"> 
+            <option>Incomponet cervix</option>
+            <option>Myoma</option>
+            <option>Ovarian cyst</option>
+            <option>Recurrent/Habitual</option>
+            <option>Other</option>
+        </select>
+        <!-- <input type="text" name="admission_diagnosis" 
+        id="admission_diagnosis" field_type="alpha" 
+        key="admission_diagnosis" helpText="Select Discharge Diagnosis"  
+        ajaxURL="/search/admission_diagnosis?search_string=" 
+        key=presentation" allowFreeText="true" textCase ="upper"
+        condition="($('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" /> 
+
+        
+
+        <input type="text" name="next_diagnosis" 
+        id="next_diagnosis" field_type="alpha" 
+        key="next_diagnosis" helpText="Select Next Diagnosis"  
+        ajaxURL="/search/next_diagnosis?search_string=" 
+        key=presentation" allowFreeText="true" optional ="true"
+        condition="($('discharge_outcome').value.toUpperCase() == 'DISCHARGED' && __$('diagnosis0').value != 'N/A')" />  -->
+
+        <!-- PROCEDURES -->
+
+         <!-- <input type="text" name="procedure_done" 
+          id="procedure_done" field_type="alpha" 
+          key="procedure" helpText="1st Procedure done"  
+          ajaxURL="/search/procedure?search_string=" 
+          key=procedure" allowFreeText="true" 
+          condition="$('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED'" /> 
+
+          <input type="text" name="procedure_diagnosis" 
+          id="procedure_diagnosis" field_type="alpha" 
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'HYSTERECTOMY'" /> 
+
+          <input type="text" name="procedure_diagnosis1" 
+          id="procedure_diagnosis1" field_type="alpha" 
+          helpText="2nd Reason for Procedure" ajaxURL = "/encounters/procedure_diagnoses?procedure=biopsy&search_string="
+          condition="$('procedure_done').value.toUpperCase() == 'BIOPSY DIAGNOSIS'" /> 
+
+          <input type="text" name="procedure_diagnosis2" 
+          id="procedure_diagnosis2" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=bilateral_tubal_ligation&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'BILATERAL TUBAL LIGATION'" /> 
+        
+          <input type="text" name="procedure_diagnosis3" 
+          id="procedure_diagnosis3" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=ceclage&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'MYOMECTOMY'" /> 
+
+          <input type="text" name="procedure_diagnosis4" 
+          id="procedure_diagnosis4" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'CECLAGE'" /> 
+        
+          <input type="text" name="procedure_diagnosis5" 
+          id="procedure_diagnosis5" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'CYSTECTOMY'" /> 
+
+          <input type="text" name="procedure_diagnosis6" 
+          id="procedure_diagnosis6" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'MARSUPILISATION'" /> 
+
+          <input type="text" name="procedure_diagnosis7" 
+          id="procedure_diagnosis7" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'EXCISION'" /> 
+
+          <input type="text" name="procedure_diagnosis7" 
+          id="procedure_diagnosis7" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toLowerCase().trim().match('incision and drainage'" /> 
+
+          <input type="text" name="procedure_diagnosis8" 
+          id="procedure_diagnosis8" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'CAESAREAN SECTION'" /> 
+
+          <input type="text" name="procedure_diagnosis8" 
+          id="procedure_diagnosis8" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'EXAM UNDER ANAESTHESIA'" /> 
+
+          <input type="text" name="procedure_diagnosis9" 
+          id="procedure_diagnosis8" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'EVACUATION/MANUAL VACUUM ASPIRATION'" /> 
+
+          <input type="text" name="procedure_diagnosis10" 
+          id="procedure_diagnosis10" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'DILATION AND CURETTAGE'" /> 
+
+          <input type="text" name="procedure_diagnosis11" 
+          id="procedure_diagnosis11" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'EXPLORATORY LAPARATOMY ADNEXECTOMY'" /> 
+
+          <input type="text" name="procedure_diagnosis11" 
+          id="procedure_diagnosis11" field_type="alpha" 
+          ajaxURL = "/encounters/procedure_diagnoses?procedure=myomectomy&search_string="
+          helpText="Reason for Procedure" 
+          condition="$('procedure_done').value.toUpperCase() == 'LAPARATOMY DIAGNOSIS'" />  -->
+          <!-- END PROCEDURES -->
+
+          <!-- BABY DETAILS -->
+          <input type="text" name="number_babies" id="number_babies" helpText="Number of babies" field_type="number" tt_onLoad=""
+           tt_pageStyleClass="Numeric NumbersOnly" 
+           condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" />
+
+           <!-- First Baby -->
+           <!-- <input type="text" name="delivery_time" 
+          id="delivery_time" field_type="advancedTime" 
+          helpText="Baby Time of Delivery" 
+          condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" /> 
+
+           <input type="text" name="delivery_date" 
+          id="delivery_date" field_type="number" 
+          helpText="Baby Date of Delivery" 
+          tt_pageStyleClass="date" 
+          condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" /> 
+
+         <select id="delivery_place" name="delivery_place" tt_onLoad="changeNextBTN();"
+          helpText="Baby Place of Delivery" condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')"> 
+          <option>This facility</option>
+          <option>In transit</option>
+          <option>Other facility</option>
+          <option>Home/TBA</option>
+         </select>
+
+         <select id="baby_presentation" name="baby_presentation" tt_onLoad="changeNextBTN();" helpText="Baby Presentation" condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')"> 
+          <option>Transverse</option>
+          <option>Breech delivery</option>
+          <option>Cephalic</option>
+         </select>
+         <select id="baby_outcome" name="baby_outcome" tt_onLoad="changeNextBTN();" helpText="Baby Delivery Outcome" condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')"> 
+                <option>Alive</option>
+               <option>Neonatal Birth</option>
+               <option>Fresh Still birth</option>
+               <option>Macerated Still Birth</option>
+         </select>
+         
+          <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Baby Delivery Mode" condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')"> 
+             <option>Spontaneous Delivery</option>
+            <option>Casarean Section</option>
+            <option>Breech Delivery</option>
+            <option>Vacuum extraction delivery</option>
+         </select>        -->
+         <select id="baby_gender" name="baby_gender" tt_onLoad="changeNextBTN();"  helpText="Baby Sex" condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')"> 
+          <option>Male</option>
+         <option>Female</option>
+         </select> 
+
+         <input type="text" name="weight" id="weight" 
+         helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
+         tt_onUnload ="clearTimeout(timedEvent);"
+         tt_pageStyleClass="unknownButton"/>
+
+         <input type="text" name="baby_length" id="baby_length" 
+         helpText="Baby: Length(CM)" field_type="number" tt_onLoad=""
+         tt_pageStyleClass="Numeric NumbersOnlyWithDecimal"  /> 
+
+
+   <!-- Second Baby -->
+
+         <input type="text" name="baby_outcome_name2" 
+         id="baby_outcome_name2" field_type="alpha" 
+         helpText="2<sup>nd </sup>  Baby Name" 
+         condition ="__$('number_babies').value > 1 " /> 
+       
+         <input type="text" name="delivery_time2" 
+        id="delivery_time2" field_type="advancedTime" 
+        helpText="Baby Time of Delivery" 
+        condition ="__$('number_babies').value > 1 " /> 
+
+         <input type="text" name="delivery_date2" 
+        id="delivery_date2" field_type="number" 
+        helpText="2<sup>nd </sup> Baby Date of Delivery" 
+        tt_pageStyleClass="date" 
+        condition ="__$('number_babies').value > 1 " /> 
+
+       <select id="delivery_place2" name="delivery_place2" tt_onLoad="changeNextBTN();"
+        helpText="2<sup>nd </sup> Baby Place of Delivery" condition ="__$('number_babies').value > 1 "> 
+        <option>This facility</option>
+        <option>In transit</option>
+        <option>Other facility</option>
+        <option>Home/TBA</option>
+       </select>
+
+       <select id="baby_presentation2" name="baby_presentation2" 
+       tt_onLoad="changeNextBTN();" helpText="2<sup>nd </sup> Baby Presentation"
+        condition ="__$('number_babies').value > 1 "> 
+        <option>Transverse</option>
+        <option>Breech delivery</option>
+        <option>Cephalic</option>
+       </select>
+       <select id="baby_outcome2" name="baby_outcome2" tt_onLoad="changeNextBTN();" 
+       helpText="Delivery Mode" condition ="__$('number_babies').value > 1" > 
+            <option>Alive</option>
+           <option>Neonatal Birth</option>
+           <option>Fresh Still birth</option>
+           <option>Macerated Still Birth</option>
+        </select>
+
+        <select id="baby_sex2" name="baby_sex2" tt_onLoad="changeNextBTN();"
+         helpText="2<sup>nd </sup> Baby Sex" condition ="__$('number_babies').value > 1 "> 
+           <option>Male</option>
+          <option>Female</option>
+       </select>
+
+       <input type="text" name="baby_weight2" id="baby_weight2" 
+       helpText="2<sup>nd </sup>Baby: Weight(Kg)" field_type="number" tt_onLoad="" min="2.5" max="5" validationMessage = "You must enter a decimal between 0 and 9 (for example: 2<b>.6</b>)"
+       absoluteMax= "10" validationRule = "([0-9]+\\.[0-9])|Unknown$" 
+       tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" condition ="__$('number_babies').value > 1 " />
+
+       <input type="text" name="baby_length2" id="baby_length2" 
+       helpText="2<sup>nd </sup>Baby: Length(CM)" field_type="number" tt_onLoad=""
+        validationRule = "([0-9]+\\.[0-9])|Unknown$" 
+       tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" condition ="__$('number_babies').value > 1 "/>
+
+       <!-- PATIENT DIED -->
+       <input type="text" name="date_of_death" 
+          id="date_of_death" field_type="number" 
+          helpText="Date of Death" 
+          tt_pageStyleClass="date" 
+          condition = "$('discharge_outcome').value.toUpperCase() == 'PATIENT DIED'" /> 
+
+        <input type="text" name="time_of_death" 
+          id="time_of_death" field_type="advancedTime" 
+          helpText="Time of Death" 
+          condition = "$('discharge_outcome').value.toUpperCase() == 'PATIENT DIED'" /> 
+
+        <select id="place_of_death" name="place_of_death" tt_onLoad="changeNextBTN();"
+          helpText="Place of Death" condition = "$('discharge_outcome').value.toUpperCase() == 'PATIENT DIED'"> 
+            <option>Home</option>
+           <option>Current Facility</option>
+           <option>On the Way</option>
+           <option>Other</option>
+        </select>
+
+        <input type="text" name="reason_of_death" 
+        id="reason_of_death" field_type="text" 
+        helpText="Select Reason of Death" 
+        tt_pageStyleClass="date" 
+        condition = "$('discharge_outcome').value.toUpperCase() == 'PATIENT DIED'" /> 
+
+        <select id="condition_at_death" name="condition_at_death" tt_onLoad="changeNextBTN();"
+          helpText="Condition at Death" condition = "$('discharge_outcome').value.toUpperCase() == 'PATIENT DIED'"> 
+            <option>Antenatal</option>
+           <option>Postpartum</option>
+           <option>Intrapartum</option>
+        </select>
+
+      </form>
+
+   </div>
+ </div>
+</body>
+

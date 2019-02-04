@@ -1,0 +1,273 @@
+
+<!-- <script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+ --><!-- <link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css"> -->
+<!-- <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+ -->
+<!--  <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+ -->
+<!--  <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+ -->
+<!--  <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+ -->
+ <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+ <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+ 
+ <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+ <style>
+ 
+ .inputFrameClass {
+   width: 96% !important;
+ }
+ 
+ #clearButton {
+   display: none;
+ }
+ 
+ .dateselector{
+   min-height: 0px;
+ }
+ 
+ #timeselector{
+   min-height: 0px;
+ }
+ 
+ </style>
+ 
+ <script>
+ 
+ 
+ </script>
+ <script>
+      
+   function isValidDateFormat(value){
+     return value.trim().match(/(\d{4})\-(\d{2})\-(\d{2})\s(\d{2})\:(\d{2})/);
+   }
+ 
+   function isValidTimeFormat(value){
+     return value.trim().match(/(\d{2})\:(\d{2})/);
+   }
+ 
+   function createDate(value){
+     var d = isValidDateFormat(value);
+     
+     if(d){
+       return new Date(eval(d[1]),(eval(d[2])-1),eval(d[3]),eval(d[4]),eval(d[5]));
+     } else {
+       return new Date();
+     }
+   }
+   
+   function dateTimeFormatted(value){
+     return value.getFullYear() + "-" + padZeros((value.getMonth() + 1),2) + "-" + 
+       padZeros(value.getDate(),2) + " " + padZeros(value.getHours(),2) + ":" + 
+       padZeros(value.getMinutes(),2)
+   }
+ 
+   // Expects Date object and time string
+   function mergeDateTime(date, time){
+     var t = isValidTimeFormat(time);
+     
+     if(t){
+       return new Date(date.getFullYear(), date.getMonth(), date.getDate(), eval(t[1]), eval(t[2]));
+     } else {
+       return date;
+     }
+   }
+ 
+   function updateTimeOtherFields(group){
+     var outcome_date = __$("baby" + group + "_outcome_date").value.trim();
+     var delivery_mode_date = __$("baby" + group + "_delivery_mode_date").value.trim();
+     var time = __$("time_of_delivery" + group).value.trim();
+     
+     if(isValidTimeFormat(time)){
+       
+       outcome_date = createDate(outcome_date);
+       
+       outcome_date = mergeDateTime(outcome_date, time);
+       
+       __$("baby" + group + "_outcome_date").value = dateTimeFormatted(outcome_date);
+       
+       delivery_mode_date = createDate(delivery_mode_date);
+       
+       delivery_mode_date = mergeDateTime(delivery_mode_date, time);
+       
+       __$("baby" + group + "_delivery_mode_date").value = dateTimeFormatted(delivery_mode_date);
+       
+       if(group == 1){
+         
+         var number_of_babies_date = __$("number_of_babies_date").value.trim();
+         
+         number_of_babies_date = createDate(number_of_babies_date);
+       
+         number_of_babies_date = mergeDateTime(number_of_babies_date, time);
+       
+         __$("number_of_babies_date").value = dateTimeFormatted(number_of_babies_date);
+       
+       }
+     }
+   }
+   
+   function updateDateOtherFields(group){
+     var outcome_date = createDate(__$("baby" + group + "_outcome_date").value.trim());
+     var delivery_mode_date = createDate(__$("baby" + group + "_delivery_mode_date").value.trim());
+     var date = __$("date_of_delivery" + group).value.trim();
+     var time = padZeros(outcome_date.getHours(),2) + ":" + padZeros(outcome_date.getMinutes(),2);
+     
+     if(isValidTimeFormat(time)){
+       
+       date = createDate(date);
+       
+       date = mergeDateTime(date, time);
+       
+       __$("baby" + group + "_outcome_date").value = dateTimeFormatted(date);
+     }
+     
+     date = __$("date_of_delivery" + group).value.trim();
+     time = padZeros(delivery_mode_date.getHours(),2) + ":" + padZeros(delivery_mode_date.getMinutes(),2);
+     
+     if(isValidTimeFormat(time)){
+       date = createDate(date);
+       
+       date = mergeDateTime(date, time);
+       
+       __$("baby" + group + "_delivery_mode_date").value = dateTimeFormatted(date);
+       
+     }
+     
+     var number_of_babies_date = createDate(__$("number_of_babies_date").value.trim());
+         
+     date = __$("date_of_delivery" + group).value.trim();
+     time = padZeros(number_of_babies_date.getHours(),2) + ":" + padZeros(number_of_babies_date.getMinutes(),2);
+     
+     if(group == 1 && isValidTimeFormat(time)){
+         
+       number_of_babies_date = createDate(number_of_babies_date);
+       
+       number_of_babies_date = mergeDateTime(number_of_babies_date, time);
+       
+       __$("number_of_babies_date").value = dateTimeFormatted(number_of_babies_date);
+       
+     }
+   }
+   
+   //-->
+ </script>
+ 
+ 
+ <body id="mateme">
+   <div id="container">
+     <div id="content">
+       <form action="../../../../views/patient_dashboard.html">
+         <input type="text" name="number_babies" id="number_babies" absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly"/>
+ 
+          <select id="baby_status" name="baby_status" tt_onLoad="num_of_babies()" helpText="Baby: Status"> 
+             <option>Cried</option>
+             <option>No cry</option>
+          </select>
+ 
+          <input type="text" name="time_of_delivery1" 
+          id="time_of_delivery1" field_type="advancedTime" 
+          key="time_of_delivery1" helpText="Baby: Time of Deliver"  
+          allowFreeText="true" tt_onUnLoad => "updateTimeOtherFields(1)
+          condition="$(&quot;time_of_delivery1&quot;).value == &quot;&quot;" />
+ 
+          <input type="text" name="date_of_delivery" 
+           id="date_delivery" field_type="number" 
+           key="date_delivery" helpText="Baby: Date of Deliver" 
+           tt_pageStyleClass="date" 
+           allowFreeText="true" 
+           condition="$(&quot;date_delivery&quot;).value == &quot;&quot;" /> 
+ 
+           <select id="baby_gender1" name="baby_gender1" tt_onLoad="changeNextBTN();" helpText="Baby: Gender"> 
+            <option>Male</option>
+            <option>Female</option>
+         </select>
+
+         <select id="delivery_mode1" name="delivery_mode1" tt_onLoad="changeNextBTN();" helpText="Baby: Delivery Mode"> 
+            <option>Spontaneous vaginal Delivery</option>
+            <option>Breech Delivery</option>
+         </select>
+ 
+ <!--          SECOND BABY 
+  -->         
+         <select id="baby_status" name="baby_status" tt_onLoad="num_of_babies()" helpText="2<sup>nd </sup> Baby: Status" condition ="__$('number_babies').value > 1 "> 
+            <option>Cried</option>
+            <option>No cry</option>
+          </select>   
+ 
+          <input type="text" name="time_of_delivery2" 
+          id="time_of_delivery2" field_type="advancedTime" 
+          key="time_of_delivery2" helpText="2<sup>nd </sup> Baby: Time of Deliver"  
+          allowFreeText="true" condition ="__$('number_babies').value > 1 " />
+
+           <input type="text" name="date_of_delivery2" 
+          id="date_of_delivery2" field_type="number" 
+          key="date_of_delivery2" helpText="2<sup>nd </sup> Baby: Date of Deliver"  
+           tt_pageStyleClass="date" 
+           allowFreeText="true" 
+           condition ="__$('number_babies').value > 1 " /> 
+
+         <select id="baby_gender2" name="baby_gender2" tt_onLoad="changeNextBTN();" helpText="2<sup>nd </sup>Baby: Gender" condition ="__$('number_babies').value > 1 " > 
+            <option>Male</option>
+            <option>Female</option>
+         </select>
+
+         <select id="delivery_mode2" name="delivery_mode2" tt_onLoad="changeNextBTN();"  helpText="2<sup>nd </sup> Baby: Delivery Mode" condition ="__$('number_babies').value > 1 "> 
+            <option>Spontaneous vaginal Delivery</option>
+            <option>Breech Delivery</option>
+         </select>
+ 
+ <!--          END OF SECOND BABY
+  -->
+ 
+  <!--          THIRD BABY 
+  -->         
+         <select id="babyoutcome3" name="baby_outcome3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd</sup> Baby: Status" condition ="__$('number_babies').value > 2 "> 
+            <option>Cried</option>
+            <option>No cry</option>
+         </select>
+
+         <input type="text" name="time_of_delivery3" 
+         id="time_of_delivery3" field_type="advancedTime" 
+         key="time_of_delivery3" helpText="3<sup>nd </sup> Baby: Time of Deliver"  
+         allowFreeText="true" 
+         condition ="__$('number_babies').value > 2 " />
+
+         <input type="text" name="date_of_delivery3" 
+         id="date_of_delivery3" field_type="number" 
+         key="date_of_delivery3" helpText="3<sup>nd </sup> Baby: Date of Deliver"  
+         tt_pageStyleClass="date"  allowFreeText="true" 
+         condition ="__$('number_babies').value > 2 " /> 
+
+         <select id="baby_gender3" name="baby_gender3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd </sup>Baby: Gender" condition ="__$('number_babies').value > 2 "> 
+            <option>Male</option>
+            <option>Female</option>
+         </select>
+
+         <select id="delivery_mode3" name="delivery_mode3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd</sup> Baby: Delivery Mode" condition ="__$('number_babies').value > 2 "> 
+            <option>Spontaneous vaginal Delivery</option>
+            <option>Breech Delivery</option>
+         </select>
+ 
+ <!--          END OF THIRD BABY
+  -->
+ 
+ 
+          <select id="place_delivery" name="place_delivery" tt_onLoad="changeNextBTN();" helpText="Place of delivery"> 
+             <option>Home</option>
+             <option>Transit</option>
+             <option>TBA</option>
+             <option>Other</option>
+          </select>
+ 
+           <select id="birth_attended_by" name="birth_attended_by" tt_onLoad="changeNextBTN();" helpText="Birth attended by"> 
+             <option>Self</option>
+             <option>TBA</option>
+             <option>Other</option>
+          </select>
+ 
+       </form>
+ 
+    </div>
+  </div>
+ </body>
