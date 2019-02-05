@@ -1,3 +1,5 @@
+var tt_cancel_destination = "/";
+
 function buildBabyApgar1stMin(){
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
     frame.style.height = "90%";
