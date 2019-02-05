@@ -140,27 +140,77 @@ function isEmpty(str){
   <div id="container">
     <div id="content">
 
-         <form action="end_shift.html">
-           <input type="text" name="start_date" 
-          id="start_date" field_type="alpha" 
-          key="start_date" helpText="Start Date"  
-          allowFreeText="true" 
-          condition="$(&quot;start_date&quot;).value == &quot;&quot;" /> 
+    <form action="end_shift.html">
+      <input type="text" name="start_year" id="start_year" 
+        helpText="Start year" field_type="number" 
+        absoluteMin="1900" min="1900" tt_onLoad="setAbsoluteMaxYear()" 
+        tt_pageStyleClass="Numeric NumbersOnly" />
+
+      <select name="start_month" id="start_month" helpText="Start month" 
+        condition="$('start_year').value.toLowerCase() != 'unknown'" 
+        validationMessage="Please enter a valid date" tt_onUnLoad="" 
+        tt_onLoad=" validateMonth('start_month');__$(keyboard).style.display = none;">
+          <option value=""></option>
+          <option value="1">Jan</option>
+          <option value="2">Feb</option>
+          <option value="3">Mar</option>
+          <option value="4">Apr</option>
+          <option value="5">May</option>
+          <option value="6">Jun</option>
+          <option value="7">Jul</option>
+          <option value="8">Aug</option>
+          <option value="9">Sep</option>
+          <option value="10">Oct</option>
+          <option value="11">Nov</option>
+          <option value="12">Dec</option>
+        </select>
+
+    <input type="text" name="start_day" 
+      id="start_day" field_type="number" helpText="Start Day" 
+      condition="($('start_year').value != 'Unknown') && ($('start_month').value != 'Unknown')" 
+      tt_onLoad="getDayOfMonthPicker($('start_year').value, $('start_month').value);setUpPageForDateValidation();" 
+      tt_onUnLoad="" />
+
 
           <input type="text" name="start_time" 
-          id="start_time" field_type="alpha" 
+          id="start_time" field_type="advancedTime" 
           key="start_time" helpText="Start Time"  
           allowFreeText="true" 
           condition="$(&quot;start_time&quot;).value == &quot;&quot;" /> 
 
-           <input type="text" name="end_date" 
-          id="end_date" field_type="alpha" 
-          key="end_date" helpText="End Date"  
-          allowFreeText="true" 
-          condition="$(&quot;end_date&quot;).value == &quot;&quot;" /> 
+          <input type="text" name="end_year" id="end_year" 
+        helpText="End year" field_type="number" 
+        absoluteMin="1900" min="1900" tt_onLoad="setAbsoluteMaxYear()" 
+        tt_pageStyleClass="Numeric NumbersOnly" />
+
+      <select name="end_month" id="end_month" helpText="End month" 
+        condition="$('end_year').value.toLowerCase() != 'unknown'" 
+        validationMessage="Please enter a valid date" tt_onUnLoad="" 
+        tt_onLoad=" validateMonth('end_month');__$(keyboard).style.display = none;">
+          <option value=""></option>
+          <option value="1">Jan</option>
+          <option value="2">Feb</option>
+          <option value="3">Mar</option>
+          <option value="4">Apr</option>
+          <option value="5">May</option>
+          <option value="6">Jun</option>
+          <option value="7">Jul</option>
+          <option value="8">Aug</option>
+          <option value="9">Sep</option>
+          <option value="10">Oct</option>
+          <option value="11">Nov</option>
+          <option value="12">Dec</option>
+        </select>
+
+    <input type="text" name="end_day" 
+      id="end_day" field_type="advancedTime" helpText="End Day" 
+      condition="($('end_year').value != 'Unknown') && ($('end_month').value != 'Unknown')" 
+      tt_onLoad="getDayOfMonthPicker($('end_year').value, $('end_month').value);updateFinishButton();" 
+      tt_onUnLoad="" />
+
 
           <input type="text" name="end_time" 
-          id="end_time" field_type="alpha" 
+          id="end_time" field_type="advancedTime" 
           key="end_time" helpText="End Time"  
           allowFreeText="true" 
           condition="$(&quot;end_time&quot;).value == &quot;&quot;" /> 

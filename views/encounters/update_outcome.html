@@ -487,7 +487,7 @@ function weightAlert(){
            condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" />
 
            <!-- First Baby -->
-           <!-- <input type="text" name="delivery_time" 
+           <input type="text" name="delivery_time" 
           id="delivery_time" field_type="advancedTime" 
           helpText="Baby Time of Delivery" 
           condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" /> 
@@ -532,33 +532,30 @@ function weightAlert(){
          <input type="text" name="weight" id="weight" 
          helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
          tt_onUnload ="clearTimeout(timedEvent);"
-         tt_pageStyleClass="unknownButton"/>
+         tt_pageStyleClass="unknownButton"
+         condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')"/>
 
          <input type="text" name="baby_length" id="baby_length" 
          helpText="Baby: Length(CM)" field_type="number" tt_onLoad=""
-         tt_pageStyleClass="Numeric NumbersOnlyWithDecimal"  /> 
+         tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" 
+         condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" /> 
 
 
    <!-- Second Baby -->
 
-         <input type="text" name="baby_outcome_name2" 
-         id="baby_outcome_name2" field_type="alpha" 
-         helpText="2<sup>nd </sup>  Baby Name" 
-         condition ="__$('number_babies').value > 1 " /> 
-       
          <input type="text" name="delivery_time2" 
         id="delivery_time2" field_type="advancedTime" 
-        helpText="Baby Time of Delivery" 
-        condition ="__$('number_babies').value > 1 " /> 
+        helpText="2<sup>nd </sup>Baby Time of Delivery" 
+        condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') " /> 
 
          <input type="text" name="delivery_date2" 
         id="delivery_date2" field_type="number" 
         helpText="2<sup>nd </sup> Baby Date of Delivery" 
         tt_pageStyleClass="date" 
-        condition ="__$('number_babies').value > 1 " /> 
+        condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') " /> 
 
        <select id="delivery_place2" name="delivery_place2" tt_onLoad="changeNextBTN();"
-        helpText="2<sup>nd </sup> Baby Place of Delivery" condition ="__$('number_babies').value > 1 "> 
+        helpText="2<sup>nd </sup> Baby Place of Delivery" condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') "> 
         <option>This facility</option>
         <option>In transit</option>
         <option>Other facility</option>
@@ -567,13 +564,14 @@ function weightAlert(){
 
        <select id="baby_presentation2" name="baby_presentation2" 
        tt_onLoad="changeNextBTN();" helpText="2<sup>nd </sup> Baby Presentation"
-        condition ="__$('number_babies').value > 1 "> 
+       condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') "> 
         <option>Transverse</option>
         <option>Breech delivery</option>
         <option>Cephalic</option>
        </select>
        <select id="baby_outcome2" name="baby_outcome2" tt_onLoad="changeNextBTN();" 
-       helpText="Delivery Mode" condition ="__$('number_babies').value > 1" > 
+       helpText="Delivery Mode" 
+       condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') " > 
             <option>Alive</option>
            <option>Neonatal Birth</option>
            <option>Fresh Still birth</option>
@@ -581,22 +579,24 @@ function weightAlert(){
         </select>
 
         <select id="baby_sex2" name="baby_sex2" tt_onLoad="changeNextBTN();"
-         helpText="2<sup>nd </sup> Baby Sex" condition ="__$('number_babies').value > 1 "> 
+         helpText="2<sup>nd </sup> Baby Sex" 
+         condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') "> 
            <option>Male</option>
           <option>Female</option>
        </select>
 
-       <input type="text" name="baby_weight2" id="baby_weight2" 
-       helpText="2<sup>nd </sup>Baby: Weight(Kg)" field_type="number" tt_onLoad="" min="2.5" max="5" validationMessage = "You must enter a decimal between 0 and 9 (for example: 2<b>.6</b>)"
-       absoluteMax= "10" validationRule = "([0-9]+\\.[0-9])|Unknown$" 
-       tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" condition ="__$('number_babies').value > 1 " />
+       <input type="text" name="weight" id="weight" 
+       helpText="2<sup>nd </sup>Baby: Weight(Kg)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
+       tt_onUnload ="clearTimeout(timedEvent);"
+       tt_pageStyleClass="unknownButton" 
+       condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') "/>
 
-       <input type="text" name="baby_length2" id="baby_length2" 
-       helpText="2<sup>nd </sup>Baby: Length(CM)" field_type="number" tt_onLoad=""
-        validationRule = "([0-9]+\\.[0-9])|Unknown$" 
-       tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" condition ="__$('number_babies').value > 1 "/>
+       <input type="text" name="baby_length" id="baby_length" 
+         helpText="Baby: Length(CM)" field_type="number" tt_onLoad=""
+         tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" 
+         condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') " /> 
 
-       <!-- PATIENT DIED -->
+  <!-- PATIENT DIED -->
        <input type="text" name="date_of_death" 
           id="date_of_death" field_type="number" 
           helpText="Date of Death" 
