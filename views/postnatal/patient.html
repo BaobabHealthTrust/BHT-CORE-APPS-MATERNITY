@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
@@ -25,7 +26,7 @@
 </style>
 
 <script>
-
+var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
 var tt_cancel_destination = "/";
@@ -141,7 +142,7 @@ function isEmpty(str){
     <div id="content">
 
 
-      <form action="../../../../views/patient_dashboard.html">
+      <form action="../prenatal_tasks.html">
 
     <!--           Gravida maximum number is 15
      -->      
@@ -160,13 +161,13 @@ function isEmpty(str){
       </select>
       <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
      <input type="text" name="menstruation_date" 
-        id="menstruation_date" field_type="number" 
+        id="menstruation_date" field_type="date" 
           helpText="Last Menstruation Date"  
           tt_pageStyleClass="date"  allowFreeText="true" 
           condition="$(&quot;menstruation_date&quot;).value == &quot;&quot;" /> 
 
      <input type="text" name="kin_last" 
-          id="kin_last" value="Testing" field_type="alpha" 
+          id="kin_last" field_type="alpha" 
           helpText="Next of kin Last name" 
           ajaxURL="/search/?search_string=" 
           allowFreeText="true" 

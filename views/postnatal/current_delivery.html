@@ -11,7 +11,7 @@
  -->
  <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
  <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
- 
+ <script type="text/javascript" src="/assets/js/moment.js"></script>
  <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
  <style>
  
@@ -38,7 +38,7 @@
  
  </script>
  <script>
-      
+  var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
    function isValidDateFormat(value){
      return value.trim().match(/(\d{4})\-(\d{2})\-(\d{2})\s(\d{2})\:(\d{2})/);
    }
@@ -157,7 +157,7 @@
  <body id="mateme">
    <div id="container">
      <div id="content">
-       <form action="../../../../views/patient_dashboard.html">
+       <form action="../prenatal_tasks.html">
          <input type="text" name="number_babies" id="number_babies" absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly"/>
  
           <select id="baby_status" name="baby_status" tt_onLoad="num_of_babies()" helpText="Baby: Status"> 
@@ -172,7 +172,7 @@
           condition="$(&quot;time_of_delivery1&quot;).value == &quot;&quot;" />
  
           <input type="text" name="date_of_delivery" 
-           id="date_delivery" field_type="number" 
+           id="date_delivery" field_type="date" 
            key="date_delivery" helpText="Baby: Date of Deliver" 
            tt_pageStyleClass="date" 
            allowFreeText="true" 
@@ -201,7 +201,7 @@
           allowFreeText="true" condition ="__$('number_babies').value > 1 " />
 
            <input type="text" name="date_of_delivery2" 
-          id="date_of_delivery2" field_type="number" 
+          id="date_of_delivery2" field_type="date" 
           key="date_of_delivery2" helpText="2<sup>nd </sup> Baby: Date of Deliver"  
            tt_pageStyleClass="date" 
            allowFreeText="true" 
@@ -234,7 +234,7 @@
          condition ="__$('number_babies').value > 2 " />
 
          <input type="text" name="date_of_delivery3" 
-         id="date_of_delivery3" field_type="number" 
+         id="date_of_delivery3" field_type="date" 
          key="date_of_delivery3" helpText="3<sup>nd </sup> Baby: Date of Deliver"  
          tt_pageStyleClass="date"  allowFreeText="true" 
          condition ="__$('number_babies').value > 2 " /> 

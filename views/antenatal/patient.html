@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <style>
 
@@ -15,7 +15,7 @@
 </style>
 
 <script>
-
+var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
 var tt_cancel_destination = "/";
@@ -129,7 +129,7 @@ function isEmpty(str){
   <div id="container">
     <div id="content">
 
-      <form action.="./../../../views/patient_dashboard.html">
+      <form action="../antenatal_tasks.html">
    
      <input type="text" name="gravida" id="gravida_value" helpText="Gravida" field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "1" max="15" />
 
@@ -151,7 +151,7 @@ function isEmpty(str){
       <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "0" max ="5" />
 
      <input type="text" name="menstruation_date" 
-        id="menstruation_date" field_type="number" 
+        id="menstruation_date" field_type="date" 
         helpText="Last Menstruation Date"  
         allowFreeText="true"  tt_pageStyleClass="date"
         condition="$(&quot;menstruation_date&quot;).value == &quot;&quot;" /> 

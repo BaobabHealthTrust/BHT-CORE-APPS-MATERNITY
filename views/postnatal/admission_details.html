@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
@@ -25,7 +26,7 @@
 </style>
 
 <script>
-
+var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
 var tt_cancel_destination = "/";
@@ -133,11 +134,6 @@ function isEmpty(str){
     return true;
   }
 }
-function setDate(){
-    var currentDate = new Date().toISOString().slice(0,10);
-    document.getElementById('admission_date').value = currentDate
-
-}
 
 </script>
 
@@ -146,12 +142,11 @@ function setDate(){
     <div id="content">
 
 
-      <form action="../../../../views/patient_dashboard.html">
+      <form action="../prenatal_tasks.html">
         <input type="text" name="admission_date" 
-          id="admission_date" field_type="number" 
+          id="admission_date" field_type="date" 
           key="admission_date" helpText="Admission Date"  
            tt_pageStyleClass="date" allowFreeText="true"
-           tt_onLoad="setDate();" 
           condition="$(&quot;admission_date&quot;).value == &quot;&quot;" /> 
 
          <input type="text" name="admission_time" 

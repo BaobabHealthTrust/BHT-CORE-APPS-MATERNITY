@@ -30,7 +30,7 @@
     <div id="content">
 
 
-      <form action="../../../../views/patient_dashboard.html">
+      <form action="../prenatal_tasks.html">
 
         <select id="education" name="education" tt_onLoad="changeNextBTN();" helpText="Eductaion Level">   
             <option>Primary</option>
@@ -41,7 +41,7 @@
         </select>
           
          <input type="text" name="religion" 
-          id="religion" value="Testing" field_type="alpha" 
+          id="religion" field_type="alpha" 
           helpText="Religion" 
           ajaxURL="/search/?search_string=" 
           allowFreeText="true" 
@@ -60,13 +60,15 @@
           condition="$(&quot;kin_first&quot;).value == &quot;&quot;" /> 
 
           <input type="text" name="kin_last" 
-          id="kin_last" value="Testing" field_type="alpha" 
+          id="kin_last" field_type="alpha" 
           helpText="Next of kin Last name" 
           ajaxURL="/search/?search_string=" 
           allowFreeText="true" 
           condition="$(&quot;kin_last&quot;).value == &quot;&quot;" /> 
 
-          <input type="text" name="kin_number" id="kin_number" helpText="Next of kin phone number" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" validationRule="^0\\d{7}$|Unknown|Not Available|N\/A|^0\\d{9}$" validationMessage ="Not a valid phone number"  />
+          <input type="text" name="kin_number" id="kin_number" 
+          helpText="Next of kin phone number" field_type="number"
+          tt_pageStyleClass="Numeric NumbersOnly" />
 
         <select id="relativee" name="relative" tt_onLoad="changeNextBTN();" helpText="Next of kin relationship"> 
           <option>Mother</option>

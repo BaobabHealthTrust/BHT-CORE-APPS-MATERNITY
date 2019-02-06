@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -25,7 +25,7 @@
 </style>
 
 <script>
-
+var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
 var tt_cancel_destination = "/";
@@ -269,7 +269,7 @@ function isEmpty(str){
     <div id="content">
 
 
-      <form action="../../../../views/patient_dashboard.html">
+      <form action="../antenatal_tasks.html">
 
         <select id="hiv_status_value" name="pmtct_activities" tt_onLoad="changeNextBTN();" helpText="PMTCT Status"> 
           <option>Non-Reactive</option>
@@ -277,7 +277,7 @@ function isEmpty(str){
           <option>Unknown</option>
         </select>
 
-        <input type="text" name="pmtct" id="pmtct" helpText="PMTCT test date" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" condition ="$('hiv_status_value').value.toLowerCase() != 'unknown'" tt_pageStyleClass="date" />
+        <input type="text" name="pmtct" id="pmtct" helpText="PMTCT test date" field_type="date" tt_onLoad="setAbsoluteMaxBirthYear()" condition ="$('hiv_status_value').value.toLowerCase() != 'unknown'" tt_pageStyleClass="date" />
 
       
 
@@ -286,7 +286,7 @@ function isEmpty(str){
           <option>No</option>
         </select>
 
-         <input type="text" name="pmtct" id="period_on_arvs" helpText="Date Started ARVs (Estimate)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" condition ="$('on_arvs').value.trim().toUpperCase() == 'YES';" tt_onLoad = "showPeriodOnARVs();" tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
+         <input type="text" name="pmtct" id="period_on_arvs" helpText="Date Started ARVs (Estimate)" field_type="date" tt_onLoad="setAbsoluteMaxBirthYear()" condition ="$('on_arvs').value.trim().toUpperCase() == 'YES';" tt_onLoad = "showPeriodOnARVs();" tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
 
           <select id="feeding_option" name="pmtct_activities" tt_onLoad="changeNextBTN();" helpText="Feeding Option" condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';"> 
           <option>Exclusive Breast Feeding</option>

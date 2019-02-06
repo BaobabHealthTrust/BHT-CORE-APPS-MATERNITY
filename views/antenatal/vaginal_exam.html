@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -25,7 +25,7 @@
 </style>
 
 <script>
-
+var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
 var tt_cancel_destination = "/";
@@ -141,7 +141,7 @@ function isEmpty(str){
     <div id="content">
 
 
-         <form action="../../../../views/patient_dashboard.html">
+         <form action="../antenatal_tasks.html">
           <input type="text" name="person[birth_year]" id="person_birth_year" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
 
           <select id="genetalia_inspection" name="genetalia_inspection" tt_onLoad="changeNextBTN();" helpText="Genetalia Inspection"> 
@@ -200,7 +200,8 @@ function isEmpty(str){
           allowFreeText="true" optional = "true"
           condition ="__$('membranes').value == 'Raptured'"  /> 
 
-          <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="number"  condition ="$('membranes').value.toLowerCase() == 'ruptured'"tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
+          <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date" 
+           condition ="$('membranes').value.toLowerCase() == 'ruptured'" tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
 
            <select id="colour_of_liqour" name="colour_of_liqour" tt_onLoad="changeNextBTN();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'"> 
           <option>Clear</option>

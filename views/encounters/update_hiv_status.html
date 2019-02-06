@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -25,7 +25,7 @@
 </style>
 
 <script>
-
+var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
 var tt_cancel_destination = "/";
@@ -153,7 +153,7 @@ function isEmpty(str){
          </select>
 
          <input type="text" name="hiv_test_date" 
-          id="hiv_test_date" field_type="number" 
+          id="hiv_test_date" field_type="date" 
           key="hiv_test_date" helpText="HIV test date"  
           tt_pageStyleClass="date" 
           condition="$(&quot;hiv_test_date&quot;).value == &quot;&quot;" /> 

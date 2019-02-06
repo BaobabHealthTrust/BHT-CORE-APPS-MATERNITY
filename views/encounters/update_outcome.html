@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -25,6 +25,7 @@
 </style>
 
 <script>
+  
   var currentWeight;
   var baby_date_map = "";
   var displayText = "";
@@ -35,6 +36,7 @@
   var maxi;
   var mini;
   var gender;
+  var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   
 
 function weightAlert(){
@@ -493,7 +495,7 @@ function weightAlert(){
           condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" /> 
 
            <input type="text" name="delivery_date" 
-          id="delivery_date" field_type="number" 
+          id="delivery_date" field_type="date" 
           helpText="Baby Date of Delivery" 
           tt_pageStyleClass="date" 
           condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')" /> 
@@ -549,9 +551,9 @@ function weightAlert(){
         condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') " /> 
 
          <input type="text" name="delivery_date2" 
-        id="delivery_date2" field_type="number" 
+        id="delivery_date2" field_type="date" 
         helpText="2<sup>nd </sup> Baby Date of Delivery" 
-        tt_pageStyleClass="date" 
+        tt_pageStyleClass="" 
         condition ="($('number_babies').value > 1) && ($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED') " /> 
 
        <select id="delivery_place2" name="delivery_place2" tt_onLoad="changeNextBTN();"
@@ -598,7 +600,7 @@ function weightAlert(){
 
   <!-- PATIENT DIED -->
        <input type="text" name="date_of_death" 
-          id="date_of_death" field_type="number" 
+          id="date_of_death" field_type="date" 
           helpText="Date of Death" 
           tt_pageStyleClass="date" 
           condition = "$('discharge_outcome').value.toUpperCase() == 'PATIENT DIED'" /> 
