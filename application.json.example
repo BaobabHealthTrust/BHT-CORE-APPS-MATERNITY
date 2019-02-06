@@ -9,17 +9,18 @@
       "available": true,
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "#",
-      "subtasks":[
-        {
+      "subTasks": {
+        "sub1" : {
           "available": true,
           "activitiesIcon": "/assets/images/testing.png",
           "url": "/apps/MATERNITY/views/testing.html"
-        }, {
+        },
+      "sub2": {
           "available": true,
           "activitiesIcon": "/assets/images/testing.png",
           "url": "/apps/MATERNITY/views/testing2.html"
         }
-      ] 
+      }
     },
     "Update Outcome": {
       "available": true,
@@ -65,7 +66,6 @@
      ]
   },
 
-    
   "others": [
     {
       "activitiesName": "National Health ID (Print)",
