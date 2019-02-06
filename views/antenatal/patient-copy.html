@@ -1,7 +1,17 @@
-<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
-<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+
 <style>
 
 .inputFrameClass {
@@ -125,50 +135,54 @@ function isEmpty(str){
 }
 
 </script>
+
 <body id="mateme">
   <div id="container">
     <div id="content">
 
-      <form action.="./../../../views/patient_dashboard.html">
-   
-     <input type="text" name="gravida" id="gravida_value" helpText="Gravida" field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "1" max="15" />
 
-     <select id="multiple_pregnancy" name="multiple_pregnancy" tt_onLoad="changeNextBTN();" helpText="Ever had multiple pregnancies" >   
-            <option>Yes</option>
-            <option>No</option>
-      </select>
-      <input type="text" name="num_of_deliveries" id="parity_value" helpText="Number of deliveries" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin ="0" max="15"   />
+         <form action="../../../../views/patient_dashboard.html">
+          <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" />
+          
+          <input type="text" name="gravida" id="gravida_value" helpText="Gravida" field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "1" max="15" />
 
-      <input type="text" name="no_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin="0"
-      max ="5" />
-
-      <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Select Religion"> 
-            <option>Spontaneous Delivery</option>
-            <option>Casarean Section</option>
-            <option>Breech Delivery</option>
-      </select>
-
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "0" max ="5" />
-
-     <input type="text" name="menstruation_date" 
-        id="menstruation_date" field_type="number" 
-        helpText="Last Menstruation Date"  
-        allowFreeText="true"  tt_pageStyleClass="date"
-        condition="$(&quot;menstruation_date&quot;).value == &quot;&quot;" /> 
-
-     <input type="text" name="kin_first" 
-          id="kin_first" field_type="alpha" 
-          helpText="Next of kin First name" 
-          ajaxURL="/search/?search_string=" 
-          allowFreeText="true" 
-          condition="$(&quot;kin_first&quot;).value == &quot;&quot;" /> 
+          <select id="multiple_pregnancy" name="multiple_pregnancy" tt_onLoad="changeNextBTN();" helpText="Ever had multiple pregnancies" >   
+                 <option>Yes</option>
+                 <option>No</option>
+           </select>
+           <input type="text" name="num_of_deliveries" id="parity_value" helpText="Number of deliveries" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin ="0" max="15"   />
      
-        <input type="text" name="kin_last" 
-          id="kin_last" field_type="alpha" 
-          helpText="Next of kin Last name" 
-          ajaxURL="/search/?search_string=" 
-          allowFreeText="true" 
-          condition="$(&quot;kin_last&quot;).value == &quot;&quot;" /> 
+           <input type="text" name="no_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" absoluteMin="0"
+           max ="5" />
+     
+           <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Select Religion"> 
+                 <option>Spontaneous Delivery</option>
+                 <option>Casarean Section</option>
+                 <option>Breech Delivery</option>
+           </select>
+     
+           <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" absoluteMin = "0" max ="5" />
+     
+          <input type="text" name="menstruation_date" 
+             id="menstruation_date" field_type="number" 
+             helpText="Last Menstruation Date"  
+             allowFreeText="true"  tt_pageStyleClass="date"
+             condition="$(&quot;menstruation_date&quot;).value == &quot;&quot;" /> 
+     
+          <input type="text" name="kin_first" 
+               id="kin_first" field_type="alpha" 
+               helpText="Next of kin First name" 
+               ajaxURL="/search/?search_string=" 
+               allowFreeText="true" 
+               condition="$(&quot;kin_first&quot;).value == &quot;&quot;" /> 
+          
+             <input type="text" name="kin_last" 
+               id="kin_last" field_type="alpha" 
+               helpText="Next of kin Last name" 
+               ajaxURL="/search/?search_string=" 
+               allowFreeText="true" 
+               condition="$(&quot;kin_last&quot;).value == &quot;&quot;" /> 
+     
       </form>
 
    </div>

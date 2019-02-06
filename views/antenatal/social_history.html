@@ -66,7 +66,7 @@
           allowFreeText="true" 
           condition="$(&quot;kin_last&quot;).value == &quot;&quot;" /> 
 
-          <input type="text" name="kin_number" id="kin_number" helpText="Next of kin phone number" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" validationRule="^0\\d{7}$|Unknown|Not Available|N\/A|^0\\d{9}$" validationMessage ="Not a valid phone number"  />
+          <input type="text" name="kin_number" id="kin_number" helpText="Next of kin phone number" field_type="NumbersWithUnknownAndDecimal" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" validationRule="^0\\d{7}$|Unknown|Not Available|N\/A|^0\\d{9}$" validationMessage ="Not a valid phone number"  />
 
         <select id="relative" name="relative" tt_onLoad="changeNextBTN();" helpText="Next of kin relationship"> 
           <option>Mother</option>

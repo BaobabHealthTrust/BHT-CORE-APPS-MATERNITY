@@ -148,16 +148,16 @@ function isEmpty(str){
             <option>Critical</option>
             <option>Dead</option>
           </select>
-          
-          <input type="text" name="baby_temperature" id="baby_temperature"
-           helpText="Baby: Temperature" field_type="number" tt_onLoad="" 
-           tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" min ="20" max="45" units="Celcius" 
-           validationRule="([0-9]+\\.[0-9])|Unknown$" condition = "__$('baby_condition').value != 'Dead'"/>
+          <input type="text" name="baby_temperature"
+          id="baby_temperature" helpText="Baby: Temperature"  min="20" max ="45"
+          field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" 
+          condition = "__$('baby_condition').value != 'Dead'"/>
 
           <input type="text" name="baby_respiratory_rate"
            id="baby_respiratory_rate" helpText="Baby: Respiratory rate"  min="0" max ="80"
-           field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" 
+           field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" 
            condition = "__$('baby_condition').value != 'Dead'"/>
+          
 
           <input type="text" name="baby_heart_rate" id="baby_heart_rate" helpText="Baby: Heart rate"
            field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" min ="0"  max="200"
@@ -165,7 +165,7 @@ function isEmpty(str){
 
           <input type="text" name="baby_weight" id="baby_weight" 
           helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad="" min="2.5" max="5" validationMessage = "You must enter a decimal between 0 and 9 (for example: 2<b>.6</b>)"
-          absoluteMax= "10" validationRule = "([0-9]+\\.[0-9])|Unknown$" 
+          absoluteMax= "10"
           tt_pageStyleClass="Numeric NumbersOnlyWithDecimal"  condition = "__$('baby_condition').value != 'Dead'"/>
 
           <select id="baby_abdomen" name="baby_abdomen" tt_onLoad="changeNextBTN();" helpText="Baby: Abdomen"

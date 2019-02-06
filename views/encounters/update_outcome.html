@@ -530,7 +530,7 @@ function weightAlert(){
          </select> 
 
          <input type="text" name="weight" id="weight" 
-         helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
+         helpText="Baby: Weight(Grams)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
          tt_onUnload ="clearTimeout(timedEvent);"
          tt_pageStyleClass="unknownButton"
          condition ="($('discharge_outcome').value.toUpperCase() == 'DELIVERED' || $('discharge_outcome').value.toUpperCase() == 'DISCHARGED')"/>
