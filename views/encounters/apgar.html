@@ -9,18 +9,43 @@
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-<script type="text/javascript" src="/apps/MATERNITY/assets/js/apgar.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/apgar2.js"></script>
 
 <link rel="stylesheet" href="/apps/MATERNITY/assets/css/apgar.css" type="text/css">
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<style>
 
+.active{
+  background-color:rgb(47, 95, 49);
+  border-radius: 3px;
+  font-size: 28px;
+  font-family: arial, helvetica, sans-serif;
+  padding: 10px 15px 10px 15px;
+  text-decoration: none;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+}
+.inactive{
+  background-color:gray;
+  border-radius: 3px;
+  font-size: 28px;
+  font-family: arial, helvetica, sans-serif;
+  padding: 10px 15px 10px 15px;
+  text-decoration: none;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+}
+
+
+</style>
 <body id="mateme">
     <div id="container">
         <div id="content">
             <form>
-                <input type="text" name="summary"
-                tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar1stMin();"
+                <input type="text" name="summary" id="apgar_one"
+                tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar1stMin(); showApgar();"
                 tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR"/>
+                <!-- tt_onLoad = "showApgarControl'one');  __$('touchscreenInput' + tstCurrentPage).setAttribute('absoluteMin', 1);"/> -->
 
                 <input type="text" name="summary"
                        tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar5thMin();"

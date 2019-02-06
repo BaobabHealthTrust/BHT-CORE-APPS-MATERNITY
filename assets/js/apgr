@@ -8,7 +8,8 @@ var timedEvent;
 var baby;
 var maxi;
 var mini;
-var div_points_cell ;
+var number_of_babies = "<%= params[:number_of_babies]%>";
+var baby = "<%= params[:baby]%>";
 function buildBabyApgar1stMin(){
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
     frame.style.height = "90%";
@@ -36,24 +37,14 @@ function buildBabyApgar1stMin(){
         div_table.appendChild(div_points_row);
 
         for(var j=0; j < points_cells[i].length ; j++) {
-         div_points_cell = document.createElement('td');
+            var div_points_cell = document.createElement('td');
             div_points_cell.innerHTML = points_cells[i][j];
 
             if(i === 0 && j >= 0) {
                 div_points_cell.className = 'apgar_th apgar_text';
             } else if(i >= 1 && j >= 1) {
-                if(i == 1 && j==1){
-
-                }
                 div_points_cell.className = 'apgar_btn';
                 div_points_cell.style.border = '1px solid';
-                div_points_cell.onclick = function(){ 
-                        this.className = 'active';
-                    };
-                div_points_cell.dblclick = function(){ 
-                            this.className = 'inactive';
-                };
-
             } else {
                 div_points_cell.className = 'apgar_text';
                 div_points_cell.style.border = '1px solid';
@@ -64,7 +55,6 @@ function buildBabyApgar1stMin(){
         }
 
     }
-
 
     var div_for_info = document.createElement('div');
     div_for_info.innerHTML = 'Info comes here.';
@@ -85,15 +75,15 @@ function buildBabyApgar5thMin(){
     div_table.style.width = '100%';
     div_for_table.appendChild(div_table);
 
-   arr = ["Appearance", "Pulse", "Grimance", "Activity", "Respiration"]
-   
-    arr_val = ['Pale/blue', "Baby pink/</br>blue extremities", "Completely </br> pink",
-      "Absent", "Slow -</br>Below 100 bpm", "Above </br>100 bpm",
-      "Flaccid", "Some flexion </br> of Extremities", "Active Motion",
-      "None", "Grimance", "Vigorous </br>cry",
-      "Absent", "Slow - </br> irregular", "Good crying"];
-    
-    arr_labels = ["Color", "Heart Rate", "Muscle Tone", "Reflex Irritability", "Respiratory Effort"]
+    var points_cells = [
+        ['&nbsp;','0 Points','1 Point','2 Points'],
+        ['Color','Pale/blue','Baby pink/blue extremities','Completely pink'],
+        ['Heart Rate','Absent','Slow - Below 100 bpm','Above 100 bpm'],
+        ['Muscle Tone','Flaccid','Some flexion of Extremities','Active Motion'],
+        ['Reflex Irritability','None','Grimance','Vigorous cry'],
+        ['Respiratory Effort','Absent','Slow - irregular','Good crying']
+    ];
+
     for(var i=0; i < points_cells.length; i++) {
 
         var div_points_row = document.createElement('tr');
