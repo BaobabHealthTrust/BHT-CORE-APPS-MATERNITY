@@ -57,9 +57,15 @@
 .apgar_th {}
 #clearButton {/*display: none;*/}
 .inputFrameClass {width: 96% !important;}
-.red_alert {color:black;background:red;border:2px solid gray;}
-.yellow_alert {color:black;background:yellow;border:2px solid gray;}
-.normal {color:black;}
+.red_alert {
+    background:red;
+}
+.yellow_alert {
+    background:yellow;
+}
+.normal_alert {
+    background:green;
+}
 
 #red_apgar_alert {
     background:red;
@@ -68,10 +74,27 @@
     background:yellow;
 }
 
+.red_alert, .yellow_alert, .normal_alert {
+    border-radius: 10px;
+    -moz-user-select: none;
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    font-family: arial, helvetica, sans-serif;
+    padding: 15px;
+    top: 30px;
+    width: 85%;
+    height:55%;
+    border:1px solid #999999;
+    border-spacing: 8px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 17px;
+}
+
 #divForInfo {
     border: solid 1px lightgray;
     font-size: 28px;
-    vertical-align: middle;
     text-align: center;
     background: white;
 }
