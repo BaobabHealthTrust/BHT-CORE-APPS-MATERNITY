@@ -1,3 +1,25 @@
+.active{
+    background-color:rgb(47, 95, 49);
+    border-radius: 3px;
+    font-size: 28px;
+    font-family: arial, helvetica, sans-serif;
+    padding: 10px 15px 10px 15px;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+}
+
+.inactive{
+    background-color:gray;
+    border-radius: 3px;
+    font-size: 28px;
+    font-family: arial, helvetica, sans-serif;
+    padding: 10px 15px 10px 15px;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+}
+
 .apgar_btn:hover {
     border: 1px solid #5ca6c4;
     background-color: #82bbd1;
@@ -31,10 +53,25 @@
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a7cfdf, endColorstr=#23538a);
 }
 
-.apgar_text {
-    font-size: 28px;
+.apgar_text {font-size: 28px;}
+.apgar_th {}
+#clearButton {/*display: none;*/}
+.inputFrameClass {width: 96% !important;}
+.red_alert {color:black;background:red;border:2px solid gray;}
+.yellow_alert {color:black;background:yellow;border:2px solid gray;}
+.normal {color:black;}
+
+#red_apgar_alert {
+    background:red;
+}
+#yellow_apgar_alert {
+    background:yellow;
 }
 
-.apgar_th {
-
+#divForInfo {
+    border: solid 1px lightgray;
+    font-size: 28px;
+    vertical-align: middle;
+    text-align: center;
+    background: white;
 }
