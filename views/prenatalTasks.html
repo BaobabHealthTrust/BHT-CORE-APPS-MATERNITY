@@ -1,0 +1,179 @@
+
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<!-- <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script> -->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/apps/ART/assets/js/arv_number.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+
+<link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.min.css" type="text/css">
+<style>
+    body { 
+      font-family: "Nimbus Sans L", "Arial Narrow", sans-serif;
+      background-color: #fff;
+  }
+  
+  #tasks-container {
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px;
+  }
+  
+  .tasks-container-row {
+    display: table-row;
+    margin-left:40px;
+  }
+  
+  .tasks-container-cell {
+    display: table-cell;
+    border-style: solid;
+    column-span :3;
+    border: 1px solid #5ca6c4;
+    cursor: pointer;
+    box-shadow: inset 2px -4px 2px 0px;
+    background-color: #5480a8;
+    border-radius: 7px;
+    border: solid black 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-box-shadow: inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #5ca6c4;
+    box-shadow: inset 0 0 10px #000000;
+   
+    width: 300px; 
+    color: white;
+  }
+  
+  .report-icons {
+    height: 30px;
+    width:  30px;
+  }
+  
+  .info-table {
+    padding: 8px;
+    color: #fff;
+  }
+
+  .left{
+    margin-left: 50px;
+  }
+  
+  
+  </style>
+<body id="mateme">
+    <div id="container">
+        <div id="content">
+          <div id="tasks-container">
+            <form action="../../../../views/patient_dashboard.html"> 
+                <input type="text" name="summary" id="tasks-container"
+                tt_onLoad="__$('keyboard').style.display = 'none'; buildReportLinks('main');"
+                tt_pageStyleClass= "NoControls" helpText="Post-Natal Tasks"/>
+            </form>
+          </div>
+        </div>
+   </div>
+</body>
+<script>
+
+    function taskGrouping(group) {
+    if(group == ''){
+        return [
+          ['Social History','','/apps/MATERNITY/views/antenatal/social_history.html', 'link'],
+          ['Admission Details','','/apps/MATERNITY/views/antenatal/admission.html', 'link'],
+          ['Vitals','','/apps/MATERNITY/views/antenatal/vitals.html', 'link'],
+          ["Patient History","","/apps/MATERNITY/views/antenatal/patient-copy.html",'link'],
+          ["PMTCT","","/apps/MATERNITY/views/antenatal/pmtct.html",'link'],
+          ["Physical Examination","","/apps/MATERNITY/views/antenatal/physical.html",'link'],
+          ["Vaginal Examination","","/apps/MATERNITY/views/antenatal/vaginal_exam.html",'link'],
+          ["Clinical Examination","","/apps/MATERNITY/views/antenatal/clinical.html",'link'],
+          ["Admission Diagnosis","","/apps/MATERNITY/views/antenatal/admission_diagnosis.html",'link'],["Notes","","/apps/MATERNITY/views/antenatal/notes.html",'link'],
+          ["Admission Notes printing","","#",'link']
+        ];
+      }else if(group == 'main'){
+        return [
+          ['Social History','','/apps/MATERNITY/views/postnatal/social_history.html', 'link'],
+          ['Current Delivery','','/apps/MATERNITY/views/postnatal/current_delivery.html', 'link'],
+          ["Admission Detials","","/apps/MATERNITY/views/postnatal/admission_details.html",'link'],
+          ["Abnorminal Exam","","/apps/MATERNITY/views/postnatal/abnorminal_exam.html",'link'],
+          ["Physical Examination Baby","","/apps/MATERNITY/views/postnatal/physical.html",'link'],
+          ["PMTCT","","/apps/MATERNITY/views/postnatal/pmtct.html",'link'],
+          ["Patient History","","/apps/MATERNITY/views/postnatal/patient.html",'link'],
+          ["Vitals","","/apps/MATERNITY/views/postnatal/vitals.html",'link'],
+          ["Vaginal Examination","","/apps/MATERNITY/views/postnatal/vaginal_exam.html",'link'],["Notes","","/apps/MATERNITY/views/postnatal/notes.html",'link'],
+          ["Admission Notes printing","","#",'link']
+        ];
+      }else if(group == 'Post-Natal') {
+      }  
+    }	
+    
+    function buildReportLinks(group) {
+      var frame = document.getElementById('inputFrame' + tstCurrentPage);
+    frame.style.height = "90%";
+      var counter = 0;
+      var row = null;
+      var taskContainer = document.getElementById("tasks-container");
+      taskContainer.innerHTML = null;
+    
+      var tasks = taskGrouping(group);
+    
+      for(var i = 0 ; i < tasks.length ; i++){
+
+        if(counter == 0) {
+          row = document.createElement("div");
+          row.setAttribute("class","tasks-container-row ");
+         taskContainer.appendChild(row);
+       
+          }
+        var cell = document.createElement("div");
+        cell.setAttribute("class","tasks-container-cell left");
+        var table = document.createElement("table");
+        table.setAttribute("class","info-table");
+        var tr = document.createElement("tr");
+        table.appendChild(tr);
+        var td = document.createElement("td");
+        
+        var img = document.createElement("img");
+        var imgSRC = tasks[i][1];
+        imgSRC = imgSRC.length < 1 ? "/apps/ART/assets/images/reports.png" : imgSRC;
+        img.setAttribute("src", imgSRC);
+        img.setAttribute("class","report-icons");
+        td.appendChild(img);
+        tr.appendChild(td);
+    
+        var td = document.createElement("td");
+        td.setAttribute("id", i.toString());
+        if(tasks[i][3] == 'link'){
+          if(tasks[i][2] != '#')
+            cell.setAttribute("onmousedown", "window.top.location='" + tasks[i][2] + "'");
+        
+        }else{
+          cell.setAttribute("onmousedown", "buildReportLinks('" + tasks[i][2] + "');");
+        }
+        td.innerHTML = tasks[i][0];
+        tr.appendChild(td);
+    
+        cell.appendChild(table);
+        row.appendChild(cell);
+        frame.appendChild(taskContainer);
+        counter++;
+        if(counter == 3){
+          counter = 0;
+        }
+      }
+    }
+    
+    function _testFunc(){
+       var newURL = window.location.protocol + "//" + window.location.host + tasks[parseInt(this.id)][2];
+       window.top.location = newURL;
+    }
+    
+    
+    </script>
+    
+  

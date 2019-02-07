@@ -30,7 +30,7 @@
     <div id="content">
 
 
-      <form action="../antenatal_tasks.html">
+      <form action="../antenatal.html">
 
         <select id="education" name="education" tt_onLoad="changeNextBTN();" helpText="Eductaion Level">   
             <option>Primary</option>
@@ -49,7 +49,7 @@
          /> 
 
 
-        <input type="text" name="other_religion" id="other_religion" field_type="alpha"  tt_onLoad='otherReligion();' helpText="Specify other religion" key="family_name" allowFreeText="true" tt_onUnload="getInput();" condition ="__$('religion').value == 'Other'" />
+        <input type="text" name="other_religion" id="other_religion" field_type="alpha"  tt_onLoad='otherReligion();' helpText="Specify other religion" key="family_name" allowFreeText="true" condition ="__$('religion').value == 'Other'" />
 
          <input type="text" name="kin_first" 
          tt_onLoad="myInput()"
@@ -79,7 +79,7 @@
            <option>Other</option>
          </select>
 
-         <input type="text" name="other_relative" id="other_relative" field_type="alpha"  tt_onLoad='otherReligion();' helpText="Specify other relative" key="family_name" allowFreeText="true" tt_onUnload="getInput();"condition ="__$('relative').value == 'Other'" />
+         <input type="text" name="other_relative" id="other_relative" field_type="alpha"  tt_onLoad='otherReligion();' helpText="Specify other relative" key="family_name" allowFreeText="true" condition ="__$('relative').value == 'Other'" />
       </form>
 
    </div>
