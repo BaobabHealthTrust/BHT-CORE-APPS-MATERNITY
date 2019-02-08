@@ -51,19 +51,14 @@
   }
   
   .report-icons {
-    height: 30px;
-    width:  30px;
+    height: 50px;
+    width:  50px;
   }
   
   .info-table {
     padding: 8px;
     color: #fff;
   }
-
-  .left{
-    margin-left: 50px;
-  }
-  
   
   </style>
 <body id="mateme">
@@ -71,9 +66,9 @@
         <div id="content">
           <div id="tasks-container">
             <form action="../../../../views/patient_dashboard.html"> 
-                <input type="text" name="summary" id="tasks-container"
+                <input type="text" name="summary"
                 tt_onLoad="__$('keyboard').style.display = 'none'; buildReportLinks('main');"
-                tt_pageStyleClass= "NoControls" helpText="Post-Natal Tasks"/>
+                tt_pageStyleClass= "NoControls" optional="true" helpText="Post-Natal Tasks"/>
             </form>
           </div>
         </div>

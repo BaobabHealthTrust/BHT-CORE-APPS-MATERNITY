@@ -17,7 +17,7 @@
 
 
       <form action="../../../../views/patient_dashboard.html">
-        <input type="text" name="number_babies" id="baby_num" helpText="Number of babies" field_type="number" tt_onLoad=""
+        <!-- <input type="text" name="number_babies" id="baby_num" helpText="Number of babies" field_type="number" tt_onLoad=""
         tt_pageStyleClass="Numeric NumbersOnly" 
         />
         <select id="baby_gender" name="baby_gender" helpText="Baby Sex"> 
@@ -28,11 +28,7 @@
        <input type="text" name="weight" id="weight" 
           helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
           tt_onUnload ="clearTimeout(timedEvent);"
-          tt_pageStyleClass="unknownButton"/>
-
-          <input type="text" name="baby_length" id="baby_length" 
-          helpText="Baby: Length(CM)" field_type="number" tt_onLoad=""
-          tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" />
+          tt_pageStyleClass="unknownButton"/> -->
 
           <input type="text" name="summary" id="apgar_one"
                  tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar('one');"

@@ -76,8 +76,9 @@ function buildBabyApgar(minute){
                 // ------------------------------------------------------------------
                 div_points_cell.onclick = function(){ 
                     this.className = 'active';
+                    var value = this.getAttribute('value');
                     $('divForInfo').innerHTML = showApgarScore(this.getAttribute('value'));
-                    showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> = Err: E0144");
+                    showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> ="+ value);
                 };
 
             } else {
