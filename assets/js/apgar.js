@@ -34,11 +34,11 @@ function showApgarScore(apgarValue){
     displayText = "";
     apgarScore = apgarValue;
     if (apgarScore >= 7) {
-        displayText = "<span class='normal_alert' id='normal_apgar_alert'> " + parseInt(apgarScore) + "/10 - Normal APGAR</span>";
+        displayText = "<span style = 'position:relative;' class='normal_alert' id='normal_apgar_alert'> " + parseInt(apgarScore) + "/10 - Normal APGAR</span>";
     } else if (apgarScore <=3) {
-        displayText = "<span class='red_alert' id='red_apgar_alert'> " + parseInt(apgarScore) + "/10 - Low APGAR</span>";
+        displayText = "<span style = 'position:relative;' class='red_alert' id='red_apgar_alert'> " + parseInt(apgarScore) + "/10 - Low APGAR</span>";
     } else {
-        displayText = "<span class='yellow_alert' id='yellow_apgar_alert'> " + parseInt(apgarScore) + "/10 - Fairly Low </span>";
+        displayText = "<span style = 'position:relative;' class='yellow_alert' id='yellow_apgar_alert'> " + parseInt(apgarScore) + "/10 - Fairly Low </span>";
     }
     return displayText
 }
@@ -102,11 +102,6 @@ function buildBabyApgar(minute){
                 // ------------------------------------------------------------------
                 div_points_cell.onclick = function(){
                     this.className = 'active';
-<<<<<<< HEAD
-                    var value = this.getAttribute('value');
-                    $('divForInfo').innerHTML = showApgarScore(this.getAttribute('value'));
-                    showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> ="+ value);
-=======
 
                     var value = this.getAttribute('value');
                     var i_value = this.getAttribute('i');
@@ -114,7 +109,6 @@ function buildBabyApgar(minute){
 
                     $('divForInfo').innerHTML = calculateApgarScore(this.getAttribute('value')); //showApgarScore(this.getAttribute('value'));
                     showCategory(apgarCategory(value,i_value,j_value));
->>>>>>> 543a77a58ea47c70d8bbedefa749c91ec9b1e145
                 };
 
             } else {
