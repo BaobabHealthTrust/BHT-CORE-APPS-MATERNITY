@@ -1,18 +1,44 @@
 var apgarScore = 0;
+var calculatedApgarScore;
+
+$("clearButton").onclick = function() {
+    apgarScore = 0;
+    calculatedApgarScore = 0;
+    showApgarScore(apgarScore);
+
+    var point_buttons = document.getElementsByClassName("apgar_btn");
+
+    for( i = 0; 0 < point_buttons.length; i++){
+        point_buttons[i].className = 'inactive';
+        showCategory(0,0,0);
+    }
+};
 
 function $(e) {
     return document.getElementById(e);
 }
 
-function showApgarScore(apgar_value){
+function apgarCategory(value,i_value,j_value) {
+    var categoryText = "<span style='font-size:27px;font-weight:bold;'>APGAR</span> = "+value+"+"+i_value+"+"+j_value;
+    return categoryText;
+}
+
+function calculateApgarScore(apgarValue=0) {
+    var calculatedApgarScore = parseInt(apgarScore) + parseInt(apgarValue);
+    var showCalculatedApgarScore = showApgarScore(calculatedApgarScore);
+
+    return showCalculatedApgarScore;
+}
+
+function showApgarScore(apgarValue){
     displayText = "";
-    apgarScore = apgar_value;
+    apgarScore = apgarValue;
     if (apgarScore >= 7) {
-        displayText = "<span class='normal'> " + parseInt(apgarScore) + "/10 - Normal APGAR</span>";
+        displayText = "<span class='normal_alert' id='normal_apgar_alert'> " + parseInt(apgarScore) + "/10 - Normal APGAR</span>";
     } else if (apgarScore <=3) {
-        displayText = "<span class='red_alert'> " + parseInt(apgarScore) + "/10 - Low APGAR</span>";
+        displayText = "<span class='red_alert' id='red_apgar_alert'> " + parseInt(apgarScore) + "/10 - Low APGAR</span>";
     } else {
-        displayText = "<span class='yellow_alert'> " + parseInt(apgarScore) + "/10 - Fairly Low </span>";
+        displayText = "<span class='yellow_alert' id='yellow_apgar_alert'> " + parseInt(apgarScore) + "/10 - Fairly Low </span>";
     }
     return displayText
 }
@@ -74,11 +100,21 @@ function buildBabyApgar(minute){
                 div_points_cell.setAttribute("i", i);
                 div_points_cell.setAttribute("j", j);
                 // ------------------------------------------------------------------
-                div_points_cell.onclick = function(){ 
+                div_points_cell.onclick = function(){
                     this.className = 'active';
+<<<<<<< HEAD
                     var value = this.getAttribute('value');
                     $('divForInfo').innerHTML = showApgarScore(this.getAttribute('value'));
                     showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> ="+ value);
+=======
+
+                    var value = this.getAttribute('value');
+                    var i_value = this.getAttribute('i');
+                    var j_value = this.getAttribute('j');
+
+                    $('divForInfo').innerHTML = calculateApgarScore(this.getAttribute('value')); //showApgarScore(this.getAttribute('value'));
+                    showCategory(apgarCategory(value,i_value,j_value));
+>>>>>>> 543a77a58ea47c70d8bbedefa749c91ec9b1e145
                 };
 
             } else {
@@ -94,7 +130,7 @@ function buildBabyApgar(minute){
     var div_for_info = document.createElement('div');
     div_for_info.id = 'divForInfo';
     div_for_info.innerHTML = showApgarScore(apgarScore);
-    div_for_info.style.border = '1px solid';
+    div_for_info.style.borderRadius = '5px';
     div_for_info.style.height = '20%';
     frame.appendChild(div_for_info);
 }
