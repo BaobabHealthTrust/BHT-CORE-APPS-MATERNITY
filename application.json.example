@@ -3,24 +3,12 @@
    "Ante-Natal": {
       "available": true,
       "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/antenatal_tasks.html"
+      "url": "/apps/MATERNITY/views/antenatal.html"
     },
     "Post-Natal": {
       "available": true,
       "activitiesIcon": "/assets/images/consultation.png",
-      "url": "#",
-      "subTasks": {
-        "sub1" : {
-          "available": true,
-          "activitiesIcon": "/assets/images/testing.png",
-          "url": "/apps/MATERNITY/views/testing.html"
-        },
-      "sub2": {
-          "available": true,
-          "activitiesIcon": "/assets/images/testing.png",
-          "url": "/apps/MATERNITY/views/testing2.html"
-        }
-      }
+      "url": "/apps/MATERNITY/views/prenatalTasks.html"
     },
     "Update Outcome": {
       "available": true,
@@ -31,41 +19,35 @@
       "available": true,
       "activitiesIcon": "/assets/images/dispensing.png",
       "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
-    }
-  },
-  "Ante-natal":{
-    "Social History": {
-      "available": true,
-      "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/encounters/social_history.html"
     },
-    "Admission Details": {
-      "available": true,
-      "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/encounters/admission.html"
-    },
-    "Vitals": {
-      "available": true,
-      "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/encounters/vitals.html"
-    },
-    "Patient History": {
+    "social history": {
       "available": true,
       "activitiesIcon": "/assets/images/dispensing.png",
-      "url": "/apps/MATERNITY/views/encounters/patient.html"
+      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
     }
 
   },
   "activities": {
     "url": "/apps/MATERNITY/views/activities.html",
     "tasks": [
-      ["Ante-natal","ante_natal"],
-      ["Post-Natal","post_natal"],
-      ["Update Outcome","update_outcome"],
-      ["Update Hiv status","update_hiv_status"]
-     ]
+      ["Social history","social history"],
+      ["Vitals","vitals"],
+      ["PMTCT","pmtct"],
+      ["Physical examination","physical examination"],
+      ["Vaginal examination","vagina examination"],
+      ["Clinical examination","maternity examination"],
+      ["Admission diagnosis","admission diagnosis"],
+      ["Current Delivery","current delivery"],
+      ["Physical examination baby","physical examination baby"],
+      ["Abnominal examination","Abnominal examination"],
+      ["Admit patient","admit patient"],
+      ["Admission details","admission details"],
+      ["Update outcome","update outcome"],
+      ["Update HIV status","Update HIV status"],
+      ["Patient history","patient history"]
+    ]
+    
   },
-
   "others": [
     {
       "activitiesName": "National Health ID (Print)",

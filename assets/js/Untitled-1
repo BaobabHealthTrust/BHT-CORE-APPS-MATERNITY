@@ -51,8 +51,8 @@
   }
   
   .report-icons {
-   height: 50px;
-    width:  50px;
+    height: 30px;
+    width:  30px;
   }
   
   .info-table {
@@ -69,47 +69,45 @@
 <body id="mateme">
     <div id="container">
         <div id="content">
-          <div id="tasks-container">
-            <form action="../../../../views/patient_dashboard.html"> 
-                <input type="text" name="summary" id="tasks-container"
-                tt_onLoad="__$('keyboard').style.display = 'none'; buildReportLinks('main');"
-                tt_pageStyleClass= "NoControls" optional="true" helpText="Antenal Tasks"/>
+            <form>
+                    <input type="text" name="summary" id="tasks-container"
+                    tt_onLoad="__$('keyboard').style.display = 'none'; buildReportLinks('main');"
+                    tt_pageStyleClass= "NoControls" helpText="Antenal Tasks"/>
             </form>
-          </div>
         </div>
    </div>
 </body>
 <script>
 
     function taskGrouping(group) {
-    if(group == 'main'){
-        return [
-          ['Social History','','/apps/MATERNITY/views/antenatal/social_history.html', 'link'],
-          ['Admission Details','','/apps/MATERNITY/views/antenatal/admission.html', 'link'],
-          ['Vitals','','/views/patient/vitals.html', 'link'],
-          ["Patient History","","/apps/MATERNITY/views/antenatal/patient-copy.html",'link'],
-          ["PMTCT","","/apps/MATERNITY/views/antenatal/pmtct.html",'link'],
-          ["Physical Examination","","/apps/MATERNITY/views/antenatal/physical.html",'link'],
-          ["Vaginal Examination","","/apps/MATERNITY/views/antenatal/vaginal_exam.html",'link'],
-          ["Clinical Examination","","/apps/MATERNITY/views/antenatal/clinical.html",'link'],
-          ["Admission Diagnosis","","/apps/MATERNITY/views/antenatal/admission_diagnosis.html",'link'],["Notes","","/apps/MATERNITY/views/antenatal/notes.html",'link'],
-          ["Admission Notes printing","","#",'link']
-        ];
-      }else if(group == 'Post-Natal'){
-        return [
-          ['Social History','','/apps/MATERNITY/views/postnatal/social_history.html', 'link'],
-          ['Current Delivery','','/apps/MATERNITY/views/postnatal/current_delivery.html', 'link'],
-          ["Admission Detials","","/apps/MATERNITY/views/postnatal/admission_details.html",'link'],
-          ["Abnorminal Exam","","/apps/MATERNITY/views/postnatal/abnorminal_exam.html",'link'],
-          ["Physical Examination Baby","","/apps/MATERNITY/views/postnatal/physical.html",'link'],
-          ["PMTCT","","/apps/MATERNITY/views/postnatal/pmtct.html",'link'],
-          ["Patient History","","/apps/MATERNITY/views/postnatal/patient.html",'link'],
-          ["Vitals","","/apps/MATERNITY/views/postnatal/vitals.html",'link'],
-          ["Vaginal Examination","","/apps/MATERNITY/views/postnatal/vaginal_exam.html",'link'],["Notes","","/apps/MATERNITY/views/postnatal/notes.html",'link'],
-          ["Admission Notes printing","","#",'link']
-        ];
-      }else if(group == 'Post-Natal') {
-      }  
+        if(group == ''){
+    return [
+      ['Social History','','/apps/MATERNITY/views/antenatal/social_history.html', 'link'],
+      ['Admission Details','','/apps/MATERNITY/views/antenatal/admission.html', 'link'],
+      ["Vitals","","/apps/MATERNITY/views/antenatal/vitals.html'",'link'],
+      ["Patient History","","/apps/MATERNITY/views/antenatal/patient.html",'link'],
+      ["PMTCT","","/apps/MATERNITY/views/antenatal/pmtct.html",'link'],
+      ["Physical Examination","","/apps/MATERNITY/views/antenatal/physical.html",'link'],
+      ["Vaginal Examination","","/apps/MATERNITY/views/antenatal/vaginal_exam.html",'link'],
+      ["Clinical Examination","","/apps/MATERNITY/views/antenatal/clinical.html",'link'],
+      ["Admission Diagnosis","","/apps/MATERNITY/views/antenatal/admission_diagnosis.html",'link'],["Notes","","/apps/MATERNITY/views/antenatal/notes.html",'link'],
+      ["Admission Notes printing","","#",'link']
+    ];
+  }else if(group == 'main'){
+    return [
+      ['Social History','','/apps/MATERNITY/views/postnatal/social_history.html', 'link'],
+      ['Current Delivery','','/apps/MATERNITY/views/postnatal/current_delivery.html', 'link'],
+      ["Admission Detials","","/apps/MATERNITY/views/postnatal/admission_details.html",'link'],
+      ["Abnorminal Exam","","/apps/MATERNITY/views/postnatal/abnorminal_exam.html",'link'],
+      ["Physical Examination Baby","","/apps/MATERNITY/views/postnatal/physical.html",'link'],
+      ["PMTCT","","/apps/MATERNITY/views/postnatal/pmtct.html",'link'],
+      ["Patient History","","/apps/MATERNITY/views/postnatal/patient.html",'link'],
+      ["Vitals","","/apps/MATERNITY/views/postnatal/vitals.html",'link'],
+      ["Vaginal Examination","","/apps/MATERNITY/views/postnatal/vaginal_exam.html",'link'],["Notes","","/apps/MATERNITY/views/postnatal/notes.html",'link'],
+      ["Admission Notes printing","","#",'link']
+    ];
+  }else if(group == 'Post-Natal') {
+  }    
     }	
     
     function buildReportLinks(group) {
@@ -127,9 +125,9 @@
         if(counter == 0) {
           row = document.createElement("div");
           row.setAttribute("class","tasks-container-row ");
-         taskContainer.appendChild(row);
+          taskContainer.appendChild(row);
        
-          }
+      }
         var cell = document.createElement("div");
         cell.setAttribute("class","tasks-container-cell left");
         var table = document.createElement("table");
@@ -162,9 +160,9 @@
         row.appendChild(cell);
         frame.appendChild(taskContainer);
         counter++;
-        if(counter == 3){
+        if(counter == 3)
           counter = 0;
-        }
+    
       }
     }
     
