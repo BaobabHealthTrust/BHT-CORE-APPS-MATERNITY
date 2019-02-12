@@ -141,7 +141,7 @@ function isEmpty(str){
     <div id="content">
 
 
-         <form action="../antenatal.html">
+         <form>
           <input type="text" name="person[birth_year]" id="person_birth_year" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
 
           <select id="genetalia_inspection" name="genetalia_inspection" tt_onLoad="changeNextBTN();" helpText="Genetalia Inspection"> 
@@ -213,7 +213,7 @@ function isEmpty(str){
           <option>Pus</option>
           </select>
 
-          <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextBTN();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'"> 
+          <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextButton();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'">
           <option>Not Done</option>
           <option>Vertex</option>
           <option>Sacrum</option>
@@ -231,3 +231,28 @@ function isEmpty(str){
  </div>
 </body>
 
+<script>
+    function changeNextButton() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postSocialHistory();")
+    }
+
+    function postSocialHistory() {
+        var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
+
+        var encounter = {
+            encounter_type_name: 'VAGINAL EXAMINATION',
+            encounter_type_id:  102,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+        };
+
+        submitParameters(encounter, "/encounters", "nextPage");
+    }
+
+    function nextPage(){
+        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
+</script>
