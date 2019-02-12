@@ -196,7 +196,20 @@ function isEmpty(str){
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "nextPage");
+        submitParameters(encounter, "/encounters", "postMedicalHistoryObs");
+    }
+
+    function postMedicalHistoryObs(encounter) {
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 8696, value_text: YesNoConcepts[yesNo_Hash['HIV Reception']['Patient present?']] },
+                { concept_id: 2122, value_coded: YesNoConcepts[yesNo_Hash['HIV Reception']['Guardian present?']] }
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){

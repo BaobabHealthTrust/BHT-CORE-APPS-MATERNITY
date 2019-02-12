@@ -1,6 +1,4 @@
-
-<!-- <script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
- --><!-- <link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css"> -->
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
@@ -9,7 +7,6 @@
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
-<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <style>
 
 .inputFrameClass {
@@ -100,7 +97,31 @@
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "nextPage");
+        submitParameters(encounter, "/encounters", "postSocialHistoryObs");
+    }
+
+    function postSocialHistoryObs(encounter) {
+
+        var educationLevel = document.getElementById('education').value;
+        var religion = document.getElementById('religion').value;
+        var kinNumber = document.getElementById('kin_number').value;
+        var relative = document.getElementById('relative').value;
+        var nextOfKinFirstName = document.getElementById('kin_first').value;
+        var nextOfKinLastName = document.getElementById('kin_last').value;
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 8696, value_text: educationLevel }, // saving
+                { concept_id: 8366, value_text: religion },
+                { concept_id: 2616, value_text: kinNumber },
+                { concept_id: 2172, value_text: relative }, // saving
+                { concept_id: 2927, value_text: nextOfKinFirstName },
+                { concept_id: 2928, value_text: nextOfKinLastName }
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
