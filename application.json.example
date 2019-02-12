@@ -1,50 +1,55 @@
 {
   "encounters": {
-   "Ante-Natal": {
+   "ante-natal": {
       "available": true,
-      "activitiesIcon": "/assets/images/consultation.png",
+     "encountersName": "ante-natal",
+     "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/antenatal.html"
     },
-    "Post-Natal": {
+    "post-natal": {
       "available": true,
+      "encountersName": "post-natal",
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/prenatalTasks.html"
     },
-    "Update Outcome": {
+    "update outcome": {
       "available": true,
+      "encountersName": "update outcome",
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/encounters/update_outcome.html"
     },
-    "Update Hiv status": {
+    "update hiv status": {
       "available": true,
+      "encountersName": "update hiv status",
       "activitiesIcon": "/assets/images/dispensing.png",
       "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
     },
     "social history": {
       "available": true,
+      "encountersName": "social history",
       "activitiesIcon": "/assets/images/dispensing.png",
-      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
+      "url": "/apps/MATERNITY/views/encounters/social_history.html"
     }
 
   },
   "activities": {
     "url": "/apps/MATERNITY/views/activities.html",
     "tasks": [
-      ["Social history","social history"],
+      ["Social History","social history"],
       ["Vitals","vitals"],
       ["PMTCT","pmtct"],
-      ["Physical examination","physical examination"],
-      ["Vaginal examination","vagina examination"],
-      ["Clinical examination","maternity examination"],
-      ["Admission diagnosis","admission diagnosis"],
+      ["Physical Examination","physical examination"],
+      ["Vaginal Examination","vaginal examination"],
+      ["Clinical Examination","maternity examination"],
+      ["Admission Diagnosis","admission diagnosis"],
       ["Current Delivery","current delivery"],
-      ["Physical examination baby","physical examination baby"],
-      ["Abnominal examination","Abnominal examination"],
-      ["Admit patient","admit patient"],
-      ["Admission details","admission details"],
-      ["Update outcome","update outcome"],
-      ["Update HIV status","Update HIV status"],
-      ["Patient history","patient history"]
+      ["Physical Examination baby","physical examination baby"],
+      ["Abnominal Examination","abnominal examination"],
+      ["Admit Patient","admit patient"],
+      ["Admission Details","admission details"],
+      ["Update Outcome","update outcome"],
+      ["Update HIV Status","update hiv status"],
+      ["Patient History","patient history"]
     ]
     
   },
