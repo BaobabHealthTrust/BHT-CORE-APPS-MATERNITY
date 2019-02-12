@@ -1,18 +1,52 @@
 
-<!-- <script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
- --><!-- <link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css"> -->
-<!-- <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
- -->
-<!--  <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
- -->
-<!--  <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
- -->
-<!--  <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
- -->
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/apps/ART/assets/js/arv_number.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script>
+var guardianAvailable = false;
+var apiProtocol = sessionStorage.apiProtocol;
+var apiURL = sessionStorage.apiURL;
+var apiPort = sessionStorage.apiPort;
+var patientID = sessionStorage.patientID;
+function postVitalsObs(encounter) {
 
-<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+var obs = {
+  encounter_id: encounter["encounter_id"],
+}; 
+
+submitParameters(obs,"nextPage")  
+}
+function nextPage(obs){
+    nextEncounter(sessionStorage.patientID, 1);
+}
+function changeNextBTN() {
+  console.log("Change button");
+    var nextButton =  document.getElementById('nextButton');
+    nextButton.setAttribute("onmousedown","submitHIVreception() ;")
+}
+
+function submitHIVreception() {
+  console.log("Work ");
+  var currentTime = moment().format(' HH:mm:ss');
+  var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD'); 
+  encounter_datetime += currentTime;
+                        	
+  var encounter = {
+    encounter_type_name: 'SOCIAL HISTORY',
+    encounter_type_id:  84,
+    patient_id: patientID,
+    encounter_datetime: encounter_datetime
+  }
+
+  submitParameters(encounter, "/encounters", "postVitalsObs");
+}
+</script>
 <style>
 
 .inputFrameClass {
@@ -30,9 +64,9 @@
     <div id="content">
 
 
-      <form action="">
+      <form>
 
-        <select id="education" name="education" tt_onLoad="changeNextBTN();" helpText="Eductaion Level">   
+        <select id="education" name="education" tt_onLoad="" helpText="Eductaion Level">   
             <option>Primary</option>
             <option>Secondary</option>
             <option>Tertiary</option>
@@ -69,7 +103,7 @@
           <input type="text" name="kin_number" id="kin_number" 
           helpText="Next of kin phone number" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
 
-        <select id="relative" name="relative" tt_onLoad="changeNextBTN();" helpText="Next of kin relationship"> 
+        <select id="relative" name="relative" tt_onLoad="changeNextBTN();changeNextButton();" helpText="Next of kin relationship"> 
           <option>Mother</option>
           <option>Daughter</option>
           <option>Sister</option>
@@ -79,7 +113,6 @@
            <option>Other</option>
          </select>
 
-         <input type="text" name="other_relative" id="other_relative" field_type="alpha"  tt_onLoad='otherReligion();' helpText="Specify other relative" key="family_name" allowFreeText="true" condition ="__$('relative').value == 'Other'" />
       </form>
 
    </div>

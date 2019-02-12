@@ -1,21 +1,21 @@
 {
   "encounters": {
-   "Ante-Natal": {
+   "ante-natal": {
       "available": true,
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/antenatal.html"
     },
-    "Post-Natal": {
+    "post-natal": {
       "available": true,
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/prenatalTasks.html"
     },
-    "Update Outcome": {
+    "update outcome": {
       "available": true,
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/encounters/update_outcome.html"
     },
-    "Update Hiv status": {
+    "update HIV status": {
       "available": true,
       "activitiesIcon": "/assets/images/dispensing.png",
       "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
@@ -23,7 +23,7 @@
     "social history": {
       "available": true,
       "activitiesIcon": "/assets/images/dispensing.png",
-      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
+      "url": "/apps/MATERNITY/views/encounters/social_history.html"
     }
 
   },
@@ -31,6 +31,7 @@
     "url": "/apps/MATERNITY/views/activities.html",
     "tasks": [
       ["Social history","social history"],
+      ["Update outcome","update outcome"],
       ["Vitals","vitals"],
       ["PMTCT","pmtct"],
       ["Physical examination","physical examination"],
@@ -42,7 +43,6 @@
       ["Abnominal examination","Abnominal examination"],
       ["Admit patient","admit patient"],
       ["Admission details","admission details"],
-      ["Update outcome","update outcome"],
       ["Update HIV status","Update HIV status"],
       ["Patient history","patient history"]
     ]
