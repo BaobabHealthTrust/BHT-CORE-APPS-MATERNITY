@@ -24,6 +24,18 @@
       "activitiesIcon": "/assets/images/dispensing.png",
       "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
     },
+    "vitals": {
+      "available": true,
+      "encountersName": "vitals",
+      "encountersIcon": "/assets/images/aids.png",
+      "url": "/views/patient/vitals.html"
+    },
+    "medical history": {
+      "available": true,
+      "encountersName": "medical history",
+      "encountersIcon": "/assets/images/aids.png",
+      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
+    },
     "social history": {
       "available": true,
       "encountersName": "social history",
@@ -45,11 +57,10 @@
       ["Current Delivery","current delivery"],
       ["Physical Examination baby","physical examination baby"],
       ["Abnominal Examination","abnominal examination"],
-      ["Admit Patient","admit patient"],
       ["Admission Details","admission details"],
       ["Update Outcome","update outcome"],
       ["Update HIV Status","update hiv status"],
-      ["Patient History","patient history"]
+      ["Medical History","medical history"]
     ]
     
   },
