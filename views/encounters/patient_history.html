@@ -10,6 +10,7 @@
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
+
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -140,88 +141,37 @@ function isEmpty(str){
   <div id="container">
     <div id="content">
 
-         <form>
-          <input type="text" name="person[birth_year]" id="person_birth_year" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
 
-          <select id="genetalia_inspection" name="genetalia_inspection" tt_onLoad="changeNextBTN();" helpText="Genetalia Inspection"> 
-            <option>Not done</option>
-            <option>Scar</option>
-            <option>Sores</option>
-            <option>Warts</option>
-            <option>Bleeding</option>
-            <option>Liqour</option>
-            <option>Varicose Veins</option>
-            <option>Nothing Abnormal Detected</option>
-            <option>Show</option>
-          </select>    
+      <form action="../prenatalTasks.html">
 
-         <select id="station" name="station" tt_onLoad="changeNextBTN();" helpText="Station"> 
-            <option>-3</option>
-            <option>-2</option>
-            <option>-1</option>
-            <option>0</option>
-            <option>+1</option>
-            <option>+2</option>
-            <option>+3</option>
-            <option>N/A</option>
-          </select>
+    <!--           Gravida maximum number is 15
+     -->      
+     <input type="text" name="gravida" id="gravida" helpText="Gravida" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
 
-          <select id="cervical_dilation" name="cervical_dilation" tt_onLoad="changeNextBTN();" helpText="Cervical Dilation"> 
-            <option>Not done</option>
-            <option>Finger tip</option>
-            <option>Open</option>
-            <option>Closed</option>
-          </select>
+     <select id="multiple_pregnancy" name="multiple_pregnancy" tt_onLoad="changeNextBTN();" helpText="Ever had multiple pregnancies">   
+            <option>Yes</option>
+            <option>No</option>
+      </select>
+      <input type="text" name="num_of_deliveries" id="num_of_deliveries" helpText="Number of deliveries" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
+      <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
+      <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Select Religion"> 
+            <option>Spontaneous Delivery</option>
+            <option>Casarean Section</option>
+            <option>Breech Delivery</option>
+      </select>
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
+     <input type="text" name="menstruation_date" 
+        id="menstruation_date" field_type="date" 
+          helpText="Last Menstruation Date"  
+          tt_pageStyleClass="date"  allowFreeText="true" 
+          condition="$(&quot;menstruation_date&quot;).value == &quot;&quot;" /> 
 
-          <select id="caput" name="caput" tt_onLoad="changeNextBTN();" helpText="Caput"> 
-            <option>0</option>
-            <option>1+</option>
-            <option>2+</option>
-            <option>3+</option>
-            <option>N/A</option>
-          </select>
-
-           <input type="text" name="moulding" 
-          id="moulding" field_type="text" 
-          key="moulding" helpText="Moulding"  
-          allowFreeText="true" 
-          /> 
-        
-          <select id="membranes" name="membranes" tt_onLoad="changeNextBTN();" helpText="Membranes"> 
-          <option>Intact</option>
-          <option>Raptured</option>
-          </select>
-
-
-          <input type="text" name="rupture_time" 
-          id="rupture_time" field_type="advancedTime" 
-          helpText="Membrane Rapture Time"  
-          allowFreeText="true" optional = "true"
-          condition ="__$('membranes').value == 'Raptured'"  /> 
-
-          <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date" 
-           condition ="$('membranes').value.toLowerCase() == 'ruptured'" tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
-
-           <select id="colour_of_liqour" name="colour_of_liqour" tt_onLoad="changeNextBTN();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'"> 
-          <option>Clear</option>
-          <option>Meconium Grade 1</option>
-          <option>Meconium Grade 2</option>
-          <option>Meconium Grade 3</option>
-          <option>Blood</option>
-          <option>Absent</option>
-          <option>Pus</option>
-          </select>
-
-          <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextButton();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'">
-          <option>Not Done</option>
-          <option>Vertex</option>
-          <option>Sacrum</option>
-          <option>Breech</option>
-          <option>Hand</option>
-          <option>Foot</option>
-          <option>Shoulder</option>
-          <option>Cord</option>
-          </select>
+     <input type="text" name="kin_last" 
+          id="kin_last" field_type="alpha" 
+          helpText="Next of kin Last name" 
+          ajaxURL="/search/?search_string=" 
+          allowFreeText="true"  tt_onLoad="changeNextButton();"
+          condition="$(&quot;kin_last&quot;).value == &quot;&quot;" /> 
       </form>
 
    </div>
@@ -240,13 +190,26 @@ function isEmpty(str){
         encounter_datetime += currentTime;
 
         var encounter = {
-            encounter_type_name: 'VAGINAL EXAMINATION',
-            encounter_type_id:  102,
+            encounter_type_name: 'MEDICAL HISTORY',
+            encounter_type_id:  30,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "nextPage");
+        submitParameters(encounter, "/encounters", "postMedicalHistoryObs");
+    }
+
+    function postMedicalHistoryObs(encounter) {
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 8696, value_text: YesNoConcepts[yesNo_Hash['HIV Reception']['Patient present?']] },
+                { concept_id: 2122, value_coded: YesNoConcepts[yesNo_Hash['HIV Reception']['Guardian present?']] }
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){

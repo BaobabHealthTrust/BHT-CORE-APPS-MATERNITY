@@ -40,15 +40,17 @@
       var apiPort = sessionStorage.getItem("apiPort");
       var apiProtocol = sessionStorage.getItem("apiProtocol");
       var id = sessionStorage.getItem("patientID");
+      var programID = sessionStorage.getItem("programID");
 
       function ajaxRequest() {
-        var url = 'http://' + apiURL + ':' + apiPort + '/api/v1/programs/1/patients/' + id;
+        var url = apiProtocol + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/patients/' + id;
         var req = new XMLHttpRequest();
         req.onreadystatechange = function () {
 
           if (this.readyState == 4) {
             if (this.status == 200) {
               var results = JSON.parse(this.responseText);
+              console.log('results');
               document.getElementById("art-start-date").innerHTML = ((results.art_start_date !== "N/A") ? results.art_start_date + "/" : "No Start Date Available");
               document.getElementById("art-duration").innerHTML = ((results.art_duration !== "N/A") ? "("+ Math.floor(results.art_duration) + " month(s))" : "")  
               document.getElementById("filing-number").innerHTML = ((results.filing_number !== "N/A") ? results.filing_number : "No Filing Number Available");

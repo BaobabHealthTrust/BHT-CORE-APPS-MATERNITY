@@ -28,6 +28,18 @@
       "activitiesIcon": "/assets/images/dispensing.png",
       "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
     },
+    "vitals": {
+      "available": true,
+      "encountersName": "vitals",
+      "encountersIcon": "/assets/images/aids.png",
+      "url": "/views/patient/vitals.html"
+    },
+    "medical history": {
+      "available": true,
+      "encountersName": "medical history",
+      "encountersIcon": "/assets/images/aids.png",
+      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
+    },
     "social history": {
       "available": true,
       "encountersName": "social history",
@@ -62,12 +74,15 @@
 =======
       ["Physical Examination baby","physical examination baby"],
       ["Abnominal Examination","abnominal examination"],
-      ["Admit Patient","admit patient"],
       ["Admission Details","admission details"],
       ["Update Outcome","update outcome"],
       ["Update HIV Status","update hiv status"],
+<<<<<<< HEAD
       ["Patient History","patient history"]
 >>>>>>> 18be850b35e1981391334a36f2478bf66f1284b5
+=======
+      ["Medical History","medical history"]
+>>>>>>> f9d169a5d85f05990142ac7f50e9aebbd33efed7
     ]
     
   },
