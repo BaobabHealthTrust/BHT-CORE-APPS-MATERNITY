@@ -23,10 +23,8 @@
   <div id="container">
     <div id="content">
 
-
       <form>
-
-        <select id="education" name="education" tt_onLoad="changeNextBTN();" helpText="Eductaion Level">   
+        <select id="education" name="education" tt_onLoad="changeNextBTN();" helpText="Education Level">
             <option>Primary</option>
             <option>Secondary</option>
             <option>Tertiary</option>
@@ -109,13 +107,82 @@
         var nextOfKinFirstName = document.getElementById('kin_first').value;
         var nextOfKinLastName = document.getElementById('kin_last').value;
 
+        var conceptAnswers = [
+            /*Education Level*/
+            {
+                "primaryEducation": 8697,
+                "secondaryEducation": 8698,
+                "tertiaryEducation": 8699,
+                "none": 1107,
+                "other": 6408
+            },
+            /*Relative*/
+            {
+                "mother": 2175,
+                // "daughter", missing
+                //aunt missing
+                "friend": 5618,
+                "sister": 2177,
+                "unknown": 1067,
+                "other": 6408
+            }
+        ];
+
+        var educationLevelAnswer;
+        var religionAnswer;
+        var kinNumberAnswer;
+        var relativeAnswer;
+        var nextOfKinFirstNameAnswer;
+        var nextOfKinLastNameAnswer;
+
+        switch (educationLevel.toUpperCase()) {
+            case 'PRIMARY':
+                educationLevelAnswer = conceptAnswers[0].primaryEducation;
+                break;
+            case 'SECONDARY':
+                educationLevelAnswer = conceptAnswers[0].secondaryEducation;
+                break;
+            case 'TERTIARY':
+                educationLevelAnswer = conceptAnswers[0].tertiaryEducation;
+                break;
+            case 'NONE':
+                educationLevelAnswer = conceptAnswers[0].none;
+                break;
+            case 'OTHER':
+                educationLevelAnswer = conceptAnswers[0].other;
+                break;
+            default:
+                break;
+        }
+        switch (relative.toUpperCase()) {
+            case 'MOTHER':
+                relativeAnswer = conceptAnswers[1].mother;
+                break;
+            case 'SISTER':
+                relativeAnswer = conceptAnswers[1].sister;
+                break;
+            case 'AUNT':
+                relativeAnswer = conceptAnswers[1].aunt;
+                break;
+            case 'FRIEND':
+                relativeAnswer = conceptAnswers[1].friend;
+                break;
+            case 'OTHER':
+                relativeAnswer = conceptAnswers[1].other;
+                break;
+            case 'UNKNOWN':
+                relativeAnswer = conceptAnswers[1].unknown;
+                break;
+            default:
+                break;
+        }
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-                { concept_id: 8696, value_text: educationLevel }, // saving
+                { concept_id: 8696, value_coded: educationLevelAnswer }, // saving
                 { concept_id: 8366, value_text: religion },
-                { concept_id: 2616, value_text: kinNumber },
-                { concept_id: 2172, value_text: relative }, // saving
+                { concept_id: 2616, value_numeric: kinNumber },
+                { concept_id: 2172, value_coded: relativeAnswer }, // saving
                 { concept_id: 2927, value_text: nextOfKinFirstName },
                 { concept_id: 2928, value_text: nextOfKinLastName }
             ]
