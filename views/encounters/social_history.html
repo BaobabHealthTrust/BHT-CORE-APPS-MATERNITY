@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
@@ -6,6 +7,14 @@
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+=======
+<!-- <script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+ --><!-- <link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css"> -->
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+>>>>>>> 18be850b35e1981391334a36f2478bf66f1284b5
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 <script>
@@ -103,7 +112,11 @@ function submitHIVreception() {
           <input type="text" name="kin_number" id="kin_number" 
           helpText="Next of kin phone number" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
 
+<<<<<<< HEAD
         <select id="relative" name="relative" tt_onLoad="changeNextBTN();changeNextButton();" helpText="Next of kin relationship"> 
+=======
+        <select id="relative" name="relative" tt_onLoad="changeNextButton();" helpText="Next of kin relationship">
+>>>>>>> 18be850b35e1981391334a36f2478bf66f1284b5
           <option>Mother</option>
           <option>Daughter</option>
           <option>Sister</option>
@@ -118,4 +131,30 @@ function submitHIVreception() {
    </div>
  </div>
 </body>
+
+<script>
+    function changeNextButton() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postSocialHistory();")
+    }
+
+    function postSocialHistory() {
+        var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
+
+        var encounter = {
+            encounter_type_name: 'SOCIAL HISTORY',
+            encounter_type_id:  84,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+        };
+
+        submitParameters(encounter, "/encounters", "nextPage");
+    }
+
+    function nextPage(){
+        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
+</script>
 
