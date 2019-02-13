@@ -25,14 +25,15 @@
 </style>
 
 <script>
-var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
-var tt_cancel_destination = "/";
+var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+
 var apiProtocol = sessionStorage.apiProtocol;
 var apiURL = sessionStorage.apiURL;
 var apiPort = sessionStorage.apiPort;
-var patient_id = sessionStorage.patientID;
+var patientID = sessionStorage.patientID;
+var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 var previousActivities = null;
 function getActivities(){
   var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
@@ -141,7 +142,7 @@ function isEmpty(str){
     <div id="content">
 
          <form>
-          <input type="text" name="person[birth_year]" id="person_birth_year" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
+          <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
 
           <select id="genetalia_inspection" name="genetalia_inspection" tt_onLoad="changeNextBTN();" helpText="Genetalia Inspection"> 
             <option>Not done</option>
@@ -149,7 +150,7 @@ function isEmpty(str){
             <option>Sores</option>
             <option>Warts</option>
             <option>Bleeding</option>
-            <option>Liqour</option>
+            <option>Liquor</option>
             <option>Varicose Veins</option>
             <option>Nothing Abnormal Detected</option>
             <option>Show</option>
@@ -202,7 +203,7 @@ function isEmpty(str){
           <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date" 
            condition ="$('membranes').value.toLowerCase() == 'ruptured'" tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
 
-           <select id="colour_of_liqour" name="colour_of_liqour" tt_onLoad="changeNextBTN();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'"> 
+           <select id="colour_of_liqour" name="colour_of_liqour" tt_onLoad="changeNextBTN();" helpText="Colour of Liqour" condition = "__$('membranes').value == 'Raptured'">
           <option>Clear</option>
           <option>Meconium Grade 1</option>
           <option>Meconium Grade 2</option>
@@ -212,7 +213,7 @@ function isEmpty(str){
           <option>Pus</option>
           </select>
 
-          <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextButton();" helpText="Membranes" condition = "__$('membranes').value == 'Raptured'">
+          <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextButton();" helpText="Presenting Part" condition = "__$('membranes').value == 'Raptured'">
           <option>Not Done</option>
           <option>Vertex</option>
           <option>Sacrum</option>
@@ -231,10 +232,10 @@ function isEmpty(str){
 <script>
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postSocialHistory();")
+        nextButton.setAttribute("onmousedown","postVaginalExam();")
     }
 
-    function postSocialHistory() {
+    function postVaginalExam() {
         var currentTime = moment().format(' HH:mm:ss');
         var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
         encounter_datetime += currentTime;
@@ -246,7 +247,138 @@ function isEmpty(str){
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "nextPage");
+        submitParameters(encounter, "/encounters", "postVaginalObs");
+    }
+
+
+    function postVaginalObs(encounter) {
+
+        var fundus = document.getElementById('fundus').value;
+        var genetaliaInspection = document.getElementById('genetalia_inspection').value;
+        var station = document.getElementById('station').value;
+        var cervialDilation = document.getElementById('cervical_dilation').value;
+        var caput = document.getElementById('caput').value;
+        var moulding = document.getElementById('moulding').value;
+        var membranes = document.getElementById('membranes').value;
+        var ruptureTime = document.getElementById('rupture_time').value;
+        var ruptureDate = document.getElementById('rupture_date').value;
+        var colorOfLiqour = document.getElementById('colour_of_liqour').value;
+        var presentingPart = document.getElementById('presenting_part').value;
+
+        var conceptAnswers = [
+            // genetalia inspection
+            {
+                "notDone": 1118,
+                "scar": 2448,
+                "sores": 7917,
+                "warts": 6905,
+                "bleeding": 7918,
+                "liquor": 7919,
+                "varicoseVeins": 591,
+                "nothingAbnormalDetected": 7920,
+                "show": 1581
+            },
+            // station
+            {
+                "3minus": 9701,
+                "2minus": 9702,
+                "1minus": 9703,
+                "zero": 1101,
+                "1plus": 7129,
+                "2plus": 7130,
+                "3plus": 7131,
+                "notAvailable": ''
+            },
+            // cervical dilation
+            {
+                "fingerTip": 9704,
+                "open": 9705,
+                "closed": 9706
+            },
+            // membranes
+            {
+                "intact": 9707,
+                "raptured": 8653
+            },
+            // color of liqour
+            {
+                "clear": 3236,
+                "meconiumGrade1": 9708,
+                "meconiumGrade2": 9709,
+                "meconiumGrade3": 9710,
+                "blood": 7333,
+                "absent": 6324,
+                "pus": 7946
+            },
+            // presenting part
+            {
+                "vertex": 7895,
+                "sacrum": 7912,
+                "breech": 9426,
+                "hand": 7913,
+                "foot": 7914,
+                "shoulder": 7915,
+                "cord": 7916
+            }
+        ];
+
+        var genetaliaInspectionAnswer;
+        var stationAnswer;
+        var cervicalDilationAnswer;
+        var membranesAnswer;
+        var colorOfLiqourAnswer;
+        var presentingPartAnswer;
+
+        switch (genetaliaInspection.toUpperCase()) {
+            case 'NOT DONE':
+                genetaliaInspectionAnswer = conceptAnswers[0].notDone;
+                break;
+            case 'SCAR':
+                genetaliaInspectionAnswer = conceptAnswers[0].scar;
+                break;
+            case  'SORES':
+                genetaliaInspectionAnswer = conceptAnswers[0].sores;
+                break;
+            case 'WARTS':
+                genetaliaInspectionAnswer = conceptAnswers[0].warts;
+                break;
+            case 'BLEEDING':
+                genetaliaInspectionAnswer = conceptAnswers[0].bleeding;
+                break;
+            case 'LIQUOR':
+                genetaliaInspectionAnswer = conceptAnswers[0].liquor;
+                break;
+            case 'VARICOSE VEINS':
+                genetaliaInspectionAnswer = conceptAnswers[0].varicoseVeins;
+                break;
+            case 'NOTHING ABNORMAL DETECTED':
+                genetaliaInspectionAnswer = conceptAnswers[0].nothingAbnormalDetected;
+                break;
+            case 'SHOW':
+                genetaliaInspectionAnswer = conceptAnswers[0].show;
+                break;
+            default:
+                break;
+        }
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 7835, value_coded: ''}, // fundus
+                { concept_id: 7841, value_coded: ''}, // genetalia inspection
+                { concept_id: 7842, value_coded: ''}, // station
+                { concept_id: 7843, value_coded: ''}, // cervical dilation
+                { concept_id: 7844, value_coded: ''}, // caput
+                { concept_id: 7944, value_coded: ''}, // moulding
+                { concept_id: 7845, value_coded: ''}, // membranes
+                { concept_id: 7847, value_coded: ''}, // rupture time
+                { concept_id: 7846, value_coded: ''}, // rupture date
+                { concept_id: 7848, value_coded: ''}, // color of liqour
+                { concept_id: 7849, value_coded: ''} // presenting part
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
