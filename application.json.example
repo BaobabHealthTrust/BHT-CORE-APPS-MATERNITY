@@ -18,11 +18,7 @@
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/encounters/update_outcome.html"
     },
-<<<<<<< HEAD
-    "update HIV status": {
-=======
     "update hiv status": {
->>>>>>> 18be850b35e1981391334a36f2478bf66f1284b5
       "available": true,
       "encountersName": "update hiv status",
       "activitiesIcon": "/assets/images/dispensing.png",
@@ -51,39 +47,15 @@
   "activities": {
     "url": "/apps/MATERNITY/views/activities.html",
     "tasks": [
-<<<<<<< HEAD
-      ["Social history","social history"],
-      ["Update outcome","update outcome"],
-=======
-      ["Social History","social history"],
->>>>>>> 18be850b35e1981391334a36f2478bf66f1284b5
-      ["Vitals","vitals"],
-      ["PMTCT","pmtct"],
-      ["Physical Examination","physical examination"],
       ["Vaginal Examination","vaginal examination"],
-      ["Clinical Examination","maternity examination"],
       ["Admission Diagnosis","admission diagnosis"],
       ["Current Delivery","current delivery"],
-<<<<<<< HEAD
-      ["Physical examination baby","physical examination baby"],
-      ["Abnominal examination","Abnominal examination"],
-      ["Admit patient","admit patient"],
-      ["Admission details","admission details"],
-      ["Update HIV status","Update HIV status"],
-      ["Patient history","patient history"]
-=======
       ["Physical Examination baby","physical examination baby"],
       ["Abnominal Examination","abnominal examination"],
       ["Admission Details","admission details"],
       ["Update Outcome","update outcome"],
       ["Update HIV Status","update hiv status"],
-<<<<<<< HEAD
-      ["Patient History","patient history"]
->>>>>>> 18be850b35e1981391334a36f2478bf66f1284b5
-=======
       ["Medical History","medical history"]
->>>>>>> f9d169a5d85f05990142ac7f50e9aebbd33efed7
-    ]
     
   },
   "others": [
