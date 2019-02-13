@@ -34,32 +34,55 @@
       "available": true,
       "encountersName": "medical history",
       "encountersIcon": "/assets/images/aids.png",
-      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
+      "url": "/apps/MATERNITY/views/encounters/patient_history.html"
     },
     "social history": {
       "available": true,
       "encountersName": "social history",
       "activitiesIcon": "/assets/images/dispensing.png",
       "url": "/apps/MATERNITY/views/encounters/social_history.html"
+    },
+    "pmtct history": {
+      "available": true,
+      "encountersName": "pmtct history",
+      "activitiesIcon": "/assets/images/dispensing.png",
+      "url": "/apps/MATERNITY/views/encounters/pmtct.html"
+    },
+    "physical examination": {
+      "available": true,
+      "encountersName": "physical examination",
+      "activitiesIcon": "/assets/images/dispensing.png",
+      "url": "/apps/MATERNITY/views/encounters/physical_examination.html"
+    },
+    "vaginal examination": {
+      "available": true,
+      "encountersName": "vagina examination",
+      "activitiesIcon": "/assets/images/dispensing.png",
+      "url": "/apps/MATERNITY/views/antenatal/vaginal_exam.html"
+    },
+    "maternity examination": {
+      "available": true,
+      "encountersName": "maternity examination",
+      "activitiesIcon": "/assets/images/dispensing.png",
+      "url": "/apps/MATERNITY/views/encounters/clinical_exam.html"
+    },
+    "obstetric history": {
+      "available": true,
+      "encountersName": "obstetric history",
+      "activitiesIcon": "/assets/images/dispensing.png",
+      "url": "/apps/MATERNITY/views/encounters/admission_details.html"
     }
-
   },
   "activities": {
     "url": "/apps/MATERNITY/views/activities.html",
     "tasks": [
       ["Social History","social history"],
       ["Vitals","vitals"],
-      ["PMTCT","pmtct"],
+      ["PMTCT History","pmtct history"],
       ["Physical Examination","physical examination"],
       ["Vaginal Examination","vaginal examination"],
-      ["Clinical Examination","maternity examination"],
-      ["Admission Diagnosis","admission diagnosis"],
-      ["Current Delivery","current delivery"],
-      ["Physical Examination baby","physical examination baby"],
-      ["Abnominal Examination","abnominal examination"],
-      ["Admission Details","admission details"],
-      ["Update Outcome","update outcome"],
-      ["Update HIV Status","update hiv status"],
+      ["Maternity Examination","maternity examination"],
+      ["Obstetric History","obstetric history"],
       ["Medical History","medical history"]
     ]
     
