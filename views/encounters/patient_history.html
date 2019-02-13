@@ -43,7 +43,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       
       <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" />
      
-      <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Select Religion"> 
+      <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Select Delivery Mode"> 
             <option>Spontaneous Delivery</option>
             <option>Caesarean Section</option>
             <option>Breech Delivery</option>
@@ -105,6 +105,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
               "yes": 1065,
               "no": 1066
           },
+           /*Delivery mode*/
           {
             "spontaneous": 1170,
             "caesarean": 1171,
