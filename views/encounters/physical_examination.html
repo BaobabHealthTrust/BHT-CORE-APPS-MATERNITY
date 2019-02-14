@@ -24,112 +24,8 @@
 }
 
 </style>
-
 <script>
-
-var patientID = sessionStorage.getItem("patientID");
-var programID = sessionStorage.getItem("programID");
-var tt_cancel_destination = "/";
-var apiProtocol = sessionStorage.apiProtocol;
-var apiURL = sessionStorage.apiURL;
-var apiPort = sessionStorage.apiPort;
-var patient_id = sessionStorage.patientID;
-var previousActivities = null;
-function getActivities(){
-  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-
-  if (this.readyState == 4) {
-    if (this.status == 200) {
-      var results = JSON.parse(this.responseText);
-        previousActivities = results.property_value;
-        loadActivities(previousActivities);
-    }else {
-
-        loadActivities("");
-    }
-    }
-    };
-    try {
-      req.open('GET', url, true);
-      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
-      req.send(null);
-    } catch (e) {
-    
-    }
-}
-
-function loadActivities(previousActivities) {
-  var activities = [];
-  jQuery.getJSON("/apps/ART/application.json")
-    .done(function (data) {
-      activities = data.activities.tasks;
-      renderActivities(activities, previousActivities);
-
-    })
-    .fail(function () {
-      console.log("The application " + applicationName + "'s application.json file is not available");
-  });
-
-}
-/*
-<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
-*/
-
-function renderActivities(activities, previousActivities) {
-  var ul = document.getElementById("tt_currentUnorderedListOptions");
-  for(var i = 0 ; i < activities.sort().length ; i++){
-    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
-    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
-    innerHTML += ' id="optionValue' + i + '">';
-    innerHTML+= activities[i][0] + "</div></div></div>";
-    
-    var li = document.createElement("li");
-    li.setAttribute("id", i );
-    li.setAttribute("tstvalue", activities[i][1]);
-    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
-    li.setAttribute("style","");
-    li.setAttribute("class","even");
-    li.innerHTML = innerHTML;
-    ul.appendChild(li); 
-     if(previousActivities.search(activities[i][0]) >= 0) {
-      updateInputs(i);
-    }
-  } 
-}
-
-function updateInputs(i) {
-  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
-}
-
-function setActivities() {
-  var values = document.getElementById("touchscreenInput0").value;
-  if(isEmpty(values))
-    return;
-
-  var regex = new RegExp(";", "g");
-  values = values.replace(regex, ",");
-
-  var parameters = { property: "Activities", property_value: values }
-
-  submitParameters(parameters, "/user_properties", "redirectTo"); 
-  
-}
-
-function redirectTo(obj) {
-  sessionStorage.setItem("userActivities", obj.property_value);
-  document.location = "/";
-}
-
-function isEmpty(str){
-  try {
-    return (str.replace(/\s+/g, '').length < 1);
-  }catch(e){
-    return true;
-  }
-}
-
+  var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 </script>
 
 <body id="mateme">
@@ -194,7 +90,7 @@ function isEmpty(str){
             <option>Right Acromion Dorsal Posterio</option>
            </select>
 
-          <select id="contractions" name="contraction" tt_onLoad="changeNextBTN();" helpText="Contractions" condition => "__$('fundus').value != 'N/A'"> 
+          <select id="contractions" name="contraction" tt_onLoad="changeNextBTN();" helpText="Contractions" condition = "__$('fundus').value != 'N/A'"> 
             <option>Yes</option>
             <option>No</option>
            </select>
@@ -207,17 +103,17 @@ function isEmpty(str){
            </select>
 
 
-          <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" condition = "$('contractions').value.trim().toUpperCase() == 'YES' " +
-          "&& __$('fundus').value != 'N/A' && __$('contractions_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" />
+          <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number" tt_onLoad="" 
+          tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
+           __$('fundus').value != 'N/A' && __$('contractions_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" />
 
-          <input type="text" name="given_name" 
-          id="given_name" field_type="alpha" 
-          key="given_name" helpText="Station"  
-          ajaxURL="/search/given_name?search_string=" 
-          key=given_name" allowFreeText="true" 
-          condition="$(&quot;given_name&quot;).value == &quot;&quot;" /> 
+          <input type="text" name="station" 
+          id="station" field_type="alpha" 
+          key="station" helpText="Station"  
+          allowFreeText="true" 
+             /> 
 
-          <select id="activity" name="activities" tt_onLoad="changeNextBTN();" helpText="Moulding"> 
+          <select id="moulding" name="moulding" tt_onLoad="changeNextBTN();" helpText="Moulding"> 
             <option>0</option>
             <option>1+</option>
             <option>2+</option>
@@ -225,12 +121,12 @@ function isEmpty(str){
             <option>N/A</option>
           </select>
         
-          <select id="activity" name="activities" tt_onLoad="changeNextBTN();" helpText="Membranes"> 
+          <select id="membranes" name="membranes" tt_onLoad="changeNextBTN();" helpText="Membranes"> 
           <option>Intact</option>
           <option>Raptured</option>
           </select>
 
-          <select id="descent" name="descent" tt_onLoad="changeNextButton();"  helpText="Descent" condition => "__$('fundus').value != 'N/A'">
+          <select id="descent" name="descent" tt_onLoad="changeNextButton();"  helpText="Descent" condition = "__$('fundus').value != 'N/A'"tt_onLoad="changeNextButton();">
           <option>N/A</option>
           <option>5/5</option>
           <option>4/5</option>
@@ -247,17 +143,19 @@ function isEmpty(str){
  </div>
 </body>
 
-<script>
+
+  
+  <script>
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postSocialHistory();")
+        nextButton.setAttribute("onmousedown","postPhysicalExam();")
     }
-
-    function postSocialHistory() {
+  
+    function postPhysicalExam() {
         var currentTime = moment().format(' HH:mm:ss');
         var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
         encounter_datetime += currentTime;
-
+  
         var encounter = {
             encounter_type_name: 'PHYSICAL EXAMINATION',
             encounter_type_id:  103,
@@ -265,10 +163,310 @@ function isEmpty(str){
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "nextPage");
+  
+        submitParameters(encounter, "/encounters", "postPhysicalExamObs");
     }
+  
+    function postPhysicalExamObs(encounter) {
+  
+        var fundus = document.getElementById('fundus').value;
+        var lie = document.getElementById('lie').value;
+        var presentation = document.getElementById('presentation').value;
+        var position = document.getElementById('position').value;
+        var vertex = document.getElementById('vertex').value;
+        var breech = document.getElementById('breech').value;
+        var face = document.getElementById('face').value;
+        var shoulder = document.getElementById('shoulder').value;
+        var contraction = document.getElementById('contractions').value;
+        var contractions_intensity = document.getElementById('contraction_intensity').value;
+        var station = document.getElementById('station').value;
+        var moulding = document.getElementById('moulding').value;
+        var membranes = document.getElementById('membranes').value;
+        var descent = document.getElementById('descent').value;
+        var contractions_level =  document.getElementById('contractions_level').value;
+      
+        var conceptAnswers = [
+    
+            /*Lie*/
+            {
+               // "longitudinal": 1065,
+                "transverse": 7147,
+                "oblique": 7885,
+                "undefined": 8805
+            },
+            /*Position */
+            {
+              "vertex": 7895,
+              "breech": 9426,
+              "face": 7887,
+              "shoulder": 7915,
+              },
+            /* Vertex */
+            {
+              "left_occipito_anterior": 7889,
+              "left_occipito_transverse": 7891,
+              "right_occipito_anterior": 7892,
+              "right_occipito_transverse": 7894,
+              "right_occipito_posterior": 7893,
+            },
+            /* breech */
+            {
+                "left_sacro_anterio": 7896,
+                "left_sacro_transverse": 7901,
+                "left_sacro_posterior": 7900,
+                "right_sacro_anterior": 7897,
+                "right_sacro_transverse": 7899,
+                "right_sacro_posterior": 7898
+            },
+            /* face */
+            {
+                "left_mento_anterior": 7902,
+                "left_mento_transverse": 7904,
+                "left_mento_posterior": 7903,
+                "right_mento_anterior": 7905,
+                "right_mento_transverse": 7907,
+                "right_mento_posterior": 7906
+            },
+                /*Contractions*/
+            {
+                "yes": 1065,
+                "no": 1066
+            },
+            /* Contraction intensity */
+            {
+                "mild": 1901,
+                "moderate": 1900,
+                "strong": 1409,
+                "niggling": 9700
+            },
+            /* Moulding */
+           {
+                "zero": 1101,
+                "one_plus": 7129,
+                "two_plus": 7130,
+                "three_plus": 7131,
+                "na": 1175
+            },
+            /* Contraction intensity */
+                 {
+                "intact": 9707,
+                "raptured": 8653,
+            },
+            /* descent */
+           {
+                "na": 1175,
+                "five_over_five": 9711,
+                "four_over_five": 9712,
+                "three_over_five": 9713,
+                "two_over_five": 9714,
+                "one_over_five":9715,
+                "zero_over_five":9716
+            },
 
+        ];
+  
+        var lieAnswer;
+        var positionAnswer;
+        var vertexAnswer;
+        var breechAnswer;
+        var shoulderAnswer;
+        var contractionsAnswer;
+        var contractionsIntensityAnswers;
+        var mouldingAnswer;
+        var membranesAnswer;
+        var descentAnswer;
+        switch (lie.toUpperCase()) {
+            case 'TRANSVERSE':
+                lieAnswer = conceptAnswers[0].transverse;
+                break;
+            case 'LONGITUDINAL':
+                lieAnswer = conceptAnswers[0].longitudinal;
+                break;
+            case 'OBLIQUE':
+            lieAnswer = conceptAnswers[0].oblique;
+            break;
+            case 'UNDEFINED':
+            lieAnswer = conceptAnswers[0].undefined;
+            break;
+            default:
+                break;
+        }
+        switch (position.toUpperCase()) {
+            case 'VERTEX':
+              positionAnswer = conceptAnswers[1].vertex;
+                break;
+            case 'BREECH':
+              positionAnswer = conceptAnswers[1].breech;
+                break;
+            case 'FACE':
+              positionAnswer = conceptAnswers[1].face;
+                break;
+            case 'SHOULDER':
+              positionAnswer = conceptAnswers[1].shoulder;
+            break;
+            default:
+                break;
+        }
+        switch (vertex.toUpperCase()) {
+            case 'LEFT OCCIPITO ANTERIOR':
+              vertexAnswer = conceptAnswers[2].left_occipito_anterior;
+                break;
+            case 'LEFT OCCIPITO TRANSVERSE':
+              vertexAnswer = conceptAnswers[2].left_occipito_transverse;
+                break;
+            case 'RIGHT OCCIPITO ANTERIOR':
+              vertexAnswer = conceptAnswers[2].right_occipito_anterior;
+                break;
+            case 'RIGHT OCCIPITO TRANSVERSE':
+              vertexAnswer = conceptAnswers[2].right_occipito_transverse;
+            case 'RIGHT OCCIPITO POSTERIOR':
+              vertexAnswer = conceptAnswers[2].right_occipito_posterior;
+            break;
+            default:
+                break;
+        }
+        switch (breech.toUpperCase()) {
+            case 'LEFT SACRO ANTERIOR':
+              breechAnswer = conceptAnswers[3].left_sacro_anterio;
+                break;
+            case 'LEFT SACRO TRANSVERSE':
+              breechAnswer = conceptAnswers[3].left_sacro_transverse;
+                break;
+            case 'LEFT SACRO POSTERIOR':
+              breechAnswer = conceptAnswers[3].left_sacro_posterior;
+                break;
+            case 'RIGHT SACRO ANTERIOR':
+              breechAnswer = conceptAnswers[3].right_sacro_anterior;
+            case 'RIGHT SACRO TRANSVERSE':
+              breechAnswer = conceptAnswers[3].right_sacro_transverse;
+            case 'RIGHT SACRO POSTERIOR':
+              breechAnswer = conceptAnswers[3].right_sacro_posterior;       
+            break;
+            default:
+                break;
+        }
+        switch (shoulder.toUpperCase()) {
+            case 'LEFT MENTO ANTERIOR':
+              shoulderAnswer = conceptAnswers[4].left_mento_anterior;
+                break;
+            case 'LEFT MENTO TRANSVERSE':
+             shoulderAnswer = conceptAnswers[4].left_mento_transverse;
+                break;
+            case 'LEFT MENTO POSTERIOR':
+             shoulderAnswer = conceptAnswers[4].left_mento_posterior;
+                break;
+            case 'RIGHT MENTO ANTERIOR':
+              shoulderAnswer = conceptAnswers[4].right_mento_anterior;
+            case 'RIGHT MENTO TRANSVERSE':
+              shoulderAnswer = conceptAnswers[4].right_mento_transverse;
+            case 'RIGHT MENTO POSTERIOR':
+              shoulderAnswer = conceptAnswers[4].right_mento_posterior;       
+            break;
+            default:
+                break;
+        }
+        switch (contraction.toUpperCase()) {
+          case 'YES':
+             contractionsAnswer = conceptAnswers[5].yes;
+              break;
+          case 'NO':
+             contractionsAnswer = conceptAnswers[5].no;
+              break;
+          default:
+              break;
+         }
+         switch (contractions_intensity.toUpperCase()) {
+          case 'MILD':
+             contractionsIntensityAnswers = conceptAnswers[6].mild;
+              break;
+          case 'MODERATE':
+             contractionsIntensityAnswers = conceptAnswers[6].moderate;
+              break;
+          case 'STRONG':
+             contractionsIntensityAnswers = conceptAnswers[6].strong;
+          break;
+          case 'NIGGLING':
+             contractionsIntensityAnswers = conceptAnswers[6].niggling;
+          break;
+          default:
+              break;
+         }
+         switch (moulding) {
+          case '0':
+             mouldingAnswer = conceptAnswers[7].zero;
+              break;
+          case '1+':
+             moulding = conceptAnswers[7].one_plus;
+              break;
+          case '2+':
+             mouldingAnswer = conceptAnswers[7].two_plus;
+          break;
+          case '3+':
+             mouldingAnswer = conceptAnswers[7].three-plus;
+          break;
+          case 'N/A':
+             mouldingAnswer = conceptAnswers[7].na;
+          break;
+          default:
+              break;
+         }
+         switch (membranes.toUpperCase()) {
+          case 'INTACT':
+             membranesAnswer = conceptAnswers[8].intact;
+              break;
+          case 'RAPTURED':
+             contractionsAnswer = conceptAnswers[8].raptured;
+              break;
+          default:
+              break;
+         }
+         switch (descent) {
+          case 'N/A':
+            descentAnswer = conceptAnswers[9].intact;
+              break;
+          case '5/5':
+           descentAnswer = conceptAnswers[9].raptured;
+              break;
+         case '4/5':
+          descentAnswer = conceptAnswers[9].raptured;
+              break;
+         case '3/5':
+           descentAnswer = conceptAnswers[9].raptured;
+              break;
+         case '2/5':
+           descentAnswer = conceptAnswers[9].raptured;
+              break;
+        case '1/5':
+          descentAnswer = conceptAnswers[9].raptured;
+              break;
+        case '0/5':
+         descentAnswer = conceptAnswers[9].raptured;
+              break;
+          default:
+              break;
+         }
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 7835, value_numeric: fundus }, 
+                { concept_id: 7836, value_coded: lieAnswer },
+                { concept_id: 7837, value_coded: positionAnswer },
+                { concept_id: 7895, value_coded: vertexAnswer },
+                { concept_id: 9425, value_coded: breechAnswer },
+                { concept_id: 7915, value_coded: shoulderAnswer },
+                { concept_id: 7838, value_coded: contractionsAnswer },
+                { concept_id: 7929, value_coded: contractionsIntensityAnswers },
+                { concept_id: 7943, value_text: contractions_level },
+                { concept_id: 7842, value_text: station },
+                { concept_id: 7845, value_coded: membranesAnswer },
+                { concept_id: 7840, value_coded: descentAnswer }
+            ]
+        };
+  
+        submitParameters(obs, "/observations", "nextPage")
+    }
+  
     function nextPage(){
         nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
-</script>
+  </script>
