@@ -6,7 +6,6 @@
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-
 <style>
 
 .inputFrameClass {
@@ -78,9 +77,6 @@
 </body>
 
 <script>
-    var patientID = sessionStorage.getItem("patientID");
-    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
-
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postSocialHistory();")
@@ -132,7 +128,11 @@
         ];
 
         var educationLevelAnswer;
+        var religionAnswer;
+        var kinNumberAnswer;
         var relativeAnswer;
+        var nextOfKinFirstNameAnswer;
+        var nextOfKinLastNameAnswer;
 
         switch (educationLevel.toUpperCase()) {
             case 'PRIMARY':
