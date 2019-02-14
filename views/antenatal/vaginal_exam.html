@@ -188,7 +188,7 @@ function isEmpty(str){
           allowFreeText="true" 
           /> 
         
-          <select id="membranes" name="membranes" tt_onLoad="changeNextBTN();" helpText="Membranes"> 
+          <select id="membranes" name="membranes" helpText="Membranes"  tt_onUnLoad="changeNextButton();">
           <option>Intact</option>
           <option>Raptured</option>
           </select>
@@ -203,7 +203,7 @@ function isEmpty(str){
           <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date" 
            condition ="$('membranes').value.toLowerCase() == 'ruptured'" tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
 
-           <select id="colour_of_liqour" name="colour_of_liqour" tt_onLoad="changeNextBTN();" helpText="Colour of Liqour" condition = "__$('membranes').value == 'Raptured'">
+           <select id="colour_of_liqour" name="colour_of_liqour" helpText="Colour of Liqour" condition = "__$('membranes').value == 'Raptured'">
           <option>Clear</option>
           <option>Meconium Grade 1</option>
           <option>Meconium Grade 2</option>
@@ -231,8 +231,19 @@ function isEmpty(str){
 
 <script>
     function changeNextButton() {
-        var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postVaginalExam();")
+        var membranes = document.getElementById('membranes').value;
+        var raptureTime = document.getElementById('rupture_time').value;
+
+        console.log('heee'+membranes); return;
+        if(membranes.toUpperCase() === 'INTACT') {
+            postVaginalExam();
+        } else if(membranes.toUpperCase() === 'RAPTURED' && raptureTime === '') {
+            gotoNextPage();
+        } else {
+            var nextButton =  document.getElementById('nextButton');
+            nextButton.setAttribute("onmousedown","postVaginalExam();")
+        }
+
     }
 
     function postVaginalExam() {
