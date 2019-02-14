@@ -77,6 +77,10 @@
 </body>
 
 <script>
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postSocialHistory();")
@@ -128,11 +132,7 @@
         ];
 
         var educationLevelAnswer;
-        var religionAnswer;
-        var kinNumberAnswer;
         var relativeAnswer;
-        var nextOfKinFirstNameAnswer;
-        var nextOfKinLastNameAnswer;
 
         switch (educationLevel.toUpperCase()) {
             case 'PRIMARY':
