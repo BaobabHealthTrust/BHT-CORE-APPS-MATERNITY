@@ -24,35 +24,31 @@
 
 </style>
 
-<script>
-    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-</script>
-
 <body id="mateme">
 <div id="container">
     <div id="content">
 
         <form>
-            <select id="hiv_status_value" name="pmtct_activities" helpText="PMTCT Status" tt_onUnLoad="changeNextButton();">
+            <select id="hiv_status_value" name="hiv_status" helpText="PMTCT Status" tt_onUnLoad="changeNextButton();">
                 <option>Non-Reactive</option>
                 <option>Reactive</option>
                 <option>Unknown</option>
             </select>
 
-            <input type="text" name="pmtct" id="pmtct" helpText="PMTCT test date" field_type="date"
+            <input type="text" name="pmtct_test_date" id="pmtct_test_date" helpText="PMTCT test date" field_type="date"
                    tt_pageStyleClass="date"  condition ="$('hiv_status_value').value.toLowerCase() != 'unknown'" tt_onUnLoad="changeNextButton();" />
 
-            <select id="on_arvs" name="pmtct_activities" helpText="On ARVs"
+            <select id="pmtct_on_arvs" name="pmtct_on_arvs" helpText="On ARVs"
                     condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';">
                 <option>Yes</option>
                 <option>No</option>
             </select>
 
-            <input type="text" name="pmtct" id="period_on_arvs" helpText="Date Started ARVs (Estimate)"
+            <input type="text" name="period_on_arvs" id="period_on_arvs" helpText="Date Started ARVs (Estimate)"
                    field_type="date" tt_pageStyleClass="date"
-                   condition ="$('on_arvs').value.trim().toUpperCase() == 'YES';" />
+                   condition ="$('pmtct_on_arvs').value.trim().toUpperCase() == 'YES';" />
 
-            <select id="feeding_option" name="pmtct_activities" helpText="Feeding Option" condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';" tt_onLoad="changeNextButton();">
+            <select id="feeding_option" name="feeding_option" helpText="Feeding Option" condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';" tt_onLoad="changeNextButton();">
                 <option>Exclusive Breast Feeding</option>
                 <option>No Breast Feeding</option>
                 <option>Exclusive Formula Feeding</option>
@@ -63,23 +59,26 @@
     </div>
 </div>
 </body>
-<script>
-    function changeNextButton() {
-        var hivStatus = document.getElementById('hiv_status_value').value;
-        var pmtct = document.getElementById('pmtct').value;
 
+<script>
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+    var hivStatus = document.getElementById('hiv_status_value').value;
+    var pmtctTestDate = document.getElementById('pmtct_test_date').value;
+
+    function changeNextButton() {
         if (hivStatus === 'Unknown') {
-            postSocialHistory();
-        } else if(hivStatus === 'Non-Reactive' && pmtct !== '') {
-            postSocialHistory();
+            postPMTCT();
+        } else if(hivStatus === 'Non-Reactive' && pmtctTestDate !== '') {
+            postPMTCT();
         } else {
             var nextButton =  document.getElementById('nextButton');
-            nextButton.setAttribute("onmousedown","postSocialHistory();")
+            nextButton.setAttribute("onmousedown","postPMTCT();")
         }
-
     }
 
-    function postSocialHistory() {
+    function postPMTCT() {
         var currentTime = moment().format(' HH:mm:ss');
         var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
         encounter_datetime += currentTime;
@@ -91,11 +90,114 @@
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "nextPage");
+        submitParameters(encounter, "/encounters", "postPmtctObs");
+    }
+
+    function postPmtctObs(encounter) {
+        var hivStatus = document.getElementById('hiv_status_value').value;
+        var pmtctTestDate = document.getElementById('pmtct_test_date').value;
+        var pmtctOnArvs = document.getElementById('pmtct_on_arvs').value;
+        var periodOnArvs = document.getElementById('period_on_arvs').value;
+        var feedingOption = document.getElementById('feeding_option').value;
+
+        var conceptAnswers = [
+            // Hiv Status
+            {
+                "reactive": 1228,
+                "nonReactive": 1229,
+                "unknown": 1067
+            },
+            // PMTCT on ARVs
+            {
+                "yes": 1065,
+                "no": 1066
+            },
+            // Feeding option
+            {
+                "exclusiveBreastFeeding": 5526,
+                "noBreastFeeding": 1107,
+                "exclusiveFormulaFeeding": 5254
+            }
+        ];
+
+        var hivStatusAnswer;
+        var pmtctOnArvsAnswer;
+        var feedingOptionAnswer;
+
+        switch(hivStatus.toUpperCase()) {
+            case 'REACTIVE':
+                hivStatusAnswer = conceptAnswers[0].reactive;
+                break;
+            case 'NON-REACTIVE':
+                hivStatusAnswer = conceptAnswers[0].nonReactive;
+                break;
+            case 'UNKNOWN':
+                hivStatusAnswer = conceptAnswers[0].unknown;
+                break;
+        }
+
+        switch(pmtctOnArvs.toUpperCase()) {
+            case 'YES':
+                pmtctOnArvsAnswer = conceptAnswers[1].yes;
+                break;
+            case 'NO':
+                pmtctOnArvsAnswer = conceptAnswers[1].no;
+                break;
+            default:
+                break;
+        }
+
+        switch (feedingOption.toUpperCase()) {
+            case 'EXCLUSIVE BREAST FEEDING':
+                feedingOptionAnswer = conceptAnswers[2].exclusiveBreastFeeding;
+                break;
+            case 'NO BREAST FEEDING':
+                feedingOptionAnswer = conceptAnswers[2].noBreastFeeding;
+                break;
+            case 'EXCLUSIVE FORMULA FEEDING':
+                feedingOptionAnswer = conceptAnswers[2].exclusiveFormulaFeeding;
+                break;
+            default:
+                break;
+        }
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 3753, value_coded: hivStatusAnswer } // hiv status
+            ]
+        };
+
+        if(pmtctTestDate !== '') {
+            var pmtctTestDay = pmtctTestDate.split('-')[0];
+            var pmtctTestMonth = pmtctTestDate.split('-')[1];
+            var pmtctTestYear = pmtctTestDate.split('-')[2];
+
+            var pmtctTestDates = pmtctTestYear + "-" + pmtctTestMonth + "-" + pmtctTestDay;
+
+            obs.observations.push({ concept_id: 1837, value_datetime: pmtctTestDates }); // pmtct test date
+        }
+        if(pmtctOnArvs !== '') {
+            obs.observations.push({ concept_id: 1577, value_coded: pmtctOnArvsAnswer }); // pmtct on arvs
+        }
+        if(periodOnArvs !== '') {
+            var periodOnArvsDay = periodOnArvs.split('-')[0];
+            var periodOnArvsMonth = periodOnArvs.split('-')[1];
+            var periodOnArvsYear = periodOnArvs.split('-')[2];
+
+            var periodOnArvsDate = periodOnArvsYear + "-" + periodOnArvsMonth + "-" + periodOnArvsDay;
+
+            obs.observations.push({ concept_id: 7833, value_datetime: periodOnArvsDate }); // period on arvs
+        }
+        if(feedingOption !== '') {
+            obs.observations.push({ concept_id: 1151, value_coded: feedingOptionAnswer }); // feeding option
+        }
+
+        console.log(obs.observations);
+        submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
-        console.log('hey');
         nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>
