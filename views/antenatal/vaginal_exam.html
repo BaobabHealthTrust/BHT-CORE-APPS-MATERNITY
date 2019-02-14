@@ -256,7 +256,7 @@ function isEmpty(str){
         var fundus = document.getElementById('fundus').value;
         var genetaliaInspection = document.getElementById('genetalia_inspection').value;
         var station = document.getElementById('station').value;
-        var cervialDilation = document.getElementById('cervical_dilation').value;
+        var cervicalDilation = document.getElementById('cervical_dilation').value;
         var caput = document.getElementById('caput').value;
         var moulding = document.getElementById('moulding').value;
         var membranes = document.getElementById('membranes').value;
@@ -325,6 +325,7 @@ function isEmpty(str){
         var genetaliaInspectionAnswer;
         var stationAnswer;
         var cervicalDilationAnswer;
+        var caputAnswer;
         var membranesAnswer;
         var colorOfLiqourAnswer;
         var presentingPartAnswer;
@@ -361,20 +362,152 @@ function isEmpty(str){
                 break;
         }
 
+        switch(station.toUpperCase()) {
+            case '-3':
+                stationAnswer = conceptAnswers[1]["3minus"];
+                break;
+            case '-2':
+                stationAnswer = conceptAnswers[1]["2minus"];
+                break;
+            case '-1':
+                stationAnswer = conceptAnswers[1]["1minus"];
+                break;
+            case '0':
+                stationAnswer = conceptAnswers[1].zero;
+                break;
+            case '+1':
+                stationAnswer = conceptAnswers[1]["1plus"];
+                break;
+            case '+2':
+                stationAnswer = conceptAnswers[1]["2plus"];
+                break;
+            case '+3':
+                stationAnswer = conceptAnswers[1]["3plus"];
+                break;
+            case 'N/A':
+                stationAnswer = conceptAnswers[1].notAvailable;
+                break;
+            default:
+                break;
+        }
+
+        switch (cervicalDilation.toUpperCase()) {
+            case 'NOT DONE':
+                cervicalDilationAnswer = conceptAnswers[0].notDone;
+                break;
+            case 'FINGER TIP':
+                cervicalDilationAnswer = conceptAnswers[2].fingerTip;
+                break;
+            case 'OPEN':
+                cervicalDilationAnswer = conceptAnswers[2].open;
+                break;
+            case 'CLOSED':
+                cervicalDilationAnswer = conceptAnswers[2].closed;
+                break;
+            default:
+                break;
+        }
+
+        switch (caput.toUpperCase()) {
+            case '0':
+                caputAnswer = conceptAnswers[1].zero;
+                break;
+            case '1+':
+                caputAnswer = conceptAnswers[1]["1plus"];
+                break;
+            case '2+':
+                caputAnswer = conceptAnswers[1]["2plus"];
+                break;
+            case '3+':
+                caputAnswer = conceptAnswers[1]["3plus"];
+                break;
+            case 'N/A':
+                caputAnswer = conceptAnswers[1].notAvailable;
+                break;
+            default:
+                break;
+        }
+
+        switch (membranes.toUpperCase()) {
+            case 'INTACT':
+                membranesAnswer = conceptAnswers[3].intact;
+                break;
+            case 'RAPTURED':
+                membranesAnswer = conceptAnswers[3].raptured;
+                break;
+            default:
+                break;
+        }
+
+        switch(colorOfLiqour.toUpperCase()) {
+            case 'CLEAR':
+                colorOfLiqourAnswer = conceptAnswers[4].clear;
+                break;
+            case 'MECONIUM GRADE 1':
+                colorOfLiqourAnswer = conceptAnswers[4].meconiumGrade1;
+                break;
+            case 'MECONIUM GRADE 2':
+                colorOfLiqourAnswer = conceptAnswers[4].meconiumGrade2;
+                break;
+            case 'MECONIUM GRADE 3':
+                colorOfLiqourAnswer = conceptAnswers[4].meconiumGrade3;
+                break;
+            case 'BLOOD':
+                colorOfLiqourAnswer = conceptAnswers[4].blood;
+                break;
+            case 'ABSENT':
+                colorOfLiqourAnswer = conceptAnswers[4].absent;
+                break;
+            case 'PUS':
+                colorOfLiqourAnswer = conceptAnswers[4].pus;
+                break;
+            default:
+                break;
+        }
+
+        switch (presentingPart.toUpperCase()) {
+            case 'NOT DONE':
+                presentingPartAnswer = conceptAnswers[0].notDone;
+                break;
+            case 'VERTEX':
+                presentingPartAnswer = conceptAnswers[5].vertex;
+                break;
+            case 'SACRUM':
+                presentingPartAnswer = conceptAnswers[5].sacrum;
+                break;
+            case 'BREECH':
+                presentingPartAnswer = conceptAnswers[5].breech;
+                break;
+            case 'HAND':
+                presentingPartAnswer = conceptAnswers[5].hand;
+                break;
+            case 'FOOT':
+                presentingPartAnswer = conceptAnswers[5].foot;
+                break;
+            case 'SHOULDER':
+                presentingPartAnswer = conceptAnswers[5].shoulder;
+                break;
+            case 'CORD':
+                presentingPartAnswer = conceptAnswers[5].cord;
+                break;
+            default:
+                break;
+        }
+
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-                { concept_id: 7835, value_coded: ''}, // fundus
-                { concept_id: 7841, value_coded: ''}, // genetalia inspection
-                { concept_id: 7842, value_coded: ''}, // station
-                { concept_id: 7843, value_coded: ''}, // cervical dilation
-                { concept_id: 7844, value_coded: ''}, // caput
-                { concept_id: 7944, value_coded: ''}, // moulding
-                { concept_id: 7845, value_coded: ''}, // membranes
-                { concept_id: 7847, value_coded: ''}, // rupture time
-                { concept_id: 7846, value_coded: ''}, // rupture date
-                { concept_id: 7848, value_coded: ''}, // color of liqour
-                { concept_id: 7849, value_coded: ''} // presenting part
+                { concept_id: 7835, value_numeric: fundus}, // fundus
+                { concept_id: 7841, value_coded: genetaliaInspectionAnswer}, // genetalia inspection
+                { concept_id: 7842, value_coded: stationAnswer}, // station
+                { concept_id: 7843, value_coded: cervicalDilationAnswer}, // cervical dilation
+                { concept_id: 7844, value_coded: caputAnswer}, // caput
+                { concept_id: 7944, value_coded: moulding}, // moulding
+                { concept_id: 7845, value_coded: membranesAnswer}, // membranes
+                { concept_id: 7847, value_text: ruptureTime}, // rupture time
+                { concept_id: 7846, value_datetime: ruptureDate}, // rupture date
+                { concept_id: 7848, value_coded: colorOfLiqourAnswer}, // color of liqour
+                { concept_id: 7849, value_coded: presentingPartAnswer} // presenting part
             ]
         };
 
