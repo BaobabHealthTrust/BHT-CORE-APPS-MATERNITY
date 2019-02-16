@@ -24,8 +24,6 @@
 <body id="mateme">
   <div id="container">
     <div id="content">
-
-
       <form>
          <select id="uterus" name="uterus" tt_onLoad="changeNextBTN();" helpText="Uterus"> 
           <option>Well contracted</option>
@@ -67,7 +65,6 @@
     }
 
     function postAbnorminalExamObs(encounter) {
-        console.log("I get herr");
         var uterus = document.getElementById('uterus').value;
         var statusOfPlancenta = document.getElementById('status_of_placenta').value;
 
@@ -87,7 +84,7 @@
         var uterusAnswer;
         var placentaAnswer;
 
-        switch (educationLevel.toUpperCase()) {
+        switch (uterus.toUpperCase()) {
             case 'WELL CONTRACTED':
                 uterusAnswer = conceptAnswers[0].wellContracted;
                 break;
@@ -97,7 +94,7 @@
             default:
                 break;
         }
-        switch (relative.toUpperCase()) {
+        switch (statusOfPlancenta.toUpperCase()) {
             case 'DELIVERED':
                 placentaAnswer = conceptAnswers[1].delivered;
                 break;
@@ -119,7 +116,7 @@
     }
 
     function nextPage(){
-        window.location = "../prenatalTasks.html";
+       window.location.href = "../prenatalTasks.html";
         //nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>

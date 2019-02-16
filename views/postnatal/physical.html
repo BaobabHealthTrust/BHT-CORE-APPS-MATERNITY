@@ -204,3 +204,150 @@ function isEmpty(str){
  </div>
 </body>
 
+
+<script>
+  function changeNextButton() {
+      var nextButton =  document.getElementById('nextButton');
+      nextButton.setAttribute("onmousedown","postPhysicalExam();")
+  }
+  function postPhysicalExam() {
+      var currentTime = moment().format(' HH:mm:ss');
+      var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+      encounter_datetime += currentTime;
+
+      var encounter = {
+            encounter_type_name: 'PHYSICAL EXAMINATION BABY',
+            encounter_type_id:  117,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+      };
+
+      submitParameters(encounter, "/encounters", "postPhysicalExamObs");
+  }
+
+  function postPhysicalExamObs(encounter) {
+
+    var condition = document.getElementById('baby_condition').value;
+    var temperature = document.getElementById('baby_temperature').value;
+    var respiratory = document.getElementById('baby_respiratory_rate').value;
+    var heart = document.getElementById('baby_heart_rate').value;
+    var weight = document.getElementById('baby_weight').value;
+    var abdomen = document.getElementById('baby_abdomen').value;
+    var cordTied = document.getElementById('baby_cord_tied').value;
+    var cordClean = document.getElementById('baby_cord_clean').value;
+    var abnormals = document.getElementById('baby_abnormals').value;
+    var abnormals = document.getElementById('baby_abnormals').value;
+    var abnormalities = document.getElementById('baby_abnormalities').value;
+
+var conceptAnswers = [
+
+    /*Condition*/
+    {
+        "stable": 9723,
+        "critical": 9724,
+        "dead": 6540
+    },
+     /*Baby abdomen*/
+    {
+      "distended": 9725,
+      "soft": 3243
+    },
+     /*Baby tied*/
+      {
+        "yes": 1065,
+        "no": 1066  },
+    /*Baby clean*/
+      {
+        "yes": 1065,
+        "no": 1066
+    },
+    /*Baby abnormals*/
+       {
+        "yes": 1065,
+        "no": 1066
+    }
+];
+
+var conditionAnswer;
+var abdomenAnswer;
+var tiedAnswer;
+var cleanAnswer;
+var abnormalsAnswer;
+
+switch (condition.toUpperCase()) {
+    case 'STABLE':
+        conditionAnswer = conceptAnswers[0].stable;
+        break;
+    case 'CRITICAL':
+        conditionAnswer = conceptAnswers[0].critical;
+        break;
+    case 'DEAD':
+        conditionAnswer = conceptAnswers[0].dead;
+    break;
+    default:
+        break;
+}
+switch (abdomen.toUpperCase()) {
+    case 'DISTENDED':
+      abdomenAnswer = conceptAnswers[1].distended;
+        break;
+    case 'SOFT':
+        abdomenAnswer = conceptAnswers[1].soft;
+        break;
+    default:
+        break;
+}
+switch (cordTied.toUpperCase()) {
+    case 'YES':
+        tiedAnswer = conceptAnswers[2].yes;
+        break;
+    case 'NO':
+        tiedAnswer = conceptAnswers[2].no;
+        break;
+    default:
+        break;
+  }
+switch (cordClean.toUpperCase()) {
+  case 'YES':
+      cleanAnswer = conceptAnswers[3].yes;
+      break;
+  case 'NO':
+      cleanAnswer = conceptAnswers[3].no;
+      break;
+  default:
+      break;
+}
+switch (abnormals.toUpperCase()) {
+  case 'YES':
+      abnormalsAnswer = conceptAnswers[4].yes;
+      break;
+  case 'NO':
+      abnormalsAnswer = conceptAnswers[4].no;
+      break;
+  default:
+      break;
+}
+var obs = {
+    encounter_id: encounter["encounter_id"],
+    observations: [
+        { concept_id: 8399, value_coded: conditionAnswer },
+        { concept_id: 5088, value_numeric: temperature },
+        { concept_id: 5242, value_numeric: respiratory },
+        { concept_id: 5087, value_numeric: heart }, 
+        { concept_id: 8876, value_numeric: weight },
+        { concept_id: 8400, value_coded: abdomenAnswer },
+        { concept_id: 8405, value_coded: tiedAnswer },
+        { concept_id: 8406, value_coded: cleanAnswer },
+        { concept_id: 1116, value_coded: abnormalsAnswer },
+        { concept_id: 8404, value_coded: spleenAnswer },
+        { concept_id: 8400, value_coded: spleenAnswer }
+    ]
+};
+
+submitParameters(obs, "/observations", "nextPage")
+}
+
+function nextPage(){
+nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+}
+</script>
