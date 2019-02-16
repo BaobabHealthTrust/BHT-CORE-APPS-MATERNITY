@@ -130,7 +130,6 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
         var raptureTime = document.getElementById('rupture_time').value;
 
         if(membranes === 'Intact') {
-            alert('Intacting');
             postVaginalExam();
         } else if(membranes.toUpperCase() === 'RAPTURED' && raptureTime === '') {
 
