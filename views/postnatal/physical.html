@@ -1,19 +1,14 @@
 
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
-<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
-<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-
-<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
-<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
-
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 <style>
-
 .inputFrameClass {
   width: 96% !important;
 }
@@ -24,126 +19,14 @@
 
 </style>
 
-<script>
-
-var patientID = sessionStorage.getItem("patientID");
-var programID = sessionStorage.getItem("programID");
-var tt_cancel_destination = "/";
-var apiProtocol = sessionStorage.apiProtocol;
-var apiURL = sessionStorage.apiURL;
-var apiPort = sessionStorage.apiPort;
-var patient_id = sessionStorage.patientID;
-var previousActivities = null;
-function getActivities(){
-  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-
-  if (this.readyState == 4) {
-    if (this.status == 200) {
-      var results = JSON.parse(this.responseText);
-        previousActivities = results.property_value;
-        loadActivities(previousActivities);
-    }else {
-
-        loadActivities("");
-    }
-    }
-    };
-    try {
-      req.open('GET', url, true);
-      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
-      req.send(null);
-    } catch (e) {
-    
-    }
-}
-
-function loadActivities(previousActivities) {
-  var activities = [];
-  jQuery.getJSON("/apps/ART/application.json")
-    .done(function (data) {
-      activities = data.activities.tasks;
-      renderActivities(activities, previousActivities);
-
-    })
-    .fail(function () {
-      console.log("The application " + applicationName + "'s application.json file is not available");
-  });
-
-}
-/*
-<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
-*/
-
-function renderActivities(activities, previousActivities) {
-  var ul = document.getElementById("tt_currentUnorderedListOptions");
-  for(var i = 0 ; i < activities.sort().length ; i++){
-    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
-    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
-    innerHTML += ' id="optionValue' + i + '">';
-    innerHTML+= activities[i][0] + "</div></div></div>";
-    
-    var li = document.createElement("li");
-    li.setAttribute("id", i );
-    li.setAttribute("tstvalue", activities[i][1]);
-    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
-    li.setAttribute("style","");
-    li.setAttribute("class","even");
-    li.innerHTML = innerHTML;
-    ul.appendChild(li); 
-     if(previousActivities.search(activities[i][0]) >= 0) {
-      updateInputs(i);
-    }
-  } 
-}
-
-function updateInputs(i) {
-  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
-}
-// function changeNextBTN() {
-//   var nextBTN = document.getElementById("nextButton");
-//   nextButton.setAttribute("onmousedown","setActivities();");
-
-// }
-
-function setActivities() {
-  var values = document.getElementById("touchscreenInput0").value;
-  if(isEmpty(values))
-    return;
-
-  var regex = new RegExp(";", "g");
-  values = values.replace(regex, ",");
-
-  var parameters = { property: "Activities", property_value: values }
-
-  submitParameters(parameters, "/user_properties", "redirectTo"); 
-  
-}
-
-function redirectTo(obj) {
-  sessionStorage.setItem("userActivities", obj.property_value);
-  document.location = "/";
-}
-
-function isEmpty(str){
-  try {
-    return (str.replace(/\s+/g, '').length < 1);
-  }catch(e){
-    return true;
-  }
-}
-
-</script>
-
 <body id="mateme">
   <div id="container">
     <div id="content">
 
 
-         <form action="../prenatalTasks.html">
+         <form>
      
-          <select id="baby_condition" name="baby_condition" tt_onLoad="changeNextBTN();" helpText="Baby: Condition at admission"> 
+          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onUnLoad="changeNextButton();"> 
             <option>Stable</option>
             <option>Critical</option>
             <option>Dead</option>
@@ -169,7 +52,7 @@ function isEmpty(str){
           tt_pageStyleClass="Numeric NumbersOnlyWithDecimal"  condition = "__$('baby_condition').value != 'Dead'"/>
 
           <select id="baby_abdomen" name="baby_abdomen" tt_onLoad="changeNextBTN();" helpText="Baby: Abdomen"
-          ondition = "__$('baby_condition').value != 'Dead'"> 
+          condition = "__$('baby_condition').value != 'Dead'"> 
             <option>Distended</option>
             <option>Soft</option>
            </select>
@@ -186,7 +69,7 @@ function isEmpty(str){
             <option>No</option>
           </select>
 
-          <select id="baby_abnormals" name="baby_abnormals" tt_onLoad="changeNextBTN();" helpText="Baby: abnormalities"
+          <select id="baby_abnormals" name="baby_abnormals" tt_onLoad="changeNextButton();" helpText="Baby: abnormalities"
           condition = "__$('baby_condition').value != 'Dead'"> 
             <option>Yes</option>
             <option>No</option>
@@ -196,7 +79,7 @@ function isEmpty(str){
           id="baby_abnormalities" field_type="alpha" 
           key="baby_abnormalities" helpText="Specify any abnormalities"  
           allowFreeText="true" 
-          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'" /> 
+          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'" tt_onLoad="changeNextButton();"/> 
 
       </form>
 
@@ -206,148 +89,177 @@ function isEmpty(str){
 
 
 <script>
-  function changeNextButton() {
-      var nextButton =  document.getElementById('nextButton');
-      nextButton.setAttribute("onmousedown","postPhysicalExam();")
-  }
-  function postPhysicalExam() {
-      var currentTime = moment().format(' HH:mm:ss');
-      var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
-      encounter_datetime += currentTime;
+     var patientID = sessionStorage.getItem("patientID");
+     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
-      var encounter = {
-            encounter_type_name: 'PHYSICAL EXAMINATION BABY',
-            encounter_type_id:  117,
-            patient_id: sessionStorage.patientID,
-            encounter_datetime: encounter_datetime
-      };
 
-      submitParameters(encounter, "/encounters", "postPhysicalExamObs");
-  }
+      function changeNextButton() {
+          console.log("Change button");
+          var condition = document.getElementById('baby_condition').value;
+          var abnormals = document.getElementById('baby_abnormals').value;
+          if (condition === 'Dead') {
+            postPhysicalExam();
+          } else {
+            var nextButton =  document.getElementById('nextButton');
+            nextButton.setAttribute("onmousedown","postPhysicalExam();")
+          }
+       
+      }
+      function postPhysicalExam() {
+          var currentTime = moment().format(' HH:mm:ss');
+          var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+          encounter_datetime += currentTime;
 
-  function postPhysicalExamObs(encounter) {
+          var encounter = {
+                encounter_type_name: 'PHYSICAL EXAMINATION BABY',
+                encounter_type_id:  117,
+                patient_id: sessionStorage.patientID,
+                encounter_datetime: encounter_datetime
+          };
 
-    var condition = document.getElementById('baby_condition').value;
-    var temperature = document.getElementById('baby_temperature').value;
-    var respiratory = document.getElementById('baby_respiratory_rate').value;
-    var heart = document.getElementById('baby_heart_rate').value;
-    var weight = document.getElementById('baby_weight').value;
-    var abdomen = document.getElementById('baby_abdomen').value;
-    var cordTied = document.getElementById('baby_cord_tied').value;
-    var cordClean = document.getElementById('baby_cord_clean').value;
-    var abnormals = document.getElementById('baby_abnormals').value;
-    var abnormals = document.getElementById('baby_abnormals').value;
-    var abnormalities = document.getElementById('baby_abnormalities').value;
+          submitParameters(encounter, "/encounters", "postPhysicalExamObs");
+      }
 
-var conceptAnswers = [
+      function postPhysicalExamObs(encounter) {
+        var condition = document.getElementById('baby_condition').value;
+        var temperature = document.getElementById('baby_temperature').value;
+        var respiratory = document.getElementById('baby_respiratory_rate').value;
+        var heart = document.getElementById('baby_heart_rate').value;
+        var weight = document.getElementById('baby_weight').value;
+        var abdomen = document.getElementById('baby_abdomen').value;
+        var cordTied = document.getElementById('baby_cord_tied').value;
+        var cordClean = document.getElementById('baby_cord_clean').value;
+        var abnormals = document.getElementById('baby_abnormals').value;
+        var abnormals = document.getElementById('baby_abnormals').value;
+        var abnormalities = document.getElementById('baby_abnormalities').value;
 
-    /*Condition*/
-    {
-        "stable": 9723,
-        "critical": 9724,
-        "dead": 6540
-    },
-     /*Baby abdomen*/
-    {
-      "distended": 9725,
-      "soft": 3243
-    },
-     /*Baby tied*/
-      {
-        "yes": 1065,
-        "no": 1066  },
-    /*Baby clean*/
-      {
-        "yes": 1065,
-        "no": 1066
-    },
-    /*Baby abnormals*/
-       {
-        "yes": 1065,
-        "no": 1066
+    var conceptAnswers = [
+
+        /*Condition*/
+        {
+            "stable": 9723,
+            "critical": 9724,
+            "dead": 6540
+        },
+        /*Baby abdomen*/
+        {
+          "distended": 9725,
+          "soft": 3243
+        },
+        /*Baby tied*/
+          {
+            "yes": 1065,
+            "no": 1066  },
+        /*Baby clean*/
+          {
+            "yes": 1065,
+            "no": 1066
+        },
+        /*Baby abnormals*/
+          {
+            "yes": 1065,
+            "no": 1066
+        }
+    ];
+
+    var conditionAnswer;
+    var abdomenAnswer;
+    var tiedAnswer;
+    var cleanAnswer;
+    var abnormalsAnswer;
+
+    switch (condition.toUpperCase()) {
+        case 'STABLE':
+            conditionAnswer = conceptAnswers[0].stable;
+            break;
+        case 'CRITICAL':
+            conditionAnswer = conceptAnswers[0].critical;
+            break;
+        case 'DEAD':
+            conditionAnswer = conceptAnswers[0].dead;
+        break;
+        default:
+            break;
     }
-];
+    switch (abdomen.toUpperCase()) {
+        case 'DISTENDED':
+          abdomenAnswer = conceptAnswers[1].distended;
+            break;
+        case 'SOFT':
+            abdomenAnswer = conceptAnswers[1].soft;
+            break;
+        default:
+            break;
+    }
+    switch (cordTied.toUpperCase()) {
+        case 'YES':
+            tiedAnswer = conceptAnswers[2].yes;
+            break;
+        case 'NO':
+            tiedAnswer = conceptAnswers[2].no;
+            break;
+        default:
+            break;
+      }
+    switch (cordClean.toUpperCase()) {
+      case 'YES':
+          cleanAnswer = conceptAnswers[3].yes;
+          break;
+      case 'NO':
+          cleanAnswer = conceptAnswers[3].no;
+          break;
+      default:
+          break;
+    }
+    switch (abnormals.toUpperCase()) {
+      case 'YES':
+          abnormalsAnswer = conceptAnswers[4].yes;
+          break;
+      case 'NO':
+          abnormalsAnswer = conceptAnswers[4].no;
+          break;
+      default:
+          break;
+    }
+    var obs = {
+        encounter_id: encounter["encounter_id"],
+        observations: [
+            { concept_id: 8399, value_coded: conditionAnswer }
+              ]
+    };
+        if(temperature !== '') {
+            obs.observations.push( { concept_id: 5088, value_numeric: temperature } ); 
+        }
+        if(respiratory !== '') {
+            obs.observations.push(  { concept_id: 5242, value_numeric: respiratory } ); 
+        }
+        if(heart !== '') {
+            obs.observations.push(   { concept_id: 5087, value_numeric: heart } ); 
+        }
+        if(weight !== '') {
+            obs.observations.push( { concept_id: 8876, value_numeric: weight } ); 
+        }
+        if(abdomen !== '') {
+            obs.observations.push( { concept_id: 8400, value_coded: abdomenAnswer } ); 
+        }
+        if(cordTied !== '') {
+            obs.observations.push(  { concept_id: 8405, value_coded: tiedAnswer } ); 
+        }
+        if(cordClean !== '') {
+            obs.observations.push(  { concept_id: 8406, value_coded: cleanAnswer } ); 
+        }
+        if(abnormals !== '') {
+            obs.observations.push(  { concept_id: 1116, value_coded: abnormalsAnswer } ); 
+        }
+        if(abnormalities !== '') {
+            obs.observations.push(  { concept_id: 8404, value_coded: abnormalities } ); 
+        }
+        submitParameters(obs, "/observations", "nextPage")
+    }
 
-var conditionAnswer;
-var abdomenAnswer;
-var tiedAnswer;
-var cleanAnswer;
-var abnormalsAnswer;
-
-switch (condition.toUpperCase()) {
-    case 'STABLE':
-        conditionAnswer = conceptAnswers[0].stable;
-        break;
-    case 'CRITICAL':
-        conditionAnswer = conceptAnswers[0].critical;
-        break;
-    case 'DEAD':
-        conditionAnswer = conceptAnswers[0].dead;
-    break;
-    default:
-        break;
-}
-switch (abdomen.toUpperCase()) {
-    case 'DISTENDED':
-      abdomenAnswer = conceptAnswers[1].distended;
-        break;
-    case 'SOFT':
-        abdomenAnswer = conceptAnswers[1].soft;
-        break;
-    default:
-        break;
-}
-switch (cordTied.toUpperCase()) {
-    case 'YES':
-        tiedAnswer = conceptAnswers[2].yes;
-        break;
-    case 'NO':
-        tiedAnswer = conceptAnswers[2].no;
-        break;
-    default:
-        break;
-  }
-switch (cordClean.toUpperCase()) {
-  case 'YES':
-      cleanAnswer = conceptAnswers[3].yes;
-      break;
-  case 'NO':
-      cleanAnswer = conceptAnswers[3].no;
-      break;
-  default:
-      break;
-}
-switch (abnormals.toUpperCase()) {
-  case 'YES':
-      abnormalsAnswer = conceptAnswers[4].yes;
-      break;
-  case 'NO':
-      abnormalsAnswer = conceptAnswers[4].no;
-      break;
-  default:
-      break;
-}
-var obs = {
-    encounter_id: encounter["encounter_id"],
-    observations: [
-        { concept_id: 8399, value_coded: conditionAnswer },
-        { concept_id: 5088, value_numeric: temperature },
-        { concept_id: 5242, value_numeric: respiratory },
-        { concept_id: 5087, value_numeric: heart }, 
-        { concept_id: 8876, value_numeric: weight },
-        { concept_id: 8400, value_coded: abdomenAnswer },
-        { concept_id: 8405, value_coded: tiedAnswer },
-        { concept_id: 8406, value_coded: cleanAnswer },
-        { concept_id: 1116, value_coded: abnormalsAnswer },
-        { concept_id: 8404, value_coded: spleenAnswer },
-        { concept_id: 8400, value_coded: spleenAnswer }
-    ]
-};
-
-submitParameters(obs, "/observations", "nextPage")
-}
-
-function nextPage(){
-nextEncounter(sessionStorage.patientID, sessionStorage.programID);
-}
+    function nextPage(){
+     // window.location.href = "../prenatalTasks.html";
+      //snextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
 </script>
