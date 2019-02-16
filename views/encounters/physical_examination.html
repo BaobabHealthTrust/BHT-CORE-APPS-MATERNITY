@@ -105,7 +105,7 @@
 
           <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number" tt_onLoad="" 
           tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
-           __$('fundus').value != 'N/A' && __$('contractions_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" />
+           __$('fundus').value != 'N/A' && __$('contraction_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" />
 
           <input type="text" name="station" 
           id="station" field_type="alpha" 
@@ -189,7 +189,7 @@
     
             /*Lie*/
             {
-               // "longitudinal": 1065,
+               "longitudinal": 9717,
                 "transverse": 7147,
                 "oblique": 7885,
                 "undefined": 8805
@@ -227,6 +227,13 @@
                 "right_mento_transverse": 7907,
                 "right_mento_posterior": 7906
             },
+            /* shoulder */
+                {
+                "leftAcromionAnterior": 7908,
+                "leftAcromioPosterior": 7909,
+                "rightAcromionAnterior": 7910,
+                "rightAcromionPosterior": 7911
+            },
                 /*Contractions*/
             {
                 "yes": 1065,
@@ -247,7 +254,7 @@
                 "three_plus": 7131,
                 "na": 1175
             },
-            /* Contraction intensity */
+            /* Membranes answer */
                  {
                 "intact": 9707,
                 "raptured": 8653,
@@ -275,6 +282,7 @@
         var mouldingAnswer;
         var membranesAnswer;
         var descentAnswer;
+        var faceAnswer;
         switch (lie.toUpperCase()) {
             case 'TRANSVERSE':
                 lieAnswer = conceptAnswers[0].transverse;
@@ -345,22 +353,37 @@
             default:
                 break;
         }
-        switch (shoulder.toUpperCase()) {
+        switch (face.toUpperCase()) {
             case 'LEFT MENTO ANTERIOR':
-              shoulderAnswer = conceptAnswers[4].left_mento_anterior;
+                 faceAnswer = conceptAnswers[4].left_mento_anterior;
                 break;
             case 'LEFT MENTO TRANSVERSE':
-             shoulderAnswer = conceptAnswers[4].left_mento_transverse;
+                faceAnswer = conceptAnswers[4].left_mento_transverse;
                 break;
             case 'LEFT MENTO POSTERIOR':
-             shoulderAnswer = conceptAnswers[4].left_mento_posterior;
+               faceAnswer = conceptAnswers[4].left_mento_posterior;
                 break;
             case 'RIGHT MENTO ANTERIOR':
-              shoulderAnswer = conceptAnswers[4].right_mento_anterior;
+               faceAnswer = conceptAnswers[4].right_mento_anterior;
             case 'RIGHT MENTO TRANSVERSE':
-              shoulderAnswer = conceptAnswers[4].right_mento_transverse;
+               faceAnswer = conceptAnswers[4].right_mento_transverse;
             case 'RIGHT MENTO POSTERIOR':
-              shoulderAnswer = conceptAnswers[4].right_mento_posterior;       
+              faceAnswer = conceptAnswers[4].right_mento_posterior;       
+            break;
+            default:
+                break;
+        }
+        switch (shoulder.toUpperCase()) {
+            case 'LEFT ACROMION DORSAL ANTERIOR':
+              shoulderAnswer = conceptAnswers[4].leftAcromionAnterior;
+                break;
+            case 'LEFT ACROMION DORSAL POSTERIOR':
+             shoulderAnswer = conceptAnswers[4].leftAcromioPosterior;
+                break;
+            case 'RIGHT ACROMION DORSAL ANTERIOR':
+              shoulderAnswer = conceptAnswers[4].rightAcromionAnterior;
+            case 'RIGHT ACROMION DORSAL POSTERIOR':
+              shoulderAnswer = conceptAnswers[4].rightAcromionPosterior;       
             break;
             default:
                 break;
@@ -402,7 +425,7 @@
              mouldingAnswer = conceptAnswers[7].two_plus;
           break;
           case '3+':
-             mouldingAnswer = conceptAnswers[7].three-plus;
+             mouldingAnswer = conceptAnswers[7].three_plus;
           break;
           case 'N/A':
              mouldingAnswer = conceptAnswers[7].na;
@@ -415,7 +438,7 @@
              membranesAnswer = conceptAnswers[8].intact;
               break;
           case 'RAPTURED':
-             contractionsAnswer = conceptAnswers[8].raptured;
+             membranesAnswer = conceptAnswers[8].raptured;
               break;
           default:
               break;
@@ -449,23 +472,37 @@
             encounter_id: encounter["encounter_id"],
             observations: [
                 { concept_id: 7835, value_numeric: fundus }, 
+                { concept_id: 7835, value_text: presentation }, 
                 { concept_id: 7836, value_coded: lieAnswer },
                 { concept_id: 7837, value_coded: positionAnswer },
-                { concept_id: 7895, value_coded: vertexAnswer },
-                { concept_id: 9425, value_coded: breechAnswer },
-                { concept_id: 7915, value_coded: shoulderAnswer },
                 { concept_id: 7838, value_coded: contractionsAnswer },
-                { concept_id: 7929, value_coded: contractionsIntensityAnswers },
-                { concept_id: 7943, value_text: contractions_level },
                 { concept_id: 7842, value_text: station },
                 { concept_id: 7845, value_coded: membranesAnswer },
-                { concept_id: 7840, value_coded: descentAnswer }
+                { concept_id: 7840, value_coded: descentAnswer },
+                { concept_id: 7944, value_coded: mouldingAnswer }
             ]
         };
-  
+        if(breech !== '') {
+            obs.observations.push( { concept_id: 9425, value_coded: breechAnswer }); 
+        }
+        if(vertex !== '') {
+            obs.observations.push( { concept_id: 7895, value_coded: vertexAnswer }); 
+        }
+        if(face !== '') {
+            obs.observations.push( { concept_id: 7887, value_coded: faceAnswer }); 
+        }
+        if(shoulder !== '') {
+            obs.observations.push( { concept_id: 7915, value_coded: shoulderAnswer }); 
+        }
+        if(contractions_intensity !== '') {
+            obs.observations.push( { concept_id: 7929, value_coded: contractionsIntensityAnswers }); 
+        }
+        if(contractions_level !== '') {
+            obs.observations.push( { concept_id: 7943, value_text: contractions_level }); 
+        }
         submitParameters(obs, "/observations", "nextPage")
     }
-  
+   
     function nextPage(){
         nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }

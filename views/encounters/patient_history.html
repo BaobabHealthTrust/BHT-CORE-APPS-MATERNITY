@@ -51,11 +51,9 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
       <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
      
-      <input type="text" name="menstruation_date" 
-        id="menstruation_date" field_type="date" 
-          helpText="Last Menstruation Date"  
-          tt_pageStyleClass="date"  allowFreeText="true" tt_onLoad="changeNextButton();"
-          condition="$(&quot;menstruation_date&quot;).value == &quot;&quot;" /> 
+      <input type="text" name="men_date" id="men_date" helpText="Last Menstruation Date" field_type="date"
+      tt_pageStyleClass="date" tt_onLoad="changeNextButton();" />
+
       </form>
 
    </div>
@@ -92,8 +90,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var num_of_abortions = document.getElementById('num_of_abortions').value;
       var delivery_mode = document.getElementById('delivery_mode').value;
       var ttv_status = document.getElementById('ttv_status').value;
-      var menstruation_date = document.getElementById('menstruation_date');
-
+      var menstruation_date = document.getElementById('men_date').value;
       YesNoConcepts = {};
       YesNoConcepts["Yes"] = 1065;
       YesNoConcepts["No"] = 1066;
@@ -142,16 +139,24 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var obs = {
           encounter_id: encounter["encounter_id"],
           observations: [
-              { concept_id: 7142, value_coded: multiplePregnancyAnswer }, // saving
+              { concept_id: 7142, value_coded: multiplePregnancyAnswer }, 
               { concept_id: 1755, value_text: gravida },
               { concept_id: 1053, value_numeric: num_of_deliveries },
-              { concept_id: 7942, value_numeric: num_of_abortions }, // saving
+              { concept_id: 7942, value_numeric: num_of_abortions }, 
               { concept_id: 7438, value_coded: deliveryModeAnswer },
-              { concept_id: 7124, value_numeric: ttv_status },
-             { concept_id: 9206, value_datetime: menstruation_date }
+              { concept_id: 7124, value_numeric: ttv_status }
           ]
       };
+      if(menstruation_date !== '') {
+            console.log("Worrrkkkkkk");
+            var menstruationDay = menstruation_date.split('-')[0];
+            var menstruationMonth = menstruation_date.split('-')[1];
+            var menstruationYear = menstruation_date.split('-')[2];
 
+            var menstruationDates = menstruationYear + "-" + menstruationMonth + "-" + menstruationDay;
+
+            obs.observations.push({ concept_id: 968, value_datetime: menstruationDates }); 
+        }
       submitParameters(obs, "/observations", "nextPage")
   }
 
