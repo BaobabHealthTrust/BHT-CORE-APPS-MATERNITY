@@ -49,10 +49,10 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
             <option>Breech Delivery</option>
       </select>
 
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
-     
-      <input type="text" name="men_date" id="men_date" helpText="Last Menstruation Date" field_type="date"
-      tt_pageStyleClass="date" tt_onLoad="changeNextButton();" />
+      <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
+      tt_pageStyleClass="date" />
+
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="changeNextButton();"/>
 
       </form>
 
@@ -62,6 +62,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
 
 <script>
+
   function changeNextButton() {
       var nextButton =  document.getElementById('nextButton');
       nextButton.setAttribute("onmousedown","postPatientHistory();")
@@ -90,7 +91,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var num_of_abortions = document.getElementById('num_of_abortions').value;
       var delivery_mode = document.getElementById('delivery_mode').value;
       var ttv_status = document.getElementById('ttv_status').value;
-      var menstruation_date = document.getElementById('men_date').value;
+      var menstruation_date = document.getElementById('menstruation_date').value;
       YesNoConcepts = {};
       YesNoConcepts["Yes"] = 1065;
       YesNoConcepts["No"] = 1066;
@@ -148,7 +149,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           ]
       };
       if(menstruation_date !== '') {
-            console.log("Worrrkkkkkk");
+            console.log("Worrrk")
             var menstruationDay = menstruation_date.split('-')[0];
             var menstruationMonth = menstruation_date.split('-')[1];
             var menstruationYear = menstruation_date.split('-')[2];
