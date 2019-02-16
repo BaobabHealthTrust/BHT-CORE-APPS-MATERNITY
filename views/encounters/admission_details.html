@@ -162,16 +162,16 @@ function setDate(){
           allowFreeText="true" 
           condition = "$('admission_date').value.trim().length > 0;"/> 
 
-          <select id="observation" name="observations" tt_onLoad="changeNextBTN();" helpText="Observation"> 
+          <select id="observation" name="observations" helpText="Observation">
           <option>Healthy</option>
           <option>Ill looking</option>
           </select>
 
-          <select id="condition" name="conditions" tt_onLoad="changeNextBTN();" helpText="Condition">  
+          <select id="condition" name="conditions" helpText="Condition">
              <option>Stable</option>
              <option>Critical</option>
          </select>
-         <select id="anemic" name="anemic" tt_onLoad="changeNextBTN();" helpText="Anemic">   <option>Yes</option>
+         <select id="anemic" name="anemic" helpText="Anemic">   <option>Yes</option>
             <option>No</option>
           </select>
           <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema">   <option>None</option>
@@ -202,7 +202,61 @@ function setDate(){
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "nextPage");
+        submitParameters(encounter, "/encounters", "postObstetricHistoryObs");
+    }
+
+    function postObstetricHistoryObs(encounter) {
+
+        var admissionDate = document.getElementById('admission_date').value;
+        var admissionTime = document.getElementById('admission_time').value;
+        var observationValue = document.getElementById('observation').value;
+        var conditionValue = document.getElementById('condition').value;
+        var anemicValue = document.getElementById('anemic').value;
+        var oedemaValue = document.getElementById('oedema').value;
+
+        var admissionDay = admissionDate.split('-')[0];
+        var admissionMonth = admissionDate.split('-')[1];
+        var admissionYear = admissionDate.split('-')[2];
+
+        var admissionDateValue = admissionYear + '-' + admissionMonth + '-' + admissionDay;
+
+        var conceptAnswers = [
+            // for observations
+            {
+                "healthy": 1888,
+                "illLooking": 2308,
+            },
+            // condition status
+            {
+                "stable": '',
+                "critical": ''
+            },
+            // anemic
+            {
+                "yes": 1065,
+                "no": 1066
+            },
+            // oedema
+            {
+                "plusOne": 7129,
+                "plusTwo": 7130,
+                "plusThree": 7131
+            }
+        ];
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 7826, value_datetime: admissionDateValue }, // admission date
+                { concept_id: 7827, value_text: admissionTime }, // admission time
+                { concept_id: 2592, value_coded: conceptAnswers[0] }, // observations
+                { concept_id: 7828, value_coded:  conceptAnswers[1] }, // condition
+                { concept_id: 3, value_coded: conceptAnswers[2] }, // anemic
+                { concept_id: 460, value_coded: conceptAnswers[3] } // oedema
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
