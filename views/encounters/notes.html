@@ -1,0 +1,89 @@
+
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+
+<style>
+
+.inputFrameClass {
+  width: 96% !important;
+}
+
+#clearButton {
+  display: none;
+}
+
+</style>
+
+<body id="mateme">
+  <div id="container">
+    <div id="content">
+      <form>
+        <input type="text" name="impression" 
+          id="impression" field_type="alpha" 
+          key="impression" helpText="Impression"  
+          ajaxURL="/search/impression?search_string=" 
+          key=impression" allowFreeText="true" />
+
+           <input type="text" name="plan" 
+          id="plan" field_type="alpha" 
+          key="plan" helpText="Plan"  
+          ajaxURL="/search/given_name?search_string=" 
+          key=plan" allowFreeText="true" tt_onLoad="changeNextButton();"/>
+      </form>
+
+   </div>
+ </div>
+</body>
+
+<script>
+    function changeNextButton() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postAdmissionNotes();")
+    }
+
+    function postAdmissionNotes() {
+        var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
+
+        var encounter = {
+            encounter_type_name: 'ADMISSION NOTES',
+            encounter_type_id:  105,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+        };
+
+        submitParameters(encounter, "/encounters", "postAdmissionNotesObs");
+    }
+
+    function postAdmissionNotesObs(encounter) {
+
+        var impression = document.getElementById('impression').value;
+        var plan = document.getElementById('plan').value;
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 1375, value_datetime: impression }, // impression . If an endpoint is available
+                // this will accept coded answers. In the meantime, text will do
+                { concept_id: 7834, value_text: plan }, // plan
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
+    }
+
+    function nextPage(){
+        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
+</script>

@@ -219,36 +219,36 @@
  
  <!--          END OF SECOND BABY
   -->
- 
-  <!--          THIRD BABY 
-  -->         
-         <select id="babyoutcome3" name="baby_outcome3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd</sup> Baby: Status" condition ="__$('number_babies').value > 2 "> 
+
+  <!--          THIRD BABY
+  -->
+         <select id="babyoutcome3" name="baby_outcome3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd</sup> Baby: Status" condition ="__$('number_babies').value > 2 ">
             <option>Cried</option>
             <option>No cry</option>
          </select>
 
-         <input type="text" name="time_of_delivery3" 
-         id="time_of_delivery3" field_type="advancedTime" 
-         key="time_of_delivery3" helpText="3<sup>nd </sup> Baby: Time of Deliver"  
-         allowFreeText="true" 
+         <input type="text" name="time_of_delivery3"
+         id="time_of_delivery3" field_type="advancedTime"
+         key="time_of_delivery3" helpText="3<sup>nd </sup> Baby: Time of Deliver"
+         allowFreeText="true"
          condition ="__$('number_babies').value > 2 " />
 
-         <input type="text" name="date_of_delivery3" 
-         id="date_of_delivery3" field_type="date" 
-         key="date_of_delivery3" helpText="3<sup>nd </sup> Baby: Date of Deliver"  
-         tt_pageStyleClass="date"  allowFreeText="true" 
-         condition ="__$('number_babies').value > 2 " /> 
+         <input type="text" name="date_of_delivery3"
+         id="date_of_delivery3" field_type="date"
+         key="date_of_delivery3" helpText="3<sup>nd </sup> Baby: Date of Deliver"
+         tt_pageStyleClass="date"  allowFreeText="true"
+         condition ="__$('number_babies').value > 2 " />
 
-         <select id="baby_gender3" name="baby_gender3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd </sup>Baby: Gender" condition ="__$('number_babies').value > 2 "> 
+         <select id="baby_gender3" name="baby_gender3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd </sup>Baby: Gender" condition ="__$('number_babies').value > 2 ">
             <option>Male</option>
             <option>Female</option>
          </select>
 
-         <select id="delivery_mode3" name="delivery_mode3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd</sup> Baby: Delivery Mode" condition ="__$('number_babies').value > 2 "> 
+         <select id="delivery_mode3" name="delivery_mode3" tt_onLoad="changeNextBTN();" helpText="3<sup>nd</sup> Baby: Delivery Mode" condition ="__$('number_babies').value > 2 ">
             <option>Spontaneous vaginal Delivery</option>
             <option>Breech Delivery</option>
          </select>
- 
+
  <!--          END OF THIRD BABY
   -->
  
@@ -271,3 +271,83 @@
     </div>
   </div>
  </body>
+
+<script>
+    function changeNextButton() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postCurrentDelivery();")
+    }
+
+    function postCurrentDelivery() {
+        var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
+
+        var encounter = {
+            encounter_type_name: 'CURRENT DELIVERY',
+            encounter_type_id:  115,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+        };
+
+        submitParameters(encounter, "/encounters", "postCurrentDeliveryObs");
+    }
+
+    function postCurrentDeliveryObs(encounter) {
+
+        var admissionDate = document.getElementById('admission_date').value;
+        var admissionTime = document.getElementById('admission_time').value;
+        var observationValue = document.getElementById('observation').value;
+        var conditionValue = document.getElementById('condition').value;
+        var anemicValue = document.getElementById('anemic').value;
+        var oedemaValue = document.getElementById('oedema').value;
+
+        var admissionDay = admissionDate.split('-')[0];
+        var admissionMonth = admissionDate.split('-')[1];
+        var admissionYear = admissionDate.split('-')[2];
+
+        var admissionDateValue = admissionYear + '-' + admissionMonth + '-' + admissionDay;
+
+        var conceptAnswers = [
+            // for observations
+            {
+                "healthy": 1888,
+                "illLooking": 2308,
+            },
+            // condition status
+            {
+                "stable": '',
+                "critical": ''
+            },
+            // anemic
+            {
+                "yes": 1065,
+                "no": 1066
+            },
+            // oedema
+            {
+                "plusOne": 7129,
+                "plusTwo": 7130,
+                "plusThree": 7131
+            }
+        ];
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 7826, value_datetime: admissionDateValue }, // admission date
+                { concept_id: 7827, value_text: admissionTime }, // admission time
+                { concept_id: 2592, value_coded: conceptAnswers[0] }, // observations
+                { concept_id: 7828, value_coded:  conceptAnswers[1] }, // condition
+                { concept_id: 3, value_coded: conceptAnswers[2] }, // anemic
+                { concept_id: 460, value_coded: conceptAnswers[3] } // oedema
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
+    }
+
+    function nextPage(){
+        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
+</script>
