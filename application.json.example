@@ -76,7 +76,7 @@
       "available": true,
       "encountersName": "clinician notes",
       "activitiesIcon": "/assets/images/clinical-notes.png",
-      "url": "/apps/MATERNITY/views/antenatal/notes.html"
+      "url": "/apps/MATERNITY/views/encounters/notes.html"
     },
     "admission diagnosis": {
       "available": true,
