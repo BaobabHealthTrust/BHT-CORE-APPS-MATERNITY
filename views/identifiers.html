@@ -59,13 +59,11 @@
           if (this.readyState == 4) {
             if (this.status == 200) {
               var results = JSON.parse(this.responseText);
-              console.log('results');
               document.getElementById("patient_id").innerHTML = ((results.patient_id !== "N/A") ? results.patient_id : "No Start Date Available");
               document.getElementById("patient_residence").innerHTML = ((results.residence !== "N/A") ? results.residence : "Residence not Available");
               document.getElementById("patient_age").innerHTML = ((results.age !== "N/A") ? results.age : "No Start Date Available");
             }
           }
-          console.log(results);
         };
         try {
           req.open('GET', url, true);
