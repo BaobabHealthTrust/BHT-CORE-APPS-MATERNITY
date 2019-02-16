@@ -37,7 +37,7 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
     <div id="content">
 
          <form>
-          <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
+          <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
 
           <select id="genetalia_inspection" name="genetalia_inspection" helpText="Genetalia Inspection">
             <option>Not done</option>
@@ -96,7 +96,7 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
           condition ="__$('membranes').value == 'Raptured'"  /> 
 
           <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date" 
-           condition ="$('membranes').value.toLowerCase() == 'ruptured'" tt_pageStyleClass="date" tt_onUnLoad = "window.clearInterval(timedEvent);"/>
+           condition ="$('membranes').value == 'Raptured'" tt_pageStyleClass="date"/>
 
            <select id="colour_of_liqour" name="colour_of_liqour" helpText="Colour of Liqour" condition = "__$('membranes').value == 'Raptured'">
           <option>Clear</option>
@@ -130,14 +130,14 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
         var raptureTime = document.getElementById('rupture_time').value;
 
         if(membranes === 'Intact') {
+            alert('Intacting');
             postVaginalExam();
         } else if(membranes.toUpperCase() === 'RAPTURED' && raptureTime === '') {
-            gotoNextPage();
+
         } else {
             var nextButton =  document.getElementById('nextButton');
             nextButton.setAttribute("onmousedown","nextPage();")
         }
-
     }
 
     function postVaginalExam() {
@@ -157,7 +157,6 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
 
 
     function postVaginalObs(encounter) {
-
         var fundus = document.getElementById('fundus').value;
         var genetaliaInspection = document.getElementById('genetalia_inspection').value;
         var station = document.getElementById('station').value;
@@ -407,19 +406,28 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
                 { concept_id: 7842, value_coded: stationAnswer}, // station
                 { concept_id: 7843, value_coded: cervicalDilationAnswer}, // cervical dilation
                 { concept_id: 7844, value_coded: caputAnswer}, // caput
-                { concept_id: 7944, value_coded: moulding}, // moulding
-                { concept_id: 7845, value_coded: membranesAnswer}, // membranes
-                { concept_id: 7847, value_text: ruptureTime}, // rupture time
-                { concept_id: 7846, value_datetime: ruptureDate}, // rupture date
-                { concept_id: 7848, value_coded: colorOfLiqourAnswer}, // color of liqour
-                { concept_id: 7849, value_coded: presentingPartAnswer} // presenting part
+                { concept_id: 7944, value_text: moulding}, // moulding
+                { concept_id: 7845, value_coded: membranesAnswer} // membranes
             ]
         };
+
+        if(ruptureTime !== '') {
+            obs.observations.push({ concept_id: 7847, value_text: ruptureTime});
+        }
+        if(ruptureDate !== '') {
+            obs.observations.push({ concept_id: 7846, value_datetime: ruptureDate});
+        }
+        if(colorOfLiqour !== '') {
+            obs.observations.push({ concept_id: 7848, value_coded: colorOfLiqourAnswer});
+        }
+        if(presentingPart !== '') {
+            obs.observations.push({ concept_id: 7849, value_coded: presentingPartAnswer});
+        }
 
         submitParameters(obs, "/observations", "nextPage")
     }
 
-    function nextPage(){
+    function nextPage() {
         nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>
