@@ -1,76 +1,82 @@
 {
   "encounters": {
-   "ante-natal": {
-      "available": true,
-     "encountersName": "ante-natal",
-     "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/antenatal.html"
-    },
-    "post-natal": {
-      "available": true,
-      "encountersName": "post-natal",
-      "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/prenatalTasks.html"
-    },
     "update outcome": {
       "available": true,
       "encountersName": "update outcome",
-      "activitiesIcon": "/assets/images/consultation.png",
+      "activitiesIcon": "/assets/images/outcomes.png",
       "url": "/apps/MATERNITY/views/encounters/update_outcome.html"
     },
     "update hiv status": {
       "available": true,
       "encountersName": "update hiv status",
-      "activitiesIcon": "/assets/images/dispensing.png",
+      "activitiesIcon": "/assets/images/hiv-staging.png",
       "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
     },
     "vitals": {
       "available": true,
       "encountersName": "vitals",
-      "encountersIcon": "/assets/images/aids.png",
+      "activitiesIcon": "/assets/images/vitals.png",
       "url": "/views/patient/vitals.html"
     },
     "medical history": {
       "available": true,
       "encountersName": "medical history",
-      "encountersIcon": "/assets/images/aids.png",
+      "activitiesIcon": "/assets/images/medical_history.png",
       "url": "/apps/MATERNITY/views/encounters/patient_history.html"
     },
     "social history": {
       "available": true,
       "encountersName": "social history",
-      "activitiesIcon": "/assets/images/dispensing.png",
+      "activitiesIcon": "/assets/images/social_history.png",
       "url": "/apps/MATERNITY/views/encounters/social_history.html"
     },
     "pmtct history": {
       "available": true,
       "encountersName": "pmtct history",
-      "activitiesIcon": "/assets/images/dispensing.png",
+      "activitiesIcon": "/assets/images/pmtct.png",
       "url": "/apps/MATERNITY/views/encounters/pmtct.html"
     },
     "physical examination": {
       "available": true,
       "encountersName": "physical examination",
-      "activitiesIcon": "/assets/images/dispensing.png",
+      "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/encounters/physical_examination.html"
     },
     "vaginal examination": {
       "available": true,
       "encountersName": "vagina examination",
-      "activitiesIcon": "/assets/images/dispensing.png",
+      "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/antenatal/vaginal_exam.html"
     },
     "maternity examination": {
       "available": true,
       "encountersName": "maternity examination",
-      "activitiesIcon": "/assets/images/dispensing.png",
+      "activitiesIcon": "/assets/images/maternity.jpg",
       "url": "/apps/MATERNITY/views/encounters/clinical_exam.html"
     },
     "obstetric history": {
       "available": true,
       "encountersName": "obstetric history",
-      "activitiesIcon": "/assets/images/dispensing.png",
+      "activitiesIcon": "/assets/images/obstetric_history.png",
       "url": "/apps/MATERNITY/views/encounters/admission_details.html"
+    },
+    "admission notes": {
+      "available": true,
+      "encountersName": "clinician notes",
+      "activitiesIcon": "/assets/images/clinical-notes.png",
+      "url": "/apps/MATERNITY/views/antenatal/notes.html"
+    },
+    "admission diagnosis": {
+      "available": true,
+      "encountersName": "admission diagnosis",
+      "activitiesIcon": "/assets/images/diagnosis.png",
+      "url": "/apps/MATERNITY/views/antenatal/notes.html"
+    },
+    "admission notes printing": {
+      "available": true,
+      "encountersName": "clinician notes",
+      "activitiesIcon": "/assets/images/print.png",
+      "url": "#"
     }
   },
   "activities": {
@@ -84,6 +90,7 @@
       ["Maternity Examination","maternity examination"],
       ["Obstetric History","obstetric history"],
       ["Medical History","medical history"]
+    ]
     
   },
   "others": [
