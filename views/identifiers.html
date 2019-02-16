@@ -23,15 +23,24 @@
 
     <div class="demo-header-cell demo-left" style="">
       
-      <div id="name-title"><strong>MATERNITY - Start Date: </strong>&nbsp;<span id="art-start-date"></span> <span id="maternity-duration"> </span> </div>
+      <div id="name-title"><strong>MATERNITY </strong>&nbsp;</div>
       <div class="birthdates">
         <span class="headers">
-          <strong>Ward :</strong>
+          <strong>Patient ID:</strong>
         </span> 
-        <span id="ward_name"></span> 
+        <span id="patient_id"></span>
       </div>
-      <div class="addresses"><span class="headers"><strong>File Number:</strong></span>&nbsp;<span id="filing-number"></span></div>
-      <div class="addresses"><span class="headers"><strong>Current Outcome:</strong></span>&nbsp;<span id="current-outcome"></span></div>
+      <div class="addresses">
+        <span class="headers">
+          <strong>Residence:</strong>
+        </span>&nbsp;
+        <span id="patient_residence"></span></div>
+      <div class="addresses">
+        <span class="headers">
+          <strong>Age:</strong>
+        </span>&nbsp;
+        <span id="patient_age"></span>
+      </div>
     
     </div>
 
@@ -43,7 +52,7 @@
       var programID = sessionStorage.getItem("programID");
 
       function ajaxRequest() {
-        var url = apiProtocol + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/patients/' + id;
+        var url = 'http://' + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/patients/' + id;
         var req = new XMLHttpRequest();
         req.onreadystatechange = function () {
 
@@ -51,13 +60,12 @@
             if (this.status == 200) {
               var results = JSON.parse(this.responseText);
               console.log('results');
-              document.getElementById("art-start-date").innerHTML = ((results.art_start_date !== "N/A") ? results.art_start_date + "/" : "No Start Date Available");
-              document.getElementById("art-duration").innerHTML = ((results.art_duration !== "N/A") ? "("+ Math.floor(results.art_duration) + " month(s))" : "")  
-              document.getElementById("filing-number").innerHTML = ((results.filing_number !== "N/A") ? results.filing_number : "No Filing Number Available");
-              document.getElementById("arv-number").innerHTML = ((results.arv_number !== "N/A") ? "("+results.arv_number+")" : "No ARV Number Available");
-              document.getElementById("current-outcome").innerHTML =  ((results.current_outcome !== "N/A") ? results.current_outcome : "No Outcome Available");
+              document.getElementById("patient_id").innerHTML = ((results.patient_id !== "N/A") ? results.patient_id : "No Start Date Available");
+              document.getElementById("patient_residence").innerHTML = ((results.residence !== "N/A") ? results.residence : "Residence not Available");
+              document.getElementById("patient_age").innerHTML = ((results.age !== "N/A") ? results.age : "No Start Date Available");
             }
           }
+          console.log(results);
         };
         try {
           req.open('GET', url, true);
@@ -68,6 +76,7 @@
       }
 
       ajaxRequest();
+
       </script>
 </body>
 </html>

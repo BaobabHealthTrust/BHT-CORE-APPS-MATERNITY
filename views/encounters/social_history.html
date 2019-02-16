@@ -42,20 +42,16 @@
 
         <input type="text" name="other_religion" id="other_religion" field_type="alpha"  tt_onLoad='otherReligion();' helpText="Specify other religion" key="family_name" allowFreeText="true" condition ="__$('religion').value == 'Other'" />
 
-         <input type="text" name="kin_first" 
-         tt_onLoad="myInput()"
+         <input type="text" name="kin_first"
           id="kin_first" field_type="alpha" 
-          key="kin_first" helpText="Next of kin first name"  
-          ajaxURL="/search/kin_first?search_string=" 
-          key=kin_first" allowFreeText="true" 
-          condition="$(&quot;kin_first&quot;).value == &quot;&quot;" /> 
+          key="kin_first" helpText="Next of kin first name"
+                ajaxURL="/search/given_name?search_string=" allowFreeText="true" />
 
           <input type="text" name="kin_last" 
           id="kin_last" field_type="alpha" 
-          helpText="Next of kin Last name" 
-          ajaxURL="/search/?search_string=" 
-          allowFreeText="true" 
-          condition="$(&quot;kin_last&quot;).value == &quot;&quot;" /> 
+          helpText="Next of kin Last name"
+                 ajaxURL="/search/family_name?search_string="
+          allowFreeText="true"  />
 
           <input type="text" name="kin_number" id="kin_number" 
           helpText="Next of kin phone number" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
