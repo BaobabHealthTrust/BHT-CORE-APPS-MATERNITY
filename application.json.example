@@ -1,5 +1,17 @@
 {
   "encounters": {
+    "antenatal": {
+      "available": true,
+      "encountersName": "antenatal",
+      "activitiesIcon": "/assets/images/anc.png",
+      "url": "/apps/MATERNITY/views/antenatal_tasks.html"
+    },
+    "postnatal": {
+      "available": true,
+      "encountersName": "postnatal",
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/prenatalTasks.html"
+    },
     "update outcome": {
       "available": true,
       "encountersName": "update outcome",
