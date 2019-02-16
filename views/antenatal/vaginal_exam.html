@@ -28,112 +28,7 @@
 var patientID = sessionStorage.getItem("patientID");
 var programID = sessionStorage.getItem("programID");
 var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-
-var apiProtocol = sessionStorage.apiProtocol;
-var apiURL = sessionStorage.apiURL;
-var apiPort = sessionStorage.apiPort;
-var patientID = sessionStorage.patientID;
 var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
-var previousActivities = null;
-function getActivities(){
-  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-
-  if (this.readyState == 4) {
-    if (this.status == 200) {
-      var results = JSON.parse(this.responseText);
-        previousActivities = results.property_value;
-        loadActivities(previousActivities);
-    }else {
-
-        loadActivities("");
-    }
-    }
-    };
-    try {
-      req.open('GET', url, true);
-      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
-      req.send(null);
-    } catch (e) {
-    
-    }
-}
-
-function loadActivities(previousActivities) {
-  var activities = [];
-  jQuery.getJSON("/apps/ART/application.json")
-    .done(function (data) {
-      activities = data.activities.tasks;
-      renderActivities(activities, previousActivities);
-
-    })
-    .fail(function () {
-      console.log("The application " + applicationName + "'s application.json file is not available");
-  });
-
-}
-/*
-<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
-*/
-
-function renderActivities(activities, previousActivities) {
-  var ul = document.getElementById("tt_currentUnorderedListOptions");
-  for(var i = 0 ; i < activities.sort().length ; i++){
-    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
-    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
-    innerHTML += ' id="optionValue' + i + '">';
-    innerHTML+= activities[i][0] + "</div></div></div>";
-    
-    var li = document.createElement("li");
-    li.setAttribute("id", i );
-    li.setAttribute("tstvalue", activities[i][1]);
-    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
-    li.setAttribute("style","");
-    li.setAttribute("class","even");
-    li.innerHTML = innerHTML;
-    ul.appendChild(li); 
-     if(previousActivities.search(activities[i][0]) >= 0) {
-      updateInputs(i);
-    }
-  } 
-}
-
-function updateInputs(i) {
-  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
-}
-// function changeNextBTN() {
-//   var nextBTN = document.getElementById("nextButton");
-//   nextButton.setAttribute("onmousedown","setActivities();");
-
-// }
-
-function setActivities() {
-  var values = document.getElementById("touchscreenInput0").value;
-  if(isEmpty(values))
-    return;
-
-  var regex = new RegExp(";", "g");
-  values = values.replace(regex, ",");
-
-  var parameters = { property: "Activities", property_value: values }
-
-  submitParameters(parameters, "/user_properties", "redirectTo"); 
-  
-}
-
-function redirectTo(obj) {
-  sessionStorage.setItem("userActivities", obj.property_value);
-  document.location = "/";
-}
-
-function isEmpty(str){
-  try {
-    return (str.replace(/\s+/g, '').length < 1);
-  }catch(e){
-    return true;
-  }
-}
 
 </script>
 
@@ -144,7 +39,7 @@ function isEmpty(str){
          <form>
           <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_onLoad="setAbsoluteMaxBirthYear()" tt_pageStyleClass="Numeric NumbersOnly" />
 
-          <select id="genetalia_inspection" name="genetalia_inspection" tt_onLoad="changeNextBTN();" helpText="Genetalia Inspection"> 
+          <select id="genetalia_inspection" name="genetalia_inspection" helpText="Genetalia Inspection">
             <option>Not done</option>
             <option>Scar</option>
             <option>Sores</option>
@@ -156,7 +51,7 @@ function isEmpty(str){
             <option>Show</option>
           </select>    
 
-         <select id="station" name="station" tt_onLoad="changeNextBTN();" helpText="Station"> 
+         <select id="station" name="station" helpText="Station">
             <option>-3</option>
             <option>-2</option>
             <option>-1</option>
@@ -167,14 +62,14 @@ function isEmpty(str){
             <option>N/A</option>
           </select>
 
-          <select id="cervical_dilation" name="cervical_dilation" tt_onLoad="changeNextBTN();" helpText="Cervical Dilation"> 
+          <select id="cervical_dilation" name="cervical_dilation" helpText="Cervical Dilation">
             <option>Not done</option>
             <option>Finger tip</option>
             <option>Open</option>
             <option>Closed</option>
           </select>
 
-          <select id="caput" name="caput" tt_onLoad="changeNextBTN();" helpText="Caput"> 
+          <select id="caput" name="caput" helpText="Caput">
             <option>0</option>
             <option>1+</option>
             <option>2+</option>
@@ -188,7 +83,7 @@ function isEmpty(str){
           allowFreeText="true" 
           /> 
         
-          <select id="membranes" name="membranes" helpText="Membranes"  tt_onUnLoad="changeNextButton();">
+          <select id="membranes" name="membranes" helpText="Membranes" tt_onUnLoad="changeNextButton();">
           <option>Intact</option>
           <option>Raptured</option>
           </select>
@@ -234,14 +129,13 @@ function isEmpty(str){
         var membranes = document.getElementById('membranes').value;
         var raptureTime = document.getElementById('rupture_time').value;
 
-        console.log('heee'+membranes); return;
-        if(membranes.toUpperCase() === 'INTACT') {
+        if(membranes === 'Intact') {
             postVaginalExam();
         } else if(membranes.toUpperCase() === 'RAPTURED' && raptureTime === '') {
             gotoNextPage();
         } else {
             var nextButton =  document.getElementById('nextButton');
-            nextButton.setAttribute("onmousedown","postVaginalExam();")
+            nextButton.setAttribute("onmousedown","nextPage();")
         }
 
     }
