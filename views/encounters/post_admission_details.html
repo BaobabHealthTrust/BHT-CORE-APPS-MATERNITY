@@ -25,135 +25,23 @@
 
 </style>
 
-<script>
-var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-var patientID = sessionStorage.getItem("patientID");
-var programID = sessionStorage.getItem("programID");
-var tt_cancel_destination = "/";
-var apiProtocol = sessionStorage.apiProtocol;
-var apiURL = sessionStorage.apiURL;
-var apiPort = sessionStorage.apiPort;
-var patient_id = sessionStorage.patientID;
-var previousActivities = null;
-function getActivities(){
-  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-
-  if (this.readyState == 4) {
-    if (this.status == 200) {
-      var results = JSON.parse(this.responseText);
-        previousActivities = results.property_value;
-        loadActivities(previousActivities);
-    }else {
-
-        loadActivities("");
-    }
-    }
-    };
-    try {
-      req.open('GET', url, true);
-      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
-      req.send(null);
-    } catch (e) {
-    
-    }
-}
-
-function loadActivities(previousActivities) {
-  var activities = [];
-  jQuery.getJSON("/apps/ART/application.json")
-    .done(function (data) {
-      activities = data.activities.tasks;
-      renderActivities(activities, previousActivities);
-
-    })
-    .fail(function () {
-      console.log("The application " + applicationName + "'s application.json file is not available");
-  });
-
-}
-/*
-<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
-*/
-
-function renderActivities(activities, previousActivities) {
-  var ul = document.getElementById("tt_currentUnorderedListOptions");
-  for(var i = 0 ; i < activities.sort().length ; i++){
-    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
-    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
-    innerHTML += ' id="optionValue' + i + '">';
-    innerHTML+= activities[i][0] + "</div></div></div>";
-    
-    var li = document.createElement("li");
-    li.setAttribute("id", i );
-    li.setAttribute("tstvalue", activities[i][1]);
-    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
-    li.setAttribute("style","");
-    li.setAttribute("class","even");
-    li.innerHTML = innerHTML;
-    ul.appendChild(li); 
-     if(previousActivities.search(activities[i][0]) >= 0) {
-      updateInputs(i);
-    }
-  } 
-}
-
-function updateInputs(i) {
-  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
-}
-// function changeNextBTN() {
-//   var nextBTN = document.getElementById("nextButton");
-//   nextButton.setAttribute("onmousedown","setActivities();");
-
-// }
-
-function setActivities() {
-  var values = document.getElementById("touchscreenInput0").value;
-  if(isEmpty(values))
-    return;
-
-  var regex = new RegExp(";", "g");
-  values = values.replace(regex, ",");
-
-  var parameters = { property: "Activities", property_value: values }
-
-  submitParameters(parameters, "/user_properties", "redirectTo"); 
-  
-}
-
-function redirectTo(obj) {
-  sessionStorage.setItem("userActivities", obj.property_value);
-  document.location = "/";
-}
-
-function isEmpty(str){
-  try {
-    return (str.replace(/\s+/g, '').length < 1);
-  }catch(e){
-    return true;
-  }
-}
-
-</script>
-
 <body id="mateme">
   <div id="container">
     <div id="content">
 
 
-      <form action="../prenatalTasks.html">
+      <form>
         <input type="text" name="admission_date" 
           id="admission_date" field_type="date" 
           key="admission_date" helpText="Admission Date"  
            tt_pageStyleClass="date" allowFreeText="true"
-          condition="$(&quot;admission_date&quot;).value == &quot;&quot;" /> 
+           /> 
 
          <input type="text" name="admission_time" 
           id="admission_time" field_type="advancedTime" 
           key="admission_time" helpText="Admission Time"  
           allowFreeText="true" 
-          condition="$(&quot;admission_time&quot;).value == &quot;&quot;" /> 
+           /> 
 
 
           <input type="text" name="admission_diagnosis" 
@@ -161,37 +49,21 @@ function isEmpty(str){
           key="admission_diagnosis" helpText="Select admission diagnosis"  
           ajaxURL="/search/admission_diagnosis?search_string=" 
           key=admission_time" allowFreeText="true" 
-          condition="$(&quot;admission_diagnosis&quot;).value == &quot;&quot;" /> 
+           /> 
 
           <input type="text" name="next_diagnosis" 
           id="next_diagnosis" field_type="alpha" 
           key="next_diagnosis" helpText="Select the next diagnosis"  
-          ajaxURL="/search/admission_diagnosis?search_string=" 
-          key=admission_time" allowFreeText="true" 
-          condition="$(&quot;admission_diagnosis&quot;).value == &quot;&quot;" /> 
-
+           allowFreeText="true" 
+           /> 
 
           <input type="text" name="other_diagnosis" 
           id="other_diagnosis" field_type="alpha" 
           key="other_diagnosis" helpText="Select the next diagnosis"  
-          ajaxURL="/search/other_diagnosis?search_string=" 
-          key=admission_time" allowFreeText="true" 
-          condition="$(&quot;other_diagnosis&quot;).value == &quot;&quot;" /> 
-
-          <select id="condition" name="conditions" tt_onLoad="changeNextBTN();" helpText="Condition">  
-            <option>Stable</option>
-            <option>Critical</option>
-         </select>
-         <select id="anemic" name="anemic" tt_onLoad="changeNextBTN();" helpText="Anemic">  
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-          <select id="oedema" name="oedema" tt_onLoad="changeNextBTN();" helpText="Oedema"> 
-             <option>None</option>
-             <option>1+</option>
-             <option>2+</option>
-             <option>3+</option>
-          </select>
+          allowFreeText="true" 
+          /> 
+          <input style="display:none;" tt_onLoad="changeNextButton();" name="other_diagnosis" type="hidden"
+           />
 
       </form>
 
@@ -199,3 +71,67 @@ function isEmpty(str){
  </div>
 </body>
 
+<script>
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+
+  function getAdmissionD(){
+    var admissionDiagnosisThree = document.getElementById('other_diagnosis').value;
+    console.log("EEEEEEE" + admissionDiagnosisThree);
+  }
+
+
+  function changeNextButton() {
+      var nextButton =  document.getElementById('nextButton');
+      nextButton.setAttribute("onmousedown","postObstreticHistory();")
+  }
+
+  function postObstreticHistory() {
+      var currentTime = moment().format(' HH:mm:ss');
+      var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+      encounter_datetime += currentTime;
+
+      var encounter = {
+          encounter_type_name: 'OBSTETRIC HISTORY',
+          encounter_type_id:  82,
+          patient_id: sessionStorage.patientID,
+          encounter_datetime: encounter_datetime
+      };
+
+      submitParameters(encounter, "/encounters", "postObstetricHistoryObs");
+  }
+
+  function postObstetricHistoryObs(encounter) {
+
+      var admissionDate = document.getElementById('admission_date').value;
+      var admissionTime = document.getElementById('admission_time').value;
+      var admissionDiagnosisOne = document.getElementById('admission_diagnosis').value;
+      var admissionDiagnosisTwo= document.getElementById('next_diagnosis').value;
+      var admissionDiagnosisThree = document.getElementById('other_diagnosis').value;
+
+      var admissionDay = admissionDate.split('-')[0];
+      var admissionMonth = admissionDate.split('-')[1];
+      var admissionYear = admissionDate.split('-')[2];
+
+      var admissionDateValue = admissionYear + '-' + admissionMonth + '-' + admissionDay;
+
+      console.log("Admission diagnosis" + admissionDiagnosisThree);
+      var obs = {
+          encounter_id: encounter["encounter_id"],
+          observations: [
+              { concept_id: 7826, value_datetime: admissionDateValue }, 
+              { concept_id: 7827, value_text: admissionTime }, 
+              { concept_id: 7447, value_text: admissionDiagnosisOne }, 
+              { concept_id: 7685, value_text: admissionDiagnosisTwo }, 
+              { concept_id: 7685, value_text: admissionDiagnosisThree } 
+          ]
+      };
+
+      submitParameters(obs, "/observations", "nextPage")
+  }
+
+  function nextPage(){
+    //  nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+  }
+</script>

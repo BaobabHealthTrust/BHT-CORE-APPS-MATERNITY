@@ -49,18 +49,12 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
             <option>Breech Delivery</option>
       </select>
 
-      <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
-      tt_pageStyleClass="date" />
 
-      <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" />
-
-      <input type="text" name="ttv_status" id="ttv_status" helpText=" TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="changeNextButton();" />
-
-
-
-     
-
-      </form>
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" 
+       />
+      <input type="text" name="menstruation_date" id="menstruation_date" helpText="Last Menstruation Date" field_type="date"
+      tt_pageStyleClass="date" tt_onLoad="changeNextButton();" />
+    </form>
 
    </div>
  </div>
@@ -139,6 +133,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           default:
               break;
       }
+      console.log("TTV STATUS ............."+ ttv_status);
       var obs = {
           encounter_id: encounter["encounter_id"],
           observations: [
