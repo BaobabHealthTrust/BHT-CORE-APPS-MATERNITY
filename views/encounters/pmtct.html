@@ -68,6 +68,10 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
+    var hivStatus = document.getElementById('hiv_status_value').value;
+    var pmtctTestDate = document.getElementById('pmtct_test_date').value;
+    var feedingOption = document.getElementById('feeding_option').value;
+
     function changeNextButtonUnknownHIV() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postPMTCTunknownHIV();");
@@ -84,8 +88,7 @@
     }
 
     function postPMTCTunknownHIV() {
-        var hivStatus = document.getElementById('hiv_status_value').value;
-        var pmtctTestDate = document.getElementById('pmtct_test_date').value;
+        hivStatus = document.getElementById('touchscreenInput'+tstCurrentPage).value;
 
         if (hivStatus === 'Unknown') {
             var currentTime = moment().format(' HH:mm:ss');
@@ -107,7 +110,7 @@
     }
 
     function postPMTCTNonReactiveHIV() {
-        var hivStatus = document.getElementById('hiv_status_value').value;
+        pmtctTestDate = document.getElementById('touchscreenInput' + tstCurrentPage).value;
 
         if (hivStatus === 'Non-Reactive') {
             var currentTime = moment().format(' HH:mm:ss');
@@ -129,6 +132,8 @@
     }
 
     function postPMTCT() {
+        feedingOption = document.getElementById('touchscreenInput' + tstCurrentPage).value;
+
         var currentTime = moment().format(' HH:mm:ss');
         var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
         encounter_datetime += currentTime;
@@ -144,13 +149,10 @@
     }
 
     function postPmtctObs(encounter) {
-        var hivStatus = document.getElementById('hiv_status_value').value;
-        var pmtctTestDate = document.getElementById('touchscreenInput'+tstCurrentPage).value;
+
+
         var pmtctOnArvs = document.getElementById('pmtct_on_arvs').value;
         var periodOnArvs = document.getElementById('period_on_arvs').value;
-        var feedingOption = document.getElementById('feeding_option').value;
-
-        console.log(pmtctTestDate);
 
         var conceptAnswers = [
             // Hiv Status
