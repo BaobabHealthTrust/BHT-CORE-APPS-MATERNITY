@@ -39,7 +39,7 @@
             <option>No</option>
           </select>
 
-          <select id="third_stage" name="third_stage" tt_onLoad="changeNextBTN();" helpText="Third Stage"> 
+          <select id="third_stage" name="third_stage" tt_onLoad="changeNextButton();" helpText="Third Stage"> 
             <option>Complete</option>
             <option>Incomplete</option>
           </select>
@@ -84,7 +84,7 @@
 
        /*Blood loss*/
        {
-           "actngiveBleeding": 8591,
+           "activeBleeding": 8591,
            "noActiveBleeding": 9727,
            "lochia": 9728
        },
@@ -149,7 +149,7 @@
    }
 
    function nextPage(){
-    // window.location.href = "../prenatalTasks.html";
+      window.location.href = "../prenatalTasks.html";
      //snextEncounter(sessionStorage.patientID, sessionStorage.programID);
    }
 </script>

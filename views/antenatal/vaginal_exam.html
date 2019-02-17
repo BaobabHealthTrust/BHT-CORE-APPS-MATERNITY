@@ -126,17 +126,9 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
 
 <script>
     function changeNextButton() {
-        var membranes = document.getElementById('membranes').value;
-        var raptureTime = document.getElementById('rupture_time').value;
-
-        if(membranes === 'Intact') {
-            postVaginalExam();
-        } else if(membranes.toUpperCase() === 'RAPTURED' && raptureTime === '') {
-
-        } else {
+  
             var nextButton =  document.getElementById('nextButton');
-            nextButton.setAttribute("onmousedown","nextPage();")
-        }
+            nextButton.setAttribute("onmousedown","nextPage();");
     }
 
     function postVaginalExam() {
@@ -156,30 +148,16 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
 
 
     function postVaginalObs(encounter) {
-        var fundus = document.getElementById('fundus').value;
-        var genetaliaInspection = document.getElementById('genetalia_inspection').value;
-        var station = document.getElementById('station').value;
-        var cervicalDilation = document.getElementById('cervical_dilation').value;
-        var caput = document.getElementById('caput').value;
-        var moulding = document.getElementById('moulding').value;
-        var membranes = document.getElementById('membranes').value;
-        var ruptureTime = document.getElementById('rupture_time').value;
-        var ruptureDate = document.getElementById('rupture_date').value;
-        var colorOfLiqour = document.getElementById('colour_of_liqour').value;
-        var presentingPart = document.getElementById('presenting_part').value;
+        var bloodLoss = document.getElementById('blooc_loss').value;
+        var tear = document.getElementById('tear').value;
+        var thirdStage = document.getElementById('third_stage').value;
 
         var conceptAnswers = [
-            // genetalia inspection
+            // Blood loss
             {
-                "notDone": 1118,
-                "scar": 2448,
-                "sores": 7917,
-                "warts": 6905,
-                "bleeding": 7918,
-                "liquor": 7919,
-                "varicoseVeins": 591,
-                "nothingAbnormalDetected": 7920,
-                "show": 1581
+                "activeBleeding": 8591,
+                "noActiveBleeding": 9727,
+                "lochia": 9728
             },
             // station
             {

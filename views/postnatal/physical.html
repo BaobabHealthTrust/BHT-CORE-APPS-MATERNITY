@@ -26,10 +26,10 @@
 
          <form>
      
-          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onUnLoad="changeNextButton();"> 
+          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" > 
             <option>Stable</option>
             <option>Critical</option>
-            <option>Dead</option>
+            <option onmousedown="changeNextButton();">Dead</option>
           </select>
           <input type="text" name="baby_temperature"
           id="baby_temperature" helpText="Baby: Temperature"  min="20" max ="45"
@@ -43,13 +43,13 @@
           
 
           <input type="text" name="baby_heart_rate" id="baby_heart_rate" helpText="Baby: Heart rate"
-           field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" min ="0"  max="200"
+           field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" min ="0"  max="200"
            condition = "__$('baby_condition').value != 'Dead'"/>
 
           <input type="text" name="baby_weight" id="baby_weight" 
           helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad="" min="2.5" max="5" validationMessage = "You must enter a decimal between 0 and 9 (for example: 2<b>.6</b>)"
           absoluteMax= "10"
-          tt_pageStyleClass="Numeric NumbersOnlyWithDecimal"  condition = "__$('baby_condition').value != 'Dead'"/>
+          tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal"  condition = "__$('baby_condition').value != 'Dead'"/>
 
           <select id="baby_abdomen" name="baby_abdomen" tt_onLoad="changeNextBTN();" helpText="Baby: Abdomen"
           condition = "__$('baby_condition').value != 'Dead'"> 
@@ -69,13 +69,13 @@
             <option>No</option>
           </select>
 
-          <select id="baby_abnormals" name="baby_abnormals" tt_onLoad="changeNextButton();" helpText="Baby: abnormalities"
+          <select id="baby_abnormals" name="baby_abnormals" helpText="Baby: abnormalities"
           condition = "__$('baby_condition').value != 'Dead'"> 
             <option>Yes</option>
-            <option>No</option>
+            <option onmousedown="changeNextButton();">No</option>
           </select>
 
-          <input type="hidden" name="baby_abnormalities" 
+          <input name="baby_abnormalities" 
           id="baby_abnormalities" field_type="alpha" 
           key="baby_abnormalities" helpText="Specify any abnormalities"  
           allowFreeText="true" 
@@ -95,12 +95,13 @@
 
 
       function changeNextButton() {
-          console.log("Change button");
           var condition = document.getElementById('baby_condition').value;
           var abnormals = document.getElementById('baby_abnormals').value;
           if (condition === 'Dead') {
             postPhysicalExam();
-          } else {
+          } else if(abnormals =="No"){
+            postPhysicalExam();
+          }else {
             var nextButton =  document.getElementById('nextButton');
             nextButton.setAttribute("onmousedown","postPhysicalExam();")
           }
@@ -225,41 +226,41 @@
     var obs = {
         encounter_id: encounter["encounter_id"],
         observations: [
-            { concept_id: 8399, value_coded: conditionAnswer }
+            { concept_id: 8399, value_coded: conditionAnswer } //saving
               ]
     };
         if(temperature !== '') {
-            obs.observations.push( { concept_id: 5088, value_numeric: temperature } ); 
+            obs.observations.push( { concept_id: 5088, value_numeric: temperature } ); //saving
         }
         if(respiratory !== '') {
-            obs.observations.push(  { concept_id: 5242, value_numeric: respiratory } ); 
+            obs.observations.push(  { concept_id: 5242, value_numeric: respiratory } ); //saving
         }
         if(heart !== '') {
-            obs.observations.push(   { concept_id: 5087, value_numeric: heart } ); 
+            obs.observations.push(   { concept_id: 5087, value_numeric: heart } ); //saving
         }
         if(weight !== '') {
-            obs.observations.push( { concept_id: 8876, value_numeric: weight } ); 
+            obs.observations.push( { concept_id: 8876, value_numeric: weight } ); //saving
         }
         if(abdomen !== '') {
-            obs.observations.push( { concept_id: 8400, value_coded: abdomenAnswer } ); 
+            obs.observations.push( { concept_id: 8400, value_coded: abdomenAnswer } ); //saving
         }
         if(cordTied !== '') {
-            obs.observations.push(  { concept_id: 8405, value_coded: tiedAnswer } ); 
+            obs.observations.push(  { concept_id: 8405, value_coded: tiedAnswer } ); //saving
         }
         if(cordClean !== '') {
-            obs.observations.push(  { concept_id: 8406, value_coded: cleanAnswer } ); 
+            obs.observations.push(  { concept_id: 8406, value_coded: cleanAnswer } ); //saving
         }
         if(abnormals !== '') {
-            obs.observations.push(  { concept_id: 1116, value_coded: abnormalsAnswer } ); 
+            obs.observations.push(  { concept_id: 1116, value_coded: abnormalsAnswer } ); //saving
         }
         if(abnormalities !== '') {
-            obs.observations.push(  { concept_id: 8404, value_coded: abnormalities } ); 
+            obs.observations.push(  { concept_id: 8404, value_text: abnormalities } ); 
         }
         submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
-     // window.location.href = "../prenatalTasks.html";
+     window.location.href = "../prenatalTasks.html";
       //snextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>
