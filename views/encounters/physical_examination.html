@@ -38,9 +38,9 @@
 
 
         <form>
-            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" />
+            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" />
 
-            <select id="lie" name="lie" tt_onLoad="changeNextBTN();" helpText="Lie" condition ="__$('fundus').value != 'N/A'">
+            <select id="lie" name="lie" helpText="Lie" condition ="__$('fundus').value != 'N/A'">
                 <option></option>
                 <option>Longitudinal</option>
                 <option>Transverse</option>
@@ -55,7 +55,7 @@
                    key=presentation" allowFreeText="true"
                    condition ="__$('fundus').value != 'N/A'" />
 
-            <select id="position" name="position" tt_onLoad="changeNextBTN();" helpText="Position" condition ="__$('fundus').value != 'N/A'" >
+            <select id="position" name="position" helpText="Position" condition ="__$('fundus').value != 'N/A'" >
                 <option></option>
                 <option>Vertex</option>
                 <option>Breech</option>
@@ -63,7 +63,7 @@
                 <option>Shoulder</option>
             </select>
 
-            <select id="vertex" name="vertex" tt_onLoad="changeNextBTN();" helpText="Cephalic Position Type" condition = "$('position').value.trim().toUpperCase() == 'VERTEX' && __$('fundus').value != 'N/A'" >
+            <select id="vertex" name="vertex" helpText="Cephalic Position Type" condition = "$('position').value.trim().toUpperCase() == 'VERTEX' && __$('fundus').value != 'N/A'" >
                 <option></option>
                 <option>Left Occipito Anterior</option>
                 <option>Left Occipito Transverse</option>
@@ -72,7 +72,7 @@
                 <option>Right Occipito Posterior</option>
             </select>
 
-            <select id="breech" name="breech" tt_onLoad="changeNextBTN();" helpText="Breech Position Type" condition ="$('position').value.trim().toUpperCase() == 'BREECH' && __$('fundus').value != 'N/A';" >
+            <select id="breech" name="breech" helpText="Breech Position Type" condition ="$('position').value.trim().toUpperCase() == 'BREECH' && __$('fundus').value != 'N/A';" >
                 <option></option>
                 <option>Left Sacro Anterior</option>
                 <option>Left Sacro Transverse</option>
@@ -82,7 +82,7 @@
                 <option>Right Sacro Posterior</option>
             </select>
 
-            <select id="face" name="face" tt_onLoad="changeNextBTN();" helpText="Face Position Type" condition ="$('position').value.trim().toUpperCase() == 'FACE' && __$('fundus').value != 'N/A';" >
+            <select id="face" name="face" helpText="Face Position Type" condition ="$('position').value.trim().toUpperCase() == 'FACE' && __$('fundus').value != 'N/A';" >
                 <option></option>
                 <option>Left Mento Anterior</option>
                 <option>Left Mento Transverse</option>
@@ -92,7 +92,7 @@
                 <option>Right Mento Posterior</option>
             </select>
 
-            <select id="shoulder" name="shoulder" tt_onLoad="changeNextBTN();" helpText="Shoulder Position Type" condition = "$('position').value.trim().toUpperCase() == 'SHOULDER' && __$('fundus').value != 'N/A';" >
+            <select id="shoulder" name="shoulder" helpText="Shoulder Position Type" condition = "$('position').value.trim().toUpperCase() == 'SHOULDER' && __$('fundus').value != 'N/A';" >
                 <option></option>
                 <option>Left Acromion Dorsal Anterior</option>
                 <option>Left Acromion Dorsal Posterior</option>
@@ -100,13 +100,13 @@
                 <option>Right Acromion Dorsal Posterio</option>
             </select>
 
-            <select id="contractions" name="contractions" tt_onLoad="changeNextBTN();" helpText="Contractions" condition = "__$('fundus').value != 'N/A'">
+            <select id="contractions" name="contractions" helpText="Contractions" condition = "__$('fundus').value != 'N/A'">
                 <option></option>
                 <option>Yes</option>
                 <option>No</option>
             </select>
 
-            <select id="contraction_intensity" name="contraction_intensity" tt_onLoad="changeNextBTN();" helpText="Contraction Intensity" condition ="__$('contractions').value.trim().toUpperCase() != 'NO' && __$('fundus').value != 'N/A';" >
+            <select id="contraction_intensity" name="contraction_intensity" helpText="Contraction Intensity" condition ="__$('contractions').value.trim().toUpperCase() != 'NO' && __$('fundus').value != 'N/A';" >
                 <option></option>
                 <option>Mild</option>
                 <option>Moderate</option>
@@ -115,7 +115,7 @@
             </select>
 
 
-            <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number" tt_onLoad=""
+            <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number"
                    tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
            __$('fundus').value != 'N/A' && __$('contraction_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" />
 
@@ -125,7 +125,7 @@
                    allowFreeText="true"
             />
 
-            <select id="moulding" name="moulding" tt_onLoad="changeNextBTN();" helpText="Moulding">
+            <select id="moulding" name="moulding" helpText="Moulding">
                 <option></option>
                 <option>0</option>
                 <option>1+</option>
@@ -134,7 +134,7 @@
                 <option>N/A</option>
             </select>
 
-            <select id="membranes" name="membranes" tt_onLoad="changeNextBTN();" helpText="Membranes">
+            <select id="membranes" name="membranes" helpText="Membranes">
                 <option></option>
                 <option>Intact</option>
                 <option>Raptured</option>
@@ -177,7 +177,7 @@
         };
 
 
-        submitParameters(encounter, "/encounters", "nextPage");
+        submitParameters(encounter, "/encounters", "postPhysicalExamObs");
     }
 
     function postPhysicalExamObs(encounter) {
@@ -199,7 +199,6 @@
         var contractions_level =  document.getElementById('contractions_level').value;
 
         var conceptAnswers = [
-
             /*Lie*/
             {
                 "longitudinal": 9717,
@@ -296,6 +295,7 @@
         var membranesAnswer;
         var descentAnswer;
         var faceAnswer;
+
         switch (lie.toUpperCase()) {
             case 'TRANSVERSE':
                 lieAnswer = conceptAnswers[0].transverse;
@@ -395,6 +395,7 @@
                 break;
             case 'RIGHT ACROMION DORSAL ANTERIOR':
                 shoulderAnswer = conceptAnswers[5].rightAcromionAnterior;
+                break;
             case 'RIGHT ACROMION DORSAL POSTERIOR':
                 shoulderAnswer = conceptAnswers[5].rightAcromionPosterior;
                 break;
@@ -481,8 +482,8 @@
             default:
                 break;
         }
-        var obs;
-        ob = {
+
+        var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
                 { concept_id: 7835, value_numeric: fundus },
@@ -497,7 +498,7 @@
 
             ]
         };
-        //console.log("Membranes answer"+membranesAnswer);
+
         if(breech !== '') {
             obs.observations.push( { concept_id: 9425, value_coded: breechAnswer });
         }
@@ -514,8 +515,9 @@
             obs.observations.push( { concept_id: 7929, value_coded: contractionsIntensityAnswers }); // not saving
         }
         if(contractions_level !== '') {
-            obs.observations.push( { concept_id: 7943, value_text: contractions_level });
+            obs.observations.push( { concept_id: 7943, value_numeric: contractions_level });
         }
+
         submitParameters(obs, "/observations", "nextPage")
     }
 
