@@ -1,7 +1,7 @@
-<!--script type="text/javascript">
-  jQuery(document).ready(function($) {
-  })
-</script-->
+<script src="/assets/js/moment.js"></script>
+
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+
 <style type="text/css">
     body {
         -moz-user-select:none;
@@ -33,33 +33,6 @@
         overflow: hidden;
     }
 
-    .btn {
-        min-height: 50px;
-        margin: 0px;
-        margin-bottom: 5px;
-        font-size: 1.2em;
-        background-color: #6281a7;
-        color: #FFF;
-        font-weight: normal;
-        border: 5px outset #000;
-        padding: 10px;
-        cursor: pointer;
-        background:url(../images/btn_blue.png) right repeat;
-        -moz-user-select:none;
-        -moz-user-focus:disabled;
-    }
-
-    .btn:hover {
-        background:url(../images/btn_blue_hover.png) right repeat;
-        -moz-user-select:none;
-        -moz-user-focus:disabled;
-    }
-
-    .btn:active {
-        background:url(../images/btn_yellow.png) right repeat;
-        border: 3px inset #000;
-    }
-
 </style>
 <div id="tab" style="background-color: #fff; border-top: 1px #fff solid; margin-top: 0px;">
     <h2 style="text-align: center; color: #6281a7; margin-top: -2px; margin-bottom: 0px;">Current Visit Statistics</h2>
@@ -83,18 +56,24 @@
             <td>0</td>
         </tr>
         <tr class="even">
-            <td style="text-align:left;">Diagnosis</td>
+            <td style="text-align:left;">Vitals</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
         </tr>
         <tr class="odd">
-            <td style="text-align:left;">Update Outcome</td>
+            <td style="text-align:left;">Diagnosis</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
         </tr>
         <tr class="even">
+            <td style="text-align:left;">Update Outcome</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr class="odd">
             <td style="text-align:left;">Referrals - Out</td>
             <td>0</td>
             <td>0</td>
@@ -102,3 +81,105 @@
         </tr>
     </table>
 </div>
+
+<script type="text/javascript">
+    var stats = {all: true, encounter_types: [5, 61, 6, 41, 40, 63]};
+    var apiProtocol = sessionStorage.apiProtocol;
+    var apiURL = sessionStorage.apiURL;
+    var apiPort = sessionStorage.apiPort;
+    var programID = sessionStorage.programID;
+
+    var encounter_types = {}
+    encounter_types[5] = "Registration";
+    encounter_types[61] = "Observations";
+    encounter_types[6] = "Vitals";
+    encounter_types[41] = "Diagnosis";
+    encounter_types[40] = "Update Outcome";
+    encounter_types[63] = "Referrals Out";
+    var end_date = moment().subtract(1, "days").format("YYYY-MM-DD");
+    var start_date = moment().subtract(5, "days").format("YYYY-MM-DD");
+
+    function getVisits() {
+        var url = apiProtocol + '://' + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/reports/visits?name=visits&start_date=' + start_date + '&end_date=' + end_date;
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function () {
+
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    var complete = new Array;
+                    var incomplete = new Array;
+                    var days = new Array;
+                    var keys = Object.keys(results);
+                    for (var x = 0; x < keys.length; x++) {
+                        complete.push(results[keys[x]].complete + results[keys[x]].incomplete);
+                        incomplete.push(results[keys[x]].incomplete);
+                        days.push(moment(keys[x]).format("ddd"));
+                    }
+                    console.log('hey ' + results);
+                }
+            }
+        };
+        try {
+            req.open('GET', url, true);
+            req.setRequestHeader('Authorization', sessionStorage.getItem('authorization'));
+            req.send(null);
+        } catch (e) {
+        }
+    }
+
+    getVisits();
+    var encounter_date = moment(new Date()).format("YYYY-MM-DD");
+    submitParameters(stats, "/reports/encounters?date=" + encounter_date, "renderStats");
+
+    try {
+        var cover = document.getElementById('submit-cover');
+        cover.style = 'display: none;';
+    } catch (e) {
+    }
+
+    var encounters_created = [];
+    var counter = 1;
+
+    function renderStats(stats) {
+
+        var tby = document.getElementById("stats-table-body");
+        for (var encounter_type_id in stats) {
+
+            console.log('enc_type ' + encounter_type_id);
+            counter++;
+        }
+
+        getUserStats();
+    }
+
+    function getUserStats() {
+        var stats = {encounter_types: [5, 61, 6, 41, 40, 63]};
+        var session_stats_url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/reports/encounters?date=" + encounter_date;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+                var user_stats = JSON.parse(this.responseText);
+                for (var encounter_type in user_stats) {
+                    var males = user_stats[encounter_type]["M"];
+                    var females = user_stats[encounter_type]["F"];
+                    var element = document.getElementById("encounter_" + encounter_type);
+                    if (element) {
+                        var total = parseInt(males) + parseInt(females);
+                        element.innerHTML = "<b>" + total + "</b>";
+                    }
+                    console.log('User stats '+user_stats[encounter_type]['M']);
+                }
+            }
+        };
+        xhttp.open("POST", session_stats_url, true);
+        xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+        xhttp.setRequestHeader('Content-type', "application/json");
+        xhttp.send(JSON.stringify(stats));
+    }
+
+    var usernameField = document.getElementById("username");
+    if (usernameField) {
+        usernameField.innerHTML = sessionStorage.username.toUpperCase();
+    }
+</script>
