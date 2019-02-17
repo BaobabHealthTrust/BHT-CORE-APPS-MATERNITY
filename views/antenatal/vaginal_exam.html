@@ -13,115 +13,119 @@
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
+    .inputFrameClass {
+        width: 96% !important;
+    }
 
-.inputFrameClass {
-  width: 96% !important;
-}
-
-#clearButton {
-  display: none;
-}
-
+    #clearButton {
+        display: none;
+    }
 </style>
 
 <script>
-var patientID = sessionStorage.getItem("patientID");
-var programID = sessionStorage.getItem("programID");
-var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
 </script>
 
 <body id="mateme">
-  <div id="container">
+<div id="container">
     <div id="content">
 
-         <form>
-          <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
+        <form>
+            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
 
-          <select id="genetalia_inspection" name="genetalia_inspection" helpText="Genetalia Inspection">
-            <option>Not done</option>
-            <option>Scar</option>
-            <option>Sores</option>
-            <option>Warts</option>
-            <option>Bleeding</option>
-            <option>Liquor</option>
-            <option>Varicose Veins</option>
-            <option>Nothing Abnormal Detected</option>
-            <option>Show</option>
-          </select>    
+            <select id="genetalia_inspection" name="genetalia_inspection" helpText="Genetalia Inspection">
+                <option></option>
+                <option>Not done</option>
+                <option>Scar</option>
+                <option>Sores</option>
+                <option>Warts</option>
+                <option>Bleeding</option>
+                <option>Liquor</option>
+                <option>Varicose Veins</option>
+                <option>Nothing Abnormal Detected</option>
+                <option>Show</option>
+            </select>
 
-         <select id="station" name="station" helpText="Station">
-            <option>-3</option>
-            <option>-2</option>
-            <option>-1</option>
-            <option>0</option>
-            <option>+1</option>
-            <option>+2</option>
-            <option>+3</option>
-            <option>N/A</option>
-          </select>
+            <select id="station" name="station" helpText="Station">
+                <option></option>
+                <option>-3</option>
+                <option>-2</option>
+                <option>-1</option>
+                <option>0</option>
+                <option>+1</option>
+                <option>+2</option>
+                <option>+3</option>
+                <option>N/A</option>
+            </select>
 
-          <select id="cervical_dilation" name="cervical_dilation" helpText="Cervical Dilation">
-            <option>Not done</option>
-            <option>Finger tip</option>
-            <option>Open</option>
-            <option>Closed</option>
-          </select>
+            <select id="cervical_dilation" name="cervical_dilation" helpText="Cervical Dilation">
+                <option></option>
+                <option>Not done</option>
+                <option>Finger tip</option>
+                <option>Open</option>
+                <option>Closed</option>
+            </select>
 
-          <select id="caput" name="caput" helpText="Caput">
-            <option>0</option>
-            <option>1+</option>
-            <option>2+</option>
-            <option>3+</option>
-            <option>N/A</option>
-          </select>
+            <select id="caput" name="caput" helpText="Caput">
+                <option></option>
+                <option>0</option>
+                <option>1+</option>
+                <option>2+</option>
+                <option>3+</option>
+                <option>N/A</option>
+            </select>
 
-           <input type="text" name="moulding" 
-          id="moulding" field_type="text" 
-          key="moulding" helpText="Moulding"  
-          allowFreeText="true" 
-          /> 
-        
-          <select id="membranes" name="membranes" helpText="Membranes" tt_onUnLoad="changeNextButton();">
-          <option>Intact</option>
-          <option>Raptured</option>
-          </select>
+            <input type="text" name="moulding"
+                   id="moulding" field_type="text"
+                   key="moulding" helpText="Moulding"
+                   allowFreeText="true"
+            />
+
+            <select id="membranes" name="membranes" helpText="Membranes" tt_onUnLoad="changeNextButton();">
+                <option></option>
+                <option>Intact</option>
+                <option>Raptured</option>
+            </select>
 
 
-          <input type="text" name="rupture_time" 
-          id="rupture_time" field_type="advancedTime" 
-          helpText="Membrane Rapture Time"  
-          allowFreeText="true" optional = "true"
-          condition ="__$('membranes').value == 'Raptured'"  /> 
+            <input type="text" name="rupture_time"
+                   id="rupture_time" field_type="advancedTime"
+                   helpText="Membrane Rapture Time"
+                   allowFreeText="true" optional = "true"
+                   condition ="__$('membranes').value == 'Raptured'"  />
 
-          <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date" 
-           condition ="$('membranes').value == 'Raptured'" tt_pageStyleClass="date"/>
+            <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date"
+                   condition ="$('membranes').value == 'Raptured'" tt_pageStyleClass="date"/>
 
-           <select id="colour_of_liqour" name="colour_of_liqour" helpText="Colour of Liqour" condition = "__$('membranes').value == 'Raptured'">
-          <option>Clear</option>
-          <option>Meconium Grade 1</option>
-          <option>Meconium Grade 2</option>
-          <option>Meconium Grade 3</option>
-          <option>Blood</option>
-          <option>Absent</option>
-          <option>Pus</option>
-          </select>
+            <select id="colour_of_liqour" name="colour_of_liqour" helpText="Colour of Liqour" condition = "__$('membranes').value == 'Raptured'">
+                <option></option>
+                <option>Clear</option>
+                <option>Meconium Grade 1</option>
+                <option>Meconium Grade 2</option>
+                <option>Meconium Grade 3</option>
+                <option>Blood</option>
+                <option>Absent</option>
+                <option>Pus</option>
+            </select>
 
-          <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextButton();" helpText="Presenting Part" condition = "__$('membranes').value == 'Raptured'">
-          <option>Not Done</option>
-          <option>Vertex</option>
-          <option>Sacrum</option>
-          <option>Breech</option>
-          <option>Hand</option>
-          <option>Foot</option>
-          <option>Shoulder</option>
-          <option>Cord</option>
-          </select>
-      </form>
+            <select id="presenting_part" name="presenting_part" tt_onLoad="changeNextButton();" helpText="Presenting Part" condition = "__$('membranes').value == 'Raptured'">
+                <option></option>
+                <option>Not Done</option>
+                <option>Vertex</option>
+                <option>Sacrum</option>
+                <option>Breech</option>
+                <option>Hand</option>
+                <option>Foot</option>
+                <option>Shoulder</option>
+                <option>Cord</option>
+            </select>
+        </form>
 
-   </div>
- </div>
+    </div>
+</div>
 </body>
 
 <script>
@@ -135,7 +139,7 @@ var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patien
 
         } else {
             var nextButton =  document.getElementById('nextButton');
-            nextButton.setAttribute("onmousedown","nextPage();")
+            nextButton.setAttribute("onmousedown","postVaginalExam();")
         }
     }
 

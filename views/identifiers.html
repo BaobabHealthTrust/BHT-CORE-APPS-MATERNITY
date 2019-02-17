@@ -1,80 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/bootstrap/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.min.css">
-  <script src="/assets/js/moment.js"></script>
-  <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
-  <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.min.css">
+    <script src="/assets/js/moment.js"></script>
+    <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+    <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 
-  <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
-  <style>
-    #name-title {
-      text-decoration: underline;
-      margin-top: 3%;
-    }
-  </style>
+    <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+    <style>
+        #name-title {
+            text-decoration: underline;
+            margin-top: 3%;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="demo-header-cell demo-left" style="">
-      
-      <div id="name-title"><strong>MATERNITY </strong>&nbsp;</div>
-      <div class="birthdates">
+<div class="demo-header-cell demo-left" style="">
+
+    <div id="name-title">
+        <strong>MATERNITY</strong>
+    </div>
+    <div class="addresses">
         <span class="headers">
-          <strong>Patient ID:</strong>
-        </span> 
-        <span id="patient_id"></span>
-      </div>
-      <div class="addresses">
+          <strong>Location:</strong>
+        </span>&nbsp;
+        <span id="user_location"></span>
+    </div>
+    <div class="addresses">
         <span class="headers">
           <strong>Residence:</strong>
         </span>&nbsp;
         <span id="patient_residence"></span></div>
-      <div class="addresses">
-        <span class="headers">
-          <strong>Age:</strong>
-        </span>&nbsp;
-        <span id="patient_age"></span>
-      </div>
-    
-    </div>
+</div>
 
-      <script>
-      var apiURL = sessionStorage.getItem("apiURL");
-      var apiPort = sessionStorage.getItem("apiPort");
-      var apiProtocol = sessionStorage.getItem("apiProtocol");
-      var id = sessionStorage.getItem("patientID");
-      var programID = sessionStorage.getItem("programID");
+<script>
+    var apiURL = sessionStorage.getItem("apiURL");
+    var apiPort = sessionStorage.getItem("apiPort");
+    var apiProtocol = sessionStorage.getItem("apiProtocol");
+    var id = sessionStorage.getItem("patientID");
+    var programID = sessionStorage.getItem("programID");
 
-      function ajaxRequest() {
+    function ajaxRequest() {
         var url = 'http://' + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/patients/' + id;
         var req = new XMLHttpRequest();
         req.onreadystatechange = function () {
 
-          if (this.readyState == 4) {
-            if (this.status == 200) {
-              var results = JSON.parse(this.responseText);
-              document.getElementById("patient_id").innerHTML = ((results.patient_id !== "N/A") ? results.patient_id : "No Start Date Available");
-              document.getElementById("patient_residence").innerHTML = ((results.residence !== "N/A") ? results.residence : "Residence not Available");
-              document.getElementById("patient_age").innerHTML = ((results.age !== "N/A") ? results.age : "No Start Date Available");
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    document.getElementById("user_location").innerHTML = '<strong> ' + sessionStorage.userLocation.toUpperCase() + '</strong>' ;
+                    document.getElementById("patient_residence").innerHTML = ((results.residence !== "N/A") ? results.residence : "Residence not Available");
+                }
             }
-          }
         };
         try {
-          req.open('GET', url, true);
-          req.setRequestHeader('Authorization', sessionStorage.getItem('authorization'));
-          req.send(null);
+            req.open('GET', url, true);
+            req.setRequestHeader('Authorization', sessionStorage.getItem('authorization'));
+            req.send(null);
         } catch (e) {
         }
-      }
+    }
 
-      ajaxRequest();
+    ajaxRequest();
 
-      </script>
+</script>
 </body>
 </html>
