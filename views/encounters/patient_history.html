@@ -52,7 +52,9 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
       tt_pageStyleClass="date" />
 
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_onLoad="changeNextButton();"  tt_pageStyleClass="Numeric NumbersOnly" />
+      <input type="text" name="num_of_abortions" id="ttv_status" helpText=" TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="changeNextButton();" />
+
+
 
      
 
@@ -94,7 +96,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var delivery_mode = document.getElementById('delivery_mode').value;
       var ttv_status = document.getElementById('ttv_status').value;
       var menstruation_date = document.getElementById('menstruation_date').value;
-      console.log("TTV STATUS *********"+ttv_status );
       var conceptAnswers = [
   
           /*Multiple pregnancies*/
@@ -136,7 +137,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           default:
               break;
       }
-      console.log("TTV STATUS ....."+ttv_status );
       var obs = {
           encounter_id: encounter["encounter_id"],
           observations: [
@@ -162,6 +162,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   }
 
   function nextPage(){
-     //nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    nextEncounter(sessionStorage.patientID, sessionStorage.programID);
   }
 </script>
