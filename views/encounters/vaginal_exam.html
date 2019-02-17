@@ -82,7 +82,7 @@
                    allowFreeText="true"
             />
 
-            <select id="membranes" name="membranes" helpText="Membranes" tt_onUnLoad="changeNextButton();">
+            <select id="membranes" name="membranes" helpText="Membranes" tt_onLoad="changeNextButtonIntactMembrane();">
                 <option></option>
                 <option>Intact</option>
                 <option>Raptured</option>
@@ -93,7 +93,7 @@
                    id="rupture_time" field_type="advancedTime"
                    helpText="Membrane Rapture Time"
                    allowFreeText="true" optional = "true"
-                   condition ="__$('membranes').value == 'Raptured'"  />
+                   condition ="__$('membranes').value == 'Raptured'" />
 
             <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date"
                    condition ="$('membranes').value == 'Raptured'" tt_pageStyleClass="date"/>
@@ -127,16 +127,16 @@
 </body>
 
 <script>
-    var fundus = document.getElementById('fundus').value;
-    var genetaliaInspection = document.getElementById('genetalia_inspection').value;
-    var station = document.getElementById('station').value;
-    var cervicalDilation = document.getElementById('cervical_dilation').value;
-    var caput = document.getElementById('caput').value;
-    var moulding = document.getElementById('moulding').value;
-    var membranes = document.getElementById('membranes').value;
-    var ruptureTime = document.getElementById('rupture_time').value;
-    var ruptureDate = document.getElementById('rupture_date').value;
-    var colorOfLiqour = document.getElementById('colour_of_liqour').value;
+    var fundus;
+    var genetaliaInspection;
+    var station;
+    var cervicalDilation;
+    var caput;
+    var moulding;
+    var membranes;
+    var ruptureTime;
+    var ruptureDate;
+    var colorOfLiqour;
     var presentingPart = document.getElementById('presenting_part').value;
 
     function changeNextButton() {
@@ -144,7 +144,14 @@
         nextButton.setAttribute("onmousedown","postVaginalExam();");
     }
 
+    function changeNextButtonIntactMembrane() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postVaginalExamIntact();");
+    }
+
     function postVaginalExam() {
+        presentingPart = document.getElementById('touchscreenInput' + tstCurrentPage).value;
+
         var currentTime = moment().format(' HH:mm:ss');
         var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
         encounter_datetime += currentTime;
@@ -159,8 +166,40 @@
         submitParameters(encounter, "/encounters", "postVaginalObs");
     }
 
+    function postVaginalExamIntact() {
+        membranes = document.getElementById('touchscreenInput' + tstCurrentPage).value;
+
+        if (membranes === 'Intact') {
+            var currentTime = moment().format(' HH:mm:ss');
+            var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+            encounter_datetime += currentTime;
+
+            var encounter = {
+                encounter_type_name: 'VAGINAL EXAMINATION',
+                encounter_type_id:  102,
+                patient_id: sessionStorage.patientID,
+                encounter_datetime: encounter_datetime
+            };
+
+            submitParameters(encounter, "/encounters", "postVaginalObs");
+        } else {
+            gotoNextPage();
+        }
+
+    }
 
     function postVaginalObs(encounter) {
+
+        fundus = document.getElementById('fundus').value;
+        genetaliaInspection = document.getElementById('genetalia_inspection').value;
+        station = document.getElementById('station').value;
+        cervicalDilation = document.getElementById('cervical_dilation').value;
+        caput = document.getElementById('caput').value;
+        moulding = document.getElementById('moulding').value;
+        membranes = document.getElementById('membranes').value;
+        ruptureTime = document.getElementById('rupture_time').value;
+        ruptureDate = document.getElementById('rupture_date').value;
+        colorOfLiqour = document.getElementById('colour_of_liqour').value;
 
         var conceptAnswers = [
             // Blood loss
@@ -330,7 +369,7 @@
                 break;
         }
 
-        switch(colorOfLiqour.toUpperCase()) {
+        switch (colorOfLiqour.toUpperCase()) {
             case 'CLEAR':
                 colorOfLiqourAnswer = conceptAnswers[4].clear;
                 break;
