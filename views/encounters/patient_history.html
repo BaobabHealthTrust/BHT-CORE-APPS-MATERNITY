@@ -94,7 +94,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var delivery_mode = document.getElementById('delivery_mode').value;
       var ttv_status = document.getElementById('ttv_status').value;
       var menstruation_date = document.getElementById('menstruation_date').value;
-      console.log("TTV STATUS *********"+ttv_status );
+
       var conceptAnswers = [
   
           /*Multiple pregnancies*/
@@ -136,7 +136,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           default:
               break;
       }
-      console.log("TTV STATUS ....."+ttv_status );
+
       var obs = {
           encounter_id: encounter["encounter_id"],
           observations: [
@@ -162,6 +162,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   }
 
   function nextPage(){
-     // nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+     nextEncounter(sessionStorage.patientID, sessionStorage.programID);
   }
 </script>
