@@ -26,14 +26,15 @@
 
          <form>
      
-          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" > 
+          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onUnLoad="changeNextButton();" > 
+            <option></option>
             <option>Stable</option>
-            <option>Critical</option>
-            <option onmousedown="changeNextButton();">Dead</option>
+            <option >Critical</option>
+            <option id="Dead" value="Dead">Dead</option>
           </select>
           <input type="text" name="baby_temperature"
           id="baby_temperature" helpText="Baby: Temperature"  min="20" max ="45"
-          field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" 
+          field_type="number" tt_onLoad="checkDead();" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" 
           condition = "__$('baby_condition').value != 'Dead'"/>
 
           <input type="text" name="baby_respiratory_rate"
@@ -53,33 +54,36 @@
 
           <select id="baby_abdomen" name="baby_abdomen" tt_onLoad="changeNextBTN();" helpText="Baby: Abdomen"
           condition = "__$('baby_condition').value != 'Dead'"> 
+            <option></option>   
             <option>Distended</option>
             <option>Soft</option>
            </select>
 
            <select id="baby_cord_tied" name="baby_cord_tied" tt_onLoad="changeNextBTN();" helpText="Baby: Cord tied"
            condition = "__$('baby_condition').value != 'Dead'"> 
+            <option></option>
             <option>Yes</option>
             <option>No</option>
           </select>
 
           <select id="baby_cord_clean" name="baby_cord_clean" tt_onLoad="changeNextBTN();" helpText="Baby: Cord clean"
           condition = "__$('baby_condition').value != 'Dead'"> 
+            <option></option>
             <option>Yes</option>
             <option>No</option>
           </select>
 
           <select id="baby_abnormals" name="baby_abnormals" helpText="Baby: abnormalities"
-          condition = "__$('baby_condition').value != 'Dead'"> 
+          condition = "__$('baby_condition').value != 'Dead'" tt_onLoad="changeNextBTN();"> 
+            <option></option>
             <option>Yes</option>
             <option onmousedown="changeNextButton();">No</option>
           </select>
 
           <input name="baby_abnormalities" 
           id="baby_abnormalities" field_type="alpha" 
-          key="baby_abnormalities" helpText="Specify any abnormalities"  
-          allowFreeText="true" 
-          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'" tt_onLoad="changeNextButton();"/> 
+          helpText="Specify any abnormalities"  tt_onLoad="changeNextButton();"
+          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'"/> 
 
       </form>
 
@@ -92,18 +96,22 @@
      var patientID = sessionStorage.getItem("patientID");
      var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
      var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
-
+    
 
       function changeNextButton() {
-          var condition = document.getElementById('baby_condition').value;
+          var condition = document.getElementById('Dead').value;
           var abnormals = document.getElementById('baby_abnormals').value;
+          var abnormalities = document.getElementById('baby_abnormalities').value;
           if (condition === 'Dead') {
-            postPhysicalExam();
+            var nextButton =  document.getElementById('nextButton');
+           nextButton.setAttribute("onmousedown","postPhysicalExam();");
+           nextButton = " ";
+  
           } else if(abnormals =="No"){
             postPhysicalExam();
           }else {
             var nextButton =  document.getElementById('nextButton');
-            nextButton.setAttribute("onmousedown","postPhysicalExam();")
+           nextButton.setAttribute("onmousedown","postPhysicalExam();");
           }
        
       }
@@ -229,6 +237,7 @@
             { concept_id: 8399, value_coded: conditionAnswer } //saving
               ]
     };
+    console.log("abnormalities are "+abnormalities);
         if(temperature !== '') {
             obs.observations.push( { concept_id: 5088, value_numeric: temperature } ); //saving
         }
