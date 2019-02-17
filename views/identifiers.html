@@ -37,6 +37,11 @@
           <strong>Residence:</strong>
         </span>&nbsp;
         <span id="patient_residence"></span></div>
+    <div class="addresses">
+        <span class="headers">
+          <strong>Current Outcome:</strong>
+        </span>&nbsp;
+        <span id="current_outcome"></span></div>
 </div>
 
 <script>
@@ -47,7 +52,7 @@
     var programID = sessionStorage.getItem("programID");
 
     function ajaxRequest() {
-        var url = 'http://' + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/patients/' + id;
+        var url = apiProtocol + '://' + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/patients/' + id;
         var req = new XMLHttpRequest();
         req.onreadystatechange = function () {
 
@@ -56,6 +61,7 @@
                     var results = JSON.parse(this.responseText);
                     document.getElementById("user_location").innerHTML = '<strong> ' + sessionStorage.userLocation.toUpperCase() + '</strong>' ;
                     document.getElementById("patient_residence").innerHTML = ((results.residence !== "N/A") ? results.residence : "Residence not Available");
+                    document.getElementById("current_outcome").innerHTML = ((results.current_outcome !== "N/A") ? results.current_outcome : "Current Outcome not Available");
                 }
             }
         };

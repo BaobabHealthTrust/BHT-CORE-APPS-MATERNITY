@@ -14,13 +14,13 @@
 
 <style>
 
-.inputFrameClass {
-  width: 96% !important;
-}
+    .inputFrameClass {
+        width: 96% !important;
+    }
 
-#clearButton {
-  display: none;
-}
+    #clearButton {
+        display: none;
+    }
 
 </style>
 
@@ -33,34 +33,30 @@
 </script>
 
 <body id="mateme">
-  <div id="container">
+<div id="container">
     <div id="content">
 
 
-         <form>
-          <input type="text" name="admission_diagnosis" 
-          id="admission_diagnosis" field_type="alpha" 
-          key="admission_diagnosis" helpText="Select Admission Diagnosis"  
-          ajaxURL="/search/admission_diagnosis?search_string=" 
-          key=presentation" allowFreeText="true" textCase ="upper"/>
+        <form>
+            <input type="text" name="admission_diagnosis"
+                   id="admission_diagnosis" field_type="alpha"
+                   key="admission_diagnosis" helpText="Select Admission Diagnosis"
+                   ajaxURL="/search/admission_diagnosis?search_string=" allowFreeText="true" textCase ="upper"/>
 
-          <input type="text" name="next_diagnosis" 
-          id="next_diagnosis" field_type="alpha" 
-          key="next_diagnosis" helpText="Select Next Diagnosis"  
-          ajaxURL="/search/next_diagnosis?search_string=" 
-          key=presentation" allowFreeText="true" />
+            <input type="text" name="next_diagnosis"
+                   id="next_diagnosis" field_type="alpha"
+                   key="next_diagnosis" helpText="Select Next Diagnosis"
+                   ajaxURL="/search/next_diagnosis?search_string=" allowFreeText="true" />
 
-  
-          <input type="text" name="other_diagnosis" 
-          id="other_diagnosis" field_type="alpha" 
-          key="other_diagnosis" helpText="Select Other Diagnosis"
-          ajaxURL="/search/next_diagnosis?search_string=" 
-          key=presentation" allowFreeText="true" tt_onLoad="changeNextButton();"/>
-          
-           </form>
+            <input type="text" name="other_diagnosis"
+                   id="other_diagnosis" field_type="alpha"
+                   key="other_diagnosis" helpText="Select Other Diagnosis"
+                   ajaxURL="/search/next_diagnosis?search_string=" allowFreeText="true" tt_onLoad="changeNextButton();"/>
 
-   </div>
- </div>
+        </form>
+
+    </div>
+</div>
 </body>
 
 <script>
@@ -93,12 +89,13 @@
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-                { concept_id: 7447, value_numeric: admissionDiagnosis }, // admission diagnosis
-                { concept_id: 6543, value_coded: nextDiagnosis }, // next diagnosis
-                { concept_id: 7685, value_coded:  otherDiagnosis } // other diagnosis
+                { concept_id: 7447, value_text: admissionDiagnosis }, // admission diagnosis
+                { concept_id: 6543, value_text: nextDiagnosis }, // next diagnosis
+                { concept_id: 7685, value_text: otherDiagnosis } // other diagnosis
             ]
         };
 
+        console.log('1: '+admissionDiagnosis+' 2: '+nextDiagnosis+' 3: '+otherDiagnosis);
         submitParameters(obs, "/observations", "nextPage")
     }
 

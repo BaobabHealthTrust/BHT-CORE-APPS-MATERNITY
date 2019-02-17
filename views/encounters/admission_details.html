@@ -15,174 +15,68 @@
 
 <style>
 
-.inputFrameClass {
-  width: 96% !important;
-}
+    .inputFrameClass {
+        width: 96% !important;
+    }
 
-#clearButton {
-  display: none;
-}
+    #clearButton {
+        display: none;
+    }
 
 </style>
 
 <script>
-var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-
-var patientID = sessionStorage.getItem("patientID");
-var programID = sessionStorage.getItem("programID");
-var tt_cancel_destination = "/";
-var apiProtocol = sessionStorage.apiProtocol;
-var apiURL = sessionStorage.apiURL;
-var apiPort = sessionStorage.apiPort;
-var patient_id = sessionStorage.patientID;
-var previousActivities = null;
-function getActivities(){
-  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-
-  if (this.readyState == 4) {
-    if (this.status == 200) {
-      var results = JSON.parse(this.responseText);
-        previousActivities = results.property_value;
-        loadActivities(previousActivities);
-    }else {
-
-        loadActivities("");
-    }
-    }
-    };
-    try {
-      req.open('GET', url, true);
-      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
-      req.send(null);
-    } catch (e) {
-    
-    }
-}
-
-function loadActivities(previousActivities) {
-  var activities = [];
-  jQuery.getJSON("/apps/ART/application.json")
-    .done(function (data) {
-      activities = data.activities.tasks;
-      renderActivities(activities, previousActivities);
-
-    })
-    .fail(function () {
-      console.log("The application " + applicationName + "'s application.json file is not available");
-  });
-
-}
-/*
-<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
-*/
-
-function renderActivities(activities, previousActivities) {
-  var ul = document.getElementById("tt_currentUnorderedListOptions");
-  for(var i = 0 ; i < activities.sort().length ; i++){
-    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
-    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
-    innerHTML += ' id="optionValue' + i + '">';
-    innerHTML+= activities[i][0] + "</div></div></div>";
-    
-    var li = document.createElement("li");
-    li.setAttribute("id", i );
-    li.setAttribute("tstvalue", activities[i][1]);
-    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
-    li.setAttribute("style","");
-    li.setAttribute("class","even");
-    li.innerHTML = innerHTML;
-    ul.appendChild(li); 
-     if(previousActivities.search(activities[i][0]) >= 0) {
-      updateInputs(i);
-    }
-  } 
-}
-
-function updateInputs(i) {
-  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
-}
-// function changeNextBTN() {
-//   var nextBTN = document.getElementById("nextButton");
-//   nextButton.setAttribute("onmousedown","setActivities();");
-
-// }
-
-function setActivities() {
-  var values = document.getElementById("touchscreenInput0").value;
-  if(isEmpty(values))
-    return;
-
-  var regex = new RegExp(";", "g");
-  values = values.replace(regex, ",");
-
-  var parameters = { property: "Activities", property_value: values }
-
-  submitParameters(parameters, "/user_properties", "redirectTo"); 
-  
-}
-
-function redirectTo(obj) {
-  sessionStorage.setItem("userActivities", obj.property_value);
-  document.location = "/";
-}
-
-function isEmpty(str){
-  try {
-    return (str.replace(/\s+/g, '').length < 1);
-  }catch(e){
-    return true;
-  }
-}
-function setDate(){
-    var currentDate = new Date().toISOString().slice(0,10);
-    document.getElementById('admission_date').value = currentDate
-
-}
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
 </script>
 
 <body id="mateme">
-  <div id="container">
+<div id="container">
     <div id="content">
 
 
-      <form>
-         <input type="text" name="admission_date" 
-          id="admission_date" field_type="date" 
-          key="admission_date" helpText="Admission Date"  
-           tt_pageStyleClass="date" allowFreeText="true"
-           tt_onLoad="setDate();" 
-           tt_onUnLoad = "$('admission_date').value = $('admission_date').value.trim()" /> 
+        <form>
+            <input type="text" name="admission_date"
+                   id="admission_date" field_type="date"
+                   key="admission_date" helpText="Admission Date"
+                   tt_pageStyleClass="date" allowFreeText="true"
+                   tt_onLoad="setDate();"
+                   tt_onUnLoad = "$('admission_date').value = $('admission_date').value.trim()" />
 
-         <input type="text" name="admission_time" 
-          id="admission_time" field_type="advancedTime" 
-          key="admission_time" helpText="Admission Time"  
-          allowFreeText="true" 
-          condition = "$('admission_date').value.trim().length > 0;"/> 
+            <input type="text" name="admission_time"
+                   id="admission_time" field_type="advancedTime"
+                   key="admission_time" helpText="Admission Time"
+                   allowFreeText="true"
+                   condition = "$('admission_date').value.trim().length > 0;"/>
 
-          <select id="observation" name="observations" helpText="Observation">
-          <option>Healthy</option>
-          <option>Ill looking</option>
-          </select>
+            <select id="observation" name="observations" helpText="Observation">
+                <option></option>
+                <option>Healthy</option>
+                <option>Ill looking</option>
+            </select>
 
-          <select id="condition" name="conditions" helpText="Condition">
-             <option>Stable</option>
-             <option>Critical</option>
-         </select>
-         <select id="anemic" name="anemic" helpText="Anemic">   <option>Yes</option>
-            <option>No</option>
-          </select>
-          <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema">   <option>None</option>
-             <option>1+</option>
-             <option>2+</option>
-             <option>3+</option>
-          </select>
-      </form>
+            <select id="condition" name="conditions" helpText="Condition">
+                <option></option>
+                <option>Stable</option>
+                <option>Critical</option>
+            </select>
+            <select id="anemic" name="anemic" helpText="Anemic">
+                <option></option>
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+            <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema">   <option>None</option>
+                <option></option>
+                <option>1+</option>
+                <option>2+</option>
+                <option>3+</option>
+            </select>
+        </form>
 
-   </div>
- </div>
+    </div>
+</div>
 </body>
 <script>
     function changeNextButton() {
@@ -244,15 +138,66 @@ function setDate(){
             }
         ];
 
+        var observationValueAnswer;
+        var conditionValueAnswer;
+        var anemicValueAnswer;
+        var oedemaValueAnswer;
+
+        switch (observationValue.toUpperCase()) {
+            case 'HEALTHY':
+                observationValueAnswer = conceptAnswers[0].healthy;
+                break;
+            case 'ILL LOOKING':
+                observationValueAnswer = conceptAnswers[0].illLooking;
+                break;
+            default:
+                break;
+        }
+
+        switch (conditionValue.toUpperCase()) {
+            case 'STABLE':
+                conditionValueAnswer = conceptAnswers[1].stable;
+                break;
+            case 'CRITICAL':
+                conditionValueAnswer = conceptAnswers[1].critical;
+            default:
+                break;
+        }
+
+        switch (anemicValue.toUpperCase()) {
+            case 'YES':
+                anemicValueAnswer = conceptAnswers[2].yes;
+                break;
+            case 'NO':
+                anemicValueAnswer = conceptAnswers[2].no;
+                break;
+            default:
+                break;
+        }
+
+        switch (oedemaValue) {
+            case '1+':
+                oedemaValueAnswer = conceptAnswers[3].plusOne;
+                break;
+            case '2+':
+                oedemaValueAnswer = conceptAnswers[3].plusTwo;
+                break;
+            case '3+':
+                oedemaValueAnswer = conceptAnswers[3].plusThree;
+                break;
+            default:
+                break;
+        }
+
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
                 { concept_id: 7826, value_datetime: admissionDateValue }, // admission date
                 { concept_id: 7827, value_text: admissionTime }, // admission time
-                { concept_id: 2592, value_coded: conceptAnswers[0] }, // observations
-                { concept_id: 7828, value_coded:  conceptAnswers[1] }, // condition
-                { concept_id: 3, value_coded: conceptAnswers[2] }, // anemic
-                { concept_id: 460, value_coded: conceptAnswers[3] } // oedema
+                { concept_id: 2592, value_coded: observationValueAnswer }, // observations
+                { concept_id: 7828, value_coded: conditionValueAnswer }, // condition
+                { concept_id: 3, value_coded: anemicValueAnswer }, // anemic
+                { concept_id: 460, value_coded: oedemaValueAnswer } // oedema
             ]
         };
 
