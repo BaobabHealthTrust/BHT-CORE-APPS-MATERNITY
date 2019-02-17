@@ -60,10 +60,9 @@
           <input type="text" name="other_diagnosis" 
           id="other_diagnosis" field_type="alpha" 
           key="other_diagnosis" helpText="Select the next diagnosis"  
-          allowFreeText="true" 
+          allowFreeText="true" tt_onLoad="changeNextButton();"
           /> 
-          <input style="display:none;" tt_onLoad="changeNextButton();" name="other_diagnosis" type="hidden"
-           />
+
 
       </form>
 
@@ -76,10 +75,6 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
-  function getAdmissionD(){
-    var admissionDiagnosisThree = document.getElementById('other_diagnosis').value;
-    console.log("EEEEEEE" + admissionDiagnosisThree);
-  }
 
 
   function changeNextButton() {
@@ -108,7 +103,7 @@
       var admissionTime = document.getElementById('admission_time').value;
       var admissionDiagnosisOne = document.getElementById('admission_diagnosis').value;
       var admissionDiagnosisTwo= document.getElementById('next_diagnosis').value;
-      var admissionDiagnosisThree = document.getElementById('other_diagnosis').value;
+      var admissionDiagnosisThree = document.getElementById('touchscreenInput' + tstCurrentPage).value;
 
       var admissionDay = admissionDate.split('-')[0];
       var admissionMonth = admissionDate.split('-')[1];
@@ -132,6 +127,6 @@
   }
 
   function nextPage(){
-    //  nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+     nextEncounter(sessionStorage.patientID, sessionStorage.programID);
   }
 </script>

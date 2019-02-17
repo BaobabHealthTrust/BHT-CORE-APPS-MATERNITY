@@ -49,12 +49,14 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
             <option>Breech Delivery</option>
       </select>
 
+      <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
+      tt_pageStyleClass="date" />
 
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" 
-       />
-      <input type="text" name="menstruation_date" id="menstruation_date" helpText="Last Menstruation Date" field_type="date"
-      tt_pageStyleClass="date" tt_onLoad="changeNextButton();" />
-    </form>
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="changeNextButton();" />
+
+     
+
+      </form>
 
    </div>
  </div>
@@ -69,18 +71,18 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   }
 
   function postPatientHistory() {
-      var currentTime = moment().format(' HH:mm:ss');
-      var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
-      encounter_datetime += currentTime;
+    var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
 
-      var encounter = {
-            encounter_type_name: 'MEDICAL HISTORY',
+        var encounter = {
+          encounter_type_name: 'MEDICAL HISTORY',
             encounter_type_id:  30,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
-      };
+        };
 
-      submitParameters(encounter, "/encounters", "postPatientHistoryObs");
+        submitParameters(encounter, "/encounters", "postPatientHistoryObs");
   }
 
   function postPatientHistoryObs(encounter) {
@@ -90,7 +92,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var num_of_deliveries = document.getElementById('num_of_deliveries').value;
       var num_of_abortions = document.getElementById('num_of_abortions').value;
       var delivery_mode = document.getElementById('delivery_mode').value;
-      var ttv_status = document.getElementById('ttv_status').value;
+      var ttv_status = document.getElementById('touchscreenInput' + tstCurrentPage).value;
       var menstruation_date = document.getElementById('menstruation_date').value;
       var conceptAnswers = [
   
@@ -133,7 +135,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           default:
               break;
       }
-      console.log("TTV STATUS ............."+ ttv_status);
       var obs = {
           encounter_id: encounter["encounter_id"],
           observations: [
@@ -159,6 +160,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   }
 
   function nextPage(){
-    nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+     nextEncounter(sessionStorage.patientID, sessionStorage.programID);
   }
 </script>
