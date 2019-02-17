@@ -99,84 +99,41 @@
     var end_date = moment().subtract(1, "days").format("YYYY-MM-DD");
     var start_date = moment().subtract(5, "days").format("YYYY-MM-DD");
 
-    function getVisits() {
-        var url = apiProtocol + '://' + apiURL + ':' + apiPort + '/api/v1/programs/' + programID + '/reports/visits?name=visits&start_date=' + start_date + '&end_date=' + end_date;
-        var req = new XMLHttpRequest();
-        req.onreadystatechange = function () {
+    function dashboardStats(stats) {
 
-            if (this.readyState == 4) {
-                if (this.status == 200) {
-                    var results = JSON.parse(this.responseText);
-                    var complete = new Array;
-                    var incomplete = new Array;
-                    var days = new Array;
-                    var keys = Object.keys(results);
-                    for (var x = 0; x < keys.length; x++) {
-                        complete.push(results[keys[x]].complete + results[keys[x]].incomplete);
-                        incomplete.push(results[keys[x]].incomplete);
-                        days.push(moment(keys[x]).format("ddd"));
-                    }
-                    console.log('hey ' + results);
-                }
-            }
-        };
-        try {
-            req.open('GET', url, true);
-            req.setRequestHeader('Authorization', sessionStorage.getItem('authorization'));
-            req.send(null);
-        } catch (e) {
-        }
+        console.log('total ' + stats);
+
+        var top_colunm = stats['top'];
+        document.getElementById('reg-today').innerHTML = top_colunm.registered_today;
+        document.getElementById('returning-today').innerHTML = top_colunm.returning_today;
+        document.getElementById('referred-today').innerHTML = top_colunm.referred_today;
+        var total = parseInt(top_colunm.referred_today);
+        total += parseInt(top_colunm.returning_today);
+        total += parseInt(top_colunm.registered_today);
+        // document.getElementById('reg-total').innerHTML = total;
+
+        console.log('total ' + total);
     }
 
-    getVisits();
-    var encounter_date = moment(new Date()).format("YYYY-MM-DD");
-    submitParameters(stats, "/reports/encounters?date=" + encounter_date, "renderStats");
+    function fetchDashboardStats() {
+        var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1";
+        url += "/dashboard_stats?date=" + sessionStorage.sessionDate;
+        url+= "&program_id=" + sessionStorage.programID;
 
-    try {
-        var cover = document.getElementById('submit-cover');
-        cover.style = 'display: none;';
-    } catch (e) {
-    }
-
-    var encounters_created = [];
-    var counter = 1;
-
-    function renderStats(stats) {
-
-        var tby = document.getElementById("stats-table-body");
-        for (var encounter_type_id in stats) {
-
-            console.log('enc_type ' + encounter_type_id);
-            counter++;
-        }
-
-        getUserStats();
-    }
-
-    function getUserStats() {
-        var stats = {encounter_types: [5, 61, 6, 41, 40, 63]};
-        var session_stats_url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/reports/encounters?date=" + encounter_date;
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
+        xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
-                var user_stats = JSON.parse(this.responseText);
-                for (var encounter_type in user_stats) {
-                    var males = user_stats[encounter_type]["M"];
-                    var females = user_stats[encounter_type]["F"];
-                    var element = document.getElementById("encounter_" + encounter_type);
-                    if (element) {
-                        var total = parseInt(males) + parseInt(females);
-                        element.innerHTML = "<b>" + total + "</b>";
-                    }
-                    console.log('User stats '+user_stats[encounter_type]['M']);
-                }
+                var obj = JSON.parse(this.responseText);
+                dashboardStats(obj);
             }
         };
-        xhttp.open("POST", session_stats_url, true);
+        xhttp.open("GET", url, true);
         xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
         xhttp.setRequestHeader('Content-type', "application/json");
-        xhttp.send(JSON.stringify(stats));
+        xhttp.send();
     }
+
+    setTimeout("fetchDashboardStats()", 200);
 
     var usernameField = document.getElementById("username");
     if (usernameField) {
