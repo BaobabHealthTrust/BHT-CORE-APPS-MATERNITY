@@ -77,20 +77,7 @@
 <script>
 
     function taskGrouping(group) {
-    if(group == ''){
-        return [
-          ['Social History','','/apps/MATERNITY/views/antenatal/social_history.html', 'link'],
-          ['Admission Details','','/apps/MATERNITY/views/antenatal/admission.html', 'link'],
-          ['Vitals','','/apps/MATERNITY/views/antenatal/vitals.html', 'link'],
-          ["Patient History","","/apps/MATERNITY/views/antenatal/patient-copy.html",'link'],
-          ["PMTCT","","/apps/MATERNITY/views/antenatal/pmtct.html",'link'],
-          ["Physical Examination","","/apps/MATERNITY/views/antenatal/physical.html",'link'],
-          ["Vaginal Examination","","/apps/MATERNITY/views/antenatal/vaginal_exam.html",'link'],
-          ["Clinical Examination","","/apps/MATERNITY/views/antenatal/clinical.html",'link'],
-          ["Admission Diagnosis","","/apps/MATERNITY/views/antenatal/admission_diagnosis.html",'link'],["Notes","","/apps/MATERNITY/views/encounters/notes.html",'link'],
-          ["Admission Notes printing","","#",'link']
-        ];
-      }else if(group == 'main'){
+         if(group == 'main'){
         return [
           ['Social History','','/apps/MATERNITY/views/encounters/social_history.html', 'link'],
           ['Current Delivery','','/apps/MATERNITY/views/encounters/current_delivery.html', 'link'],
@@ -103,8 +90,7 @@
           ["Vaginal Examination","","/apps/MATERNITY/views/encounters/post_vaginal_exam.html",'link'],["Notes","","/apps/MATERNITY/views/encounters/notes.html",'link'],
           ["Admission Notes printing","","#",'link']
         ];
-      }else if(group == 'Post-Natal') {
-      }  
+      } 
     }	
     
     function buildReportLinks(group) {
