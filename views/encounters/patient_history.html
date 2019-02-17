@@ -96,10 +96,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var delivery_mode = document.getElementById('delivery_mode').value;
       var ttv_status = document.getElementById('ttv_status').value;
       var menstruation_date = document.getElementById('menstruation_date').value;
-<<<<<<< HEAD
-=======
 
->>>>>>> a85c1438f57ab6a008981dbd6d913fd5fad49a54
       var conceptAnswers = [
   
           /*Multiple pregnancies*/
@@ -141,10 +138,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           default:
               break;
       }
-<<<<<<< HEAD
-=======
 
->>>>>>> a85c1438f57ab6a008981dbd6d913fd5fad49a54
       var obs = {
           encounter_id: encounter["encounter_id"],
           observations: [
@@ -169,12 +163,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       submitParameters(obs, "/observations", "nextPage")
   }
 
-<<<<<<< HEAD
   function nextPage(){
     nextEncounter(sessionStorage.patientID, sessionStorage.programID);
-=======
-  function nextPage() {
-     nextEncounter(sessionStorage.patientID, sessionStorage.programID);
->>>>>>> a85c1438f57ab6a008981dbd6d913fd5fad49a54
   }
 </script>
