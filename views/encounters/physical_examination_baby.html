@@ -26,16 +26,18 @@
 
          <form>
      
-          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onUnLoad="changeNextButton();" > 
+          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onLoad="changeButtonDead();" > 
             <option></option>
             <option>Stable</option>
             <option >Critical</option>
-            <option id="Dead" value="Dead">Dead</option>
+            <option>Dead</option>
           </select>
+
           <input type="text" name="baby_temperature"
           id="baby_temperature" helpText="Baby: Temperature"  min="20" max ="45"
           field_type="number" tt_onLoad="checkDead();" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" 
           condition = "__$('baby_condition').value != 'Dead'"/>
+
 
           <input type="text" name="baby_respiratory_rate"
            id="baby_respiratory_rate" helpText="Baby: Respiratory rate"  min="0" max ="80"
@@ -66,7 +68,7 @@
             <option>No</option>
           </select>
 
-          <select id="baby_cord_clean" name="baby_cord_clean" tt_onLoad="changeNextBTN();" helpText="Baby: Cord clean"
+          <select id="baby_cord_clean" name="baby_cord_clean" helpText="Baby: Cord clean"
           condition = "__$('baby_condition').value != 'Dead'"> 
             <option></option>
             <option>Yes</option>
@@ -74,16 +76,16 @@
           </select>
 
           <select id="baby_abnormals" name="baby_abnormals" helpText="Baby: abnormalities"
-          condition = "__$('baby_condition').value != 'Dead'" tt_onLoad="changeNextBTN();"> 
+          condition = "__$('baby_condition').value != 'Dead'" tt_onLoad="changeButtonNo();"> 
             <option></option>
             <option>Yes</option>
-            <option onmousedown="changeNextButton();">No</option>
+            <option>No</option>
           </select>
 
           <input name="baby_abnormalities" 
           id="baby_abnormalities" field_type="alpha" 
-          helpText="Specify any abnormalities"  tt_onLoad="changeNextButton();"
-          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'"/> 
+          helpText="Specify any abnormalities" 
+          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'" tt_onLoad="changeNextButton();"/> 
 
       </form>
 
@@ -96,25 +98,68 @@
      var patientID = sessionStorage.getItem("patientID");
      var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
      var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
-    
+     var abnormalities;
+      function changeButtonDead(){
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postDeadCondition();");
+      }
+
+      function changeButtonNo(){
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postNoCondition();");
+      }
+      
 
       function changeNextButton() {
-          var condition = document.getElementById('Dead').value;
-          var abnormals = document.getElementById('baby_abnormals').value;
-          var abnormalities = document.getElementById('baby_abnormalities').value;
-          if (condition === 'Dead') {
             var nextButton =  document.getElementById('nextButton');
            nextButton.setAttribute("onmousedown","postPhysicalExam();");
-           nextButton = " ";
-  
-          } else if(abnormals =="No"){
-            postPhysicalExam();
-          }else {
-            var nextButton =  document.getElementById('nextButton');
-           nextButton.setAttribute("onmousedown","postPhysicalExam();");
-          }
+          
        
       }
+
+      function postDeadCondition(){
+        condition = document.getElementById('touchscreenInput'+tstCurrentPage).value;
+
+        if (condition === 'Dead') {
+            var currentTime = moment().format(' HH:mm:ss');
+            var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+            encounter_datetime += currentTime;
+
+            var encounter = {
+                encounter_type_name: 'PMTCT HISTORY',
+                encounter_type_id:  129,
+                patient_id: sessionStorage.patientID,
+                encounter_datetime: encounter_datetime
+            };
+
+            submitParameters(encounter, "/encounters", "postPhysicalExamObs");
+
+        } else {
+            gotoNextPage();
+        }
+      }
+      function postNoCondition(){
+        babyAbnormals = document.getElementById('touchscreenInput'+tstCurrentPage).value;
+
+        if (babyAbnormals === 'No') {
+            var currentTime = moment().format(' HH:mm:ss');
+            var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+            encounter_datetime += currentTime;
+
+            var encounter = {
+                encounter_type_name: 'PMTCT HISTORY',
+                encounter_type_id:  129,
+                patient_id: sessionStorage.patientID,
+                encounter_datetime: encounter_datetime
+            };
+
+            submitParameters(encounter, "/encounters", "postPhysicalExamObs");
+
+        } else {
+            gotoNextPage();
+        }
+      }
+
       function postPhysicalExam() {
           var currentTime = moment().format(' HH:mm:ss');
           var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
@@ -126,6 +171,7 @@
                 patient_id: sessionStorage.patientID,
                 encounter_datetime: encounter_datetime
           };
+           abnormalities = document.getElementById('touchscreenInput' + tstCurrentPage).value;
 
           submitParameters(encounter, "/encounters", "postPhysicalExamObs");
       }
@@ -141,7 +187,6 @@
         var cordClean = document.getElementById('baby_cord_clean').value;
         var abnormals = document.getElementById('baby_abnormals').value;
         var abnormals = document.getElementById('baby_abnormals').value;
-        var abnormalities = document.getElementById('baby_abnormalities').value;
 
     var conceptAnswers = [
 

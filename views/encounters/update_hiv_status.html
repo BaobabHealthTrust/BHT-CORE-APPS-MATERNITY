@@ -24,118 +24,6 @@
 
 </style>
 
-<script>
-var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-var patientID = sessionStorage.getItem("patientID");
-var programID = sessionStorage.getItem("programID");
-var tt_cancel_destination = "/";
-var apiProtocol = sessionStorage.apiProtocol;
-var apiURL = sessionStorage.apiURL;
-var apiPort = sessionStorage.apiPort;
-var patient_id = sessionStorage.patientID;
-var previousActivities = null;
-function getActivities(){
-  var url = 'http://'+apiURL+':'+apiPort+'/api/v1/user_properties?property=activities';
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-
-  if (this.readyState == 4) {
-    if (this.status == 200) {
-      var results = JSON.parse(this.responseText);
-        previousActivities = results.property_value;
-        loadActivities(previousActivities);
-    }else {
-
-        loadActivities("");
-    }
-    }
-    };
-    try {
-      req.open('GET', url, true);
-      req.setRequestHeader('Authorization',sessionStorage.getItem('authorization'));
-      req.send(null);
-    } catch (e) {
-    
-    }
-}
-
-function loadActivities(previousActivities) {
-  var activities = [];
-  jQuery.getJSON("/apps/ART/application.json")
-    .done(function (data) {
-      activities = data.activities.tasks;
-      renderActivities(activities, previousActivities);
-
-    })
-    .fail(function () {
-      console.log("The application " + applicationName + "'s application.json file is not available");
-  });
-
-}
-/*
-<li id="0" tstvalue="vitals" class="even" tag="even" onmousedown="" onclick="null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); " style=""><div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img0" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;" id="optionValue0">Vitals</div></div></div></li
-*/
-
-function renderActivities(activities, previousActivities) {
-  var ul = document.getElementById("tt_currentUnorderedListOptions");
-  for(var i = 0 ; i < activities.sort().length ; i++){
-    var innerHTML = '<div style="display: table; border-spacing: 0px;"><div style="display: table-row"><div style="display: table-cell;"><img id="img';
-    innerHTML += i + '" src="/public/touchscreentoolkit/lib/images/unticked.jpg" alt="[ ]"></div><div style="display: table-cell; vertical-align: middle; text-align: left; padding-left: 15px;"';
-    innerHTML += ' id="optionValue' + i + '">';
-    innerHTML+= activities[i][0] + "</div></div></div>";
-    
-    var li = document.createElement("li");
-    li.setAttribute("id", i );
-    li.setAttribute("tstvalue", activities[i][1]);
-    li.setAttribute("onmousedown", "null; updateTouchscreenInputForSelect(__$('optionValue' + this.id), this); ");
-    li.setAttribute("style","");
-    li.setAttribute("class","even");
-    li.innerHTML = innerHTML;
-    ul.appendChild(li); 
-     if(previousActivities.search(activities[i][0]) >= 0) {
-      updateInputs(i);
-    }
-  } 
-}
-
-function updateInputs(i) {
-  updateTouchscreenInputForSelect(__$('optionValue' + i), document.getElementById(i)); 
-}
-// function changeNextBTN() {
-//   var nextBTN = document.getElementById("nextButton");
-//   nextButton.setAttribute("onmousedown","setActivities();");
-
-// }
-
-function setActivities() {
-  var values = document.getElementById("touchscreenInput0").value;
-  if(isEmpty(values))
-    return;
-
-  var regex = new RegExp(";", "g");
-  values = values.replace(regex, ",");
-
-  var parameters = { property: "Activities", property_value: values }
-
-  submitParameters(parameters, "/user_properties", "redirectTo"); 
-  
-}
-
-function redirectTo(obj) {
-  sessionStorage.setItem("userActivities", obj.property_value);
-  document.location = "/";
-}
-
-function isEmpty(str){
-  try {
-    return (str.replace(/\s+/g, '').length < 1);
-  }catch(e){
-    return true;
-  }
-}
-
-</script>
-
 <body id="mateme">
   <div id="container">
     <div id="content">
@@ -163,3 +51,45 @@ function isEmpty(str){
  </div>
 </body>
 
+<script>
+    function changeNextButton() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postAdmissionNotes();")
+    }
+
+    function postAdmissionNotes() {
+        var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
+
+        var encounter = {
+            encounter_type_name: 'ADMISSION NOTES',
+            encounter_type_id:  105,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+        };
+
+        submitParameters(encounter, "/encounters", "postAdmissionNotesObs");
+    }
+
+    function postAdmissionNotesObs(encounter) {
+
+        var impression = document.getElementById('impression').value;
+        var plan = document.getElementById('plan').value;
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 1375, value_datetime: impression }, // impression . If an endpoint is available
+                // this will accept coded answers. In the meantime, text will do
+                { concept_id: 7834, value_text: plan }, // plan
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
+    }
+
+    function nextPage(){
+        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
+</script>
