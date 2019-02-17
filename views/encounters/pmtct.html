@@ -108,7 +108,6 @@
 
     function postPMTCTNonReactiveHIV() {
         var hivStatus = document.getElementById('hiv_status_value').value;
-        var pmtctTestDate = document.getElementById('pmtct_test_date').value;
 
         if (hivStatus === 'Non-Reactive') {
             var currentTime = moment().format(' HH:mm:ss');
@@ -146,10 +145,12 @@
 
     function postPmtctObs(encounter) {
         var hivStatus = document.getElementById('hiv_status_value').value;
-        var pmtctTestDate = document.getElementById('pmtct_test_date').value;
+        var pmtctTestDate = document.getElementById('touchscreenInput'+tstCurrentPage).value;
         var pmtctOnArvs = document.getElementById('pmtct_on_arvs').value;
         var periodOnArvs = document.getElementById('period_on_arvs').value;
         var feedingOption = document.getElementById('feeding_option').value;
+
+        console.log(pmtctTestDate);
 
         var conceptAnswers = [
             // Hiv Status
