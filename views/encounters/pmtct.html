@@ -30,16 +30,18 @@
 
         <form>
             <select id="hiv_status_value" name="hiv_status" helpText="PMTCT Status" tt_onUnLoad="changeNextButton();">
+                <option></option>
                 <option>Non-Reactive</option>
                 <option>Reactive</option>
                 <option>Unknown</option>
             </select>
 
             <input type="text" name="pmtct_test_date" id="pmtct_test_date" helpText="PMTCT test date" field_type="date"
-                   tt_pageStyleClass="date"  condition ="$('hiv_status_value').value.toLowerCase() != 'unknown'" tt_onUnLoad="changeNextButton();" />
+                   tt_pageStyleClass="date"  condition ="$('hiv_status_value').value.toLowerCase() != 'unknown'" tt_onLoad="changeNextButton();"/>
 
             <select id="pmtct_on_arvs" name="pmtct_on_arvs" helpText="On ARVs"
                     condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';">
+                <option></option>
                 <option>Yes</option>
                 <option>No</option>
             </select>
@@ -49,6 +51,7 @@
                    condition ="$('pmtct_on_arvs').value.trim().toUpperCase() == 'YES';" />
 
             <select id="feeding_option" name="feeding_option" helpText="Feeding Option" condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';" tt_onLoad="changeNextButton();">
+                <option></option>
                 <option>Exclusive Breast Feeding</option>
                 <option>No Breast Feeding</option>
                 <option>Exclusive Formula Feeding</option>
@@ -70,8 +73,9 @@
     function changeNextButton() {
         if (hivStatus === 'Unknown') {
             postPMTCT();
-        } else if(hivStatus === 'Non-Reactive' && pmtctTestDate !== '') {
-            postPMTCT();
+        } else if(hivStatus === 'Reactive' && pmtctTestDate !== '') {
+            var nextButton =  document.getElementById('nextButton');
+            nextButton.setAttribute("onmousedown","gotoNextPage();")
         } else {
             var nextButton =  document.getElementById('nextButton');
             nextButton.setAttribute("onmousedown","postPMTCT();")
