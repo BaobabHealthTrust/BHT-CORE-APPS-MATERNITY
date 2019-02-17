@@ -52,7 +52,9 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
       tt_pageStyleClass="date" />
 
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="changeNextButton();"/>
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number" tt_onLoad="changeNextButton();"  tt_pageStyleClass="Numeric NumbersOnly" />
+
+     
 
       </form>
 
@@ -92,10 +94,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       var delivery_mode = document.getElementById('delivery_mode').value;
       var ttv_status = document.getElementById('ttv_status').value;
       var menstruation_date = document.getElementById('menstruation_date').value;
-      YesNoConcepts = {};
-      YesNoConcepts["Yes"] = 1065;
-      YesNoConcepts["No"] = 1066;
-
+      console.log("TTV STATUS *********"+ttv_status );
       var conceptAnswers = [
   
           /*Multiple pregnancies*/
@@ -137,6 +136,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           default:
               break;
       }
+      console.log("TTV STATUS ....."+ttv_status );
       var obs = {
           encounter_id: encounter["encounter_id"],
           observations: [
@@ -145,11 +145,11 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
               { concept_id: 1053, value_numeric: num_of_deliveries },
               { concept_id: 7942, value_numeric: num_of_abortions }, 
               { concept_id: 7438, value_coded: deliveryModeAnswer },
-              { concept_id: 7124, value_numeric: ttv_status }
-          ]
+              { concept_id: 7124, value_numeric: ttv_status } 
+              
+             ]
       };
       if(menstruation_date !== '') {
-            console.log("Worrrk")
             var menstruationDay = menstruation_date.split('-')[0];
             var menstruationMonth = menstruation_date.split('-')[1];
             var menstruationYear = menstruation_date.split('-')[2];
@@ -162,6 +162,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   }
 
   function nextPage(){
-      nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+     // nextEncounter(sessionStorage.patientID, sessionStorage.programID);
   }
 </script>

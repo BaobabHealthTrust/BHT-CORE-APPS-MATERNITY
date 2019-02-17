@@ -4,7 +4,7 @@
       "available": true,
       "encountersName": "antenatal",
       "activitiesIcon": "/assets/images/anc.png",
-      "url": "/apps/MATERNITY/views/antenatal.html"
+      "url": "/apps/MATERNITY/views/antenatal_tasks.html"
     },
     "postnatal": {
       "available": true,
@@ -58,7 +58,7 @@
       "available": true,
       "encountersName": "vagina examination",
       "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/antenatal/vaginal_exam.html"
+      "url": "/apps/MATERNITY/views/encounters/vaginal_exam.html"
     },
     "maternity examination": {
       "available": true,
