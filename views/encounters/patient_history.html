@@ -64,7 +64,9 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
 
 <script>
-
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "../antenatal.html?patient_id=" + patientID;
   function changeNextButton() {
       var nextButton =  document.getElementById('nextButton');
       nextButton.setAttribute("onmousedown","postPatientHistory();")
