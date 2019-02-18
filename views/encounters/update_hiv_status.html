@@ -122,7 +122,7 @@
             var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-              //  { concept_id: 3753, value_coded: hivTestVisit },
+                { concept_id: 3387, value_coded: hivStatusAnswer },
                 { concept_id: 7021, value_coded: hivVisitAnswer },
                 { concept_id: 1837, value_datetime: hivTestDates }
             ]
@@ -131,8 +131,6 @@
     }
 
     function nextPage(){
-
-      window.location.href = "../prenatalTasks.html";
-       // nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+          window.location.href =  "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 </script>
