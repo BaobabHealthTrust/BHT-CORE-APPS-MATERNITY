@@ -62,7 +62,7 @@
                 <option>Stable</option>
                 <option>Critical</option>
             </select>
-            <select id="anemic" name="anemic" helpText="Anemic">
+            <select id="anemic" name="anemic" helpText="Anaemic">
                 <option></option>
                 <option>Yes</option>
                 <option>No</option>
@@ -82,10 +82,10 @@
 <script>
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postSocialHistory();")
+        nextButton.setAttribute("onmousedown","postObstetricHistory();")
     }
 
-    function postSocialHistory() {
+    function postObstetricHistory() {
         var currentTime = moment().format(' HH:mm:ss');
         var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
         encounter_datetime += currentTime;
@@ -108,7 +108,6 @@
         var conditionValue = document.getElementById('condition').value;
         var anemicValue = document.getElementById('anemic').value;
         var oedemaValue = document.getElementById('touchscreenInput' + tstCurrentPage).value;
-
         var admissionDay = admissionDate.split('-')[0];
         var admissionMonth = admissionDate.split('-')[1];
         var admissionYear = admissionDate.split('-')[2];
@@ -141,7 +140,7 @@
 
         var observationValueAnswer;
         var conditionValueAnswer;
-        var anemicValueAnswer;
+        var anaemicValueAnswer;
         var oedemaValueAnswer;
 
         switch (observationValue.toUpperCase()) {
@@ -197,7 +196,7 @@
                 { concept_id: 7827, value_text: admissionTime }, // admission time
                 { concept_id: 2592, value_coded: observationValueAnswer }, // observations
                 { concept_id: 7828, value_coded: conditionValueAnswer }, // condition
-                { concept_id: 3, value_coded: anemicValueAnswer }, // anemic
+                { concept_id: 3, value_coded: anaemicValueAnswer }, // anaemic
                 { concept_id: 460, value_coded: oedemaValueAnswer } // oedema
             ]
         };
