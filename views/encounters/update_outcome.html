@@ -652,8 +652,9 @@ function weightAlert(){
  </div>
 </body>
 
-
-<%= javascript_include_tag "jquery" %>
+<!--
+==  Code taken from the encounter outcome file in the Previous Maternity ==
+----------------------------------------------------------------------------
 <script language="javascript">
     var tt_cancel_destination = "/patients/show/<%= @patient.id %>?skip_check=true"
     var currentWeight;
@@ -1215,6 +1216,7 @@ function weightAlert(){
 
 </style>
 
+<--
 <form id='outcome' action="/encounters/create" method='post'>
 
     <% @delivery_period = ["", "DELIVERED IN THE WARD",
@@ -1825,3 +1827,5 @@ function weightAlert(){
     <%= submit_tag "Finish" %>
 
 </form>
+
+-->
