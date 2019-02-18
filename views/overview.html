@@ -42,42 +42,49 @@
             <th id="username">Me</th>
             <th>Today</th>
             <th>This Year</th>
+            <th>Total To Date</th>
         </tr>
         <tr class="even">
             <td style="text-align:left;">Registration</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
+            <td id="registration_user"></td>
+            <td id="registration_today"></td>
+            <td id="registration_this_year"></td>
+            <td id="registration_total_to_date"></td>
         </tr>
         <tr class="odd">
             <td style="text-align:left;">Observations</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
+            <td></td>
         </tr>
         <tr class="even">
             <td style="text-align:left;">Vitals</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
+            <td></td>
         </tr>
         <tr class="odd">
             <td style="text-align:left;">Diagnosis</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
+            <td></td>
         </tr>
         <tr class="even">
             <td style="text-align:left;">Update Outcome</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
+            <td></td>
         </tr>
         <tr class="odd">
             <td style="text-align:left;">Referrals - Out</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
+            <td></td>
         </tr>
     </table>
 </div>
@@ -101,18 +108,15 @@
 
     function dashboardStats(stats) {
 
-        console.log('total ' + stats);
+        console.log('total ' + stats['registrations'].registered_today);
 
-        var top_colunm = stats['top'];
-        document.getElementById('reg-today').innerHTML = top_colunm.registered_today;
-        document.getElementById('returning-today').innerHTML = top_colunm.returning_today;
-        document.getElementById('referred-today').innerHTML = top_colunm.referred_today;
-        var total = parseInt(top_colunm.referred_today);
-        total += parseInt(top_colunm.returning_today);
-        total += parseInt(top_colunm.registered_today);
-        // document.getElementById('reg-total').innerHTML = total;
+        var registrations = stats['registrations'];
+        document.getElementById('registration_user').innerHTML = registrations.registered_today;
+        document.getElementById('registration_today').innerHTML = registrations.registered_today;
+        document.getElementById('registration_this_year').innerHTML = registrations.registered_today;
+        document.getElementById('registration_total_to_date').innerHTML = registrations.registered_today;
 
-        console.log('total ' + total);
+        console.log('total ');
     }
 
     function fetchDashboardStats() {
@@ -136,6 +140,7 @@
     setTimeout("fetchDashboardStats()", 200);
 
     var usernameField = document.getElementById("username");
+
     if (usernameField) {
         usernameField.innerHTML = sessionStorage.username.toUpperCase();
     }
