@@ -4,7 +4,7 @@
       "available": true,
       "encountersName": "antenatal",
       "activitiesIcon": "/assets/images/anc.png",
-      "url": "/apps/MATERNITY/views/antenatal_tasks.html"
+      "url": "/apps/MATERNITY/views/antenatal.html"
     },
     "postnatal": {
       "available": true,
