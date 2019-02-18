@@ -95,9 +95,10 @@
 
 
 <script>
-     var patientID = sessionStorage.getItem("patientID");
-     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "../prenatalTasks.html?patient_id=" + patientID;
+
      var abnormalities;
       function changeButtonDead(){
         var nextButton =  document.getElementById('nextButton');
@@ -185,7 +186,6 @@
         var abdomen = document.getElementById('baby_abdomen').value;
         var cordTied = document.getElementById('baby_cord_tied').value;
         var cordClean = document.getElementById('baby_cord_clean').value;
-        var abnormals = document.getElementById('baby_abnormals').value;
         var abnormals = document.getElementById('baby_abnormals').value;
 
     var conceptAnswers = [

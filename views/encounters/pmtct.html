@@ -66,7 +66,7 @@
 <script>
     var patientID = sessionStorage.getItem("patientID");
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+    var tt_cancel_destination = "../antenatal.html?patient_id=" + patientID;
 
     var hivStatus = document.getElementById('hiv_status_value').value;
     var pmtctTestDate = document.getElementById('pmtct_test_date').value;

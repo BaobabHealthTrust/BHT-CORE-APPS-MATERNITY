@@ -44,7 +44,7 @@
           id="hiv_test_date" field_type="date" 
           key="hiv_test_date" helpText="HIV test date"  
           tt_pageStyleClass="date" 
-          condition="$(&quot;hiv_test_date&quot;).value == &quot;&quot;" /> 
+          condition="$(&quot;hiv_test_date&quot;).value == &quot;&quot;" tt_onLoad="changeNextButton();" /> 
       </form>
 
    </div>
@@ -52,44 +52,86 @@
 </body>
 
 <script>
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+    
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postAdmissionNotes();")
+        nextButton.setAttribute("onmousedown","postHivStatus();")
     }
 
-    function postAdmissionNotes() {
+    function postHivStatus() {
         var currentTime = moment().format(' HH:mm:ss');
         var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
         encounter_datetime += currentTime;
 
         var encounter = {
-            encounter_type_name: 'ADMISSION NOTES',
-            encounter_type_id:  105,
+            encounter_type_name: 'UPDATE HIV STATUS',
+            encounter_type_id:  39,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };
 
-        submitParameters(encounter, "/encounters", "postAdmissionNotesObs");
+        submitParameters(encounter, "/encounters", "postHivStatusObs");
     }
 
-    function postAdmissionNotesObs(encounter) {
+    function postHivStatusObs(encounter) {
 
-        var impression = document.getElementById('impression').value;
-        var plan = document.getElementById('plan').value;
+        var hivStatusUpdate = document.getElementById('hiv_status_update_visit').value;
+        var hivTestVisit = document.getElementById('hiv_test_visit').value;
+        var hivTestDate = document.getElementById('touchscreenInput' + tstCurrentPage).value;
 
-        var obs = {
+        var conceptAnswers = [
+            //Status update
+            {
+                "positive": 703,
+                "negative": 664
+            },
+            // HIV Test visit
+            {
+                "currentVisit": 7022,
+                "previousVisit": 7023
+            }
+        ];
+
+        var hivStatusAnswer;
+        var hivVisitAnswer
+
+        switch(hivStatusUpdate.toUpperCase()) {
+            case 'POSITIVE':
+                hivStatusAnswer = conceptAnswers[0].positive;
+                break;
+            case 'NEGATIVE':
+                hivStatusAnswer = conceptAnswers[0].negative;
+                break;
+        }
+
+        switch(hivTestVisit.toUpperCase()) {
+            case 'CURRENT VISIT':
+                hivVisitAnswer = conceptAnswers[1].currentVisit;
+                break;
+            case 'PREVIOUS VISIT':
+                hivVisitAnswer = conceptAnswers[1].previousVisit;
+                break;
+        }
+            var hivTestDay = hivTestDate.split('-')[0];
+            var hivTestMonth = hivTestDate.split('-')[1];
+            var hivTestYear = hivTestDate.split('-')[2];
+
+            var hivTestDates = hivTestYear + "-" + hivTestMonth + "-" + hivTestDay;
+            var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-                { concept_id: 1375, value_datetime: impression }, // impression . If an endpoint is available
-                // this will accept coded answers. In the meantime, text will do
-                { concept_id: 7834, value_text: plan }, // plan
+                { concept_id: 3387, value_coded: hivStatusAnswer },
+                { concept_id: 7021, value_coded: hivVisitAnswer },
+                { concept_id: 1837, value_datetime: hivTestDates }
             ]
         };
-
         submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
-        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+          window.location.href =  "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 </script>
