@@ -70,7 +70,7 @@
     <div id="container">
         <div id="content">
           <div id="tasks-container">
-            <form action="../../../../views/patient_dashboard.html"> 
+            <form> 
                 <input type="text" name="summary" id="tasks-container"
                 tt_onLoad="__$('keyboard').style.display = 'none'; buildReportLinks('main');"
                 tt_pageStyleClass= "NoControls" optional="true" helpText="Antenal Tasks"/>
@@ -86,17 +86,17 @@
     function taskGrouping(group) {
     if(group == 'main'){
         return [
-          ['Social History','','/apps/MATERNITY/views/encounters/social_history.html', 'link'],
-          ['Admission Details','','/apps/MATERNITY/views/encounters/admission_details.html', 'link'],
-          ['Vitals','','/views/patient/vitals.html', 'link'],
-          ["Patient History","","/apps/MATERNITY/views/encounters/patient_history.html",'link'],
-          ["PMTCT","","/apps/MATERNITY/views/encounters/pmtct.html",'link'],
-          ["Physical Examination","","/apps/MATERNITY/views/encounters/physical_examination.html",'link'],
-          ["Vaginal Examination","","/apps/MATERNITY/views/encounters/vaginal_exam.html",'link'],
-          ["Clinical Examination","","/apps/MATERNITY/views/encounters/clinical_exam.html",'link'],
-          ["Admission Diagnosis","","/apps/MATERNITY/views/encounters/admission_diagnosis.html",'link'],
-          ["Notes","","/apps/MATERNITY/views/encounters/notes.html",'link'],
-          ["Admission Notes printing","","#",'link']
+          ['Social History','/assets/images/social_history.png','/apps/MATERNITY/views/encounters/social_history.html', 'function'],
+          ['Admission Details','/assets/images/obstetric_history.png','/apps/MATERNITY/views/encounters/admission_details.html', 'function'],
+          ['Vitals','/assets/images/vitals.png','/views/patient/vitals.html', 'function'],
+          ["Patient History","/assets/images/medical_history.png","/apps/MATERNITY/views/encounters/patient_history.html",'function'],
+          ["PMTCT","/assets/images/pmtct.png","/apps/MATERNITY/views/encounters/pmtct.html",'function'],
+          ["Physical Examination","/assets/images/consultation.png","/apps/MATERNITY/views/encounters/physical_examination.html",'function'],
+          ["Vaginal Examination","/assets/images/consultation.png","/apps/MATERNITY/views/encounters/vaginal_exam.html",'function'],
+          ["Clinical Examination","/assets/images/consultation.png","/apps/MATERNITY/views/encounters/clinical_exam.html",'function'],
+          ["Admission Diagnosis","/assets/images/diagnosis.png","/apps/MATERNITY/views/encounters/admission_diagnosis.html",'function'],
+          ["Notes","/assets/images/clinical-notes.png","/apps/MATERNITY/views/encounters/notes.html",'function'],
+          ["Admission Notes printing","/assets/images/print.png","#",'link']
         ];
       }
        
@@ -130,7 +130,7 @@
         
         var img = document.createElement("img");
         var imgSRC = tasks[i][1];
-        imgSRC = imgSRC.length < 1 ? "/apps/ART/assets/images/reports.png" : imgSRC;
+        imgSRC = imgSRC.length < 1 ? "/assets/images/vitals.png" : imgSRC;
         img.setAttribute("src", imgSRC);
         img.setAttribute("class","report-icons");
         td.appendChild(img);
