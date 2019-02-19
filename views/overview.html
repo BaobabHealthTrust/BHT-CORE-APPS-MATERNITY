@@ -111,15 +111,6 @@
     var apiPort = sessionStorage.apiPort;
     var programID = sessionStorage.programID;
 
-    var encounter_types = {}
-    encounter_types[5] = "Registration";
-    encounter_types[61] = "Observations";
-    encounter_types[6] = "Vitals";
-    encounter_types[41] = "Diagnosis";
-    encounter_types[40] = "Update Outcome";
-    encounter_types[63] = "Referrals Out";
-    var end_date = moment().subtract(1, "days").format("YYYY-MM-DD");
-    var start_date = moment().subtract(5, "days").format("YYYY-MM-DD");
 
     function dashboardStats(stats) {
 
@@ -128,15 +119,15 @@
 
             var statistics = stats[stat];
 
-            var statUser = statistics.registrations_by_user;
-            var statToday = statistics.registrations_today;
-            var statThisYear = statistics.registrations_this_year;
+            var statUser = statistics.stats_by_user;
+            var statToday = statistics.stats_today;
+            var statThisYear = statistics.stats_this_year;
 
             document.getElementById(stat + '_user').innerHTML = statUser;
             document.getElementById(stat + '_today').innerHTML = statToday;
             document.getElementById(stat + '_this_year').innerHTML = statThisYear;
 
-            document.getElementById(stat + '_total_to_date').innerHTML = statistics.registrations_total_to_date;
+            document.getElementById(stat + '_total_to_date').innerHTML = statistics.stats_total_to_date;
 
         }
 
@@ -145,7 +136,7 @@
     function fetchDashboardStats() {
         var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1";
         url += "/dashboard_stats?date=" + sessionStorage.sessionDate;
-        url+= "&program_id=" + sessionStorage.programID;
+        url += "&program_id=" + sessionStorage.programID;
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
