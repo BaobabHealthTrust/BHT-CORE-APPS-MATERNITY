@@ -45,51 +45,66 @@
             <th>Total To Date</th>
         </tr>
         <tr class="even">
-            <td style="text-align:left;">Registration</td>
-            <td id="registration_user"></td>
-            <td id="registration_today"></td>
-            <td id="registration_this_year"></td>
-            <td id="registration_total_to_date"></td>
+            <td style="text-align:left;">Registrations</td>
+            <td id="registrations_user">0</td>
+            <td id="registrations_today">0</td>
+            <td id="registrations_this_year">0</td>
+            <td id="registrations_total_to_date">0</td>
         </tr>
         <tr class="odd">
             <td style="text-align:left;">Observations</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
+            <td id="observations_user">0</td>
+            <td id="observations_today">0</td>
+            <td id="observations_this_year">0</td>
+            <td id="observations_total_to_date">0</td>
         </tr>
         <tr class="even">
             <td style="text-align:left;">Vitals</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
+            <td id="vitals_user">0</td>
+            <td id="vitals_today">0</td>
+            <td id="vitals_this_year">0</td>
+            <td id="vitals_total_to_date">0</td>
         </tr>
         <tr class="odd">
             <td style="text-align:left;">Diagnosis</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
+            <td id="diagnosis_user">0</td>
+            <td id="diagnosis_today">0</td>
+            <td id="diagnosis_this_year">0</td>
+            <td id="diagnosis_total_to_date">0</td>
         </tr>
         <tr class="even">
             <td style="text-align:left;">Update Outcome</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
+            <td id="update_outcome_user">0</td>
+            <td id="update_outcome_today">0</td>
+            <td id="update_outcome_this_year">0</td>
+            <td id="update_outcome_total_to_date">0</td>
+        </tr>
+        <tr class="odd">
+            <td style="text-align:left;">Births</td>
+            <td id="births_user">0</td>
+            <td id="births_today">0</td>
+            <td id="births_this_year">0</td>
+            <td id="births_total_to_date">0</td>
+        </tr>
+        <tr class="even">
+            <td style="text-align:left;">Patients Delivered</td>
+            <td id="patients_delivered_user">0</td>
+            <td id="patients_delivered_today">0</td>
+            <td id="patients_delivered_this_year">0</td>
+            <td id="patient_total_to_date">0</td>
         </tr>
         <tr class="odd">
             <td style="text-align:left;">Referrals - Out</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
+            <td id="referrals_out_user">0</td>
+            <td id="referrals_out_today">0</td>
+            <td id="referrals_out_this_year">0</td>
+            <td id="referrals_out_total_to_date">0</td>
         </tr>
     </table>
 </div>
 
 <script type="text/javascript">
+
     var stats = {all: true, encounter_types: [5, 61, 6, 41, 40, 63]};
     var apiProtocol = sessionStorage.apiProtocol;
     var apiURL = sessionStorage.apiURL;
@@ -108,15 +123,23 @@
 
     function dashboardStats(stats) {
 
-        console.log('total ' + stats['registrations'].registered_today);
+        console.log(stats);
+        for (stat in stats) {
 
-        var registrations = stats['registrations'];
-        document.getElementById('registration_user').innerHTML = registrations.registered_today;
-        document.getElementById('registration_today').innerHTML = registrations.registered_today;
-        document.getElementById('registration_this_year').innerHTML = registrations.registered_today;
-        document.getElementById('registration_total_to_date').innerHTML = registrations.registered_today;
+            var statistics = stats[stat];
 
-        console.log('total ');
+            var statUser = statistics.registrations_by_user;
+            var statToday = statistics.registrations_today;
+            var statThisYear = statistics.registrations_this_year;
+
+            document.getElementById(stat + '_user').innerHTML = statUser;
+            document.getElementById(stat + '_today').innerHTML = statToday;
+            document.getElementById(stat + '_this_year').innerHTML = statThisYear;
+
+            document.getElementById(stat + '_total_to_date').innerHTML = statistics.registrations_total_to_date;
+
+        }
+
     }
 
     function fetchDashboardStats() {
