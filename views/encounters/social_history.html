@@ -77,6 +77,8 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "../antenatal.html?patient_id=" + patientID;
 
+
+    
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postSocialHistory();")
@@ -186,7 +188,7 @@
         submitParameters(obs, "/observations", "nextPage")
     }
 
-    function nextPage(){
+    function nextPage(){s
         nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>

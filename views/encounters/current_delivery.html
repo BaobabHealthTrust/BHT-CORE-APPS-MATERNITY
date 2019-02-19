@@ -35,6 +35,12 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "../prenatalTasks.html?patient_id=" + patientID;
 
+    function getNumBabies(){
+
+    }
+
+
+
 </script>
 
 <body id="mateme">
@@ -42,7 +48,7 @@
     <div id="content">
         <form action="../prenatalTasks.html">
 
-            <input type="text" name="number_babies" id="number_babies" absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly"/>
+            <input type="text" name="number_babies" id="number_babies" tt_onUnLoad="getNumBabies();"  absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly"/>
 
             <!-- start baby loop if more than one baby -->
             <select id="baby_status" name="baby_status" helpText="Baby: Status">
@@ -109,8 +115,8 @@
         encounter_datetime += currentTime;
 
         var encounter = {
-            encounter_type_name: 'CURRENT DELIVERY',
-            encounter_type_id:  115,
+            encounter_type_name: 'BABY DELIVERY',
+            encounter_type_id:  90,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };
