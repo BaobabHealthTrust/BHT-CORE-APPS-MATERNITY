@@ -65,7 +65,7 @@
         id="diagnosis" field_type="text" 
         helpText="Select discharge diagnosis" 
         tt_pageStyleClass="n qwertyKeyboardOnly" 
-        condition = "$('discharge_outcome').value.toUpperCase() == 'DISCHARGED' " /> 
+        condition = "$('states').value. == '112' " /> 
 
         <!-- End discharged -->
 
@@ -80,8 +80,6 @@
             <option>Delivered in Antenatal ward</option>
         </select>
         <!-- End admitted -->
-
-        <!-- End patient died -->
 
         <!-- Procedures -->
         <select id="procedure_done" name="procedure_done" tt_onLoad="changeNextBTN();" 
