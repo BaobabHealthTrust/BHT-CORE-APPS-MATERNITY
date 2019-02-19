@@ -1,31 +1,13 @@
 {
   "encounters": {
-    "antenatal": {
+    "social history": {
       "available": true,
-      "encountersName": "antenatal",
-      "activitiesIcon": "/assets/images/anc.png",
-      "url": "/apps/MATERNITY/views/antenatal.html"
-    },
-    "postnatal": {
-      "available": true,
-      "encountersName": "postnatal",
-      "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/prenatalTasks.html"
-    },
-    "update outcome": {
-      "available": true,
-      "encountersName": "update outcome",
-      "activitiesIcon": "/assets/images/outcomes.png",
-      "url": "/apps/MATERNITY/views/encounters/update_outcome.html"
-    },
-    "update hiv status": {
-      "available": true,
-      "encountersName": "update hiv status",
-      "activitiesIcon": "/assets/images/hiv-staging.png",
-      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
+      "encountersName": "social history",
+      "activitiesIcon": "/assets/images/social_history.png",
+      "url": "/apps/MATERNITY/views/encounters/social_history.html"
     },
     "vitals": {
-      "available": true,
+      "available": false,
       "encountersName": "vitals",
       "activitiesIcon": "/assets/images/vitals.png",
       "url": "/views/patient/vitals.html"
@@ -35,12 +17,6 @@
       "encountersName": "medical history",
       "activitiesIcon": "/assets/images/medical_history.png",
       "url": "/apps/MATERNITY/views/encounters/patient_history.html"
-    },
-    "social history": {
-      "available": true,
-      "encountersName": "social history",
-      "activitiesIcon": "/assets/images/social_history.png",
-      "url": "/apps/MATERNITY/views/encounters/social_history.html"
     },
     "pmtct history": {
       "available": true,
@@ -82,13 +58,19 @@
       "available": true,
       "encountersName": "admission diagnosis",
       "activitiesIcon": "/assets/images/diagnosis.png",
-      "url": "/apps/MATERNITY/views/antenatal/admission_diagnosis.html"
+      "url": "/apps/MATERNITY/views/encounters/admission_diagnosis.html"
     },
-    "admission notes printing": {
+    "postnatal": {
       "available": true,
-      "encountersName": "clinician notes",
-      "activitiesIcon": "/assets/images/print.png",
-      "url": "#"
+      "encountersName": "postnatal",
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/prenatalTasks.html"
+    },
+    "update hiv status": {
+      "available": true,
+      "encountersName": "update hiv status",
+      "activitiesIcon": "/assets/images/hiv-staging.png",
+      "url": "/apps/MATERNITY/views/encounters/update_hiv_status.html"
     }
   },
   "activities": {
