@@ -82,7 +82,7 @@
       "available": true,
       "encountersName": "admission diagnosis",
       "activitiesIcon": "/assets/images/diagnosis.png",
-      "url": "/apps/MATERNITY/views/antenatal/admission_diagnosis.html"
+      "url": "/apps/MATERNITY/views/encounters/admission_diagnosis.html"
     },
     "admission notes printing": {
       "available": true,
