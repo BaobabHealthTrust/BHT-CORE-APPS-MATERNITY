@@ -33,18 +33,14 @@
 <script>
     var patientID = sessionStorage.getItem("patientID");
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-    var tt_cancel_destination = "../prenatalTasks.html?patient_id=" + patientID;
-    function changeNextButton() {
-        var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","getNumBabies();")
-    }
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
 </script>
 
 <body id="mateme">
 <div id="container">
     <div id="content">
-        <form id="container">
+        <form action="../prenatalTasks.html">
 
             <input type="text" name="number_babies" id="number_babies" absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly"/>
 
@@ -56,7 +52,7 @@
             </select>
 
             <input type="text" name="time_of_delivery"
-                   id="time_of_delivery" field_type="field_type"
+                   id="time_of_delivery" field_type="advancedTime"
                    key="time_of_delivery" helpText="Baby: Time of Delivery"
                    allowFreeText="true" />
 
@@ -77,10 +73,10 @@
                 <option></option>
                 <option>Spontaneous vaginal Delivery</option>
                 <option>Breech Delivery</option>
-            </select> -->
-            end baby loop if more than one baby
+            </select>
+            <!-- end baby loop if more than one baby -->
 
-             <select id="place_delivery" name="place_delivery" helpText="Place of delivery">
+            <select id="place_delivery" name="place_delivery" helpText="Place of delivery">
                 <option></option>
                 <option>Home</option>
                 <option>Transit</option>
@@ -101,7 +97,7 @@
 </div>
 </body>
 
- <script>
+<script>
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postCurrentDelivery();")
@@ -113,8 +109,8 @@
         encounter_datetime += currentTime;
 
         var encounter = {
-            encounter_type_name: 'BABY DELIVERY',
-            encounter_type_id:  90,
+            encounter_type_name: 'CURRENT DELIVERY',
+            encounter_type_id:  115,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };

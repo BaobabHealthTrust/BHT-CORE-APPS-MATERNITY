@@ -60,11 +60,35 @@
       "activitiesIcon": "/assets/images/diagnosis.png",
       "url": "/apps/MATERNITY/views/encounters/admission_diagnosis.html"
     },
-    "postnatal": {
+    "current delivery": {
+      "available": true,
+      "encountersName": "current delivery",
+      "activitiesIcon": "/assets/images/current_preg.png",
+      "url": "/apps/MATERNITY/views/encounters/admission_diagnosis.html"
+    },
+    "post admission details": {
+      "available": true,
+      "encountersName": "postnatal",
+      "activitiesIcon": "/assets/images/obstetric_history.png",
+      "url": "/apps/MATERNITY/views/encounters/post_admission_details.html"
+    },
+    "abdominal examination": {
       "available": true,
       "encountersName": "postnatal",
       "activitiesIcon": "/assets/images/consultation.png",
-      "url": "/apps/MATERNITY/views/prenatalTasks.html"
+      "url": "/apps/MATERNITY/views/encounters/abnorminal_exam.html"
+    },
+    "physical examination baby": {
+      "available": true,
+      "encountersName": "postnatal",
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/encounters/physical_examination_baby.html"
+    },
+    "post vaginal examination": {
+      "available": true,
+      "encountersName": "postnatal",
+      "activitiesIcon": "/assets/images/consultation.png",
+      "url": "/apps/MATERNITY/views/encounters/post_vaginal_exam.html"
     },
     "update hiv status": {
       "available": true,
@@ -83,7 +107,9 @@
       ["Vaginal Examination","vaginal examination"],
       ["Maternity Examination","maternity examination"],
       ["Obstetric History","obstetric history"],
-      ["Medical History","medical history"]
+      ["Medical History","medical history"],
+      ["Current Delivery","medical history"],
+      ["Admission Diagnosis","admission diagnosis"]
     ]
     
   },
