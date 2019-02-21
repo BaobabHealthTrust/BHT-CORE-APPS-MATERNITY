@@ -68,25 +68,25 @@
     },
     "post admission details": {
       "available": true,
-      "encountersName": "postnatal",
+      "encountersName": "admission details",
       "activitiesIcon": "/assets/images/obstetric_history.png",
       "url": "/apps/MATERNITY/views/encounters/post_admission_details.html"
     },
     "abdominal examination": {
       "available": true,
-      "encountersName": "postnatal",
+      "encountersName": "abdominal examination",
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/encounters/abnorminal_exam.html"
     },
     "physical examination baby": {
       "available": true,
-      "encountersName": "postnatal",
+      "encountersName": "physical examination baby",
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/encounters/physical_examination_baby.html"
     },
     "post vaginal examination": {
       "available": true,
-      "encountersName": "postnatal",
+      "encountersName": "vaginal examination",
       "activitiesIcon": "/assets/images/consultation.png",
       "url": "/apps/MATERNITY/views/encounters/post_vaginal_exam.html"
     },

@@ -1,4 +1,3 @@
-
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
@@ -9,14 +8,108 @@
 
 <link rel="stylesheet" href="/apps/MATERNITY/assets/css/apgar.css" type="text/css">
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+
+<script>
+  
+    var currentWeight;
+    var baby_date_map = "";
+    var displayText = "";
+    var apgarScore = 0; 
+    displaySummary = 'false'; 
+    var timedEvent;
+    var baby;
+    var maxi;
+    var mini;
+    var gender;
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    
+  
+  function weightAlert(){
+      if(!$('weight_label')){
+        var div = document.createElement("div");
+        div.id = "weight_label";
+        div.className = "statusLabel";  
+        var sel = document.getElementById("baby_gender");
+        var gender= sel.options[sel.selectedIndex].text;
+        if (gender == "Male"){
+          maxi = 4500.0;
+          mini = 2500.0;
+        }else if (gender == "Female"){
+          maxi = 4400.0;
+          mini = 2400.0;
+        }
+        $("inputFrame" + tstCurrentPage).appendChild(div);
+  
+      }
+      weight = $("touchscreenInput" + tstCurrentPage).value.trim();
+      if (weight != ""){
+        $('weight_label').innerHTML = ((weight > maxi )? "<i style='font-size: 1.2em;color: red;float: right;'> Over Weight</i>" : ((weight < mini)? "<i  style='font-size: 1.2em;float: right;color: red;'>Under Weight</i>"  : ""));
+        if (weight < maxi && weight > mini){$('weight_label').innerHTML = "<i style='float:right;font-size:1.2em;'>  Normal Weight</i>";}
+      }else {       
+        $('weight_label').innerHTML = "<i style='float:left;font-size:1.2em;'>  Enter Weight</i>";
+      }   
+    }
+
+  
+  </script>
+
 
 <body id="mateme">
   <div id="container">
     <div id="content">
 
       <form>
-
+            <!-- BABY DETAILS -->
+            <input type="text" name="number_babies" id="number_babies" helpText="Number of babies" field_type="number" tt_onLoad=""
+            tt_pageStyleClass="Numeric NumbersOnly" 
+            />
+  
+            <!-- First Baby -->
+            <input type="text" name="name_of_baby" id="name_of_baby" helpText="Name of baby" field_type="text" tt_onLoad=""
+            tt_pageStyleClass="Numeric NumbersOnly" 
+            />
+            <input type="text" name="delivery_time" 
+            id="delivery_time" field_type="advancedTime" 
+            helpText="Baby Time of Delivery" /> 
+  
+            <input type="text" name="delivery_date" 
+            id="delivery_date" field_type="date" 
+            helpText="Baby Date of Delivery" 
+            tt_pageStyleClass="date"/> 
+  
+          <select id="delivery_place" name="delivery_place" tt_onLoad="changeNextBTN();"
+            helpText="Baby Place of Delivery"> 
+            <option>This facility</option>
+            <option>In transit</option>
+            <option>Other facility</option>
+            <option>Home/TBA</option>
+          </select>
+  
+          <select id="baby_presentation" name="baby_presentation" tt_onLoad="changeNextBTN();" helpText="Baby Presentation"> 
+            <option>Transverse</option>
+            <option>Breech delivery</option>
+            <option>Cephalic</option>
+          </select>
+          <select id="baby_outcome" name="baby_outcome" tt_onLoad="changeNextBTN();" helpText="Baby Delivery Outcome"> 
+                  <option>Alive</option>
+                <option>Neonatal Birth</option>
+                <option>Fresh Still birth</option>
+                <option>Macerated Still Birth</option>
+          </select>
+          
+            <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Baby Delivery Mode"> 
+              <option>Spontaneous Delivery</option>
+              <option>Caesarean Section</option>
+              <option>Breech Delivery</option>
+              <option>Vacuum extraction delivery</option>
+          </select>   
+          <select id="baby_gender" name="baby_gender" tt_onLoad="changeNextBTN();"  helpText="Baby Sex"> 
+            <option>Male</option>
+          <option>Female</option>
+          </select> 
+          
           <input type="text" name="summary" id="apgar_one"
                  tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar('one');"
                  tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
@@ -24,6 +117,15 @@
           <input type="text" name="summary" id="apgar_two"
                  tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar('five');"
                  tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+          <input type="text" name="weight" id="weight" 
+          helpText="Baby: Weight(Grams)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
+          tt_onUnload ="clearTimeout(timedEvent);"
+          tt_pageStyleClass="unknownButton"/>
+  
+          <input type="text" name="baby_length" id="baby_length" 
+          helpText="Baby: Length(CM)" field_type="number" tt_onLoad="changeNextButton();"
+          tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" /> 
+       
 
       </form>
 
@@ -31,3 +133,167 @@
  </div>
 </body>
 
+<script>
+    function changeNextButton() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postBabyOutcome();")
+    }
+
+    function postBabyOutcome() {
+        var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
+
+        var encounter = {
+            encounter_type_name: 'UPDATE BABY OUTCOME',
+            encounter_type_id:  127,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+        };
+
+        submitParameters(encounter, "/encounters", "postBabyOutcomeObs");
+    }
+
+    function postBabyOutcomeObs(encounter) {
+
+        var numberOfBabies = document.getElementById('number_babies').value;
+        var babyName = document.getElementById('name_of_baby').value;
+        var deliveryTime = document.getElementById('time_of_delivery').value;
+        var deliveryDate = document.getElementById('date_delivery').value;
+        var placeOfDelivery = document.getElementById('place_delivery').value;
+        var babyPresentation = documen.getElementById('baby_presentation').value;
+        var babyOutcome = document.getElementById('baby_outcome').value;
+        var deliveryMode = document.getElementById('delivery_mode').value;
+        var gender = document.getElementById('baby_gender').value;
+        var weight = document.getElementById('weight').value;
+        var length = document.getElementById('length').value;
+
+        var deliveryDay = deliveryDate.split('-')[0];
+        var deliveryMonth = deliveryDate.split('-')[1];
+        var deliveryYear = deliveryDate.split('-')[2];
+
+        var deliveryDateValue = deliveryYear + '-' + deliveryMonth + '-' + deliveryDay;
+
+        var conceptAnswers = [
+            // baby presentation
+            {
+                "transverse": 7432,
+                "breech": 1172,
+                "cephalic": 7431
+
+            },
+            // gender of baby
+            {
+                "male": 2843,
+                "female": 2844
+            },
+            // delivery mode
+            {
+                "spontaneousVaginalDelivery": 1170,
+                "breechDelivery": 1172,
+                "caesareanSection": 1171,
+                "vacuumExtraction": 7139
+            },
+            // place of delivery
+            {
+                "home_tba": 8850,
+                "transit": 8848,
+                "other": 6408,
+                "facility": 5937
+            },
+            // baby outcome
+            {
+                "alive": 2180,
+                "neonatalBirth": 226,
+                "freshStillBirth": 7804,
+                "maceratedStillBirth": 7803
+            }
+        ];
+
+        var statusOfBabyAnswer;
+        var genderOfBabyAnswer;
+        var deliveryModeAnswer;
+        var placeOfDeliveryAnswer;
+        var birthAttendedByAnswer;
+
+        switch(babyStatus.toUpperCase()) {
+            case 'CRIED':
+                statusOfBabyAnswer = conceptAnswers[0].cried;
+                break;
+            case 'NO CRY':
+                statusOfBabyAnswer = conceptAnswers[0].noCry;
+                break;
+            default:
+                break;
+        }
+
+        switch(gender.toUpperCase()) {
+            case 'MALE':
+                genderOfBabyAnswer = conceptAnswers[1].male;
+                break;
+            case 'FEMALE':
+                genderOfBabyAnswer = conceptAnswers[1].female;
+                break;
+            default:
+                break;
+        }
+
+        switch(deliveryMode.toUpperCase()) {
+            case 'SPONTANEOUS VAGINAL DELIVERY':
+                deliveryModeAnswer = conceptAnswers[2].spontaneousVaginalDelivery;
+                break;
+            case 'BREECH DELIVERY':
+                deliveryModeAnswer = conceptAnswers[2].breechDelivery;
+                break;
+            default:
+                break;
+        }
+
+        switch(placeOfDelivery.toUpperCase()) {
+            case 'HOME':
+                placeOfDeliveryAnswer = conceptAnswers[3].home_tba;
+                break;
+            case 'TRANSIT':
+                placeOfDeliveryAnswer = conceptAnswers[3].transit;
+                break;
+            case 'TBA':
+                placeOfDeliveryAnswer = conceptAnswers[3].home_tba;
+                break;
+            case 'OTHER':
+                placeOfDeliveryAnswer = conceptAnswers[3].other;
+            default:
+                break;
+        }
+
+        switch(birthAttendedBy.toUpperCase()) {
+            case 'SELF':
+                birthAttendedByAnswer = conceptAnswers[4].self;
+                break;
+            case 'TBA':
+                birthAttendedByAnswer = conceptAnswers[4].self;
+                break;
+            case 'OTHER':
+                birthAttendedByAnswer = conceptAnswers[3].other
+        }
+
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 7430, value_numeric: numberOfBabies }, // number of babies
+                { concept_id: 8398, value_coded: statusOfBabyAnswer }, // status of baby
+                { concept_id: 7434, value_text: deliveryTime }, // time of delivery
+                { concept_id: 7435, value_datetime: deliveryDateValue }, // date of delivery
+                { concept_id: 8846, value_coded: genderOfBabyAnswer }, // gender of baby
+                { concept_id: 7438, value_coded: deliveryModeAnswer }, // delivery mode
+                { concept_id: 8397, value_coded: placeOfDeliveryAnswer }, // place of delivery
+                { concept_id: 8396, value_coded:  birthAttendedByAnswer } // birth attended by
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
+    }
+
+    function nextPage(){
+        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
+</script>
