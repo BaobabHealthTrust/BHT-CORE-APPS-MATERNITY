@@ -5,6 +5,7 @@
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="/assets/js/core.js"></script>
 <!-- <style>
@@ -49,7 +50,7 @@
 </script>
 
         <form>
-            <select id="education" name="education" helpText="Education Level">
+            <select id="education" name="education" helpText="Education Level" tt_onLoad="showCategory2('Social history');">
                 <option></option>
                 <option>Primary</option>
                 <option>Secondary</option>
@@ -58,7 +59,7 @@
                 <option>Other</option>
             </select>
 
-            <select helpText="Religion" name="religion" id="religion" tt_pageStyleClass="NoKeyboard">
+            <select helpText="Religion" name="religion" id="religion" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Social history');">
                 <option></option>
                 <option>Catholic</option>
                 <option>CCAP</option>
@@ -72,24 +73,26 @@
 
             <input type="text" name="religion" id="other_religion"
                    field_type="alpha" helpText="Specify other religion"
-                   key="other_religion" allowFreeText="true"
+                   key="other_religion" allowFreeText="true" 
+                   tt_onLoad="showCategory2('Social history');"
                    condition ="__$('religion').value == 'Other'" />
 
             <input type="text" name="given_name"
                    id="given_name" field_type="alpha"
-                   key="given_name" helpText="Next of kin first name" tt_onLoad='validateName();'
+                   key="given_name" helpText="Next of kin first name" tt_onLoad="validateName();showCategory2('Social history');"
                    ajaxURL="/search/given_name?search_string=" allowFreeText="true" />
 
-            <input type="text" name="kin_last"
-                   id="kin_last" field_type="alpha"
-                   helpText="Next of kin Last name"
+            <input type="text" name="family_name"
+                   id="family_name" key="family_name" field_type="alpha"
+                   helpText="Next of kin Last name" 
+                   tt_onLoad="validateName();showCategory2('Social history');"
                    ajaxURL="/search/family_name?search_string="
                    allowFreeText="true"  />
 
             <input type="text" name="kin_number" id="kin_number"
-                   helpText="Next of kin phone number" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
+                   helpText="Next of kin phone number" tt_onLoad="showCategory2('Social history');" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
 
-            <select id="relative" name="relative" tt_onLoad="changeNextButton();" helpText="Next of kin relationship type" tt_pageStyleClass="NoKeyboard">
+            <select id="relative" name="relative" tt_onLoad="changeNextButton();showCategory2('Social history');" helpText="Next of kin relationship type" tt_pageStyleClass="NoKeyboard">
                 <option>Mother</option>
                 <option>Daughter</option>
                 <option>Sister</option>
@@ -139,7 +142,7 @@
         var kinNumber = document.getElementById('kin_number').value;
         var relative = document.getElementById('relative').value;
         var nextOfKinFirstName = document.getElementById('given_name').value;
-        var nextOfKinLastName = document.getElementById('touchscreenInput' + tstCurrentPage).value;
+        var nextOfKinLastName = document.getElementById('family_name').value;
 
         var conceptAnswers = [
             /*Education Level*/

@@ -5,6 +5,7 @@
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
@@ -57,27 +58,27 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
       <form>
     
-     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="19" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
+     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="19" field_type="number" tt_onLoad="showCategory2('Medical history');" tt_pageStyleClass="Numeric NumbersOnly" />
 
-     <select id="multiple_pregnancy" name="multiple_pregnancy"  helpText="Ever had multiple pregnancies">   
+     <select id="multiple_pregnancy" name="multiple_pregnancy" helpText="Ever had multiple pregnancies" tt_onLoad="showCategory2('Medical history');">   
             <option>Yes</option>
             <option>No</option>
       </select>
 
-      <input type="text" name="num_of_deliveries" id="num_of_deliveries" helpText="Number of deliveries" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
+      <input type="text" name="num_of_deliveries" id="num_of_deliveries" helpText="Number of deliveries" tt_onLoad="showCategory2('Medical history');" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
       
-      <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" />
+      <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_onLoad="showCategory2('Medical history');" tt_pageStyleClass="Numeric NumbersOnly" />
      
-      <select id="delivery_mode" name="delivery_mode" tt_onLoad="changeNextBTN();" helpText="Select Delivery Mode"> 
+      <select id="delivery_mode" name="delivery_mode" tt_onLoad="showCategory2('Medical history');changeNextBTN();" helpText="Select Delivery Mode"> 
             <option>Spontaneous Delivery</option>
             <option>Caesarean Section</option>
             <option>Breech Delivery</option>
       </select>
 
-      <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
+      <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="showCategory2('Medical history');changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
       tt_pageStyleClass="date" />
 
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" max="5" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="submitButton();" />
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" max="5" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="showCategory2('Medical history');submitButton();" />
 
      
 
