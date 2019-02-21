@@ -7,7 +7,7 @@
       "url": "/apps/MATERNITY/views/encounters/social_history.html"
     },
     "vitals": {
-      "available": false,
+      "available": true,
       "encountersName": "vitals",
       "activitiesIcon": "/assets/images/vitals.png",
       "url": "/views/patient/vitals.html"
