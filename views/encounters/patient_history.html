@@ -24,6 +24,31 @@
 
 <script>
 var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+
+  function validateInput(){
+    try{
+      var ttv_status = $('touchscreenInput'+tstCurrentPage).value;
+      if (ttv_status == "" || ttv_status == null){
+        showMessage("You must enter a value to continue");
+      }
+      if(ttv_status > 0 && ttv_status <= 5){
+        postPatientHistory();
+      }else if(ttv_status > 5){
+        showMessage("Value greater than maximum 5");
+        return;
+      }
+      }catch(e){
+        console.log(e);
+      }
+  }
+
+  function submitButton(){
+    var nextButton = document.getElementById('nextButton');
+    nextButton.onmousedown = function(){
+      validateInput();
+      }
+  }
+
 </script>
 <body id="mateme">
   <div id="container">
@@ -32,7 +57,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
       <form>
     
-     <input type="text" name="gravida" id="gravida" helpText="Gravida" max="15" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
+     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="19" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" />
 
      <select id="multiple_pregnancy" name="multiple_pregnancy"  helpText="Ever had multiple pregnancies">   
             <option>Yes</option>
@@ -52,7 +77,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
       tt_pageStyleClass="date" />
 
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="changeNextButton();" />
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" max="5" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="submitButton();" />
 
      
 
