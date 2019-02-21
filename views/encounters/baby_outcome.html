@@ -52,7 +52,12 @@
 
   
   </script>
+<script>
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
+</script>
 
 <body id="mateme">
   <div id="container">
@@ -128,7 +133,7 @@
                  tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar('five');"
                  tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> -->
 
-          <input type="text" name="weight" id="weight" 
+          <input type="text" name="weight" id="baby_weight" 
           helpText="Baby: Weight(Grams)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
           tt_onUnload ="clearTimeout(timedEvent);"
           tt_pageStyleClass="unknownButton"/>
@@ -167,20 +172,18 @@
     }
 
     function postBabyOutcomeObs(encounter) {
-        console.log("CHange next button");
-
         var numberOfBabies = document.getElementById('number_babies').value;
-        var firstName = document.getElementById('name_of_baby').value;
-        var lastName = document.getElementById('name_of_baby').value;
-        var deliveryTime = document.getElementById('time_of_delivery').value;
-        var deliveryDate = document.getElementById('date_delivery').value;
-        var placeOfDelivery = document.getElementById('place_delivery').value;
+        var firstName = document.getElementById('first_name').value;
+        var lastName = document.getElementById('last_name').value;
+        var deliveryTime = document.getElementById('delivery_time').value;
+        var deliveryDate = document.getElementById('delivery_date').value;
+        var placeOfDelivery = document.getElementById('delivery_place').value;
         var babyPresentation = document.getElementById('baby_presentation').value;
         var babyOutcome = document.getElementById('baby_outcome').value;
         var deliveryMode = document.getElementById('delivery_mode').value;
         var gender = document.getElementById('baby_gender').value;
-        var weight = document.getElementById('weight').value;
-        var length = document.getElementById('length').value;
+        var weight = document.getElementById('baby_weight').value;
+        var length = document.getElementById('touchscreenInput' + tstCurrentPage).value;
         var otherFacility = document.getElementById('health_facility').value;
     
         var deliveryDay = deliveryDate.split('-')[0];
@@ -231,7 +234,7 @@
         var placeOfDeliveryAnswer;
         var babyOutcomeAnswer;
 
-        switch(babyPresentationAnswer.toUpperCase()) {
+        switch(babyPresentation.toUpperCase()) {
             case 'TRANSVERSE':
                 babyPresentationAnswer = conceptAnswers[0].transverse;
                 break;
@@ -239,7 +242,7 @@
                 babyPresentationAnswer = conceptAnswers[0].breechDelivery;
                 break;
             case 'CEPHALIC':
-                statusOfBabyAnswer = conceptAnswers[0].cephalic;
+                babyPresentationAnswer = conceptAnswers[0].cephalic;
             break;
             default:
                 break;
@@ -258,16 +261,16 @@
 
         switch(deliveryMode.toUpperCase()) {
             case 'SPONTANEOUS DELIVERY':
-                    babyeliveryModeAnswer = conceptAnswers[2].spontaneousVaginalDelivery;
+                 babyDeliveryModeAnswer = conceptAnswers[2].spontaneousVaginalDelivery;
                 break;
             case 'BREECH DELIVERY':
-                deliveryModeAnswer = conceptAnswers[2].breechDelivery;
+                babyDeliveryModeAnswer = conceptAnswers[2].breechDelivery;
                 break;
             case 'CAESAREAN SECTION':
-            deliveryModeAnswer = conceptAnswers[2].breechDelivery;
+                babyDeliveryModeAnswer = conceptAnswers[2].caesareanSection;
             break;
             case 'VACUUM EXTRACTION DELIVERY':
-                deliveryModeAnswer = conceptAnswers[2].breechDelivery;
+                babyDeliveryModeAnswer = conceptAnswers[2].vacuumExtraction;
                 break;
             default:
                 break;
@@ -297,37 +300,51 @@
                 babyOutcomeAnswer = conceptAnswers[4].neonatalBirth;
                 break;
             case 'FRESH STILL BIRTH':
-                babyOutcomeAnswer = conceptAnswers[3].freshStillBirth;
-            case 'FRESH STILL BIRTH':
-               babyOutcomeAnswer = conceptAnswers[3].maceratedStillBirth;
+                babyOutcomeAnswer = conceptAnswers[4].freshStillBirth;
+            case 'MACERATED STILL BIRTH':
+               babyOutcomeAnswer = conceptAnswers[4].maceratedStillBirth;
         }
+        console.log("Number of babies is "+ numberOfBabies);
+        console.log("First name is "+ firstName);
+        console.log("Last name is "+ lastName);
+        console.log("Delivery time is "+ deliveryTime);
+        console.log("Delivery date is is "+ deliveryDateValue);
+        console.log("Gender is "+ babyGenderAnswer);
+        console.log("Delivery mode is "+ babyDeliveryModeAnswer);
+        console.log("Place of delivery is "+ placeOfDeliveryAnswer);
+        console.log("presentation is "+ babyPresentationAnswer);
+        console.log("Baby outcome is "+ babyOutcomeAnswer);
+        console.log("Weight is "+ weight);
+        console.log("Length "+ length);
+        console.log("Other is "+ otherFacility);
 
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-                { concept_id: 7430, value_numeric: numberOfBabies }, 
-                { concept_id: 5913, value_coded: firstName }, 
-                { concept_id: 5915, value_coded: lastName }, 
-                { concept_id: 7434, value_text: deliveryTime }, 
-                { concept_id: 7435, value_datetime: deliveryDateValue }, 
-                { concept_id: 8846, value_coded: babyGenderAnswer }, 
-                { concept_id: 7438, value_coded: babyDeliveryModeAnswer }, 
-                { concept_id: 2997, value_coded: placeOfDeliveryAnswer }, 
-                { concept_id: 7433, value_coded:  babyPresentationAnswer }, 
-                { concept_id: 7801, value_coded:  babyOutcomeAnswer },
-                { concept_id: 5916, value_numeric:  weight },
-                { concept_id: 2998, value_numeric:  length } 
-
+                { concept_id: 7430, value_numeric: numberOfBabies }, //saving
+                { concept_id: 7434, value_text: deliveryTime }, //saving
+                { concept_id: 7435, value_datetime: deliveryDateValue },  //saving
+                { concept_id: 8846, value_coded: babyGenderAnswer }, //saving
+                { concept_id: 7438, value_coded: babyDeliveryModeAnswer }, //saving
+                { concept_id: 2997, value_coded: placeOfDeliveryAnswer }, //saving
+                { concept_id: 1172, value_coded:  babyPresentationAnswer }, 
+                { concept_id: 7801, value_coded:  babyOutcomeAnswer }, //savng
+                { concept_id: 5916, value_numeric:  weight }, //saving
+                { concept_id: 2998, value_numeric:  length }, //saving
+                { concept_id: 5913, value_text: firstName }, 
+                 { concept_id: 5915, value_text: lastName }
             ]
         };
         if(otherFacility !== '') {
-            obs.observations.push( { concept_id: 5937, value_text: otherFacility } ); 
+            console.log("Uh hhhuuu");
+            obs.observations.push( { concept_id: 5937, value_numeric: otherFacility } ); 
         }
 
         submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
+        console.log("DNCCCCCCCCCCCCC");
         //nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>
