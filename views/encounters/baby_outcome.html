@@ -304,19 +304,6 @@
             case 'MACERATED STILL BIRTH':
                babyOutcomeAnswer = conceptAnswers[4].maceratedStillBirth;
         }
-        console.log("Number of babies is "+ numberOfBabies);
-        console.log("First name is "+ firstName);
-        console.log("Last name is "+ lastName);
-        console.log("Delivery time is "+ deliveryTime);
-        console.log("Delivery date is is "+ deliveryDateValue);
-        console.log("Gender is "+ babyGenderAnswer);
-        console.log("Delivery mode is "+ babyDeliveryModeAnswer);
-        console.log("Place of delivery is "+ placeOfDeliveryAnswer);
-        console.log("presentation is "+ babyPresentationAnswer);
-        console.log("Baby outcome is "+ babyOutcomeAnswer);
-        console.log("Weight is "+ weight);
-        console.log("Length "+ length);
-        console.log("Other is "+ otherFacility);
 
         var obs = {
             encounter_id: encounter["encounter_id"],
@@ -336,7 +323,6 @@
             ]
         };
         if(otherFacility !== '') {
-            console.log("Uh hhhuuu");
             obs.observations.push( { concept_id: 5937, value_numeric: otherFacility } ); 
         }
 
@@ -344,7 +330,6 @@
     }
 
     function nextPage(){
-        console.log("DNCCCCCCCCCCCCC");
-        //nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+        window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 </script>
