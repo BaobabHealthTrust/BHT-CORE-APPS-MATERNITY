@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
@@ -29,7 +30,7 @@
     <div id="content">
 
         <form>
-            <select id="hiv_status_value" name="hiv_status" helpText="PMTCT Status" tt_onLoad="changeNextButtonUnknownHIV();" >
+            <select id="hiv_status_value" name="hiv_status" helpText="PMTCT Status" tt_onLoad="changeNextButtonUnknownHIV();showCategory2('PMTCT');" >
                 <option></option>
                 <option>Non-Reactive</option>
                 <option>Reactive</option>
@@ -37,10 +38,10 @@
             </select>
 
             <input type="text" name="pmtct_test_date" id="pmtct_test_date" helpText="PMTCT test date" field_type="date"
-                   tt_pageStyleClass="date" condition ="$('hiv_status_value').value.toLowerCase() != 'unknown';" tt_onLoad="changeNextButtonNonReactiveHIV();"/>
+                   tt_pageStyleClass="date" condition ="$('hiv_status_value').value.toLowerCase() != 'unknown';" tt_onLoad="showCategory2('PMTCT');changeNextButtonNonReactiveHIV();"/>
 
             <select id="pmtct_on_arvs" name="pmtct_on_arvs" helpText="On ARVs"
-                    condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';">
+                    condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';" tt_onLoad="showCategory2('PMTCT');">
                 <option></option>
                 <option>Yes</option>
                 <option>No</option>
@@ -48,9 +49,9 @@
 
             <input type="text" name="period_on_arvs" id="period_on_arvs" helpText="Date Started ARVs (Estimate)"
                    field_type="date" tt_pageStyleClass="date"
-                   condition ="$('pmtct_on_arvs').value.trim().toUpperCase() == 'YES';" />
+                   condition ="$('pmtct_on_arvs').value.trim().toUpperCase() == 'YES';" tt_onLoad="showCategory2('PMTCT');"/>
 
-            <select id="feeding_option" name="feeding_option" helpText="Feeding Option" condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';" tt_onLoad="changeNextButton();">
+            <select id="feeding_option" name="feeding_option" helpText="Feeding Option" condition = "$('hiv_status_value').value.trim().toUpperCase() == 'REACTIVE';" tt_onLoad="showCategory2('PMTCT');changeNextButton();">
                 <option></option>
                 <option>Exclusive Breast Feeding</option>
                 <option>No Breast Feeding</option>
