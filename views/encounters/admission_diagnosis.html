@@ -1,63 +1,33 @@
 
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
-<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
+<!-- <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script> -->
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
-<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
-<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-<script type="text/javascript" src="/assets/js/moment.js"></script>
+
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
-<style>
 
-    .inputFrameClass {
-        width: 96% !important;
-    }
-
-    #clearButton {
-        display: none;
-    }
-
-</style>
+<link rel="stylesheet" href="/apps/MATERNITY/assets/css/diagnosis.page.css" type="text/css">
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/diagnosis.page.js"></script>
 
 <script>
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
 
-    var patientID = sessionStorage.getItem("patientID");
-    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
-
-    
 </script>
 
 <body id="mateme">
 <div id="container">
     <div id="content">
 
-
         <form>
-
-            <!--<select id="ad_diagnosis" tt_onLoad="getDiagnosisList();">-->
-                <!--<option></option>-->
-            <!--</select>-->
-
-            <input type="text" name="admission_diagnosis"
-                   id="admission_diagnosis" field_type="alpha"
-                   key="admission_diagnosis" helpText="Select Admission Diagnosis"
-                   tt_onLoad="getDiagnosisList();" allowFreeText="true"/>
-
-            <input type="text" name="next_diagnosis"
-                   id="next_diagnosis" field_type="alpha"
-                   key="next_diagnosis" helpText="Select Next Diagnosis"
-                   ajaxURL="/search/next_diagnosis?search_string=" allowFreeText="true" />
-
-            <input type="text" name="other_diagnosis"
-                   id="other_diagnosis" field_type="alpha"
-                   key="other_diagnosis" helpText="Select Other Diagnosis"
-                   ajaxURL="/search/next_diagnosis?search_string=" allowFreeText="true" tt_onLoad="changeNextButton();"/>
+            <input type="text" name="summary"
+                   tt_onLoad="__$('keyboard').style.display = 'none';buildOPDdiagnosisPage();"
+                   tt_pageStyleClass= "NoControls" helpText="Diagnosis" optional = "true"/>
 
         </form>
 
@@ -65,74 +35,3 @@
 </div>
 </body>
 
-<script>
-    var apiProtocol = sessionStorage.getItem('apiProtocol');
-    var apiURL = sessionStorage.getItem('apiURL');
-    var apiPort = sessionStorage.getItem('apiPort');
-    //
-    // function getDiagnosisList() {
-    //     var url = apiProtocol+'://'+apiURL+':'+apiPort+'/api/v1/concept_set' // use 7376 once it's worked
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             var objs = JSON.parse(this.responseText);
-    //             insertDiagnosis(objs);
-    //         }
-    //     };
-    //     xhttp.open("GET", (url + "?id=7409&name=" + search_str), true);
-    //     xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
-    //     xhttp.setRequestHeader('Content-type', "application/json");
-    //     xhttp.send();
-    //
-    // }
-    //
-    // function insertDiagnosis (diagnosis) {
-    //     var diagnosisElement = document.getElementById('touchscreenInput' + tstCurrentPage);
-    //
-    //     for (concepts in ajaxURL) {
-    //         console.log(concepts);
-    //     }
-    // }
-
-    function changeNextButton() {
-        var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postAdmissionDiagnosis();")
-    }
-
-    function postAdmissionDiagnosis() {
-        var currentTime = moment().format(' HH:mm:ss');
-        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
-        encounter_datetime += currentTime;
-
-        var encounter = {
-            encounter_type_name: 'ADMISSION DIAGNOSIS',
-            encounter_type_id:  100,
-            patient_id: sessionStorage.patientID,
-            encounter_datetime: encounter_datetime
-        };
-
-        submitParameters(encounter, "/encounters", "postAdmissionDiagnosisObs");
-    }
-
-    function postAdmissionDiagnosisObs(encounter) {
-
-        var admissionDiagnosis = document.getElementById('admission_diagnosis').value;
-        var nextDiagnosis = document.getElementById('next_diagnosis').value;
-        var otherDiagnosis =document.getElementById('touchscreenInput' + tstCurrentPage).value;
-
-        var obs = {
-            encounter_id: encounter["encounter_id"],
-            observations: [
-                { concept_id: 7447, value_text: admissionDiagnosis }, // admission diagnosis
-                { concept_id: 6543, value_text: nextDiagnosis }, // next diagnosis
-                { concept_id: 7685, value_text: otherDiagnosis } // other diagnosis
-            ]
-        };
-
-        submitParameters(obs, "/observations", "nextPage")
-    }
-
-    function nextPage(){
-        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
-    }
-</script>
