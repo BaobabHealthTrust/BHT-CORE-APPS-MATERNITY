@@ -226,7 +226,7 @@
                 birthAttendedByAnswer = conceptAnswers[4].self;
                 break;
             case 'OTHER':
-                birthAttendedByAnswer = conceptAnswers[3].other
+                birthAttendedByAnswer = conceptAnswers[3].other;
         }
 
         var obs = {
@@ -246,7 +246,7 @@
         submitParameters(obs, "/observations", "nextPage")
     }
 
-    function nextPage(){
-        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    function nextPage(){    
+            window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 </script>
