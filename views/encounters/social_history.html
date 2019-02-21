@@ -6,7 +6,8 @@
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-<style>
+<script type="text/javascript" src="/assets/js/core.js"></script>
+<!-- <style>
 
     .inputFrameClass {
         width: 96% !important;
@@ -16,11 +17,36 @@
         display: none;
     }
 
-</style>
+</style> -->
 
 <body id="mateme">
 <div id="container">
     <div id="content">
+        <style>
+        .tt_controls_next_of_kin_first_name #date, #star, #slash, #minus, #plus, #percent, #decimal, #comma { display: none; }
+
+        .tt_controls_next_of_kin_last_name #date, #star, #slash, #minus, #plus, #percent, #decimal, #comma { display: none; }
+
+        </style>
+
+<script type="text/javascript">
+    var tt_cancel_destination = "/";
+
+    function validateName() {
+    __$("nextButton").removeAttribute("onmousedown");
+    __$("nextButton").onmousedown = function(){
+
+        validRegEx = /^(?=.{2,100}$)[a-z\!\A-Z]+(?:['_.\-\!\][a-z]+[a-z\!\A-Z])*$/
+        value = $('touchscreenInput' + tstCurrentPage).value;
+       if(value.match(validRegEx) == null) {
+         showMessage("Invalid name input");
+       }else if (value.match(validRegEx) != null) {
+        gotoNextPage();
+       }
+      }
+    }
+
+</script>
 
         <form>
             <select id="education" name="education" helpText="Education Level">
@@ -32,12 +58,12 @@
                 <option>Other</option>
             </select>
 
-            <select helpText="Religion" name="religion" id="religion">
+            <select helpText="Religion" name="religion" id="religion" tt_pageStyleClass="NoKeyboard">
                 <option></option>
                 <option>Catholic</option>
                 <option>CCAP</option>
                 <option>SDA</option>
-                <option>Angelican</option>
+                <option>Anglican</option>
                 <option>Muslim</option>
                 <option>Pentecostalism</option>
                 <option>Jehovah witness</option>
@@ -49,9 +75,9 @@
                    key="other_religion" allowFreeText="true"
                    condition ="__$('religion').value == 'Other'" />
 
-            <input type="text" name="kin_first"
-                   id="kin_first" field_type="alpha"
-                   key="kin_first" helpText="Next of kin first name"
+            <input type="text" name="given_name"
+                   id="given_name" field_type="alpha"
+                   key="given_name" helpText="Next of kin first name" tt_onLoad='validateName();'
                    ajaxURL="/search/given_name?search_string=" allowFreeText="true" />
 
             <input type="text" name="kin_last"
@@ -63,7 +89,7 @@
             <input type="text" name="kin_number" id="kin_number"
                    helpText="Next of kin phone number" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
 
-            <select id="relative" name="relative" tt_onLoad="changeNextButton();" helpText="Next of kin relationship">
+            <select id="relative" name="relative" tt_onLoad="changeNextButton();" helpText="Next of kin relationship type" tt_pageStyleClass="NoKeyboard">
                 <option>Mother</option>
                 <option>Daughter</option>
                 <option>Sister</option>
@@ -112,7 +138,7 @@
         var religion = document.getElementById('religion').value;
         var kinNumber = document.getElementById('kin_number').value;
         var relative = document.getElementById('relative').value;
-        var nextOfKinFirstName = document.getElementById('kin_first').value;
+        var nextOfKinFirstName = document.getElementById('given_name').value;
         var nextOfKinLastName = document.getElementById('touchscreenInput' + tstCurrentPage).value;
 
         var conceptAnswers = [

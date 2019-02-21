@@ -30,6 +30,7 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
+    
 </script>
 
 <body id="mateme">
@@ -38,10 +39,15 @@
 
 
         <form>
+
+            <!--<select id="ad_diagnosis" tt_onLoad="getDiagnosisList();">-->
+                <!--<option></option>-->
+            <!--</select>-->
+
             <input type="text" name="admission_diagnosis"
                    id="admission_diagnosis" field_type="alpha"
                    key="admission_diagnosis" helpText="Select Admission Diagnosis"
-                   ajaxURL="/search/admission_diagnosis?search_string=" allowFreeText="true" textCase ="upper"/>
+                   tt_onLoad="getDiagnosisList();" allowFreeText="true"/>
 
             <input type="text" name="next_diagnosis"
                    id="next_diagnosis" field_type="alpha"
@@ -60,6 +66,34 @@
 </body>
 
 <script>
+    var apiProtocol = sessionStorage.getItem('apiProtocol');
+    var apiURL = sessionStorage.getItem('apiURL');
+    var apiPort = sessionStorage.getItem('apiPort');
+    //
+    // function getDiagnosisList() {
+    //     var url = apiProtocol+'://'+apiURL+':'+apiPort+'/api/v1/concept_set' // use 7376 once it's worked
+    //     var xhttp = new XMLHttpRequest();
+    //     xhttp.onreadystatechange = function() {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             var objs = JSON.parse(this.responseText);
+    //             insertDiagnosis(objs);
+    //         }
+    //     };
+    //     xhttp.open("GET", (url + "?id=7409&name=" + search_str), true);
+    //     xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+    //     xhttp.setRequestHeader('Content-type', "application/json");
+    //     xhttp.send();
+    //
+    // }
+    //
+    // function insertDiagnosis (diagnosis) {
+    //     var diagnosisElement = document.getElementById('touchscreenInput' + tstCurrentPage);
+    //
+    //     for (concepts in ajaxURL) {
+    //         console.log(concepts);
+    //     }
+    // }
+
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postAdmissionDiagnosis();")
@@ -95,7 +129,6 @@
             ]
         };
 
-        console.log('1: '+admissionDiagnosis+' 2: '+nextDiagnosis+' 3: '+otherDiagnosis);
         submitParameters(obs, "/observations", "nextPage")
     }
 
