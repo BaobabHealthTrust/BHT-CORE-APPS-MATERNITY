@@ -64,7 +64,7 @@
       "available": true,
       "encountersName": "current delivery",
       "activitiesIcon": "/assets/images/current_preg.png",
-      "url": "/apps/MATERNITY/views/encounters/admission_diagnosis.html"
+      "url": "/apps/MATERNITY/views/encounters/current_delivery.html"
     },
     "post admission details": {
       "available": true,
