@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/apgar.js" defer="true"></script>
+
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 
 <script>
@@ -125,9 +127,9 @@
           <option>Female</option>
           </select> 
         
-          <input type="text" name="summary" id="apgar_one"
-                 tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar('one');"
-                 tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+          <!-- <input type="text" name="summary" id="apgar_one"
+                 tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'one');"
+                 tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> -->
 
             
           <!-- <input type="text" name="summary" id="apgar_two"
