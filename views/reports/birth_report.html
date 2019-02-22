@@ -1,0 +1,57 @@
+
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/apps/ART/assets/js/arv_number.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/birth_report.js"></script>
+
+<link rel="stylesheet" href="/apps/MATERNITY/assets/css/birth_report.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<style>
+
+.active{
+  background-color:rgb(47, 95, 49);
+  border-radius: 3px;
+  font-size: 28px;
+  font-family: arial, helvetica, sans-serif;
+  padding: 10px 15px 10px 15px;
+  text-decoration: none;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+}
+
+.inactive{
+  background-color:gray;
+  border-radius: 3px;
+  font-size: 28px;
+  font-family: arial, helvetica, sans-serif;
+  padding: 10px 15px 10px 15px;
+  text-decoration: none;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+}
+.cell {
+        border-bottom: dotted 1px #000
+      }
+      table {
+        -moz-user-select: none;
+      }
+</style>
+<body id="mateme">
+    <div id="container">
+        <div id="content">
+            <form>
+                <input type="text" name="summary" id="apgar_one"
+                tt_onLoad="__$('keyboard').style.display = 'none'; buildBirthReport();"
+                tt_pageStyleClass= "NoControls" helpText="" optional="true"/>
+            </form>
+        </div>
+   </div>
+</body>
+  
+  
