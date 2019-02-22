@@ -62,7 +62,7 @@
     },
     "current delivery": {
       "available": true,
-      "encountersName": "current delivery",
+      "encountersName": "baby delivery",
       "activitiesIcon": "/assets/images/current_preg.png",
       "url": "/apps/MATERNITY/views/encounters/current_delivery.html"
     },
