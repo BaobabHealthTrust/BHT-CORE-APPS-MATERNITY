@@ -35,14 +35,32 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
+    function createBabyFields(numberOfBabies) {
+        var dynamicTable = document.getElementById('has_dynamic_fields');
+
+        for (var i=1; i < numberOfBabies; i++) {
+            createBabyStatusField(i,dynamicTable);
+        }
+    }
+
+    function createBabyStatusField(babyNumber,dynamicTable) {
+        alert(babyNumber);
+        var babyStatusField = document.createElement('select');
+        babyStatusField.id = 'baby_status_'+babyNumber;
+        babyStatusField.name = 'baby_status_'+babyNumber;
+        babyStatusField.setAttribute('helpText','Baby ' + babyNumber + ': Status');
+
+        dynamicTable.appendChild(babyStatusField);
+
+    }
 </script>
 
 <body id="mateme">
 <div id="container">
     <div id="content">
-        <form action="../prenatalTasks.html">
+        <form id="has_dynamic_fields">
 
-            <input type="text" name="number_babies" id="number_babies" absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly"/>
+            <input type="text" name="number_babies" id="number_babies" absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onUnLoad="createBabyFields($('number_babies').value);"/>
 
             <!-- start baby loop if more than one baby -->
             <select id="baby_status" name="baby_status" helpText="Baby: Status">
@@ -109,8 +127,8 @@
         encounter_datetime += currentTime;
 
         var encounter = {
-            encounter_type_name: 'CURRENT DELIVERY',
-            encounter_type_id:  115,
+            encounter_type_name: 'BABY DELIVERY',
+            encounter_type_id:  90,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };
@@ -246,7 +264,7 @@
         submitParameters(obs, "/observations", "nextPage")
     }
 
-    function nextPage(){    
-            window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
+    function nextPage(){
+        window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 </script>
