@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
@@ -38,9 +39,9 @@
 
 
         <form>
-            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" />
+            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" tt_onLoad="showCategory2('Physical examination');" />
 
-            <select id="lie" name="lie" helpText="Lie" condition ="__$('fundus').value != 'N/A'">
+            <select id="lie" name="lie" helpText="Lie" condition ="__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Longitudinal</option>
                 <option>Transverse</option>
@@ -48,14 +49,19 @@
                 <option>Undefined</option>
             </select>
 
-            <input type="text" name="presentation"
-                   id="presentation" field_type="alpha"
-                   key="presentation" helpText="Presentation"
-                   ajaxURL="/search/given_name?search_string="
-                   key=presentation" allowFreeText="true"
-                   condition ="__$('fundus').value != 'N/A'" />
+            <select id="presentation" name="presentation" helpText="Presentation" condition ="__$('fundus').value != 'N/A'"  tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');">
+                <option></option>
+                <option>Compound</option>
+                <option>Cephalic</option>
+                <option>Breech</option>
+                <option>Face</option>
+                <option>Footling</option>
+                <option>Cord</option>
+                <option>Brow</option>
+                <option>Shoulder</option>
+            </select>
 
-            <select id="position" name="position" helpText="Position" condition ="__$('fundus').value != 'N/A'" >
+            <select id="position" name="position" helpText="Position" condition ="__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Vertex</option>
                 <option>Breech</option>
@@ -63,7 +69,7 @@
                 <option>Shoulder</option>
             </select>
 
-            <select id="vertex" name="vertex" helpText="Cephalic Position Type" condition = "$('position').value.trim().toUpperCase() == 'VERTEX' && __$('fundus').value != 'N/A'" >
+            <select id="vertex" name="vertex" helpText="Cephalic Position Type" condition = "$('position').value.trim().toUpperCase() == 'VERTEX' && __$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Left Occipito Anterior</option>
                 <option>Left Occipito Transverse</option>
@@ -72,7 +78,7 @@
                 <option>Right Occipito Posterior</option>
             </select>
 
-            <select id="breech" name="breech" helpText="Breech Position Type" condition ="$('position').value.trim().toUpperCase() == 'BREECH' && __$('fundus').value != 'N/A';" >
+            <select id="breech" name="breech" helpText="Breech Position Type" condition ="$('position').value.trim().toUpperCase() == 'BREECH' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Left Sacro Anterior</option>
                 <option>Left Sacro Transverse</option>
@@ -82,7 +88,7 @@
                 <option>Right Sacro Posterior</option>
             </select>
 
-            <select id="face" name="face" helpText="Face Position Type" condition ="$('position').value.trim().toUpperCase() == 'FACE' && __$('fundus').value != 'N/A';" >
+            <select id="face" name="face" helpText="Face Position Type" condition ="$('position').value.trim().toUpperCase() == 'FACE' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Left Mento Anterior</option>
                 <option>Left Mento Transverse</option>
@@ -92,7 +98,7 @@
                 <option>Right Mento Posterior</option>
             </select>
 
-            <select id="shoulder" name="shoulder" helpText="Shoulder Position Type" condition = "$('position').value.trim().toUpperCase() == 'SHOULDER' && __$('fundus').value != 'N/A';" >
+            <select id="shoulder" name="shoulder" helpText="Shoulder Position Type" condition = "$('position').value.trim().toUpperCase() == 'SHOULDER' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Left Acromion Dorsal Anterior</option>
                 <option>Left Acromion Dorsal Posterior</option>
@@ -100,13 +106,13 @@
                 <option>Right Acromion Dorsal Posterio</option>
             </select>
 
-            <select id="contractions" name="contractions" helpText="Contractions" condition = "__$('fundus').value != 'N/A'">
+            <select id="contractions" name="contractions" helpText="Contractions" condition = "__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Yes</option>
                 <option>No</option>
             </select>
 
-            <select id="contraction_intensity" name="contraction_intensity" helpText="Contraction Intensity" condition ="__$('contractions').value.trim().toUpperCase() != 'NO' && __$('fundus').value != 'N/A';" >
+            <select id="contraction_intensity" name="contraction_intensity" helpText="Contraction Intensity" condition ="__$('contractions').value.trim().toUpperCase() != 'NO' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');" >
                 <option></option>
                 <option>Mild</option>
                 <option>Moderate</option>
@@ -117,15 +123,15 @@
 
             <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number"
                    tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
-           __$('fundus').value != 'N/A' && __$('contraction_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" />
+           __$('fundus').value != 'N/A' && __$('contraction_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" tt_onLoad="showCategory2('Physical examination');" />
 
             <input type="text" name="station"
                    id="station" field_type="alpha"
                    key="station" helpText="Station"
-                   allowFreeText="true"
+                   allowFreeText="true" tt_onLoad="showCategory2('Physical examination');"
             />
 
-            <select id="moulding" name="moulding" helpText="Moulding">
+            <select id="moulding" name="moulding" helpText="Moulding" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>0</option>
                 <option>1+</option>
@@ -134,13 +140,13 @@
                 <option>N/A</option>
             </select>
 
-            <select id="membranes" name="membranes" helpText="Membranes">
+            <select id="membranes" name="membranes" helpText="Membranes" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Intact</option>
                 <option>Raptured</option>
             </select>
 
-            <select id="descent" name="descent" helpText="Descent" tt_onLoad="changeNextButton();" condition = "__$('fundus').value != 'N/A'" >
+            <select id="descent" name="descent" helpText="Descent" tt_onLoad="changeNextButton();showCategory2('Physical examination');" condition = "__$('fundus').value != 'N/A'" >
                 <option></option>
                 <option>N/A</option>
                 <option>5/5</option>
@@ -281,10 +287,19 @@
                 "one_over_five":9715,
                 "zero_over_five":9716
             },
+            /*presentation*/
+            {
+                "compound": 7886,
+                "cephalic": 7431,
+                "footling": 7888,
+                "cord": 7916,
+                "brow": 7945
+            }
 
         ];
 
         var lieAnswer;
+        var presentationAnswer;
         var positionAnswer;
         var vertexAnswer;
         var breechAnswer;
@@ -482,12 +497,40 @@
             default:
                 break;
         }
+        switch (presentation.toUpperCase()) {
+            case 'COMPOUND':
+                presentationAnswer = conceptAnswers[11].compound;
+                break;
+            case 'CEPHALIC':
+                presentationAnswer = conceptAnswers[11].cephalic;
+                break;
+            case 'BREECH':
+                presentationAnswer = conceptAnswers[1].breech;
+                break;
+            case 'FACE':
+                presentationAnswer = conceptAnswers[1].face;
+                break;
+            case 'FOOTLING':
+                presentationAnswer = conceptAnswers[11].footling;
+                break;
+            case 'Cord':
+                presentationAnswer = conceptAnswers[11].cord;
+                break;
+            case 'BROW':
+                presentationAnswer = conceptAnswers[11].brow;
+                break;
+            case 'SHOULDER':
+                presentationAnswer = conceptAnswers[1].shoulder;
+                break;
+            default:
+                break;
+        }
 
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
                 { concept_id: 7835, value_numeric: fundus },
-                { concept_id: 7433, value_text: presentation },
+                { concept_id: 7433, value_coded: presentationAnswer },
                 { concept_id: 7836, value_coded: lieAnswer },
                 { concept_id: 7837, value_coded: positionAnswer },
                 { concept_id: 7838, value_coded: contractionsAnswer },
