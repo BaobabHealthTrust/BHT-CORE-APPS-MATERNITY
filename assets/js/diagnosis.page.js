@@ -1,7 +1,7 @@
 var popipPosition;
 var selectedDiagnosis = {};
 
-function buildOPDdiagnosisPage() {
+function buildAdmissionDiagnosisPage() {
   var frame = document.getElementById('inputFrame' + tstCurrentPage);
   frame.style = 'width: 96%; height: 90%;';
 
@@ -372,7 +372,7 @@ function removeDig(e) {
 
 function submitDiagnosis() {
   if(isHashEmpty(selectedDiagnosis)) {
-    showMessage("Please select one / more diagnosis by click;<br/><b>Admission</b> or <b>Next</b>");
+    showMessage("Please select one / more diagnosis by clicking;<br/><b>Admission</b> or <b>Next</b>");
     return;
   }
 
@@ -422,7 +422,7 @@ function postDiagnosisObs(encounter) {
   for(concept_id in temp) {
     secondary_obs[concept_id] = temp[concept_id];
   }
-  observations = []
+  var observations = [];
   
   for(concept_id in primary_obs) {
     observations.push({
@@ -446,7 +446,7 @@ function postDiagnosisObs(encounter) {
   submitParameters(obs, "/observations", "nextPage")  
 }
 
-function nextPage(obs){
+function nextPage(){
   nextEncounter(sessionStorage.patientID, sessionStorage.programID);
 }
 

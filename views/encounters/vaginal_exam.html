@@ -60,7 +60,7 @@
                 <option>N/A</option>
             </select>
 
-            <select id="cervical_dilation" name="cervical_dilation" helpText="Cervical Dilation" tt_onLoad="showCategory2('Vaginal examination');">
+            <select id="cervical_dilation" name="cervical_dilation" tt_pageStyleClass="NoKeyboard" helpText="Cervical Dilation" tt_onLoad="showCategory2('Vaginal examination');">
                 <option></option>
                 <option>Not done</option>
                 <option>Finger tip</option>
@@ -68,7 +68,7 @@
                 <option>Closed</option>
             </select>
 
-            <select id="caput" name="caput" helpText="Caput" tt_onLoad="showCategory2('Vaginal examination');">
+            <select id="caput" name="caput"tt_pageStyleClass="NoKeyboard" helpText="Caput" tt_onLoad="showCategory2('Vaginal examination');">
                 <option></option>
                 <option>0</option>
                 <option>1+</option>
@@ -77,11 +77,14 @@
                 <option>N/A</option>
             </select>
 
-            <input type="text" name="moulding"
-                   id="moulding" field_type="text"
-                   key="moulding" helpText="Moulding"
-                   allowFreeText="true" tt_onLoad="showCategory2('Vaginal examination');"
-            />
+            <select id="moulding" name="moulding" helpText="Moulding"tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Vaginal examination');">
+                <option></option>
+                <option>0</option>
+                <option>1+</option>
+                <option>2+</option>
+                <option>3+</option>
+                <option>N/A</option>
+            </select>
 
             <select id="membranes" name="membranes" helpText="Membranes" tt_onLoad="showCategory2('Vaginal examination');changeNextButtonIntactMembrane();">
                 <option></option>
@@ -97,9 +100,9 @@
                    condition ="__$('membranes').value == 'Raptured'" tt_onLoad="showCategory2('Vaginal examination');" />
 
             <input type="text" name="rupture_date" id="rupture_date" helpText="Membranes Rupture Date" field_type="date"
-                   condition ="$('membranes').value == 'Raptured'" tt_onLoad="showCategory2('Vaginal examination');" tt_pageStyleClass="date"/>
+                   condition="$('membranes').value == 'Raptured'" tt_onLoad="showCategory2('Vaginal examination');" tt_pageStyleClass="date"/>
 
-            <select id="colour_of_liqour" name="colour_of_liqour" helpText="Colour of Liqour" tt_onLoad="showCategory2('Vaginal examination');" condition = "__$('membranes').value == 'Raptured'">
+            <select id="colour_of_liqour" name="colour_of_liqour" helpText="Colour of Liqour" tt_onLoad="showCategory2('Vaginal examination');" tt_pageStyleClass="NoKeyboard" condition="__$('membranes').value == 'Raptured'">
                 <option></option>
                 <option>Clear</option>
                 <option>Meconium Grade 1</option>
@@ -110,7 +113,7 @@
                 <option>Pus</option>
             </select>
 
-            <select id="presenting_part" name="presenting_part" tt_onLoad="showCategory2('Vaginal examination');changeNextButton();" helpText="Presenting Part" condition = "__$('membranes').value == 'Raptured'">
+            <select id="presenting_part" name="presenting_part" tt_onLoad="showCategory2('Vaginal examination');changeNextButton();"tt_pageStyleClass="NoKeyboard" helpText="Presenting Part" condition = "__$('membranes').value == 'Raptured'">
                 <option></option>
                 <option>Not Done</option>
                 <option>Vertex</option>
@@ -260,6 +263,7 @@
         var membranesAnswer;
         var colorOfLiqourAnswer;
         var presentingPartAnswer;
+        var mouldingAnswer;
 
         switch (genetaliaInspection.toUpperCase()) {
             case 'NOT DONE':
@@ -359,6 +363,27 @@
                 break;
         }
 
+        /* moulding uses caput answer hence the exact switch block */
+        /* TODO Refactor into one block. Same should be for all others */
+        switch (moulding.toUpperCase()) {
+            case '0':
+                mouldingAnswer = conceptAnswers[1].zero;
+                break;
+            case '1+':
+                mouldingAnswer = conceptAnswers[1]["1plus"];
+                break;
+            case '2+':
+                mouldingAnswer = conceptAnswers[1]["2plus"];
+                break;
+            case '3+':
+                mouldingAnswer = conceptAnswers[1]["3plus"];
+                break;
+            case 'N/A':
+                mouldingAnswer = conceptAnswers[1].notAvailable;
+                break;
+            default:
+                break;
+        }
         switch (membranes.toUpperCase()) {
             case 'INTACT':
                 membranesAnswer = conceptAnswers[3].intact;
@@ -433,7 +458,7 @@
                 { concept_id: 7842, value_coded: stationAnswer}, // station
                 { concept_id: 7843, value_coded: cervicalDilationAnswer}, // cervical dilation
                 { concept_id: 7844, value_coded: caputAnswer}, // caput
-                { concept_id: 7944, value_text: moulding}, // moulding
+                { concept_id: 7944, value_coded: mouldingAnswer}, // moulding
                 { concept_id: 7845, value_coded: membranesAnswer} // membranes
             ]
         };
