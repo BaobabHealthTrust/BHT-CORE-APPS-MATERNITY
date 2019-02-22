@@ -31,6 +31,28 @@
     var patientID = sessionStorage.getItem("patientID");
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+
+    function validateInput(){
+        try{
+          var descent = $('touchscreenInput'+tstCurrentPage).value;
+          if (descent == "" || descent == null){
+            showMessage("You must enter a value to continue");
+            return;
+          }
+          else{
+            postPhysicalExam();
+          }
+          }catch(e){
+            console.log(e);
+          }
+        }
+
+    function submitButton(){
+        var nextButton = document.getElementById('nextButton');
+        nextButton.onmousedown = function(){
+          validateInput();
+          }
+      }
 </script>
 
 <body id="mateme">
@@ -78,7 +100,7 @@
                 <option>Right Occipito Posterior</option>
             </select>
 
-            <select id="breech" name="breech" helpText="Breech Position Type" condition ="$('position').value.trim().toUpperCase() == 'BREECH' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');">
+            <select id="breech" name="breech" helpText="Breech Position Type" condition ="$('position').value.trim().toUpperCase() == 'BREECH' && __$('fundus').value != 'N/A';" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Left Sacro Anterior</option>
                 <option>Left Sacro Transverse</option>
@@ -88,7 +110,7 @@
                 <option>Right Sacro Posterior</option>
             </select>
 
-            <select id="face" name="face" helpText="Face Position Type" condition ="$('position').value.trim().toUpperCase() == 'FACE' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');">
+            <select id="face" name="face" helpText="Face Position Type" condition ="$('position').value.trim().toUpperCase() == 'FACE' && __$('fundus').value != 'N/A';" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
                 <option>Left Mento Anterior</option>
                 <option>Left Mento Transverse</option>
@@ -146,7 +168,7 @@
                 <option>Raptured</option>
             </select>
 
-            <select id="descent" name="descent" helpText="Descent" tt_onLoad="changeNextButton();showCategory2('Physical examination');" condition = "__$('fundus').value != 'N/A'" >
+            <select id="descent" name="descent" helpText="Descent" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');submitButton();" condition = "__$('fundus').value != 'N/A'" >
                 <option></option>
                 <option>N/A</option>
                 <option>5/5</option>
