@@ -4,6 +4,7 @@ function buildBirthReport(minute){
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
     frame.style.height = "100%";
     frame.style.overflowY = 'scroll';
+    frame.style.backgroundColor ="#fff";
 
     var div_for_table = document.createElement('div');
     frame.appendChild(div_for_table);
