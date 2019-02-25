@@ -169,19 +169,28 @@
 
     function showAssociationTools(program) {
         console.log(program);
+
+        var programName = program.getAttribute('program-name');
+
         var container = document.getElementById('cell-right');
         container.innerHTML = null;
         var table = document.createElement('table');
         table.setAttribute('class','program-tables');
         container.appendChild(table);
 
-                var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                td.setAttribute('class','program-states');
-                tr.appendChild(td);
-                table.appendChild(tr);
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        td.setAttribute('class','program-states');
+        tr.appendChild(td);
+        table.appendChild(tr);
 
-                buildStates(td, ['state 1','state 2','state 3']);
+        var table = document.createElement('table');
+        table.className = 'states';
+        container.appendChild(table);
+
+        buildNames(td, ['John','Jay','Doe'], table);
+        buildHomeAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
+        buildCurrentAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
 
 
         // if (!programHasStates) {

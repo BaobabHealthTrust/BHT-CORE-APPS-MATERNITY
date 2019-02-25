@@ -116,7 +116,108 @@ function updateState(program_id) {
   document.location = '/views/patient/update_state.html?program_id=' + program_id;
 }
 
-function buildStates(container, states) {
+/* TODO All build functions need code refactor */
+function buildNames(container,states,table) {
+
+    var headerRow = document.createElement('tr')
+
+    var stateHeader = document.createElement('th')
+    stateHeader.innerText = 'First Name'
+    headerRow.appendChild(stateHeader)
+
+    var startDateHeader = document.createElement('th')
+    startDateHeader.innerText = 'Middle Name'
+    headerRow.appendChild(startDateHeader)
+
+    var endDateHeader = document.createElement('th')
+    endDateHeader.innerText = 'Last Name'
+    headerRow.appendChild(endDateHeader)
+
+    table.style.padding = '4%'
+    table.setAttribute('cellpadding', '10px')
+
+    table.appendChild(headerRow)
+
+    var dataRow = document.createElement('tr');
+    dataRow.style.backgroundColor = 'grey'
+    dataRow.style.color = 'white'
+
+    buildDemographicsAttributes(states,dataRow);
+
+    table.appendChild(dataRow);
+}
+
+function buildHomeAddresses(container,states,table) {
+
+    var headerRow = document.createElement('tr')
+
+    var stateHeader = document.createElement('th')
+    stateHeader.innerText = 'Home District'
+    headerRow.appendChild(stateHeader)
+
+    var startDateHeader = document.createElement('th')
+    startDateHeader.innerText = 'Home TA'
+    headerRow.appendChild(startDateHeader)
+
+    var endDateHeader = document.createElement('th')
+    endDateHeader.innerText = 'Home Village'
+    headerRow.appendChild(endDateHeader)
+
+    table.style.padding = '4%'
+    table.setAttribute('cellpadding', '10px')
+
+    table.appendChild(headerRow)
+
+    var dataRow = document.createElement('tr');
+    dataRow.style.backgroundColor = 'grey'
+    dataRow.style.color = 'white'
+
+    buildDemographicsAttributes(states,dataRow);
+
+    table.appendChild(dataRow);
+}
+
+function buildCurrentAddresses(container,states,table) {
+
+    var headerRow = document.createElement('tr')
+
+    var stateHeader = document.createElement('th')
+    stateHeader.innerText = 'Current District'
+    headerRow.appendChild(stateHeader)
+
+    var startDateHeader = document.createElement('th')
+    startDateHeader.innerText = 'Current TA'
+    headerRow.appendChild(startDateHeader)
+
+    var endDateHeader = document.createElement('th')
+    endDateHeader.innerText = 'Current Village'
+    headerRow.appendChild(endDateHeader)
+
+    table.style.padding = '4%'
+    table.setAttribute('cellpadding', '10px')
+
+    table.appendChild(headerRow)
+
+    var dataRow = document.createElement('tr');
+    dataRow.style.backgroundColor = 'grey'
+    dataRow.style.color = 'white'
+
+    buildDemographicsAttributes(states,dataRow);
+
+    table.appendChild(dataRow);
+}
+
+function buildDemographicsAttributes(states,dataRow) {
+    for(var i = 0 ; i < states.length ; i++){
+
+        var statesName = document.createElement('td')
+        statesName.innerText = stateName(states[i])
+        dataRow.appendChild(statesName)
+
+    }
+}
+
+function buildStatesOne(container, states) {
   var table = document.createElement('table')
   table.setAttribute('class', 'states')
   container.appendChild(table)
