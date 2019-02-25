@@ -76,6 +76,7 @@
         width: 98%;
         border-radius: 9px;
         box-shadow: 5px 10px #888888;
+        margin-left: 1%;
     }
 
     .states th {
@@ -188,10 +189,10 @@
         table.className = 'states';
         container.appendChild(table);
 
-        buildNames(td, ['John','Jay','Doe'], table);
-        buildHomeAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
-        buildCurrentAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
-
+        fetchPersonDemographics(td,table);
+        // buildNames(td, ['John','Jay','Doe'], table);
+        // buildHomeAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
+        // buildCurrentAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
 
         // if (!programHasStates) {
         //     var tableRow = document.createElement('tr')
