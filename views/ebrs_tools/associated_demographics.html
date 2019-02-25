@@ -169,7 +169,6 @@
     }
 
     function showAssociationTools(program) {
-        console.log(program);
 
         var programName = program.getAttribute('program-name');
 
@@ -189,7 +188,12 @@
         table.className = 'states';
         container.appendChild(table);
 
-        fetchPersonDemographics(td,table);
+        if (programName === 'Child Birth Report') {
+            buildBirthReportButtons(td,2,table);
+        } else {
+            fetchPersonDemographics(td,table);
+        }
+
         // buildNames(td, ['John','Jay','Doe'], table);
         // buildHomeAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
         // buildCurrentAddresses(td, ['Lilongwe','Mtema','Biwi'], table);

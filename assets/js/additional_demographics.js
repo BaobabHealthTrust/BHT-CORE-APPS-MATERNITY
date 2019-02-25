@@ -268,6 +268,33 @@ function buildStatesOne(container, states) {
     }
 }
 
+function buildBirthReportButtons(container,numberOfBabies,table) {
+    var headerRow = document.createElement('tr');
+
+    var stateHeader = document.createElement('th');
+    stateHeader.innerText = 'First Name';
+    headerRow.appendChild(stateHeader);
+
+    var startDateHeader = document.createElement('th');
+    startDateHeader.innerText = 'Middle Name';
+    headerRow.appendChild(startDateHeader);
+
+    var endDateHeader = document.createElement('th');
+    endDateHeader.innerText = 'Last Name';
+    headerRow.appendChild(endDateHeader);
+
+    table.style.padding = '4%';
+    table.setAttribute('cellpadding', '10px');
+
+    table.appendChild(headerRow);
+
+    var dataRow = document.createElement('tr');
+    dataRow.style.backgroundColor = 'grey';
+    dataRow.style.color = 'white';
+
+    table.appendChild(dataRow);
+}
+
 function stateName(num) {
     if(num == 7){
         return 'On ART';
