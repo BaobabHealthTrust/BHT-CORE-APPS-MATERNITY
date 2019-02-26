@@ -10,62 +10,68 @@
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
-
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
 
-.inputFrameClass {
-  width: 96% !important;
-}
+    .inputFrameClass {
+        width: 96% !important;
+    }
 
-#clearButton {
-  display: none;
-}
+    #clearButton {
+        display: none;
+    }
 
 </style>
 
 <body id="mateme">
-  <div id="container">
+<div id="container">
     <div id="content">
 
 
-         <form>
-         <select id="head" name="head" tt_onLoad="changeNextBTN();" tt_requireNextClick = "false" helpText="Head"> 
-            <option>Normal</option>
-            <option>Abnormal</option>
-            <option>Not done</option>
-         </select>
-         <select id="heart" name="heart" tt_onLoad="changeNextBTN();" helpText="Heart Beat"> 
-            <option>Normal heart Sound</option>
-            <option>Abnormal heart Sound</option>
-            <option>Not done</option>
-         </select>
-         <select id="chest" name="chest" tt_onLoad="changeNextBTN();" helpText="Chest"> 
-            <option>Clear</option>
-            <option>Normal</option>
-            <option>Not done</option>
-         </select>
-         <select id="breast" name="breast" tt_onLoad="changeNextBTN();" helpText="Breast"> 
-            <option>Normal</option>
-            <option>Lumps</option>
-            <option>Not done</option>
-         </select>
-         <select id="abnomen" name="abnomen" tt_onLoad="changeNextBTN();" helpText="Abnomen"> 
-            <option>Enlarged</option>
-            <option>Not Enlarged</option>
-            <option>Not done</option>
-         </select>
-         <select id="spleen" name="spleen" tt_onLoad="changeNextButton();"  helpText="Spleen">
-            <option>Enlarged</option>
-            <option>Not Enlarged</option>
-            <option>Not done</option>
-         </select>
+        <form>
+            <select id="head" name="head" tt_onLoad="showCategory2('Clinical examination');" helpText="Head">
+                <option></option>
+                <option>Normal</option>
+                <option>Abnormal</option>
+                <option>Not done</option>
+            </select>
+            <select id="heart" name="heart" tt_onLoad="showCategory2('Clinical examination');" helpText="Heart Beat">
+                <option></option>
+                <option>Normal heart Sound</option>
+                <option>Abnormal heart Sound</option>
+                <option>Not done</option>
+            </select>
+            <select id="chest" name="chest" tt_onLoad="showCategory2('Clinical examination');" helpText="Chest">
+                <option></option>
+                <option>Clear</option>
+                <option>Normal</option>
+                <option>Not done</option>
+            </select>
+            <select id="breast" name="breast" tt_onLoad="showCategory2('Clinical examination');" helpText="Breast">
+                <option></option>
+                <option>Normal</option>
+                <option>Lumps</option>
+                <option>Not done</option>
+            </select>
+            <select id="abnomen" name="abnomen" tt_onLoad="showCategory2('Clinical examination');" helpText="Abnomen">
+                <option></option>
+                <option>Enlarged</option>
+                <option>Not Enlarged</option>
+                <option>Not done</option>
+            </select>
+            <select id="spleen" name="spleen" tt_onLoad="showCategory2('Clinical examination');changeNextButton();" helpText="Spleen">
+                <option></option>
+                <option>Enlarged</option>
+                <option>Not Enlarged</option>
+                <option>Not done</option>
+            </select>
 
-      </form>
+        </form>
 
-   </div>
- </div>
+    </div>
+</div>
 </body>
 
 <script>
@@ -73,175 +79,175 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
-  function changeNextButton() {
-      var nextButton =  document.getElementById('nextButton');
-      nextButton.setAttribute("onmousedown","postMaternityExam();")
-  }
-  function postMaternityExam() {
-      var currentTime = moment().format(' HH:mm:ss');
-      var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
-      encounter_datetime += currentTime;
+    function changeNextButton() {
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","postMaternityExam();")
+    }
+    function postMaternityExam() {
+        var currentTime = moment().format(' HH:mm:ss');
+        var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+        encounter_datetime += currentTime;
 
-      var encounter = {
+        var encounter = {
             encounter_type_name: 'MATERNITY EXAMINATION',
             encounter_type_id:  95,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
-      };
+        };
 
-      submitParameters(encounter, "/encounters", "postMaternityExamObs");
-  }
-
-  function postMaternityExamObs(encounter) {
-
-    var head = document.getElementById('head').value;
-    var heart = document.getElementById('heart').value;
-    var chest = document.getElementById('chest').value;
-    var breast = document.getElementById('breast').value;
-    var abdomen = document.getElementById('abnomen').value;
-    var spleen = document.getElementById('touchscreenInput' + tstCurrentPage).value;
-
-var conceptAnswers = [
-
-    /*Head*/
-    {
-        "normal": 1115,
-        "abnormal": 1116,
-        "notDone": 1118,
-    },
-     /*Heart*/
-    {
-      "normalHeartSound": 3404,
-      "abnormalHeartSound": 3177,
-      "notDone": 1118
-    },
-     /*chest*/
-      {
-      "clear": 3236,
-      "normal": 1115,
-      "notDone": 1118
-    },
-    /*Breast*/
-      {
-      "normal": 1115,
-      "lumps": 9549,
-      "notDone": 1118
-    },
-    /*Abdomen*/
-       {
-      "enlarged": 9581,
-      "notEnlarged": 9718,
-      "notDone": 1118
-    },
-     /*Abdomen*/
-     {
-      "enlarged": 9719,
-      "notEnlarged": 9718,
-      "notDone": 1118
+        submitParameters(encounter, "/encounters", "postMaternityExamObs");
     }
-];
 
-var headAnswer;
-var heartAnswer;
-var chestAnswer;
-var breastAnswer;
-var abdomenAnswer;
-var spleenAnswer;
+    function postMaternityExamObs(encounter) {
 
-switch (head.toUpperCase()) {
-    case 'NORMAL':
-        headAnswer = conceptAnswers[0].normal;
-        break;
-    case 'ABNORMAL':
-        headAnswer = conceptAnswers[0].abnormal;
-        break;
-    case 'NOT DONE':
-        headAnswer = conceptAnswers[0].notDone;
-    break;
-    default:
-        break;
-}
-switch (heart.toUpperCase()) {
-    case 'NORMAL HEART SOUND':
-      heartAnswer = conceptAnswers[1].normalHeartSound;
-        break;
-    case 'ABNORMAL HEART SOUND':
-        heartAnswer = conceptAnswers[1].abnormalHeartSound;
-        break;
-    case 'NOT DONE':
-      heartAnswer = conceptAnswers[1].notDone;
-        break;
-    default:
-        break;
-}
-switch (chest.toUpperCase()) {
-    case 'CLEAR':
-      chestAnswer = conceptAnswers[2].clear;
-        break;
-    case 'NORMAL':
-        chestAnswer = conceptAnswers[2].normal;
-        break;
-    case 'NOT DONE':
-      chestAnswer = conceptAnswers[2].notDone;
-        break;
-    default:
-        break;
-}
-switch (breast.toUpperCase()) {
-    case 'NORMAL':
-      breastAnswer = conceptAnswers[3].normal;
-        break;
-    case 'LUMPS':
-        breastAnswer = conceptAnswers[3].lumps;
-        break;
-    case 'NOT DONE':
-      breastAnswer = conceptAnswers[3].notDone;
-        break;
-    default:
-        break;
-}
-switch (abdomen.toUpperCase()) {
-    case 'ENLARGED':
-        abdomenAnswer = conceptAnswers[4].enlarged;
-        break;
-    case 'NOT ENLARGED':
-        abdomenAnswer = conceptAnswers[4].notEnlarged;
-        break;
-    case 'NOT DONE':
-       abdomenAnswer = conceptAnswers[4].notDone;
-        break;
-    default:
-        break;
-}
-switch (spleen.toUpperCase()) {
-    case 'ENLARGED':
-        spleenAnswer = conceptAnswers[4].enlarged;
-        break;
-    case 'NOT ENLARGED':
-        spleenAnswer = conceptAnswers[4].notEnlarged;
-        break;
-    case 'NOT DONE':
-      spleenAnswer = conceptAnswers[4].notDone;
-        break;
-    default:
-        break;
-}
-var obs = {
-    encounter_id: encounter["encounter_id"],
-    observations: [
-        { concept_id: 2143, value_coded: heartAnswer },
-        { concept_id: 8109, value_coded: headAnswer },
-        { concept_id: 2422, value_coded: chestAnswer },
-        { concept_id: 8456, value_coded: breastAnswer }, 
-        { concept_id: 8400, value_coded: abdomenAnswer },
-        { concept_id: 5195, value_coded: spleenAnswer }
-    ]
-};
+        var head = document.getElementById('head').value;
+        var heart = document.getElementById('heart').value;
+        var chest = document.getElementById('chest').value;
+        var breast = document.getElementById('breast').value;
+        var abdomen = document.getElementById('abnomen').value;
+        var spleen = document.getElementById('touchscreenInput' + tstCurrentPage).value;
 
-submitParameters(obs, "/observations", "nextPage")
-}
+        var conceptAnswers = [
 
-function nextPage(){
-nextEncounter(sessionStorage.patientID, sessionStorage.programID);
-}
+            /*Head*/
+            {
+                "normal": 1115,
+                "abnormal": 1116,
+                "notDone": 1118,
+            },
+            /*Heart*/
+            {
+                "normalHeartSound": 3404,
+                "abnormalHeartSound": 3177,
+                "notDone": 1118
+            },
+            /*chest*/
+            {
+                "clear": 3236,
+                "normal": 1115,
+                "notDone": 1118
+            },
+            /*Breast*/
+            {
+                "normal": 1115,
+                "lumps": 9549,
+                "notDone": 1118
+            },
+            /*Abdomen*/
+            {
+                "enlarged": 9581,
+                "notEnlarged": 9718,
+                "notDone": 1118
+            },
+            /*Abdomen*/
+            {
+                "enlarged": 9719,
+                "notEnlarged": 9718,
+                "notDone": 1118
+            }
+        ];
+
+        var headAnswer;
+        var heartAnswer;
+        var chestAnswer;
+        var breastAnswer;
+        var abdomenAnswer;
+        var spleenAnswer;
+
+        switch (head.toUpperCase()) {
+            case 'NORMAL':
+                headAnswer = conceptAnswers[0].normal;
+                break;
+            case 'ABNORMAL':
+                headAnswer = conceptAnswers[0].abnormal;
+                break;
+            case 'NOT DONE':
+                headAnswer = conceptAnswers[0].notDone;
+                break;
+            default:
+                break;
+        }
+        switch (heart.toUpperCase()) {
+            case 'NORMAL HEART SOUND':
+                heartAnswer = conceptAnswers[1].normalHeartSound;
+                break;
+            case 'ABNORMAL HEART SOUND':
+                heartAnswer = conceptAnswers[1].abnormalHeartSound;
+                break;
+            case 'NOT DONE':
+                heartAnswer = conceptAnswers[1].notDone;
+                break;
+            default:
+                break;
+        }
+        switch (chest.toUpperCase()) {
+            case 'CLEAR':
+                chestAnswer = conceptAnswers[2].clear;
+                break;
+            case 'NORMAL':
+                chestAnswer = conceptAnswers[2].normal;
+                break;
+            case 'NOT DONE':
+                chestAnswer = conceptAnswers[2].notDone;
+                break;
+            default:
+                break;
+        }
+        switch (breast.toUpperCase()) {
+            case 'NORMAL':
+                breastAnswer = conceptAnswers[3].normal;
+                break;
+            case 'LUMPS':
+                breastAnswer = conceptAnswers[3].lumps;
+                break;
+            case 'NOT DONE':
+                breastAnswer = conceptAnswers[3].notDone;
+                break;
+            default:
+                break;
+        }
+        switch (abdomen.toUpperCase()) {
+            case 'ENLARGED':
+                abdomenAnswer = conceptAnswers[4].enlarged;
+                break;
+            case 'NOT ENLARGED':
+                abdomenAnswer = conceptAnswers[4].notEnlarged;
+                break;
+            case 'NOT DONE':
+                abdomenAnswer = conceptAnswers[4].notDone;
+                break;
+            default:
+                break;
+        }
+        switch (spleen.toUpperCase()) {
+            case 'ENLARGED':
+                spleenAnswer = conceptAnswers[4].enlarged;
+                break;
+            case 'NOT ENLARGED':
+                spleenAnswer = conceptAnswers[4].notEnlarged;
+                break;
+            case 'NOT DONE':
+                spleenAnswer = conceptAnswers[4].notDone;
+                break;
+            default:
+                break;
+        }
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 2143, value_coded: heartAnswer },
+                { concept_id: 8109, value_coded: headAnswer },
+                { concept_id: 2422, value_coded: chestAnswer },
+                { concept_id: 8456, value_coded: breastAnswer },
+                { concept_id: 8400, value_coded: abdomenAnswer },
+                { concept_id: 5195, value_coded: spleenAnswer }
+            ]
+        };
+
+        submitParameters(obs, "/observations", "nextPage")
+    }
+
+    function nextPage(){
+        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    }
 </script>

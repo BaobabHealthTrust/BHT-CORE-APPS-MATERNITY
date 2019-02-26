@@ -7,9 +7,8 @@
 <link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
-<script type="text/javascript" src="/apps/ART/assets/js/arv_number.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
-<script type="text/javascript" src="/assets/js/programs.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/additional_demographics.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 
@@ -77,6 +76,7 @@
         width: 98%;
         border-radius: 9px;
         box-shadow: 5px 10px #888888;
+        margin-left: 1%;
     }
 
     .states th {
@@ -169,21 +169,34 @@
     }
 
     function showAssociationTools(program) {
-        console.log(program);
+
+        var programName = program.getAttribute('program-name');
+
         var container = document.getElementById('cell-right');
         container.innerHTML = null;
         var table = document.createElement('table');
         table.setAttribute('class','program-tables');
         container.appendChild(table);
 
-                var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                td.setAttribute('class','program-states');
-                tr.appendChild(td);
-                table.appendChild(tr);
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        td.setAttribute('class','program-states');
+        tr.appendChild(td);
+        table.appendChild(tr);
 
-                buildStates(td, ['state 1','state 2','state 3']);
+        var table = document.createElement('table');
+        table.className = 'states';
+        container.appendChild(table);
 
+        if (programName === 'Child Birth Report') {
+            buildBirthReportButtons(td,2,table);
+        } else {
+            fetchPersonDemographics(td,table);
+        }
+
+        // buildNames(td, ['John','Jay','Doe'], table);
+        // buildHomeAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
+        // buildCurrentAddresses(td, ['Lilongwe','Mtema','Biwi'], table);
 
         // if (!programHasStates) {
         //     var tableRow = document.createElement('tr')
