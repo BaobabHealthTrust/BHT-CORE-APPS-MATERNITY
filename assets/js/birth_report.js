@@ -1,26 +1,86 @@
+var mother_first_name;
+var mother_second_name;
+var mother_surname;
+var mother_district;
+var mother_ta;
+var mother_village;
+var father_first_name;
+var father_second_name;
+var father_surname;
+var father_district;
+var father_ta;
+var father_village;
+var child_first_name;
+var child_second_name;
+var child_gender;
+var child_dob;
+var parent_district;
+var parent_village;
+function fetchMotherDemographics() {
+    var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+            var demographics = JSON.parse(this.responseText);
+            var names = demographics.person.names[0];
+            var addresses = demographics.person.addresses[0];
+            var mother_names = [names.given_name,names.middle_name,names.family_name];
+            var mother_addresses= [addresses.address2,addresses.county_district,addresses.neighborhood_cell];
+            var parent_addresses = [addresses.state_province,addresses.township_division,addresses.city_village]
+            for(var i = 0 ; i < mother_names.length ; i++){
+                 mother_first_name = mother_names[i];
+                 mother_second_name = mother_names[i+1];
+                 mother_surname =  mother_names[i+2];
+            break;
+         }
+         console.log(parent_addresses);
+         for(var i = 0 ; i < mother_addresses.length ; i++){
+              mother_district = mother_addresses[i];
+              mother_ta = mother_addresses[i+1];
+              mother_village =  mother_addresses[i+2]
+             break;
+         }
+         for(var i = 0 ; i < parent_addresses.length ; i++){
+              parent_district = parent_addresses[i];
+              parent_village =  parent_addresses[i+2]
+             break;
+         }
+         if(mother_second_name !== ""){
+             mother_second_name = "N/A";
+         }
+         buildBirthReport();
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+    xhttp.setRequestHeader('Content-type', "application/json");
+    xhttp.send();
+}
 
-function buildBirthReport(mother_names,mother_addresses,parent_addresses){
-    for(var i = 0 ; i < mother_names.length ; i++){
-           var mother_first_name = mother_names[i];
-           var mother_second_name = mother_names[i+1];
-           var mother_surname =  mother_names[i+2];
-       break;
-    }
-    console.log(parent_addresses);
-    for(var i = 0 ; i < mother_addresses.length ; i++){
-        var mother_district = mother_addresses[i];
-        var mother_ta = mother_addresses[i+1];
-        var mother_village =  mother_addresses[i+2]
-        break;
-    }
-    for(var i = 0 ; i < parent_addresses.length ; i++){
-        var parent_district = parent_addresses[i];
-        var parent_village =  parent_addresses[i+2]
-        break;
-    }
-    if(mother_second_name !== ""){
-        mother_second_name = "N/A";
-    }
+
+
+function buildBirthReport(){
+    // for(var i = 0 ; i < mother_names.length ; i++){
+    //        var mother_first_name = mother_names[i];
+    //        var mother_second_name = mother_names[i+1];
+    //        var mother_surname =  mother_names[i+2];
+    //    break;
+    // }
+    // console.log(parent_addresses);
+    // for(var i = 0 ; i < mother_addresses.length ; i++){
+    //     var mother_district = mother_addresses[i];
+    //     var mother_ta = mother_addresses[i+1];
+    //     var mother_village =  mother_addresses[i+2]
+    //     break;
+    // }
+    // for(var i = 0 ; i < parent_addresses.length ; i++){
+    //     var parent_district = parent_addresses[i];
+    //     var parent_village =  parent_addresses[i+2]
+    //     break;
+    // }
+    // if(mother_second_name !== ""){
+    //     mother_second_name = "N/A";
+    // }
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
     frame.style.height = "100%";
     frame.style.overflowY = 'scroll';
