@@ -1,5 +1,4 @@
 
-<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
@@ -9,6 +8,7 @@
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <script type="text/javascript" src="/apps/MATERNITY/assets/js/birth_report.js"></script>
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 
 <link rel="stylesheet" href="/apps/MATERNITY/assets/css/birth_report.css" type="text/css">
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
@@ -28,7 +28,7 @@
         <div id="content">
             <form>
                 <input type="text" name="summary" id="birth_report"
-                tt_onLoad="__$('keyboard').style.display = 'none'; buildBirthReport();"
+                tt_onLoad="__$('keyboard').style.display = 'none'; fetchPersonDemographics();"
                 tt_pageStyleClass= "NoControls" helpText="" class="white" optional="true"/>
             </form>
         </div>
@@ -39,5 +39,8 @@
  var patientID = sessionStorage.getItem("patientID");
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+    // var apiProtocol = sessionStorage.apiProtocol;
+    // var apiURL = sessionStorage.apiURL;
+    // var apiPort = sessionStorage.apiPort;
 </script>
   

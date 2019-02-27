@@ -1,6 +1,26 @@
 
-function buildBirthReport(minute){
-
+function buildBirthReport(mother_names,mother_addresses,parent_addresses){
+    for(var i = 0 ; i < mother_names.length ; i++){
+           var mother_first_name = mother_names[i];
+           var mother_second_name = mother_names[i+1];
+           var mother_surname =  mother_names[i+2];
+       break;
+    }
+    console.log(parent_addresses);
+    for(var i = 0 ; i < mother_addresses.length ; i++){
+        var mother_district = mother_addresses[i];
+        var mother_ta = mother_addresses[i+1];
+        var mother_village =  mother_addresses[i+2]
+        break;
+    }
+    for(var i = 0 ; i < parent_addresses.length ; i++){
+        var parent_district = parent_addresses[i];
+        var parent_village =  parent_addresses[i+2]
+        break;
+    }
+    if(mother_second_name !== ""){
+        mother_second_name = "N/A";
+    }
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
     frame.style.height = "100%";
     frame.style.overflowY = 'scroll';
@@ -31,8 +51,8 @@ function buildBirthReport(minute){
      " </td> </tr><tr><td>3. </td><td> Sex (Male/Female):</td><td id='sex' style='text-align: center; padding-top: 9px;' class='cell'> Female </td><td colspan='2'>  &nbsp; </td> </tr>"+
      "<tr><td style='text-align: left; padding-top: 10px;'>4.</td><td colspan='4' style='text-align: left; padding-top: 10px;'>Name of parents: </td></tr>"+
      "<tr><td>&nbsp; </td><td style='text-align: left; padding-left: 20px; padding-top: 9px;'>Mother (Maiden Name):</td><td id='fnm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
-     "Maclena</td><td id='mnm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'> Cecelia</td><td id='lnm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
-     "Sibande </tr><tr><td>&nbsp;</td><td>&nbsp;</td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>First Name</sup>"+
+     mother_first_name+"</td><td id='mnm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+mother_second_name+"</td><td id='lnm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
+     mother_surname+"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>First Name</sup>"+
      "</td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>Middle Name</sup></td><td style='text-align: center; padding-top: 0px;'>"+
      "<sup style='font-style: italic; font-size: 0.6em;'>Surname</sup></td> </tr><tr><td> &nbsp;</td><td style='text-align: left; padding-left: 20px; padding-top: 9px;'> Father (if known):</td><td id='fnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
      "Humphrey</td><td id='mnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'> Bright</td><td id='lnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>Moyo</td></tr> <tr>"+
@@ -43,20 +63,45 @@ function buildBirthReport(minute){
      "Malawian </td>  <td id='idm' style='text-align: left; padding-bottom: 0px; padding-top: 9px; padding-left: 9px;'> ID No: <div class='cell' style='float: right;'>&nbsp;</div> </td><td style='text-align: center; padding-bottom: 0px; padding-top: 9px;'>"+
      "&nbsp; </td></tr><tr> <td style='text-align: left; padding-top: 9px;'> 6. </td> <td colspan='4' style='text-align: left; padding-top: 9px;'>Physical Residential:  </td> </tr>"+
     "<tr><td> &nbsp;</td> <td style='text-align: right; padding-top: 10px;'> Address of Parent(s)   </td>  <td id='resm' colspan='2' style='text-align: left; padding-bottom: 0px; padding-top: 10px;' class='cell'>"+
-    "</td> <td style='text-align: center; padding-bottom: 0px; padding-top: 9px;'>&nbsp; </td> </tr><tr><td> &nbsp; </td><td style='text-align: right; padding-top: 9px;'>  &nbsp; </td>"+
-    "<td id='resf' colspan='2' style='text-align: left; padding-bottom: 0px; padding-top: 9px;' class='cell'></td> <td style='text-align: left; padding-bottom: 0px; padding-top: 9px;'>  &nbsp;</td> </tr>"+
+    ""+parent_district+"</td> <td style='text-align: center; padding-bottom: 0px; padding-top: 9px;'>&nbsp; </td> </tr><tr><td> &nbsp; </td><td style='text-align: right; padding-top: 9px;'> </td>"+
+    "<td id='resf' colspan='2' style='text-align: left; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+parent_village+"</td> <td style='text-align: left; padding-bottom: 0px; padding-top: 9px;'>  &nbsp;</td> </tr>"+
     "<tr><td style='text-align: left; padding-top: 10px;'> 7. </td><td colspan='4' style='text-align: left; padding-top: 9px;'> Home Address of Parent(s) (<i>bona fide</i> citizens):  </td></tr>"+
-    " <tr> <td> &nbsp; </td> <td style='text-align: left; padding-left: 20px; padding-top: 9px;'> Mother: </td><td id='vm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>  Kasungu</td>"+
-    "<td id='tam' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'> </td> <td id='dim' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'></td></tr>" +
+    " <tr> <td> &nbsp; </td> <td style='text-align: left; padding-left: 20px; padding-top: 9px;'> Mother: </td><td id='vm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+ mother_district+"</td>"+
+    "<td id='tam' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+mother_ta+" </td> <td id='dim' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+mother_village+"</td></tr>" +
     "<tr><td>  &nbsp; </td> <td> &nbsp; </td> <td style='text-align: center; padding-top: 0px;'> <sup style='font-style: italic; font-size: 0.6em;'>Village</sup> </td> <td style='text-align: center; padding-top: 0px;'>"+
     "<sup style='font-style: italic; font-size: 0.6em;'>T/A</sup> </td> <td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>District</sup> </td> </tr>"+
-    "<tr><td>  &nbsp; </td> <td style='text-align: left; padding-left: 20px; padding-top: 9px;'> </td><td id='vf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'></td> <td id='taf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
+    "<tr><td>  &nbsp; </td> <td style='text-align: left; padding-left: 20px; padding-top: 9px;'>Father: </td><td id='vf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'></td> <td id='taf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
      "</td><td id='dif' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'></td></tr><tr><td>  &nbsp; </td><td> &nbsp; </td> <td style='text-align: center; padding-top: 0px;'>"+
      "<sup style='font-style: italic; font-size: 0.6em;'>Village</sup> </td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>T/A</sup></td><td style='text-align: center; padding-top: 0px;'>"+
      "<sup style='font-style: italic; font-size: 0.6em;'>District</sup></td></tr>";
 
     div_for_table.appendChild(div_table);  
 
+}
+function fetchPersonDemographics() {
+    var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
 
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+            var demographics = JSON.parse(this.responseText);
+            var names = demographics.person.names[0];
+            var addresses = demographics.person.addresses[0];
+            buildBirthReport([names.given_name,names.middle_name,names.family_name],[addresses.address2,addresses.county_district,addresses.neighborhood_cell],[addresses.state_province,addresses.township_division,addresses.city_village]);
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+    xhttp.setRequestHeader('Content-type', "application/json");
+    xhttp.send();
+}
 
+function buildDemographicsAttributes(states,dataRow) {
+    for(var i = 0 ; i < states.length ; i++){
+
+        var statesName = document.createElement('td')
+        statesName.innerText = stateName(states[i])
+        dataRow.appendChild(statesName)
+
+    }
 }
