@@ -89,8 +89,10 @@
 
             <select id="delivery_mode" name="delivery_mode" helpText="Baby: Delivery Mode">
                 <option></option>
-                <option>Spontaneous vaginal Delivery</option>
+                <option>Spontaneous Delivery</option>
+                <option>Caesarean Section</option>
                 <option>Breech Delivery</option>
+                <option>Vacuum extraction delivery</option>
             </select>
             <!-- end baby loop if more than one baby -->
 
@@ -167,7 +169,9 @@
             // delivery mode
             {
                 "spontaneousVaginalDelivery": 1170,
-                "breechDelivery": 1172
+                "breechDelivery": 1172,
+                "caesareanSection": 1171,
+                "vacuumExtraction": 7139
             },
             // place of delivery
             {
@@ -215,6 +219,12 @@
                 break;
             case 'BREECH DELIVERY':
                 deliveryModeAnswer = conceptAnswers[2].breechDelivery;
+                break;
+            case 'CAESAREAN SECTION':
+                deliveryModeAnswer = conceptAnswers[2].caesareanSection;
+                break;
+            case 'VACUUM EXTRACTION DELIVERY':
+                deliveryModeAnswer = conceptAnswers[2].vacuumExtraction;
                 break;
             default:
                 break;
