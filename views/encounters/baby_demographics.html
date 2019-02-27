@@ -1,0 +1,152 @@
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/apgar.js" defer="true"></script>
+
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/apgar.js" ></script>
+<script type="text/javascript" src="/assets/js/core.js"></script>
+<script>
+
+    tstUsername = "";
+    tstUserKeyboardPref = "qwerty";
+
+    var d = new Date();
+    d.toDateString();
+
+    function getInput(){
+        key = $('touchscreenInput' + tstCurrentPage).getAttribute("key");
+         value = $('touchscreenInput' + tstCurrentPage).value;
+         value = value.charAt(0).toUpperCase() + value.slice(1);     
+         sessionStorage.setItem(key, value);
+         var d = new Date();
+         sessionStorage.setItem("date_created", d.toDateString());
+     }
+
+    function validateName() {
+        __$("nextButton").removeAttribute("onmousedown");
+        __$("nextButton").onmousedown = function(){
+
+            validRegEx = /^(?=.{2,100}$)[a-z\!\A-Z]+(?:['_.\-\!\][a-z]+[a-z\!\A-Z])*$/
+            value = $('touchscreenInput' + tstCurrentPage).value;
+           if(value.match(validRegEx) == null) {
+             showMessage("Invalid name input");
+           }else if (value.match(validRegEx) != null) {
+            gotoNextPage();
+           }
+          }
+        } 
+
+    function createClient() {
+      var given_name = $('given_name').value;
+      var family_name = $('family_name').value;
+      var gender = $('gender').value;
+      hash = {}
+        if (given_name !== ""){
+            hash['given_name'] = given_name;
+        }if (family_name !== ""){
+          hash['family_name'] = family_name;
+        }if (gender !== ""){1
+          hash['gender'] = gender;
+        }
+  
+        var parametersPassed = {
+          given_name: null, family_name: null,
+          gender: null
+        }
+       
+        postClientParamaters(hash);
+
+        window.location.href = "/apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
+        
+      }
+
+    function changeNextButton(){
+      __$("nextButton").removeAttribute("onmousedown")
+      __$("nextButton").onmousedown = function(){
+
+        value = $('touchscreenInput' + tstCurrentPage).value;
+         if (value.length  > 0) {
+
+                   createClient();
+                   // nextPage();
+         }else {
+           showMessage("You must enter a value to continue");
+         }
+
+      }
+    }
+
+    function postClientParamaters(parametersPassed) {
+        var url = apiProtocol + '://' + apiURL + ':' + apiPort + '/api/v1/people';
+        if (parametersPassed.birthdate_estimated === "Yes") {
+            parametersPassed.birthdate_estimated = 1;
+        }else {
+            parametersPassed.birthdate_estimated = 0;
+        }
+        var parametersPassed = JSON.stringify(parametersPassed);
+        showStatus();
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 201) {
+                var obj = JSON.parse(this.responseText);
+                // createPatient(obj['person_id']);
+
+                // submitPatienttype(obj['person_id']);
+            }
+        };
+        xhttp.open("POST", url, true);
+        xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+        xhttp.setRequestHeader('Content-type', "application/json");
+        xhttp.send(parametersPassed);
+
+    }
+
+    function nextPage(){
+        window.location.href = "../../apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
+    }
+
+  
+  </script>
+  <script>
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+
+  </script>
+
+<body id="mateme">
+  <div id="container">
+    <div id="content">
+    <style>
+    .tt_controls_baby_first_name #date, #star, #slash, #minus, #plus, #percent, #decimal, #comma { display: none; }
+
+    .tt_controls_baby_last_name #date, #star, #slash, #minus, #plus, #percent, #decimal, #comma { display: none; }
+
+    </style>
+
+      <form>
+            <!-- BABY DETAILS -->
+            <input type="text" name="number_babies" id="number_babies" helpText="Number of babies" field_type="number" tt_onLoad=""
+            tt_pageStyleClass="Numeric NumbersOnly" 
+            />
+  
+            <!-- First Baby -->
+            <input type="text" name="given_name" id="given_name" key="given_name" helpText="Baby first name" field_type="alpha" tt_onLoad='validateName();' tt_onUnload="getInput();" condition="" allowFreeText="true" ajaxURL="/search/given_name?search_string=" />
+            
+            <input type="text" name="family_name" id="family_name" helpText="Baby last name" field_type="alpha" tt_onLoad='validateName();' ajaxURL="/search/family_name?search_string=" condition="" key="family_name" allowFreeText="true" tt_onUnload="getInput();" />
+
+            <select allowFreeText="false" id="gender" name="person[gender]"  helpText="Gender" tt_onLoad="changeNextButton();" tt_onUnLoad="getInput();nextPage();" key="gender"> 
+            <option value="M">Male</option>
+            <option value="F">Female</option></select>
+      </form>
+    </div>
+  </div>
+</body>
