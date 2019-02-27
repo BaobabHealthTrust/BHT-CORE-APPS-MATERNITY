@@ -105,7 +105,7 @@ function showStates(program){
 
     btn.setAttribute('id','update-state');
     btn.setAttribute('class','button blue navButton');
-    btn.innerHTML = '<span>Update state</span>';
+    btn.innerHTML = '<span>Edit Demo</span>';
     btn.setAttribute('onmousedown','updateState(' + program.id + ');');
 
     var root = document.getElementById('buttons');
@@ -269,19 +269,22 @@ function buildStatesOne(container, states) {
 }
 
 function buildBirthReportButtons(container,numberOfBabies,table) {
+    var babyID = sessionStorage.patientID; /* TODO Should be taken from backend id for baby(ies) */
     var headerRow = document.createElement('tr');
 
-    var stateHeader = document.createElement('th');
-    stateHeader.innerText = 'First Name';
-    headerRow.appendChild(stateHeader);
-
     var startDateHeader = document.createElement('th');
-    startDateHeader.innerText = 'Middle Name';
+    startDateHeader.style.border = 'solid';
+    startDateHeader.style.borderWidth = '1px';
+    startDateHeader.style.textAlign = 'center';
+    startDateHeader.style.lineHeight = '20px';
+    startDateHeader.style.height = '50px';
+    startDateHeader.style.padding = '10px';
+    startDateHeader.style.boxShadow = '5px 10px #888888';
+    startDateHeader.style.cursor = 'pointer';
+    startDateHeader.innerHTML = 'Baby Birth Report';
+    startDateHeader.style.backgroundColor = 'lightblue';
+    startDateHeader.setAttribute('onmousedown','navigateToBirthReport(' + babyID + ')');
     headerRow.appendChild(startDateHeader);
-
-    var endDateHeader = document.createElement('th');
-    endDateHeader.innerText = 'Last Name';
-    headerRow.appendChild(endDateHeader);
 
     table.style.padding = '4%';
     table.setAttribute('cellpadding', '10px');
@@ -303,6 +306,10 @@ function stateName(num) {
     }
 
     return num
+}
+
+function navigateToBirthReport(babyID) {
+    window.location = '/apps/MATERNITY/views/reports/birth_report.html?baby_id=' + babyID;
 }
 
 function fetchPersonDemographics(td,table) {
