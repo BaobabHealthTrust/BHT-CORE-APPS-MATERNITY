@@ -447,7 +447,7 @@ function postDiagnosisObs(encounter) {
 }
 
 function nextPage(){
-  nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+  window.location.href = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
 }
 
 

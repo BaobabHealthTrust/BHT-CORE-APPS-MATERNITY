@@ -1,130 +1,206 @@
-var apgarScore = 0;
-var calculatedApgarScore;
+var timedEvent = "";
+var temp = "" ; 
+var alert;
 
-$("clearButton").onclick = function() {
+function attribute(str){
+    id = str.split("*")[0]
+    atr = str.split("*")[1]
+    val = str.split("*")[2]
+    __$(id).setAttribute(atr, val)
+}
+function createField(id, name, type, value){
+    var node = document.createElement("input");
+    node.id = id.toLowerCase();
+    node.setAttribute("name", name);
+    node.setAttribute("type", type);
+    document.forms[0].appendChild(node);
+    $(id.toLowerCase()).value = value;
+}
+function showApgarControl(eenum,minute){
     apgarScore = 0;
-    calculatedApgarScore = 0;
-    showApgarScore(apgarScore);
-
-    var point_buttons = document.getElementsByClassName("apgar_btn");
-
-    for( i = 0; 0 < point_buttons.length; i++){
-        point_buttons[i].className = 'inactive';
-        showCategory(0,0,0);
+    var apgar = {
+        "APPEARANCE": 0,
+        "PULSE" : 0,
+        "GRIMANCE": 0,
+        "ACTIVITY": 0,
+        "RESPIRATION": 0
+    };
+    var apgarCheck = {
+        "APPEARANCE": "?",
+        "PULSE" : "?",
+        "GRIMANCE": "?",
+        "ACTIVITY": "?",
+        "RESPIRATION": "?"
+    };
+    
+    //create data handlers for  each APGAR component so they can be saved as well
+    for (var key in apgar) {      
+        var name = "concept[" + key.toLowerCase() + " minute " + ((eenum == 1)? "one" : "five") + "]";
+        createField(key + eenum, name, "hidden", apgar[key.toUpperCase()]);
     }
-};
 
-function $(e) {
-    return document.getElementById(e);
-}
-
-function apgarCategory(value,i_value,j_value) {
-    var categoryText = "<span style='font-size:27px;font-weight:bold;'>APGAR</span> = "+value+"+"+i_value+"+"+j_value;
-    return categoryText;
-}
-
-function calculateApgarScore(apgarValue=0) {
-    var calculatedApgarScore = parseInt(apgarScore) + parseInt(apgarValue);
-    var showCalculatedApgarScore = showApgarScore(calculatedApgarScore);
-
-    return showCalculatedApgarScore;
-}
-
-function showApgarScore(apgarValue){
-    displayText = "";
-    apgarScore = apgarValue;
-    if (apgarScore >= 7) {
-        displayText = "<span style = 'position:relative;' class='normal_alert' id='normal_apgar_alert'> " + parseInt(apgarScore) + "/10 - Normal APGAR</span>";
-    } else if (apgarScore <=3) {
-        displayText = "<span style = 'position:relative;' class='red_alert' id='red_apgar_alert'> " + parseInt(apgarScore) + "/10 - Low APGAR</span>";
-    } else {
-        displayText = "<span style = 'position:relative;' class='yellow_alert' id='yellow_apgar_alert'> " + parseInt(apgarScore) + "/10 - Fairly Low </span>";
+    if (eenum != 1){
+        alert = document.createElement("div");
     }
-    return displayText
+    
+    $("clearButton").onclick = function(){
+        apgarScore = 0
+        if (eenum != 1){
+            updateApgarAlert(apgarScore)
+        }
+         
+        cells = document.getElementsByClassName("butt");
+        for( i = 0; 0 < cells.length; i++){
+            cells[i].setAttribute("selected", "false");
+            cells[i].style.background = "url('/assets/images/btn_blue.png'";
+            apgar["APPEARANCE"] = 0;
+            apgar["PULSE"] = 0;
+            apgar["GRIMANCE"] = 0;
+            apgar["ACTIVITY"] = 0;
+            apgar["RESPIRATION"] = 0;
+            apgarCheck["APPEARANCE"] = "?";
+            apgarCheck["PULSE"] = "?";
+            apgarCheck["GRIMANCE"] = "?";
+            apgarCheck["ACTIVITY"] = "?";
+            apgarCheck["RESPIRATION"] = "?";
+            showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> = " + apgarCheck['APPEARANCE'] + "+" + apgarCheck['PULSE'] +"+"+ apgarCheck['GRIMANCE']
+                + "+" + apgarCheck['ACTIVITY'] + "+" + apgarCheck['RESPIRATION']);
+        }
+    }
+    $("clearButton").onclick.apply($("clearButton"));
+
+    if (eenum != 1){
+        updateApgarAlert(apgarScore);
+    }
+    
+    scoreWindow = document.createElement("div");
+    scoreWindow.setAttribute("id", "selectWindow");
+	
+    /*
+    arr_val = ['Pale/blue', "Baby pink/</br>blue extremities", "Completely </br> pink",
+      "None", "Slow -</br>Below 100 bpm", "Above </br>100 bpm",
+      "Flaccid", "Some flexion </br> of Extremities", "Active Motion",
+      "None", "Grimance", "Vigorous </br>cry",
+      "Absent", "Slow - </br> irregular", "Good crying"];
+   */
+    // arr_labels = ["Color", "Heart Rate", "Muscle Tone", "Reflex Irritability", "Respiratory Effort"]
+
+    arr = ["Appearance", "Pulse", "Grimance", "Activity", "Respiration"]
+    
+    arr_val = ['Pale/blue', "Baby pink/</br>blue extremities", "Completely </br> pink",
+      "Absent", "Slow -</br>Below 100 bpm", "Above </br>100 bpm",
+      "Flaccid", "Some flexion </br> of Extremities", "Active Motion",
+      "None", "Grimance", "Vigorous </br>cry",
+      "Absent", "Slow - </br> irregular", "Good crying"];
+      
+    arr_labels = ["Color", "Heart Rate", "Muscle Tone", "Reflex Irritability", "Respiratory Effort"]
+      
+    val_index = 0;
+    values = [0, 1, 2];
+    var labels = document.createElement("div");
+    labels.id = "row1";
+
+    placebo = document.createElement("div");
+    placebo.id = "placebo";
+    labels.appendChild(placebo);
+
+    for(i = 0; i < values.length; i++){
+        var lblCell = document.createElement("div");
+        lblCell.setAttribute("class", "value");
+        lblCell.innerHTML = (i == 2)? (i + " Points") : (i + " Point")
+        labels.appendChild(lblCell);
+    }
+    scoreWindow.appendChild(labels);
+
+    for (i = 0; i < arr.length; i ++){
+        var row = document.createElement("div");
+        row.id = "apgar_row_" + i
+        row.setAttribute("class", "boardRow");
+
+        for (j = 0; j < 4; j++){
+            var control = document.createElement("div");
+            control.id = "" + i + j;
+            if (j != 0){
+
+                control.setAttribute("class", "butt");
+                control.setAttribute("value", j-1);
+                control.setAttribute("apgar_field", arr[i]);
+                // update/set selection status of the control
+                if ((apgarCheck[arr[i].toUpperCase()] != "?") && ("" + i + (parseInt(apgarCheck[arr[i].toUpperCase()]) + 1) == control.id)){
+                    control.setAttribute("selected", "true");
+                }else{
+                    control.setAttribute("selected", "false");
+                }
+                control.setAttribute("i", i);
+                control.setAttribute("j", j);
+          
+                control.innerHTML = arr_val[val_index];
+                val_index ++;
+
+                control.onclick = function(){
+                    var num = __$(this.id).getAttribute("value");
+                    var field = __$(this.id).getAttribute("apgar_field");
+                    var key = field.toUpperCase();
+                    apgar[key] = num;
+                    apgarCheck[key] = apgar[key];
+                    //update row selections
+
+                    if (__$(this.id).getAttribute("selected") == "false"){
+
+                        for(k = 1; k < 4; k++){
+                            var x = this.getAttribute("i");
+                            __$("" + x + k).setAttribute("selected", ( this.id != "" + x + k)? "false": "true");
+
+                            __$("" + x + k).style.background = ( this.id != "" + x + k)? "url('/assets/images/btn_blue.png')" : "url('/assets/images/click_btn.png')";
+                            __$("" + x + k).style.Color= ( this.id != "" + x + k)? "black" : "white";
+                        }
+                    }
+                    $(key.toLowerCase() + eenum).value = apgar[key];
+                    apgarScore = parseInt(apgar['APPEARANCE']) + parseInt(apgar['PULSE'])
+                    + parseInt(apgar['GRIMANCE']) + parseInt(apgar['ACTIVITY']) + parseInt(apgar['RESPIRATION']);
+                    showCategory("<span style='font-size:27px;font-weight:bold;'>APGAR</span> = " + apgarCheck['APPEARANCE'] + "+" + apgarCheck['PULSE'] +"+"+ apgarCheck['GRIMANCE']
+                        + "+" + apgarCheck['ACTIVITY'] + "+" + apgarCheck['RESPIRATION']);
+                    if (apgarCheck["APPEARANCE"] != "?" && apgarCheck["PULSE"] != "?" && apgarCheck["GRIMANCE"] != "?" && apgarCheck["ACTIVITY"] != "?" && apgarCheck["RESPIRATION"] != "?"){
+                        $('touchscreenInput'+tstCurrentPage).value = apgarScore;
+                        updateApgarAlert(apgarScore);
+                        saveApgar(apgarScore,minute);
+                    }
+                    if (eenum != 1){
+                        updateApgarAlert(apgarScore);
+                    }
+                };
+
+            }else{
+                control.innerHTML = arr_labels[i];
+                control.setAttribute("class", "leftButt");
+            }
+            row.appendChild(control);
+        }
+        scoreWindow.appendChild(row);
+    }
+
+    $('inputFrame' + tstCurrentPage).style.display = "none";
+    $('page' + tstCurrentPage).style.minHeight = "650px";
+    $('page' + tstCurrentPage).appendChild(scoreWindow);
+    
+    if (eenum != 1){
+        $("page" + tstCurrentPage).appendChild(alert);
+    }
+
 }
 
 function updateApgarAlert(apgarScore){
-    var divForInfo = $('divForInfo');
-    if (apgarScore >= 7) {
-        text = "" + parseInt(apgarScore) + "/10 - Normal APGAR</span>";
-        divForInfo.id = "normal_apgar_alert";
+    if (apgarScore >= 7){
+        text = "" + apgarScore.toFixed(0) + "/10 - Normal APGAR</span>";
+        alert.id = "normal_apgar_alert";
     } else if (apgarScore <=3) {
-        text = "" + parseInt(apgarScore) + "/10 - Low APGAR</span>";
-        divForInfo.id = "red_apgar_alert";
+        text = "" + apgarScore.toFixed(0) + "/10 - Low APGAR</span>";
+        alert.id = "red_apgar_alert";
     } else {
-        text = "" + parseInt(apgarScore) + "/10 - Fairly Low </span>";
-        divForInfo.id = "yellow_apgar_alert";
+        text = "" + apgarScore.toFixed(0) + "/10 - Fairly Low </span>";
+        alert.id = "yellow_apgar_alert";
     }
-    divForInfo.innerHTML = text;
+    alert.innerHTML = text;
 }
 
-function buildBabyApgar(minute){
-    apgarScore = 0;
 
-    var frame = document.getElementById('inputFrame' + tstCurrentPage);
-    frame.style.height = "90%";
-
-    var div_for_table = document.createElement('div');
-    frame.appendChild(div_for_table);
-
-    var div_table = document.createElement('table');
-    div_table.style.height = '80%';
-    div_table.style.width = '100%';
-    div_for_table.appendChild(div_table);
-
-    var points_cells = [
-        ['&nbsp;','0 Points','1 Point','2 Points'],
-        ['Color','Pale/blue','Baby pink/blue extremities','Completely pink'],
-        ['Heart Rate','Absent','Slow - Below 100 bpm','Above 100 bpm'],
-        ['Muscle Tone','Flaccid','Some flexion of Extremities','Active Motion'],
-        ['Reflex Irritability','None','Grimance','Vigorous cry'],
-        ['Respiratory Effort','Absent','Slow - irregular','Good crying']
-    ];
-
-    for(var i=0; i < points_cells.length; i++) {
-
-        var div_points_row = document.createElement('tr');
-        div_table.appendChild(div_points_row);
-
-        for(var j=0; j < points_cells[i].length ; j++) {
-         div_points_cell = document.createElement('td');
-            div_points_cell.innerHTML = points_cells[i][j];
-
-            if(i === 0 && j >= 0) {
-                div_points_cell.className = 'apgar_th apgar_text';
-            } else if(i >= 1 && j >= 1) {
-                div_points_cell.className = 'apgar_btn';
-                div_points_cell.style.border = '1px solid';
-                // -- TODO: Not sure why I am writing this. If it works, will refactor it
-                div_points_cell.setAttribute('value', j-1);
-                div_points_cell.setAttribute("i", i);
-                div_points_cell.setAttribute("j", j);
-                // ------------------------------------------------------------------
-                div_points_cell.onclick = function(){
-                    this.className = 'active';
-
-                    var value = this.getAttribute('value');
-                    var i_value = this.getAttribute('i');
-                    var j_value = this.getAttribute('j');
-
-                    $('divForInfo').innerHTML = calculateApgarScore(this.getAttribute('value')); //showApgarScore(this.getAttribute('value'));
-                    showCategory(apgarCategory(value,i_value,j_value));
-                };
-
-            } else {
-                div_points_cell.className = 'apgar_text';
-                div_points_cell.style.border = '1px solid';
-            }
-
-            div_points_row.appendChild(div_points_cell);
-        }
-
-    }
-
-    var div_for_info = document.createElement('div');
-    div_for_info.id = 'divForInfo';
-    div_for_info.innerHTML = showApgarScore(apgarScore);
-    div_for_info.style.borderRadius = '5px';
-    div_for_info.style.height = '20%';
-    frame.appendChild(div_for_info);
-}
