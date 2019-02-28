@@ -1,0 +1,238 @@
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+
+<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/apgar.js" ></script>
+
+<script>
+    var patientID = sessionStorage.getItem("patientID");
+    var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
+    var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+
+</script>
+<style type="text/css">
+    #space { display:inline; font-size:1.2em; }
+    #Unknown {display: none;}
+    #num {display: none;}
+  
+    .n #Unknown{
+      display: block;
+    }
+    #summary {
+      padding:10px;
+      font-size:1.8em;
+    }
+    #char {
+      display: none;
+    }
+    .title {
+      text-decoration:underline;
+      margin-right:10px;
+    }
+  
+    .red_alert {color:black;background:red;border:2px solid gray;}
+    .yellow_alert {color:black;background:yellow;border:2px solid gray;}
+    .normal {color:black;}
+  
+    #red_apgar_alert {
+      background:red;
+    }
+    #yellow_apgar_alert {    
+      background:yellow;    
+    }
+    #normal_apgar_alert, #red_apgar_alert, #yellow_apgar_alert {
+      border-radius: 10px;
+      -moz-user-select: none;
+      height: 110px;
+      color:black;
+      width: 85%;
+      border:2px solid gray;
+      font-size: 30px;
+      text-align: center;
+      margin-left:auto;
+      margin-right:auto;   
+      margin-top: 40px;
+      vertical-align: middle;
+    }
+  
+    #tt_page_summary .inputFrameClass { height: 84%;}
+  
+    #qwerty{ display:none; }
+  
+    .numericKeyboard #char, #slash, #star, #plus, #date, #minus, #comma, #percent {
+      display: none;
+    }
+  
+    #selectWindow{
+      -moz-user-select: none;
+      display: table;
+      width: 85%;
+      height:55%;
+      border:1px solid #999999;
+      align: center;
+      border-spacing: 8px;
+      margin-left:auto;
+      margin-right:auto;
+      border-radius: 10px;
+      background: white;
+      margin-top: 17px;
+    }
+    .butt{
+      font-family: sans-serif;
+      font-size:1.1em;
+      font-weight: bold;
+      -moz-border-radius: 5px;
+      border-radius: 10px;
+      display:table-cell;
+      background: url('/assets/images/btn_blue.png');
+      border:1px solid #999999;
+      border-color:gray;
+      color: white;
+      vertical-align: middle;
+      height: auto;
+      width: auto;
+      max-width: 73px;
+      text-align: center;    
+    }
+    .leftButt, .value{
+      font-size:1.3em;
+      border-radius: 4px;
+      font-weight: bold;
+      background: white;
+      display:table-cell;
+      border:1px solid #999999;
+      height: auto;
+      color: rgb(5, 30, 5);
+      width: auto;
+      vertical-align: middle;
+      text-align: center;
+      max-width: 73px;
+  
+    }
+    .value{
+      height: 40px;
+      font-weight: bold;
+    }
+    .boardRow{
+      display: table-row;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border-spacing: 5px;
+    }
+    #row1{
+      display: table-row;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border-spacing: 5px 5px 5px 5px;
+    }
+    #alertsTable{
+      -moz-user-select: none;
+      display: table;
+      border-radius: 4px;
+      background: gray;
+      border-spacing: 1px;
+      width: 98%;
+      height:auto;
+      border:1px solid #999999;
+      vertical-align: middle;
+      margin-left:auto;
+      margin-top: 12px;
+      margin-right:auto;
+      max-height: 99%;
+      overflow: auto;
+    }
+    .alertsRow, .alertsHeaderRow{
+      display: table-row;
+      height: 65px !important;
+    }
+    .alertsTitle, .alertsHeader, .alertsCell{
+      display: table-cell;
+      border: solid 1px lightgray;
+      font-size: 28px;
+      vertical-align: middle;   
+      text-align: center;
+      background: white;
+    }
+    .alertsHeader, .alertsTitle{
+      font-weight: bold;
+      text-align: center;
+      background: white;
+    }
+ </style> 
+  
+  
+<body id="mateme">
+  <div id="container">
+    <div id="content">
+
+      <form>
+        
+          <input type="text" name="summary" id="apgar_one"
+                 tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'one');"
+                 tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+
+         <input type="text" name="summary" id="apgar_one"
+                tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'five');"
+                tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+
+      </form>
+
+   </div>
+ </div>
+</body>
+<script>
+var apgarFirstMinute;
+var apgarFifthMinute;
+    function saveApgar(apgarScore, minute){
+      if(minute == "one"){
+          apgarFirstMinute = apgarScore;
+      }else{
+          apgarFifthMinute = apgarScore;
+          var nextButton =  document.getElementById('nextButton');
+          nextButton.setAttribute("onmousedown","postApgar();")
+      }
+
+    }
+
+    function postApgar(){
+      var currentTime = moment().format(' HH:mm:ss');
+      var encounter_datetime = moment(sessionStorage.sessionDate).format('YYYY-MM-DD');
+      encounter_datetime += currentTime
+
+        var encounter = {
+            encounter_type_name: 'UPDATE BABY OUTCOME',
+            encounter_type_id:  127,
+            patient_id: sessionStorage.patientID,
+            encounter_datetime: encounter_datetime
+        };
+        submitParameters(encounter, "/encounters", "postApgarObs")
+    }
+
+    function postApgarObs(encounter){
+  
+        if(apgarFirstMinute !== '') {
+          var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+            { concept_id: 9140, value_numeric: apgarFirstMinute }
+                ]
+        };
+ 
+        }
+        if(apgarFifthMinute !== '') {
+            obs.observations.push( { concept_id: 9141, value_numeric: apgarFirstMinute } ); 
+        }
+
+        submitParameters(obs, "/observations", "nextPage")
+    }
+    
+    function nextPage(){
+       // window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
+    }
+</script>

@@ -60,27 +60,6 @@ function fetchMotherDemographics() {
 
 
 function buildBirthReport(){
-    // for(var i = 0 ; i < mother_names.length ; i++){
-    //        var mother_first_name = mother_names[i];
-    //        var mother_second_name = mother_names[i+1];
-    //        var mother_surname =  mother_names[i+2];
-    //    break;
-    // }
-    // console.log(parent_addresses);
-    // for(var i = 0 ; i < mother_addresses.length ; i++){
-    //     var mother_district = mother_addresses[i];
-    //     var mother_ta = mother_addresses[i+1];
-    //     var mother_village =  mother_addresses[i+2]
-    //     break;
-    // }
-    // for(var i = 0 ; i < parent_addresses.length ; i++){
-    //     var parent_district = parent_addresses[i];
-    //     var parent_village =  parent_addresses[i+2]
-    //     break;
-    // }
-    // if(mother_second_name !== ""){
-    //     mother_second_name = "N/A";
-    // }
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
     frame.style.height = "100%";
     frame.style.overflowY = 'scroll';
