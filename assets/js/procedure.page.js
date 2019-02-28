@@ -77,6 +77,42 @@ function showDiagnosisKeyboard(e) {
   document.getElementById('selected-side').innerHTML = e.innerHTML.toLowerCase();
 }
 
+function showReasonProcedureKeyboard(e) {
+  var procedureBox = document.createElement('div');
+  procedureBox.setAttribute('id', 'procedure-box');
+
+  var procedureCover = document.createElement('div');
+  procedureCover.setAttribute('id', 'procedure-cover');
+
+  var procedureContainer = document.createElement('div');
+  procedureContainer.setAttribute('id', 'procedure-container');
+  procedureBox.appendChild(procedureContainer);
+
+  var procedureNavBar = document.createElement('div');
+  procedureNavBar.setAttribute('id', 'procedure-nav-bar');
+  procedureBox.appendChild(procedureNavBar);
+
+  var windowBody = document.getElementsByTagName('body')[0];
+  try {
+      var div1 = document.getElementById('procedure-box');
+      var div2 = document.getElementById('procedure-cover');
+      windowBody.removeChild(div1);
+      windowBody.removeChild(div2);
+  } catch (e) {
+  }
+
+  windowBody.appendChild(procedureBox);
+  windowBody.appendChild(procedureCover);
+  procedureCover.style = 'display: inline;';
+  procedureBox.style = 'display: inline;';
+
+  addNavButtons(procedureNavBar);
+  addControls();
+
+  popipPosition = e;
+  document.getElementById('selected-side').innerHTML = e.innerHTML.toLowerCase();
+}
+
 function addControls() {
   var container = document.getElementById('diagnosis-container');
 
@@ -167,9 +203,9 @@ function setEnteredKey(key) {
 
 function addNavButtons(e) {
   var nextB = document.createElement('button');
-  nextB.innerHTML = '<span>Done</span>';
+  nextB.innerHTML = '<span>Next</span>';
   nextB.setAttribute('class', 'button green navButton nav-diagnosis-btns');
-  nextB.setAttribute('onmousedown', 'selectDiagnosis();');
+  nextB.setAttribute('onmousedown', 'showReasonProcedureKeyboard(this);');
   nextB.setAttribute('id', 'next-button');
   e.appendChild(nextB);
 
@@ -191,7 +227,42 @@ function cancelDiagnosis() {
   } catch (e) {
   }
 }
+function buildReasonProcedure(){
+  var container = document.getElementById('procedure-container');
 
+  var helpText = document.createElement('div');
+  helpText.innerHTML = "<span id='sideeffectTag'>Reason for procedure</span>";
+  helpText.setAttribute('class','helpTextClass');
+  helpText.style = "width: 97%;";
+  container.appendChild(helpText);
+
+
+  var search = document.createElement('div');
+  search.setAttribute('class','inputFrameClass');
+  var searchCSS = "width: 94.5%; height: 300px;";
+  search.style = searchCSS;
+  container.appendChild(search);
+
+  var input2 = document.createElement('input');
+  input2.setAttribute("type","text");
+  input2.setAttribute("id","key-input");
+  input2.setAttribute("class","touchscreenTextInput");
+  input2.setAttribute("onmouseup","checkForChanges();");
+  input2.setAttribute("onkeyup","checkForChanges();");
+  search.appendChild(input2);
+
+  // var search_results = document.createElement('div');
+  // search_results.setAttribute("id","search-results");
+  // search_results.style = "height: 260px; overflow: auto;";
+  // search.appendChild(search_results);
+
+  var keyboard = document.createElement('div');
+  keyboard.setAttribute('class','keyboard');
+  keyboard.style = "bottom: 120px;";
+  container.appendChild(keyboard);
+
+  addKeys(keyboard);
+}
 function getDiagnosis(search_str) {
   var url = apiProtocol+'://'+apiURL+':'+apiPort+'/api/v1/concept_set';
 
@@ -202,7 +273,7 @@ function getDiagnosis(search_str) {
       renderResults(objs);
     }
   };
-  xhttp.open("GET", (url + "?id=7439&name=" + search_str), true);
+  xhttp.open("GET", (url + "?id=7439clear&name=" + search_str), true);
   xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
   xhttp.setRequestHeader('Content-type', "application/json");
   xhttp.send();
