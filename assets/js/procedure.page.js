@@ -106,11 +106,12 @@ function showReasonProcedureKeyboard(e) {
   procedureCover.style = 'display: inline;';
   procedureBox.style = 'display: inline;';
 
-  addNavButtons(procedureNavBar);
+  addNavReasonButtons(procedureNavBar);
   addControls();
 
   popipPosition = e;
   document.getElementById('selected-side').innerHTML = e.innerHTML.toLowerCase();
+  buildReasonProcedure();
 }
 
 function addControls() {
@@ -216,6 +217,22 @@ function addNavButtons(e) {
   cancelB.setAttribute('onmousedown', 'cancelDiagnosis();');
   e.appendChild(cancelB);
 }
+function addNavReasonButtons(e) {
+  var nextB = document.createElement('button');
+  nextB.innerHTML = '<span>Done</span>';
+  nextB.setAttribute('class', 'button green navButton nav-diagnosis-btns');
+  nextB.setAttribute('onmousedown', 'selectDiagnosis();');
+  nextB.setAttribute('id', 'next-button');
+  e.appendChild(nextB);
+
+  var cancelB = document.createElement('button');
+  cancelB.innerHTML = '<span>Back</span>';
+  cancelB.style = 'float: left; left: 5px;';
+  cancelB.setAttribute('class', 'button red navButton nav-diagnosis-btns');
+  cancelB.setAttribute('onmousedown', 'cancelDiagnosis();');
+  e.appendChild(cancelB);
+}
+
 
 function cancelDiagnosis() {
   var windowBody = document.getElementsByTagName('body')[0];
