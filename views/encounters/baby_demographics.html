@@ -62,9 +62,12 @@
         }
        
         postClientParamaters(hash);
+        redirect
+                  
+      }
 
-        window.location.href = "/apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
-        
+      function redirectNext(){
+          window.location.href = "/apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
       }
 
     function changeNextButton(){
@@ -75,7 +78,6 @@
          if (value.length  > 0) {
 
                    createClient();
-                   // nextPage();
          }else {
            showMessage("You must enter a value to continue");
          }
@@ -97,9 +99,8 @@
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 201) {
                 var obj = JSON.parse(this.responseText);
-                // createPatient(obj['person_id']);
 
-                // submitPatienttype(obj['person_id']);
+                  redirectNext();
             }
         };
         xhttp.open("POST", url, true);
