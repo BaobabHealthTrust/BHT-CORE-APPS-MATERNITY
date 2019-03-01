@@ -61,7 +61,7 @@
 
 
         <form>
-            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" tt_onLoad="showCategory2('Physical examination');" />
+            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" min="1" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" tt_onLoad="showCategory2('Physical examination');" />
 
             <select id="lie" name="lie" helpText="Lie" condition ="__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
