@@ -43,7 +43,7 @@
                    allowFreeText="true" tt_onLoad="showCategory2('Patient admissions');"
                    condition = "$('admission_date').value.trim().length > 0;"/>
 
-            <select id="observation" name="observations" helpText="Observation" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');" >
+            <select id="observation" name="observations" helpText="General condition" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');" >
                 <option></option>
                 <option>Healthy</option>
                 <option>Sick Looking</option>
@@ -78,7 +78,6 @@
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
     function validateDate(){
-        console.log("Heeeeeeee");
         var today = new Date();
         document.getElementById('admission_date').setAttribute("min", today);
 
