@@ -1,4 +1,10 @@
 {
+  "ebrs": {
+    "ebrsProtocol": "http",
+    "ebrsHost": "localhost",
+    "ebrsPort": "8000",
+    "ebrsURL": "/person/create"
+  },
   "encounters": {
     "social history": {
       "available": true,
