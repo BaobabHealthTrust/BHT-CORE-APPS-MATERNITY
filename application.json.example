@@ -18,11 +18,11 @@
       "activitiesIcon": "/assets/images/vitals.png",
       "url": "/views/patient/vitals.html"
     },
-    "medical history": {
+    "patient admissions": {
       "available": true,
-      "encountersName": "medical history",
+      "encountersName": "patient admissions",
       "activitiesIcon": "/assets/images/medical_history.png",
-      "url": "/apps/MATERNITY/views/encounters/patient_history.html"
+      "url": "/apps/MATERNITY/views/encounters/admission_details.html"
     },
     "pmtct history": {
       "available": true,
@@ -50,9 +50,9 @@
     },
     "obstetric history": {
       "available": true,
-      "encountersName": "obstetric history",
+      "encountersName": "obstretic history",
       "activitiesIcon": "/assets/images/obstetric_history.png",
-      "url": "/apps/MATERNITY/views/encounters/admission_details.html"
+      "url": "/apps/MATERNITY/views/encounters/patient_history.html"
     },
     "admission notes": {
       "available": true,
@@ -113,8 +113,8 @@
       ["Vaginal Examination","vaginal examination"],
       ["Maternity Examination","maternity examination"],
       ["Obstetric History","obstetric history"],
-      ["Medical History","medical history"],
-      ["Current Delivery","medical history"],
+      ["Patient Admissions","patient admissions"],
+      ["Current Delivery","current delivery "],
       ["Admission Diagnosis","admission diagnosis"]
     ]
     
@@ -162,6 +162,14 @@
       "available": false,
       "activitiesIcon": "/assets/images/folder.png",
       "activitiesDescription": "Print Patient Visit Summary",
+      "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
+    },
+    {
+      "activitiesName": "Register father",
+      "available": false,
+      "activitiesIcon": "/assets/images/edit.png",
+      "url": "/apps/MATERNITY/views/encounters/register_father.html",
+      "activitiesDescription": "Change session date (for retrospective entry)",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     },
     {

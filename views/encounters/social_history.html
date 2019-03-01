@@ -71,12 +71,6 @@
                 <option>Other</option>
             </select>
 
-            <input type="text" name="religion" id="other_religion"
-                   field_type="alpha" helpText="Specify other religion"
-                   key="other_religion" allowFreeText="true" 
-                   tt_onLoad="showCategory2('Social history');"
-                   condition ="__$('religion').value == 'Other'" />
-
             <input type="text" name="given_name"
                    id="given_name" field_type="alpha"
                    key="given_name" helpText="Next of kin first name" tt_onLoad="validateName();showCategory2('Social history');"
