@@ -10,7 +10,7 @@
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
-
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -46,21 +46,21 @@
             <select id="observation" name="observations" helpText="Observation" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');" >
                 <option></option>
                 <option>Healthy</option>
-                <option>Looking not healthy</option>
+                <option>Sick Looking</option>
             </select>
 
-            <select id="condition" name="conditions" helpText="Condition" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();">
+            <select id="condition" name="conditions" helpText="Condition" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');">
                 <option></option>
                 <option>Stable</option>
                 <option>Critical</option>
             </select>
-            <select id="anemic" name="anemic" helpText="Anaemic" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();showCategory2('Patient admissions');" 
+            <select id="anemic" name="anemic" helpText="Anaemic" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();showCategory2('Patient admissions');"
             tt_onUnload="jQuery('#nextButton').show();">
                 <option></option>
                 <option>Yes</option>
                 <option>No</option>
             </select>
-            <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema" tt_onLoad="showCategory2('Patient admissions');"> 
+            <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema" tt_onLoad="showCategory2('Patient admissions');">
                 <option>None</option>
                 <option></option>
                 <option>1+</option>
@@ -151,7 +151,7 @@
             case 'HEALTHY':
                 observationValueAnswer = conceptAnswers[0].healthy;
                 break;
-            case 'ILL LOOKING':
+            case 'SICK LOOKING':
                 observationValueAnswer = conceptAnswers[0].illLooking;
                 break;
             default:
