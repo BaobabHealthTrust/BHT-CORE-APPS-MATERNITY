@@ -3,7 +3,7 @@
     "ebrsProtocol": "http",
     "ebrsHost": "localhost",
     "ebrsPort": "8000",
-    "ebrsURL": "/person/create"
+    "ebrsURL": "/maternity/create_from_maternity"
   },
   "encounters": {
     "social history": {
