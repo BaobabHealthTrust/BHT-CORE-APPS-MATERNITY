@@ -30,14 +30,14 @@
     <div id="content">
 
         <form>
-            <select id="hiv_status_value" name="hiv_status" helpText="PMTCT Status" tt_onLoad="changeNextButtonUnknownHIV();showCategory2('PMTCT');" >
+            <select id="hiv_status_value" name="hiv_status" helpText="HIV Status" tt_onLoad="changeNextButtonUnknownHIV();showCategory2('PMTCT');" >
                 <option></option>
                 <option>Non-Reactive</option>
                 <option>Reactive</option>
                 <option>Unknown</option>
             </select>
 
-            <input type="text" name="pmtct_test_date" id="pmtct_test_date" helpText="PMTCT test date" field_type="date"
+            <input type="text" name="pmtct_test_date" id="pmtct_test_date" helpText="HIV test date" field_type="date"
                    tt_pageStyleClass="date" condition ="$('hiv_status_value').value.toLowerCase() != 'unknown';" tt_onLoad="showCategory2('PMTCT');changeNextButtonNonReactiveHIV();"/>
 
             <select id="pmtct_on_arvs" name="pmtct_on_arvs" helpText="On ARVs"

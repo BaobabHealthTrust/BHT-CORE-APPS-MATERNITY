@@ -31,31 +31,36 @@
 
 
         <form>
-            <select id="head" name="head" tt_onLoad="showCategory2('Clinical examination');" helpText="Head">
+            <select id="head" name="head" tt_onLoad="showCategory2('Clinical examination');" helpText="Head" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
+            >
                 <option></option>
                 <option>Normal</option>
                 <option>Abnormal</option>
                 <option>Not done</option>
             </select>
-            <select id="heart" name="heart" tt_onLoad="showCategory2('Clinical examination');" helpText="Heart Beat">
+            <select id="heart" name="heart" tt_onLoad="showCategory2('Clinical examination');" helpText="Heart Beat"tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
+            tt_onUnload="">
                 <option></option>
                 <option>Normal heart Sound</option>
                 <option>Abnormal heart Sound</option>
                 <option>Not done</option>
             </select>
-            <select id="chest" name="chest" tt_onLoad="showCategory2('Clinical examination');" helpText="Chest">
+            <select id="chest" name="chest" tt_onLoad="showCategory2('Clinical examination');" helpText="Chest" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
+            >
                 <option></option>
                 <option>Clear</option>
                 <option>Normal</option>
                 <option>Not done</option>
             </select>
-            <select id="breast" name="breast" tt_onLoad="showCategory2('Clinical examination');" helpText="Breast">
+            <select id="breast" name="breast" tt_onLoad="showCategory2('Clinical examination');" helpText="Breast" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
+            >
                 <option></option>
                 <option>Normal</option>
                 <option>Lumps</option>
                 <option>Not done</option>
             </select>
-            <select id="abnomen" name="abnomen" tt_onLoad="showCategory2('Clinical examination');" helpText="Abnomen">
+            <select id="abnomen" name="abnomen" tt_onLoad="showCategory2('Clinical examination');" helpText="Abnomen" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
+            tt_onUnload="jQuery('#nextButton').show();">
                 <option></option>
                 <option>Enlarged</option>
                 <option>Not Enlarged</option>

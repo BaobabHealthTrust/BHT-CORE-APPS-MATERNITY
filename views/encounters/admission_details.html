@@ -10,7 +10,7 @@
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
-
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -34,32 +34,33 @@
                    id="admission_date" field_type="date"
                    key="admission_date" helpText="Admission Date"
                    tt_pageStyleClass="date" allowFreeText="true"
-                   tt_onLoad="setDate();"
+                   tt_onLoad="setDate();validateDate(); showCategory2('Patient admissions');" min="Date()"
                    tt_onUnLoad = "$('admission_date').value = $('admission_date').value.trim()" />
 
             <input type="text" name="admission_time"
                    id="admission_time" field_type="advancedTime"
                    key="admission_time" helpText="Admission Time"
-                   allowFreeText="true"
+                   allowFreeText="true" tt_onLoad="showCategory2('Patient admissions');"
                    condition = "$('admission_date').value.trim().length > 0;"/>
 
-            <select id="observation" name="observations" helpText="Observation">
+            <select id="observation" name="observations" helpText="General condition" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');" >
                 <option></option>
                 <option>Healthy</option>
-                <option>Ill looking</option>
+                <option>Sick Looking</option>
             </select>
 
-            <select id="condition" name="conditions" helpText="Condition">
+            <select id="condition" name="conditions" helpText="Condition" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');">
                 <option></option>
                 <option>Stable</option>
                 <option>Critical</option>
             </select>
-            <select id="anemic" name="anemic" helpText="Anaemic">
+            <select id="anemic" name="anemic" helpText="Anaemic" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();showCategory2('Patient admissions');"
+            tt_onUnload="jQuery('#nextButton').show();">
                 <option></option>
                 <option>Yes</option>
                 <option>No</option>
             </select>
-            <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema"> 
+            <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema" tt_onLoad="showCategory2('Patient admissions');">
                 <option>None</option>
                 <option></option>
                 <option>1+</option>
@@ -76,6 +77,11 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
+    function validateDate(){
+        var today = new Date();
+        document.getElementById('admission_date').setAttribute("min", today);
+
+    }
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postObstetricHistory();")
@@ -87,8 +93,8 @@
         encounter_datetime += currentTime;
 
         var encounter = {
-            encounter_type_name: 'OBSTETRIC HISTORY',
-            encounter_type_id:  82,
+            encounter_type_name: 'PATIENT ADMISSIONS',
+            encounter_type_id:  97,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };
@@ -144,7 +150,7 @@
             case 'HEALTHY':
                 observationValueAnswer = conceptAnswers[0].healthy;
                 break;
-            case 'ILL LOOKING':
+            case 'SICK LOOKING':
                 observationValueAnswer = conceptAnswers[0].illLooking;
                 break;
             default:

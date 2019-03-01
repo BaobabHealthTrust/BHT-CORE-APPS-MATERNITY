@@ -162,11 +162,7 @@
                 ["Home Village", parameter.home_village],
                 ["Current District", parameter.current_district],
                 ["Current TA", parameter.current_traditional_authority],
-                ["Current Village", parameter.current_village],
-                ["Landmark", parameter.landmark],
-                ["Cell phone", parameter.cell_phone_number],
-                ["Patient Type", parameter.patient_type],
-                ["Register Guardian", parameter.relationship]
+                ["Current Village", parameter.current_village]
             ];
 
             for (var i = 0; i < attributes.length; i++) {
@@ -785,10 +781,7 @@
 
             <!-- <input type="text" name="p[addresses][city_village_a]" id="p_addresses_city_village_a" tt_onUnLoad="$(&quot;person_addresses_city_village&quot;).value = $(&quot;p_addresses_city_village_a&quot;).value" condition="$(&quot;filter_t_a&quot;).value == &quot;Other&quot;" ajaxURL="/person_addresses/village?search_string=" allowFreeText="true" field_type="alpha" helpText="Specify Location/Village" tt_pageStyleClass="azButton" tt_requireNextClick="true" tt_onLoad="$(&#39;nextButton&#39;).style.display = &#39;block&#39;;" /> -->
 
-
-            <input type="text" name="summary" id="summary"
-                   tt_onLoad="summary();__$('keyboard').style.display = 'none';changeFinishBtn();"
-                   tt_onUnLoad="resetFinishBtn();" optional="true" tt_pageStyleClass="NoControls"/>
+            
 
             <!-- <input type="text" name="person[guardian_cell_phone_number]" id="guardian_cellphone" field_type="number" helpText="Next of Kin Cell Phone Number" tt_onUnload="getInput();" validationRule="^0\d{7}$|Unknown|Not Available|N/A|^0\d{9}$" validationMessage="Not a valid phone number" tt_pageStyleClass="nota NumbersOnlyWithUnknown" /> -->
 
