@@ -58,29 +58,29 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
       <form>
     
-     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="12" field_type="number" tt_onLoad="showCategory2('Medical history');" tt_pageStyleClass="Numeric NumbersOnly" />
+     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="12" field_type="number" tt_onLoad="showCategory2('Obstretic history');" tt_pageStyleClass="Numeric NumbersOnly" />
 
-     <select id="multiple_pregnancy" name="multiple_pregnancy" helpText="Ever had multiple pregnancies" tt_onLoad="showCategory2('Medical history');" condition = "$('gravida').value == 0">   
+     <select id="multiple_pregnancy" name="multiple_pregnancy" helpText="Ever had multiple pregnancies" tt_onLoad="showCategory2('Obstretic history');" condition = "$('gravida').value > 1 ">   
             <option>Yes</option>
             <option>No</option>
       </select>
 
-      <input type="text" name="num_of_deliveries" id="num_of_deliveries" helpText="Number of deliveries" tt_onLoad="showCategory2('Medical history');" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" 
-      condition = "$('gravida').value == 0"/>
+      <input type="text" name="num_of_deliveries" id="num_of_deliveries" helpText="Number of deliveries" tt_onLoad="showCategory2('Obstretic history');" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" 
+      condition = "$('gravida').value > 1"/>
       
-      <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_onLoad="showCategory2('Medical history');" tt_pageStyleClass="Numeric NumbersOnly" 
-      condition = "$('gravida').value == 0"/>
+      <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_onLoad="showCategory2('Obstretic history');" tt_pageStyleClass="Numeric NumbersOnly" 
+      condition = "$('gravida').value > 1"/>
      
-      <select id="delivery_mode" name="delivery_mode" tt_onLoad="showCategory2('Medical history');changeNextBTN();" helpText="Select Delivery Mode" condition = "$('gravida').value == 0"> 
+      <select id="delivery_mode" name="delivery_mode" tt_onLoad="showCategory2('Obstetric history');changeNextBTN();" helpText="Select Delivery Mode" condition = "$('gravida').value > 1"> 
             <option>Spontaneous Delivery</option>
             <option>Caesarean Section</option>
             <option>Breech Delivery</option>
       </select>
 
-      <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="showCategory2('Medical history');changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
+      <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="showCategory2('Obstetric history');changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
       tt_pageStyleClass="date" />
 
-      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" max="5" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="showCategory2('Medical history');submitButton();" />
+      <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" max="5" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="showCategory2('Obstetric history');submitButton();" />
 
      
 
@@ -107,8 +107,8 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
         encounter_datetime += currentTime;
 
         var encounter = {
-          encounter_type_name: 'MEDICAL HISTORY',
-            encounter_type_id:  30,
+          encounter_type_name: 'OBSTETRIC HISTORY',
+            encounter_type_id:  82,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };

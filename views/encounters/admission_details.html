@@ -34,16 +34,16 @@
                    id="admission_date" field_type="date"
                    key="admission_date" helpText="Admission Date"
                    tt_pageStyleClass="date" allowFreeText="true"
-                   tt_onLoad="setDate();validateDate();" min="Date()"
+                   tt_onLoad="setDate();validateDate(); showCategory2('Patient admissions');" min="Date()"
                    tt_onUnLoad = "$('admission_date').value = $('admission_date').value.trim()" />
 
             <input type="text" name="admission_time"
                    id="admission_time" field_type="advancedTime"
                    key="admission_time" helpText="Admission Time"
-                   allowFreeText="true"
+                   allowFreeText="true" tt_onLoad="showCategory2('Patient admissions');"
                    condition = "$('admission_date').value.trim().length > 0;"/>
 
-            <select id="observation" name="observations" helpText="Observation" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" >
+            <select id="observation" name="observations" helpText="Observation" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');" >
                 <option></option>
                 <option>Healthy</option>
                 <option>Looking not healthy</option>
@@ -54,13 +54,13 @@
                 <option>Stable</option>
                 <option>Critical</option>
             </select>
-            <select id="anemic" name="anemic" helpText="Anaemic" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
+            <select id="anemic" name="anemic" helpText="Anaemic" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();showCategory2('Patient admissions');" 
             tt_onUnload="jQuery('#nextButton').show();">
                 <option></option>
                 <option>Yes</option>
                 <option>No</option>
             </select>
-            <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema"> 
+            <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema" tt_onLoad="showCategory2('Patient admissions');"> 
                 <option>None</option>
                 <option></option>
                 <option>1+</option>
