@@ -34,7 +34,7 @@
                    id="admission_date" field_type="date"
                    key="admission_date" helpText="Admission Date"
                    tt_pageStyleClass="date" allowFreeText="true"
-                   tt_onLoad="setDate();validateDate(); showCategory2('Patient admissions');" min="Date()"
+                   tt_onLoad="submitButton(); showCategory2('Patient admissions');"
                    tt_onUnLoad = "$('admission_date').value = $('admission_date').value.trim()" />
 
             <input type="text" name="admission_time"
@@ -77,10 +77,32 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 
-    function validateDate(){
-        var today = new Date();
-        document.getElementById('admission_date').setAttribute("min", today);
+    function submitButton(){
+    var nextButton = document.getElementById('nextButton');
+    nextButton.onmousedown = function(){
+      validateDate();
+      }
+     }
 
+    function validateDate(){
+        var admissionDate = $('touchscreenInput'+tstCurrentPage).value;
+        var admissionDay = admissionDate.split('-')[0];
+        var admissionMonth = admissionDate.split('-')[1];
+        var admissionYear = admissionDate.split('-')[2];
+        var admissionDateValue = admissionYear + '-' + admissionMonth + '-' + admissionDay;
+        var DOB = sessionStorage.patientDOB;
+        var dobDay = DOB.split('/')[0];
+        var dobMonth = DOB.split('/')[1];
+        var dobYear = DOB.split('/')[2];
+        var mon = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(dobMonth) / 3 + 1;
+        var dobValue = dobYear + "-" + 0+ mon + "-" + dobDay;
+        var dateOfBirth = new Date(dobValue);
+        var dateOfAdmission = new Date(admissionDateValue);
+        if (dateOfAdmission < dateOfBirth){
+            showMessage("Date must be greater than birth date");
+        }else{
+            gotoNextPage();
+        }
     }
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
@@ -197,7 +219,7 @@
             observations: [
                 { concept_id: 7826, value_datetime: admissionDateValue }, // admission date
                 { concept_id: 7827, value_text: admissionTime }, // admission time
-                { concept_id: 2592, value_coded: observationValueAnswer }, // observations
+                { concept_id: 3627, value_coded: observationValueAnswer }, // observations
                 { concept_id: 7828, value_coded: conditionValueAnswer }, // condition
                 { concept_id: 3, value_coded: anaemicValueAnswer }, // anaemic
                 { concept_id: 460, value_coded: oedemaValueAnswer } // oedema

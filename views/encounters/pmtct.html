@@ -73,6 +73,35 @@
     var pmtctTestDate = document.getElementById('pmtct_test_date').value;
     var feedingOption = document.getElementById('feeding_option').value;
 
+    function submitButton(){
+    var nextButton = document.getElementById('nextButton');
+    nextButton.onmousedown = function(){
+      validateDate();
+      }
+     }
+
+    function validateDate(){
+        var testDate = $('touchscreenInput'+tstCurrentPage).value;
+        var testDay = admissionDate.split('-')[0];
+        var testMonth = admissionDate.split('-')[1];
+        var testYear = admissionDate.split('-')[2];
+        var testDateValue = testYear + '-' + testMonth + '-' + testDay;
+        var DOB = sessionStorage.patientDOB;
+        var dobDay = DOB.split('/')[0];
+        var dobMonth = DOB.split('/')[1];
+        var dobYear = DOB.split('/')[2];
+        var mon = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(dobMonth) / 3 + 1;
+        var dobValue = dobYear + "-" + 0+ mon + "-" + dobDay;
+        var dateOfBirth = new Date(dobValue);
+        var dateOfTest = new Date(testDateValue);
+        if (dateOfTest < dateOfBirth){
+            showMessage("Date must be greater than birth date");
+        }else{
+            postPMTCTNonReactiveHIV();
+        }
+    }
+
+
     function changeNextButtonUnknownHIV() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postPMTCTunknownHIV();");
@@ -80,7 +109,7 @@
 
     function changeNextButtonNonReactiveHIV() {
         var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postPMTCTNonReactiveHIV();");
+        nextButton.setAttribute("onmousedown","validateDate();");
     }
 
     function changeNextButton() {
@@ -242,7 +271,7 @@
 
             var periodOnArvsDate = periodOnArvsYear + "-" + periodOnArvsMonth + "-" + periodOnArvsDay;
 
-            obs.observations.push({ concept_id: 7833, value_datetime: periodOnArvsDate }); // period on arvs
+            obs.observations.push({ concept_id: 5869, value_datetime: periodOnArvsDate }); // period on arvs
         }
         if(feedingOption !== '') {
             obs.observations.push({ concept_id: 1151, value_coded: feedingOptionAnswer }); // feeding option

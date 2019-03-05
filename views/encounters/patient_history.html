@@ -58,7 +58,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
       <form>
     
-     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="12" field_type="number" tt_onLoad="showCategory2('Obstretic history');" tt_pageStyleClass="Numeric NumbersOnly" />
+     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="12" field_type="number" tt_onLoad="showCategory2('Obstretic history'); jQuery('#zero').hide();" tt_pageStyleClass="Numeric NumbersOnly" />
 
      <select id="multiple_pregnancy" name="multiple_pregnancy" helpText="Ever had multiple pregnancies" tt_onLoad="showCategory2('Obstretic history');" condition = "$('gravida').value > 1 ">   
             <option>Yes</option>

@@ -84,7 +84,8 @@
                    allowFreeText="true"  />
 
             <input type="text" name="kin_number" id="kin_number"
-                   helpText="Next of kin phone number" tt_onLoad="showCategory2('Social history');" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
+                   helpText="Next of kin phone number" validationRule="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$|Unknown|Not Available|N\/A"
+                   validationMessage="Not a valid phone number" tt_onLoad="showCategory2('Social history');" field_type="number" tt_pageStyleClass="NumbersWithUnknownAndDecimal" />
 
             <select id="relative" name="relative" tt_onLoad="changeNextButton();showCategory2('Social history');" helpText="Next of kin relationship type" tt_pageStyleClass="NoKeyboard">
                 <option>Mother</option>
