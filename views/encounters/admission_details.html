@@ -34,7 +34,7 @@
                    id="admission_date" field_type="date"
                    key="admission_date" helpText="Admission Date"
                    tt_pageStyleClass="date" allowFreeText="true"
-                   tt_onLoad="setDate();validateDate(); showCategory2('Patient admissions');" min="Date()"
+                   tt_onLoad="setDate();validateDate(); showCategory2('Patient admissions');"
                    tt_onUnLoad = "$('admission_date').value = $('admission_date').value.trim()" />
 
             <input type="text" name="admission_time"
@@ -197,7 +197,7 @@
             observations: [
                 { concept_id: 7826, value_datetime: admissionDateValue }, // admission date
                 { concept_id: 7827, value_text: admissionTime }, // admission time
-                { concept_id: 2592, value_coded: observationValueAnswer }, // observations
+                { concept_id: 3627, value_coded: observationValueAnswer }, // observations
                 { concept_id: 7828, value_coded: conditionValueAnswer }, // condition
                 { concept_id: 3, value_coded: anaemicValueAnswer }, // anaemic
                 { concept_id: 460, value_coded: oedemaValueAnswer } // oedema
