@@ -3,7 +3,7 @@
     "ebrsProtocol": "http",
     "ebrsHost": "localhost",
     "ebrsPort": "8000",
-    "ebrsURL": "/person/create"
+    "ebrsURL": "/maternity/create_from_maternity"
   },
   "encounters": {
     "social history": {
@@ -168,7 +168,7 @@
       "activitiesName": "Register father",
       "available": false,
       "activitiesIcon": "/assets/images/edit.png",
-      "url": "/apps/MATERNITY/views/encounters/register_father.html",
+      "url": "/views/patient/father_demographics/search.html",
       "activitiesDescription": "Change session date (for retrospective entry)",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     },
