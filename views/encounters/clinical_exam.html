@@ -27,36 +27,49 @@
 
 
         <form>
-            <select id="head" name="head" tt_onLoad="showCategory2('Clinical examination');" helpText="Head" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="" 
+
+            <select id="head" name="head" helpText="Head" tt_onLoad="showCategory2('Clinical examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onUnload="jQuery('#nextButton').show(); "
+            tt_requireNextClick='false'
+            tt_pageStyleClass="NoKeyboard" 
             >
                 <option></option>
                 <option>Normal</option>
                 <option>Abnormal</option>
                 <option>Not done</option>
             </select>
-            <select id="heart" name="heart" tt_onLoad="showCategory2('Clinical examination');" helpText="Heart Beat"tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
-            tt_onUnload="">
+            <select id="heart" name="heart" helpText="Heart Beat" tt_onLoad="showCategory2('Clinical examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onUnload="jQuery('#nextButton').show(); "
+            tt_requireNextClick='false'
+            tt_pageStyleClass="NoKeyboard" >
                 <option></option>
                 <option>Normal heart Sound</option>
                 <option>Abnormal heart Sound</option>
                 <option>Not done</option>
             </select>
-            <select id="chest" name="chest" tt_onLoad="showCategory2('Clinical examination');" helpText="Chest" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
-            >
+            <select id="chest" name="chest" helpText="Chest" tt_onLoad="showCategory2('Clinical examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onUnload="jQuery('#nextButton').show(); "
+            tt_requireNextClick='false'
+            tt_pageStyleClass="NoKeyboard">
                 <option></option>
                 <option>Clear</option>
                 <option>Normal</option>
                 <option>Not done</option>
             </select>
-            <select id="breast" name="breast" tt_onLoad="showCategory2('Clinical examination');" helpText="Breast" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
-            >
+            <select id="breast" name="breast" helpText="Breast" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Clinical examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onUnload="jQuery('#nextButton').show(); "
+            tt_requireNextClick='false'
+            tt_pageStyleClass="NoKeyboard"> 
+            
                 <option></option>
                 <option>Normal</option>
                 <option>Lumps</option>
                 <option>Not done</option>
             </select>
-            <select id="abnomen" name="abnomen" tt_onLoad="showCategory2('Clinical examination');" helpText="Abnomen" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide();" 
-            tt_onUnload="jQuery('#nextButton').show();">
+            <select id="abnomen" name="abnomen"  helpText="Abnomen" tt_onLoad="showCategory2('Clinical examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onUnload="jQuery('#nextButton').show(); "
+            tt_requireNextClick='false'
+            tt_pageStyleClass="NoKeyboard">
                 <option></option>
                 <option>Enlarged</option>
                 <option>Not Enlarged</option>
@@ -79,6 +92,8 @@
     var patientID = sessionStorage.getItem("patientID");
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
+
+
 
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');

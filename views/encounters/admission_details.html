@@ -1,16 +1,14 @@
-
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
-<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
-<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
 <link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/assets/js/httpUtils.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
-<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -18,6 +16,7 @@
     .inputFrameClass {
         width: 96% !important;
     }
+
 
  
 
@@ -38,7 +37,7 @@
             <input type="text" name="admission_time"
                    id="admission_time" field_type="advancedTime"
                    key="admission_time" helpText="Admission Time"
-                   allowFreeText="true" tt_onLoad="showCategory2('Patient admissions');jQuery('#nextButton').show();"
+                   allowFreeText="true" tt_onLoad="showCategory2('Patient admissions'); jQuery('#nextButton').show();"
                    condition = "timeButton();$('admission_date').value.trim().length > 0;"/>
 
             <select id="observation" name="observations" helpText="General condition" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');" >
@@ -58,6 +57,7 @@
                 <option>Yes</option>
                 <option>No</option>
             </select>
+            
             <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema" tt_onLoad="showCategory2('Patient admissions');">
                 <option>None</option>
                 <option></option>
@@ -96,14 +96,11 @@
         var minutes = date.getMinutes();
         var hour = date.getHours();
         var timeValue = hour + ":" + minutes + ":" + seconds;
-        console.log(timeValue);
         if(admissionTime > timeValue){
-            console.log("Ah ah");
-            showMessage("Time greater than current time");
+            showMessage("Time is greater than the current time");
         }else{
            gotoNextPage();
         }
-
     }
 
     function validateDate(){
@@ -248,10 +245,50 @@
             ]
         };
 
-        submitParameters(obs, "/observations", "nextPage")
+        submitParameters(obs, "/observations", "submitState")
     }
+    function postState(state) {
+  var programId = sessionStorage.programID;
+  var patientId = sessionStorage.getItem('patientID')
+  var apiPath = apiProtocol + '://' + apiURL + ':' + apiPort + '/api/v1/programs/' + programId + '/patients/' + patientId + '/states';
+
+  POST (
+    {
+      url: apiPath,
+      async: true,
+      headers: {
+        'Authorization': sessionStorage.getItem('authorization'),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    },
+    state,
+    function (data) {
+      showMessage('The patient\'s state was updated successfully.')
+      setTimeout(function() {
+       document.location = '/views/patient/programs.html'
+      }, 3000)
+    },
+    function (error) {
+      console.error(error)
+      showMessage('Outcome date cannot be less than date enrolled')
+      setTimeout(function() {
+              }, 3000)
+    }
+  )
+}
+
+  function submitState(){
+    var outcome_date = sessionStorage.sessionDate;
+       state = {
+        state: 109,
+        date: outcome_date
+      }
+      postState(state);
+      nextPage();
+   }
 
     function nextPage(){
-        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+      nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
+
 </script>

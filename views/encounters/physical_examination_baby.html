@@ -1,4 +1,5 @@
-
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
@@ -8,6 +9,8 @@
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/physical_exam_baby.js"></script>
+
 <style>
 .inputFrameClass {
   width: 96% !important;
@@ -20,8 +23,7 @@
 
 
          <form>
-     
-          <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onLoad="changeButtonDead();" > 
+       <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onLoad="changeButtonDead();" > 
             <option></option>
             <option>Stable</option>
             <option >Critical</option>
@@ -56,26 +58,9 @@
             <option>Soft</option>
            </select>
 
-           <select id="baby_cord_tied" name="baby_cord_tied" tt_onLoad="changeNextBTN();" helpText="Baby: Cord tied"
-           condition = "__$('baby_condition').value != 'Dead'"> 
-            <option></option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-
-          <select id="baby_cord_clean" name="baby_cord_clean" helpText="Baby: Cord clean"
-          condition = "__$('baby_condition').value != 'Dead'"> 
-            <option></option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-
-          <select id="baby_abnormals" name="baby_abnormals" helpText="Baby: abnormalities"
-          condition = "__$('baby_condition').value != 'Dead'" tt_onLoad="changeButtonNo();"> 
-            <option></option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
+           <input type="text" name="summary"
+           tt_onLoad="__$('keyboard').style.display = 'none';changeNextButton();addYesNo();"
+           tt_pageStyleClass= "NoControls" helpText="Baby examination" optional = "true"/>
 
           <input name="baby_abnormalities" 
           id="baby_abnormalities" field_type="alpha" 
@@ -179,11 +164,10 @@
         var heart = document.getElementById('baby_heart_rate').value;
         var weight = document.getElementById('baby_weight').value;
         var abdomen = document.getElementById('baby_abdomen').value;
-        var cordTied = document.getElementById('baby_cord_tied').value;
-        var cordClean = document.getElementById('baby_cord_clean').value;
-        var abnormals = document.getElementById('baby_abnormals').value;
-
-    var conceptAnswers = [
+        var cordTied = responseTied;
+        var cordClean = responseClean;
+        var abnormals = responseAbnormalities;
+        var conceptAnswers = [
 
         /*Condition*/
         {
