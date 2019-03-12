@@ -7,9 +7,13 @@
 
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+<link rel="stylesheet" href="/apps/MATERNITY/assets/css/current_delivery.css" type="text/css"/>
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap/bootstrap.min.js"></script>
+
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/current_delivery.js"></script>
 <style>
 
     .inputFrameClass {
@@ -30,25 +34,6 @@
     var patientID = sessionStorage.getItem("patientID");
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
-
-    function createBabyFields(numberOfBabies) {
-        var dynamicTable = document.getElementById('has_dynamic_fields');
-
-        for (var i=1; i < numberOfBabies; i++) {
-            createBabyStatusField(i,dynamicTable);
-        }
-    }
-
-    function createBabyStatusField(babyNumber,dynamicTable) {
-        alert(babyNumber);
-        var babyStatusField = document.createElement('select');
-        babyStatusField.id = 'baby_status_'+babyNumber;
-        babyStatusField.name = 'baby_status_'+babyNumber;
-        babyStatusField.setAttribute('helpText','Baby ' + babyNumber + ': Status');
-
-        dynamicTable.appendChild(babyStatusField);
-
-    }
 </script>
 
 <body id="mateme">
@@ -56,42 +41,20 @@
     <div id="content">
         <form id="has_dynamic_fields">
 
-            <input type="text" name="number_babies" id="number_babies" absoluteMin ="1" helpText="Number of Babies" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onUnLoad="createBabyFields($('number_babies').value);"/>
+            <input id="number_babies" optional="true"
+                helpText="Number of children"
+                tt_onLoad="loadSelections();
+                  jQuery('.dcimg').click(); showCategory2('Current delivery');" 
+                name="number_babies"
+              />
 
-            <!-- start baby loop if more than one baby -->
-            <select id="baby_status" name="baby_status" helpText="Baby: Status">
-                <option></option>
-                <option>Cried</option>
-                <option>No cry</option>
-            </select>
+              <input name="baby_details" type="text"
+              id="input_page" helptext="Baby details" 
+              tt_onLoad="jQuery('#clearButton').css('display', 'none');parsedConceptName = ''; 
+              loadInputWindow(); showCategory2('Current delivery'); changeSubmitFunction();"
+              optional="true" />
 
-            <input type="text" name="time_of_delivery"
-                   id="time_of_delivery" field_type="advancedTime"
-                   key="time_of_delivery" helpText="Baby: Time of Delivery"
-                   allowFreeText="true" />
-
-            <input type="text" name="date_of_delivery"
-                   id="date_delivery" field_type="date"
-                   key="date_delivery" helpText="Baby: Date of Delivery"
-                   tt_pageStyleClass="date"
-                   allowFreeText="true"
-                   condition="$(&quot;date_delivery&quot;).value == &quot;&quot;" />
-
-            <select id="baby_gender" name="baby_gender" helpText="Baby: Gender">
-                <option></option>
-                <option>Male</option>
-                <option>Female</option>
-            </select>
-
-            <select id="delivery_mode" name="delivery_mode" helpText="Baby: Delivery Mode">
-                <option></option>
-                <option>Spontaneous Delivery</option>
-                <option>Caesarean Section</option>
-                <option>Breech Delivery</option>
-                <option>Vacuum extraction delivery</option>
-            </select>
-            <!-- end baby loop if more than one baby -->
-
+<!--         
             <select id="place_delivery" name="place_delivery" helpText="Place of delivery">
                 <option></option>
                 <option>Home</option>
@@ -105,7 +68,7 @@
                 <option>Self</option>
                 <option>TBA</option>
                 <option>Other</option>
-            </select>
+            </select> -->
 
         </form>
 
