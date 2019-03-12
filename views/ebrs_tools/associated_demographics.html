@@ -189,9 +189,11 @@
         container.appendChild(table);
 
         if (programName === 'Child Birth Report') {
-            buildBirthReportButtons(td,2,table);
-        } else {
-            fetchPersonDemographics(td,table);
+            buildBirthReportButtons(td, 2, table);
+        } else if (programName === 'Child Demographics') {
+            fetchPersonDemographics(td,table,'baby');
+        } else if (programName === 'Father Demographics') {
+            fetchPersonDemographics(td,table,'father');
         }
 
         // buildNames(td, ['John','Jay','Doe'], table);
