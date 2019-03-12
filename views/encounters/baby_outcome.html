@@ -175,9 +175,7 @@
     }
 
     function postBabyOutcomeObs(encounter) {
-        var numberOfBabies = document.getElementById('number_babies').value;
-        var firstName = document.getElementById('first_name').value;
-        var lastName = document.getElementById('last_name').value;
+
         var deliveryTime = document.getElementById('delivery_time').value;
         var deliveryDate = document.getElementById('delivery_date').value;
         var placeOfDelivery = document.getElementById('delivery_place').value;
@@ -311,7 +309,6 @@
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-                { concept_id: 7430, value_numeric: numberOfBabies }, //saving
                 { concept_id: 7434, value_text: deliveryTime }, //saving
                 { concept_id: 7435, value_datetime: deliveryDateValue },  //saving
                 { concept_id: 8846, value_coded: babyGenderAnswer }, //saving
@@ -320,9 +317,7 @@
                 { concept_id: 1172, value_coded:  babyPresentationAnswer }, 
                 { concept_id: 7801, value_coded:  babyOutcomeAnswer }, //savng
                 { concept_id: 5916, value_numeric:  weight }, //saving
-                { concept_id: 2998, value_numeric:  length }, //saving
-                { concept_id: 5913, value_text: firstName }, 
-                 { concept_id: 5915, value_text: lastName }
+                { concept_id: 2998, value_numeric:  length } //saving
             ]
         };
         if(otherFacility !== '') {

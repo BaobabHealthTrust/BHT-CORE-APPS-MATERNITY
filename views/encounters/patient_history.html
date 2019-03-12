@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
 
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
@@ -8,7 +10,7 @@
 <script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/patient_history.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -16,11 +18,6 @@
 .inputFrameClass {
   width: 96% !important;
 }
-
-#clearButton {
-  display: none;
-}
-
 </style>
 
 <script>
@@ -59,11 +56,11 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       <form>
     
      <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="12" field_type="number" tt_onLoad="showCategory2('Obstretic history'); jQuery('#zero').hide();" tt_pageStyleClass="Numeric NumbersOnly" />
-
-     <select id="multiple_pregnancy" name="multiple_pregnancy" helpText="Ever had multiple pregnancies" tt_onLoad="showCategory2('Obstretic history');" condition = "$('gravida').value > 1 ">   
-            <option>Yes</option>
-            <option>No</option>
-      </select>
+      
+     <input type="text" name="multiple_pregnancy" 
+      id="multiple_pregnancy"
+      tt_onLoad="__$('keyboard').style.display = 'none';addYesNo();"
+      tt_pageStyleClass= "NoControls" helpText="Multiple pregnancies" optional = "true"/>
 
       <input type="text" name="num_of_deliveries" id="num_of_deliveries" helpText="Number of deliveries" tt_onLoad="showCategory2('Obstretic history');" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" 
       condition = "$('gravida').value > 1"/>
@@ -98,7 +95,9 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
   function changeNextButton() {
       var nextButton =  document.getElementById('nextButton');
-      nextButton.setAttribute("onmousedown","postPatientHistory();")
+      nextButton.setAttribute("onmousedown","postPatientHistory();");
+      submitTreatmentEncounter();
+
   }
 
   function postPatientHistory() {
@@ -119,7 +118,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   function postPatientHistoryObs(encounter) {
 
       var gravida = document.getElementById('gravida').value;
-      var multiple_pregnancy = document.getElementById('multiple_pregnancy').value;
+      var multiple_pregnancy = yesNo_Hash['OBSTETRIC HISTORY']['Ever had multiple pregnancies'];
       var num_of_deliveries = document.getElementById('num_of_deliveries').value;
       var num_of_abortions = document.getElementById('num_of_abortions').value;
       var delivery_mode = document.getElementById('delivery_mode').value;
@@ -191,6 +190,6 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
   }
 
   function nextPage(){
-     nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    nextEncounter(sessionStorage.patientID, sessionStorage.programID);
   }
 </script>

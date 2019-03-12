@@ -28,7 +28,7 @@
     <div id="content">
         <form>
             <input type="text" name="summary" id="birth_report"
-                   tt_onLoad="__$('keyboard').style.display = 'none';changeClearButton();fetchMotherDemographics();"
+                   tt_onLoad="__$('keyboard').style.display = 'none';changeClearButton(); changeNextButton(); fetchMotherDemographics();"
                    tt_pageStyleClass= "NoControls" helpText="" class="white" optional="true"/>
         </form>
     </div>
@@ -44,6 +44,15 @@
         var sendToEBRS = $('clearButton');
         sendToEBRS.innerHTML = '<span>Send to eBRS</span>';
         sendToEBRS.setAttribute('onmousedown','sendToEBRS();');
+    }
+
+    function changeNextButton(){
+        var nextButton =  document.getElementById('nextButton');
+        nextButton.setAttribute("onmousedown","finish();")
+    }
+
+    function finish(){
+        window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 
     function sendToEBRS() {

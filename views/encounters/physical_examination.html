@@ -11,6 +11,7 @@
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/physical_exam.js"></script>
 
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
@@ -19,11 +20,6 @@
     .inputFrameClass {
         width: 96% !important;
     }
-
-    #clearButton {
-        display: none;
-    }
-
 </style>
 
 
@@ -128,11 +124,12 @@
                 <option>Right Acromion Dorsal Posterio</option>
             </select>
 
-            <select id="contractions" name="contractions" helpText="Contractions" condition = "__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');">
-                <option></option>
-                <option>Yes</option>
-                <option>No</option>
-            </select>
+
+            <input type="text" name="contractions" 
+            id="contractions"
+            tt_onLoad="__$('keyboard').style.display = 'none';addYesNo();"
+            tt_pageStyleClass= "NoControls" helpText="Contractions" optional = "true"/>
+      
 
             <select id="contraction_intensity" name="contraction_intensity" helpText="Contraction Intensity" condition ="__$('contractions').value.trim().toUpperCase() != 'NO' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');" >
                 <option></option>
@@ -189,7 +186,8 @@
 <script>
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
-        nextButton.setAttribute("onmousedown","postPhysicalExam();")
+        nextButton.setAttribute("onmousedown","postPhysicalExam();");
+        submitTreatmentEncounter();
     }
 
     function postPhysicalExam() {
@@ -218,14 +216,14 @@
         var breech = document.getElementById('breech').value;
         var face = document.getElementById('face').value;
         var shoulder = document.getElementById('shoulder').value;
-        var contractions = document.getElementById('contractions').value;
+        var contractions = yesNo_Hash['PHYSICAL EXAMINATION']['Contractions'];
         var contractions_intensity = document.getElementById('contraction_intensity').value;
         var station = document.getElementById('station').value;
         var moulding = document.getElementById('moulding').value;
         var membranes = document.getElementById('membranes').value;
         var descent = document.getElementById('descent').value;
         var contractions_level =  document.getElementById('contractions_level').value;
-
+        console.log("Contractions is "+ contractions);
         var conceptAnswers = [
             /*Lie*/
             {

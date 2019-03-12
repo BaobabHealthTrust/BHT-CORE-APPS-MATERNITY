@@ -16,10 +16,6 @@
         width: 96% !important;
     }
 
-    #clearButton {
-        display: none;
-    }
-
     .dateselector{
         min-height: 0px;
     }
@@ -138,14 +134,16 @@
 
     function postCurrentDeliveryObs(encounter) {
 
-        var numberOfBabies = document.getElementById('number_babies').value;
-        var babyStatus = document.getElementById('baby_status').value;
-        var deliveryTime = document.getElementById('time_of_delivery').value;
-        var deliveryDate = document.getElementById('date_delivery').value;
-        var gender = document.getElementById('baby_gender').value;
-        var deliveryMode = document.getElementById('delivery_mode').value;
-        var placeOfDelivery = document.getElementById('place_delivery').value;
-        var birthAttendedBy = document.getElementById('birth_attended_by').value;
+        var number_babies = document.getElementById('number_babies');
+        var babyStatus = document.getElementById('baby_status');
+        var deliveryTime = document.getElementById('time_delivery');
+        var deliveryDate = document.getElementById('date_delivery');
+        var gender = document.getElementById('baby_gender');
+        var deliveryMode = document.getElementById('baby')
+
+        var placeOfDelivery = document.getElementById('place_delivery');
+        var birthAttendedBy = document.getElementById('birth_attended_by');
+
 
         var deliveryDay = deliveryDate.split('-')[0];
         var deliveryMonth = deliveryDate.split('-')[1];

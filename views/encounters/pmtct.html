@@ -18,11 +18,6 @@
     .inputFrameClass {
         width: 96% !important;
     }
-
-    #clearButton {
-        display: none;
-    }
-
 </style>
 
 <body id="mateme">
@@ -82,9 +77,9 @@
 
     function validateDate(){
         var testDate = $('touchscreenInput'+tstCurrentPage).value;
-        var testDay = admissionDate.split('-')[0];
-        var testMonth = admissionDate.split('-')[1];
-        var testYear = admissionDate.split('-')[2];
+        var testDay = testDate.split('-')[0];
+        var testMonth = testDate.split('-')[1];
+        var testYear = testDate.split('-')[2];
         var testDateValue = testYear + '-' + testMonth + '-' + testDay;
         var DOB = sessionStorage.patientDOB;
         var dobDay = DOB.split('/')[0];
@@ -96,6 +91,10 @@
         var dateOfTest = new Date(testDateValue);
         if (dateOfTest < dateOfBirth){
             showMessage("Date must be greater than birth date");
+        }
+        
+        if(testYear < 1985){
+            showMessage("Year not valid");
         }else{
             postPMTCTNonReactiveHIV();
         }

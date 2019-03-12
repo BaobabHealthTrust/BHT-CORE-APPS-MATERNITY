@@ -1,23 +1,23 @@
 
-<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+<!--script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/standard.js" defer="true"></script-->
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
+<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
 <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
 <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
-<script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+<script type="text/javascript" src="/assets/js/moment.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
-<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+
 
 <style>
 
 .inputFrameClass {
   width: 96% !important;
-}
-
-#clearButton {
-  display: none;
 }
 
 </style>
@@ -28,13 +28,21 @@
 
 
          <form>
-            <select id="blood_loss" name="blood_loss" tt_onLoad="changeNextBTN();" helpText="Blood Loss"> 
+            <select id="blood_loss" name="blood_loss" helpText="Blood Loss"
+            tt_onLoad="showCategory2('Vaginal examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onUnload="jQuery('#nextButton').show(); "
+            tt_requireNextClick='false'
+            tt_pageStyleClass="NoKeyboard"> 
             <option>Active bleeding</option>
             <option>No active bleeding</option>
             <option>Lochia</option>
           </select>
 
-           <select id="tear" name="tear" tt_onLoad="changeNextBTN();" helpText="Tear"> 
+           <select id="tear" name="tear"  helpText="Tear"
+           tt_onLoad="showCategory2('Vaginal examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onUnload="jQuery('#nextButton').show(); "
+            tt_requireNextClick='false'
+            tt_pageStyleClass="NoKeyboard"> 
             <option>Yes</option>
             <option>No</option>
           </select>
