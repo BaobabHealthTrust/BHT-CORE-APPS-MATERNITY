@@ -88,6 +88,15 @@
                 xhttp.open("POST", ebrsPath, true);
                 xhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
 
+                /**
+                 * mandatory parameters
+                 * Child Details
+                 * -------------
+                 * first_name,surname,dob,gender
+                 * Mother Details
+                 * --------------
+                 * first_name,maiden_surname,
+                 * */
                 var parameters = {
                     "person": {
                         "place_of_birth": "Bwaila Hospital",

@@ -60,14 +60,9 @@
           given_name: null, family_name: null,
           gender: null
         }
-       
-        postClientParamaters(hash);
-        redirect
-                  
-      }
 
-      function redirectNext(){
-          window.location.href = "/apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
+        postClientParamaters(hash);
+                  
       }
 
     function changeNextButton(){
@@ -93,14 +88,14 @@
             parametersPassed.birthdate_estimated = 0;
         }
         var parametersPassed = JSON.stringify(parametersPassed);
-        showStatus();
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 201) {
                 var obj = JSON.parse(this.responseText);
-
-                  redirectNext();
+                // relationship_type_id for child is 3
+                // a_is_to_b: parent, b_is_to_a: child
+                assignRelationShip(3,obj.person_id);
             }
         };
         xhttp.open("POST", url, true);
@@ -110,11 +105,35 @@
 
     }
 
+    function assignRelationShip(relationship_type_id,child_id) {
+        var http = new XMLHttpRequest();
+        var url = apiProtocol + '://' + apiURL + ':' + apiPort + '/api/v1/people/' + patientID+ '/relationships/';
+        var params = JSON.stringify({
+            relationship_type_id: relationship_type_id,
+            relation_id: child_id
+        });
+        http.open('POST', url, true);
+        http.setRequestHeader('Content-type', 'application/json');
+        http.onreadystatechange = function () {
+            if (http.readyState == 4) {
+                if (http.status == 201) {
+                    var v = JSON.parse(http.responseText);
+                    window.location.href = "/apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
+                } else if (http.status == 409) {
+
+                } else {
+                }
+            }
+        }
+        http.setRequestHeader('Authorization', sessionStorage.getItem('authorization'));
+        http.send(params);
+    }
+
     function nextPage(){
         window.location.href = "../../apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
     }
 
-  
+
   </script>
   <script>
     var patientID = sessionStorage.getItem("patientID");

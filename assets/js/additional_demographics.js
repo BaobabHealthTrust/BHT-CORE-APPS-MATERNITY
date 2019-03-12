@@ -312,19 +312,50 @@ function navigateToBirthReport(babyID) {
     window.location = '/apps/MATERNITY/views/reports/birth_report.html?baby_id=' + babyID;
 }
 
-function fetchPersonDemographics(td,table) {
-    var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
+function fetchPersonDemographics(td,table,demographicsType) {
+    // var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
+    var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/people/" + sessionStorage.patientID + '/relationships';
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
             var demographics = JSON.parse(this.responseText);
-            var names = demographics.person.names[0];
-            var addresses = demographics.person.addresses[0];
+            var relationship = demographics[0].relationship;
+            var related_person = demographics[0].person_b;
+
+            getChildDetails(related_person,td,table);
+            // var names = demographics.person.names[0];
+            // var addresses = demographics.person.addresses[0];
+            //
+            // buildNames(td, [names.given_name,names.middle_name,names.family_name], table);
+            // buildHomeAddresses(td, [addresses.address2,addresses.county_district,addresses.neighborhood_cell], table);
+            // buildCurrentAddresses(td, [addresses.state_province,addresses.township_division,addresses.city_village], table);
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+    xhttp.setRequestHeader('Content-type', "application/json");
+    xhttp.send();
+}
+
+function getChildDetails(related_person,td,table) {
+    var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/people/" + related_person;
+
+    console.log(url);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+            var demographics = JSON.parse(this.responseText);
+
+            console.log(demographics.names[0]);
+            var names = demographics.names[0];
+            // var addresses = demographics.person.addresses[0];
 
             buildNames(td, [names.given_name,names.middle_name,names.family_name], table);
-            buildHomeAddresses(td, [addresses.address2,addresses.county_district,addresses.neighborhood_cell], table);
-            buildCurrentAddresses(td, [addresses.state_province,addresses.township_division,addresses.city_village], table);
+            // buildHomeAddresses(td, [addresses.address2,addresses.county_district,addresses.neighborhood_cell], table);
+            // buildCurrentAddresses(td, [addresses.state_province,addresses.township_division,addresses.city_village], table);
+            buildHomeAddresses(td, ['na','na','na'], table);
+            buildCurrentAddresses(td, ['na','na','na'], table);
         }
     };
     xhttp.open("GET", url, true);
