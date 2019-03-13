@@ -33,7 +33,7 @@ var parity;
 var parsedConceptName;
       
 var x = [];
-
+var num_of_babies = 0;
 
 
 var observations = [];
@@ -97,7 +97,6 @@ var counts = {};
 var gravida_value = "";
       
 function changeSubmitFunction(){
-  console.log("Daaaaa");
   var nextButton = document.getElementById('nextButton');
   
   nextButton.setAttribute('onmousedown', 'submitCurrentDeliveryEncounter()');
@@ -105,7 +104,6 @@ function changeSubmitFunction(){
 }
 
 function submitCurrentDeliveryEncounter(){
-  console.log("Submit current deliveyr");   
   var currentTime = moment().format(' HH:mm:ss');
         
   var encounter_datetime = moment(sessionDate).format('YYYY-MM-DD'); 
@@ -113,8 +111,8 @@ function submitCurrentDeliveryEncounter(){
   encounter_datetime += currentTime;
 
  var encounter = {
-            encounter_type_name: 'CURRENT DELIVERY',
-            encounter_type_id:  115,
+            encounter_type_name: 'BABY DELIVERY',
+            encounter_type_id:  90,
             patient_id: sessionStorage.patientID,
             encounter_datetime: encounter_datetime
         };
@@ -130,13 +128,12 @@ function postObstetricObs(encounter){
   var obs = {
       encounter_id: encounter.encounter_id,
       observations: [
-          {concept_id: 1755, value_numeric: parseInt(gravida_value)}
+         {concept_id: 7430, value_numeric: num_of_babies}
         ]
       };
       
   try{
     
-    if ($('para').value !== ""){
       
       obs.observations.push(
            // {concept_id: 1053, value_numeric: parseInt($('para').value)}
@@ -201,8 +198,64 @@ function postObstetricObs(encounter){
 
       }
         
-    }
+    
+      var placeOfDelivery = document.getElementById('place_delivery').value;
+      var birthAttendedBy = document.getElementById('birth_attended_by').value;
+
+      var conceptAnswers = [
+          
+          // place of delivery
+          {
+              "home_tba": 8850,
+              "transit": 8848,
+              "other": 6408
+          },
+          // birth attended by
+          {
+              "self": 9726
+          }
+      ];
+
+      var placeOfDeliveryAnswer;
+      var birthAttendedByAnswer;
+
+      switch(placeOfDelivery.toUpperCase()) {
+          case 'HOME':
+              placeOfDeliveryAnswer = conceptAnswers[0].home_tba;
+              break;
+          case 'TRANSIT':
+              placeOfDeliveryAnswer = conceptAnswers[0].transit;
+              break;
+          case 'TBA':
+              placeOfDeliveryAnswer = conceptAnswers[0].home_tba;
+              break;
+          case 'OTHER':
+              placeOfDeliveryAnswer = conceptAnswers[0].other;
+          default:
+              break;
+      }
+
+      switch(birthAttendedBy.toUpperCase()) {
+          case 'SELF':
+              birthAttendedByAnswer = conceptAnswers[1].self;
+              break;
+          case 'TBA':
+              birthAttendedByAnswer = conceptAnswers[1].self;
+              break;
+          case 'OTHER':
+              birthAttendedByAnswer = conceptAnswers[1].other;
+      }  
+      
+      if (placeOfDelivery !== "") {
         
+        obs.observations.push({concept_id: 8397, value_coded: placeOfDeliveryAnswer});
+
+      }
+      if (birthAttendedByAnswer !== "") {
+        
+        obs.observations.push({concept_id: 8396, value_coded: birthAttendedByAnswer});
+
+      }
 
     
     if (observations.length > 0){
@@ -223,15 +276,14 @@ function postObstetricObs(encounter){
     console.log(e);
         
   }
-  
-  submitParameters(obs, "/observations", "nextPage");
 
+ submitParameters(obs, "/observations", "nextPage");
+  nextPage();
 }
 
 function nextPage(){
-        
-  nextEncounter(sessionStorage.patientID, sessionStorage.programID);
-      
+  window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
+
 }
 
 function increment(pos) {
@@ -477,7 +529,6 @@ function loadSelections() {
       row.appendChild(cell2);
       
       if (counts[p] != undefined && parseInt(counts[p]) > 1) {
-              
         $("inc" + p).style.background = "url('/apps/ANC/assets/images/down_arrow.png')";
               
         $("inc" + p).style.backgroundRepeat = "no-repeat";
@@ -535,7 +586,6 @@ function loadSelections() {
     updateInput(1, false);
         
   
-      
 }
 function updateDeliveries() {
         
@@ -909,7 +959,7 @@ function loadInputWindow() {
     }
     
     function populate(id, type) {
-
+     
       var table = __$("details");
 
       jQ(table).fadeOut(2);
@@ -927,7 +977,6 @@ function loadInputWindow() {
           $[id][n] = {}
 
         for (var i = 0; i < fields.length; i++) {
-
           if ($[id]["count"] > 1 && i == 0) {
 
             var rowd = document.createElement("div");
@@ -950,7 +999,8 @@ function loadInputWindow() {
                         " baby" + "</span>";
                       
             d.setAttribute("class", "demarcation-td");
-                      
+            num_of_babies++;
+     
             rowd.appendChild(d);
 
             var dd = document.createElement("div");
@@ -1090,6 +1140,7 @@ function loadInputWindow() {
       __$("hheader").style.width = width;
 
       __$("header").style.width = width;
+
 
     }
   
