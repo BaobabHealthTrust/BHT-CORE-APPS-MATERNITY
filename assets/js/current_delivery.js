@@ -294,14 +294,14 @@ function increment(pos) {
         
   } else {
     
-    __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.background = "url('/apps/ANC/assets/images/up_arrow_gray.png')";
+    __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.background = "url('/apps/MATERNITY/assets/images/up_arrow_gray.png')";
           
     __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.backgroundRepeat = "no-repeat";
         
   }
   
   if (i + 1 == 13) {
-    __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.background = "url('/apps/ANC/assets/images/up_arrow_gray.png')";
+    __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.background = "url('/apps/MATERNITY/assets/images/up_arrow_gray.png')";
           
     __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.backgroundRepeat = "no-repeat";
         
@@ -309,7 +309,7 @@ function increment(pos) {
   
   if (i + 1 > 1) {
           
-    __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.background = "url('/apps/ANC/assets/images/down_arrow.png')";
+    __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.background = "url('/apps/MATERNITY/assets/images/down_arrow.png')";
           
     __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.backgroundRepeat = "no-repeat";
         
@@ -329,7 +329,7 @@ function decrement(pos) {
         
   } else {
     
-    __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.background = "url('/apps/ANC/assets/images/down_arrow_gray.png')";
+    __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.background = "url('/apps/MATERNITY/assets/images/down_arrow_gray.png')";
           
     __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.backgroundRepeat = "no-repeat";
         
@@ -337,7 +337,7 @@ function decrement(pos) {
   
   if (i - 1 == 1) {
 
-    __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.background = "url('/apps/ANC/assets/images/down_arrow_gray.png')";
+    __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.background = "url('/apps/MATERNITY/assets/images/down_arrow_gray.png')";
           
     __$("input_" + pos).parentNode.parentNode.children[0].childNodes[0].style.backgroundRepeat = "no-repeat";
         
@@ -345,7 +345,7 @@ function decrement(pos) {
   
   if (i - 1 < 13) {
           
-    __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.background = "url('/apps/ANC/assets/images/up_arrow.png')";
+    __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.background = "url('/apps/MATERNITY/assets/images/up_arrow.png')";
           
     __$("input_" + pos).parentNode.parentNode.children[2].childNodes[1].style.backgroundRepeat = "no-repeat";
         
@@ -357,13 +357,13 @@ function checkSelection(pos) {
   
   if (__$("img_" + pos).src.match(/unticked/)) {
 
-    __$("img_" + pos).src = "/apps/ANC/assets/images/ticked.jpg";
+    __$("img_" + pos).src = "/apps/MATERNITY/assets/images/ticked.jpg";
           
     updateInput(pos, true);
         
   } else {
     
-    __$("img_" + pos).src = "/apps/ANC/assets/images/unticked.jpg";
+    __$("img_" + pos).src = "/apps/MATERNITY/assets/images/unticked.jpg";
           
     updateInput(pos, false);
         
@@ -525,13 +525,13 @@ function loadSelections() {
       row.appendChild(cell2);
       
       if (counts[p] != undefined && parseInt(counts[p]) > 1) {
-        $("inc" + p).style.background = "url('/apps/ANC/assets/images/down_arrow.png')";
+        $("inc" + p).style.background = "url('/apps/MATERNITY/assets/images/down_arrow.png')";
               
         $("inc" + p).style.backgroundRepeat = "no-repeat";
             
       } else {
               
-        $("inc" + p).style.background = "url('/apps/ANC/assets/images/down_arrow_gray.png')";
+        $("inc" + p).style.background = "url('/apps/MATERNITY/assets/images/down_arrow_gray.png')";
               
         $("inc" + p).style.backgroundRepeat = "no-repeat";
             
@@ -539,13 +539,13 @@ function loadSelections() {
 
       if (counts[p] != undefined && parseInt(counts[p]) == 13) {
               
-        $("dec" + p).style.background = "url('/apps/ANC/assets/images/up_arrow_gray.png')";
+        $("dec" + p).style.background = "url('/apps/MATERNITY/assets/images/up_arrow_gray.png')";
               
         $("dec" + p).style.backgroundRepeat = "no-repeat";
            
       } else {
               
-        $("dec" + p).style.background = "url('/apps/ANC/assets/images/up_arrow.png')";
+        $("dec" + p).style.background = "url('/apps/MATERNITY/assets/images/up_arrow.png')";
               
         $("dec" + p).style.backgroundRepeat = "no-repeat";
             
@@ -559,7 +559,7 @@ function loadSelections() {
             
       cell3.setAttribute("p", p);
             
-      cell3.innerHTML = '<img class = "dcimg" id = "img_' + p + '" onclick = "checkSelection(' + p + ')" src="/apps/ANC/assets/images/unticked.jpg" height="45" width="45"> ';
+      cell3.innerHTML = '<img class = "dcimg" id = "img_' + p + '" onclick = "checkSelection(' + p + ')" src="/apps/MATERNITY/assets/images/unticked.jpg" height="45" width="45"> ';
             
       row.appendChild(cell3);
 
