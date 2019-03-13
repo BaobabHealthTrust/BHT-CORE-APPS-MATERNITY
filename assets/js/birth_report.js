@@ -87,7 +87,7 @@ function fetchRelationDetails(relationship,motherID) {
 
 function buildBirthReport(){
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
-    frame.style.height = "100%";
+    frame.style.height = "90%";
     frame.style.overflowY = 'scroll';
     frame.style.backgroundColor ="#fff";
 

@@ -75,6 +75,7 @@ function showDiagnosisKeyboard(e) {
 
   popipPosition = e;
   document.getElementById('selected-side').innerHTML = e.innerHTML.toLowerCase();
+  getDiagnosis('');
 }
 
 function addControls() {
