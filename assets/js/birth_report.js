@@ -15,6 +15,7 @@ var child_second_name;
 var child_gender;
 var child_dob;
 var parent_district;
+var parent_ta;
 var parent_village;
 function fetchMotherDemographics() {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
@@ -42,6 +43,7 @@ function fetchMotherDemographics() {
             }
             for(var i = 0 ; i < parent_addresses.length ; i++){
                 parent_district = parent_addresses[i];
+                parent_ta = parent_addresses[i+1];
                 parent_village =  parent_addresses[i+2]
                 break;
             }
@@ -143,6 +145,136 @@ function buildBirthReport(){
     div_for_table.appendChild(div_table);
 
 }
+
+function sendToEBRS() {
+
+    var ebrsHost;
+    var ebrsPort;
+    var ebrsProtocol;
+    var ebrsURL;
+    var ebrsPath;
+
+    var ebrsConfig = '/apps/MATERNITY/application.json';
+
+    jQuery.getJSON(ebrsConfig)
+        .done((configurations) => {
+            var ebrs = configurations.ebrs;
+            ebrsHost = ebrs.ebrsHost;
+            ebrsPort = ebrs.ebrsPort;
+            ebrsProtocol = ebrs.ebrsProtocol;
+            ebrsURL = ebrs.ebrsURL;
+            ebrsPath = ebrsProtocol + '://' + ebrsHost + ':' + ebrsPort + ebrsURL;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+                    showMessage('Report successfully sent. Please Wait...');
+                    setTimeout(window.location = '/views/patient_dashboard.html?patient_id=' + patientID,5000);
+                } else if (this.status == 400) {
+                    showMessage('Report not sent. Error: Bad request.')
+                } else if (this.status == 500) {
+                    showMessage('Report sent without Patient ID')
+                }
+            };
+            xhttp.open("POST", ebrsPath, true);
+            xhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+
+            /**
+             * mandatory parameters
+             * Child Details
+             * -------------
+             * first_name,surname,dob,gender
+             *
+             * Mother Details
+             * --------------
+             * first_name,maiden_surname,
+             * */
+            var parameters = {
+                "person": {
+                    "place_of_birth": "Bwaila Hospital",
+                    "hospital_of_birth": "Bwaila Hospital",
+                    "birth_district": "Lilongwe",
+                    "relationship": "normal",
+                    "duplicate": "",
+                    "is_exact_duplicate": "",
+                    "first_name": child_first_name,
+                    "last_name": child_second_name,
+                    "birthdate": "2019-02-28",
+                    "gender": child_gender,
+                    "birth_weight": "3.666",
+                    "type_of_birth": "Single",
+                    "parents_married_to_each_other": "No",
+                    "court_order_attached": "Yes",
+                    "mother": {
+                        "first_name": mother_first_name,
+                        "last_name": mother_surname,
+                        "maiden_name": "",
+                        "birthdate": "2002-02-28",
+                        "citizenship": "Malawian",
+                        "residential_country": "Malawi",
+                        "home_district": mother_district,
+                        "home_ta": mother_ta,
+                        "home_village": mother_village,
+                        "current_district": parent_district,
+                        "current_ta": parent_ta,
+                        "current_village": parent_village
+                    },
+                    "mode_of_delivery": "Vaccum Extraction",
+                    "level_of_education": "Primary",
+                    "father": {
+                        "first_name": father_first_name,
+                        "last_name": father_second_name,
+                        "birthdate": "1999-02-28",
+                        "citizenship": "Malawian",
+                        "residential_country": "Malawi",
+                        "home_district": father_district,
+                        "home_ta": father_ta,
+                        "home_village": father_village,
+                        "current_district": "Blantyre",
+                        "current_ta": "Kunthembwe",
+                        "current_village": "Buluzi"
+                    },
+                    "informant": {
+                        "first_name": mother_first_name,
+                        "last_name": mother_surname,
+                        "birthdate": "2002-02-28",
+                        "citizenship": "Malawian",
+                        "residential_country": "Malawi",
+                        "other_informant_relationship_to_person": "",
+                        "home_district": mother_district,
+                        "home_ta": mother_ta,
+                        "home_village": mother_village,
+                        "current_district": parent_district,
+                        "current_ta": parent_ta,
+                        "current_village": parent_village,
+                        "phone_number": "Unknown"
+                    },
+                    "form_signed": "Yes"
+                },
+                "mother_barcode": "",
+                "gestation_at_birth": "36",
+                "number_of_prenatal_visits": "3",
+                "month_prenatal_care_started": "3",
+                "number_of_children_born_alive_inclusive": "3",
+                "number_of_children_born_still_alive": "3",
+                "father_barcode": "",
+                "informant_same_as_mother": "Yes",
+                "date_reported": "2019-02-28",
+                "copy_mother_name": "No",
+                "controller": "person",
+                "action": "create"
+            };
+
+            var json = JSON.stringify(parameters);
+            xhttp.send(json);
+        })
+        .fail((error) => {
+            console.error(error)
+            showMessage('There was an error sending data to eBRS.')
+        })
+
+}
+
 function fetchPersonDemographics() {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
 
