@@ -35,7 +35,15 @@
     var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
     var tt_cancel_destination = "/views/patient_dashboard.html?patient_id=" + patientID;
 </script>
+<style>
 
+.time_btn{
+  width:100px;
+}
+.time_input{
+  width:100px;
+}
+</style>
 <body id="mateme">
 <div id="container">
     <div id="content">
@@ -167,24 +175,21 @@ function decrementYear(){
 
 function incrementMonth(){
   var value = $("dateselector_month").value;
-  for(var i =0; i < dob_months.length; i++){
-    if(value == dob_months[i]){
-      console.log("Month is "+dob_months[i]);
-      __$("dateselector_month").value = dob_months[i+1];
-      break;
-        }
-  }
+  var value = $("dateselector_month").value;
+  var value_index = dob_months.indexOf(value);
+  __$("dateselector_month").value = dob_months[(value_index+1) % dob_months.length];
 }
 
 function decrementMonth(){
   var value = $("dateselector_month").value;
-  for(var i =0; i < dob_months.length; i++){
-    if(value == dob_months[i]){
-      console.log("Month is "+dob_months[i]);
-      __$("dateselector_month").value = dob_months[i-1];
-      break;
-        }
+  var value_index = dob_months.indexOf(value);
+  if ((value_index-1) < 0){
+    __$("dateselector_month").value = dob_months[(dob_months.length-1) % dob_months.length];
+  }else{
+    __$("dateselector_month").value = dob_months[(value_index-1) % dob_months.length];
   }
+  
+
 }
   
 </script>

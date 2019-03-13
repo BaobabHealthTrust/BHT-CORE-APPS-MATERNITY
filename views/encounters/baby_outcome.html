@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/apps/MATERNITY/assets/css/apgar.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
 <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
@@ -7,10 +8,9 @@
 
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/moment.js"></script>
-<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/apgar.js" defer="true"></script>
 
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
-<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/apgar.js" ></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/apgar.js" ></script>
 <script>
   
     var currentWeight;
@@ -61,27 +61,177 @@
 
 </script>
 
+<style type="text/css">
+    #space { display:inline; font-size:1.2em; }
+    #Unknown {display: none;}
+    #num {display: none;}
+  
+    .n #Unknown{
+      display: block;
+    }
+    #summary {
+      padding:10px;
+      font-size:1.8em;
+    }
+    #char {
+      display: none;
+    }
+    .title {
+      text-decoration:underline;
+      margin-right:10px;
+    }
+  
+    .red_alert {color:black;background:red;border:2px solid gray;}
+    .yellow_alert {color:black;background:yellow;border:2px solid gray;}
+    .normal {color:black;}
+  
+    #red_apgar_alert {
+      background:red;
+    }
+    #yellow_apgar_alert {    
+      background:yellow;    
+    }
+    #normal_apgar_alert, #red_apgar_alert, #yellow_apgar_alert {
+      border-radius: 10px;
+      -moz-user-select: none;
+      height: 110px;
+      color:black;
+      width: 85%;
+      border:2px solid gray;
+      font-size: 30px;
+      text-align: center;
+      margin-left:auto;
+      margin-right:auto;   
+      margin-top: 40px;
+      vertical-align: middle;
+    }
+    #normal_apgar_alert{
+        background-color: green;
+    }
+  
+    #tt_page_summary .inputFrameClass { height: 84%;}
+  
+    #qwerty{ display:none; }
+  
+    .numericKeyboard #char, #slash, #star, #plus, #date, #minus, #comma, #percent {
+      display: none;
+    }
+  
+    #selectWindow{
+      -moz-user-select: none;
+      display: table;
+      width: 85%;
+      height:55%;
+      border:1px solid #999999;
+      align: center;
+      border-spacing: 8px;
+      margin-left:auto;
+      margin-right:auto;
+      border-radius: 10px;
+      background: white;
+      margin-top: 17px;
+    }
+    .butt{
+      font-family: sans-serif;
+      font-size:1.1em;
+      font-weight: bold;
+      -moz-border-radius: 5px;
+      border-radius: 10px;
+      display:table-cell;
+      background: url('/assets/images/btn_blue.png');
+      border:1px solid #999999;
+      border-color:gray;
+      color: white;
+      vertical-align: middle;
+      height: auto;
+      width: auto;
+      max-width: 73px;
+      text-align: center;    
+    }
+    .leftButt, .value{
+      font-size:1.3em;
+      border-radius: 4px;
+      font-weight: bold;
+      background: white;
+      display:table-cell;
+      border:1px solid #999999;
+      height: auto;
+      color: rgb(5, 30, 5);
+      width: auto;
+      vertical-align: middle;
+      text-align: center;
+      max-width: 73px;
+  
+    }
+    .value{
+      height: 40px;
+      font-weight: bold;
+    }
+    .boardRow{
+      display: table-row;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border-spacing: 5px;
+    }
+    #row1{
+      display: table-row;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border-spacing: 5px 5px 5px 5px;
+    }
+    #alertsTable{
+      -moz-user-select: none;
+      display: table;
+      border-radius: 4px;
+      background: gray;
+      border-spacing: 1px;
+      width: 98%;
+      height:auto;
+      border:1px solid #999999;
+      vertical-align: middle;
+      margin-left:auto;
+      margin-top: 12px;
+      margin-right:auto;
+      max-height: 99%;
+      overflow: auto;
+    }
+    .alertsRow, .alertsHeaderRow{
+      display: table-row;
+      height: 65px !important;
+    }
+    .alertsTitle, .alertsHeader, .alertsCell{
+      display: table-cell;
+      border: solid 1px lightgray;
+      font-size: 28px;
+      vertical-align: middle;   
+      text-align: center;
+      background: white;
+    }
+    .alertsHeader, .alertsTitle{
+      font-weight: bold;
+      text-align: center;
+      background: white;
+    }
+  
+  
+  
+  
+  </style>
+  
 <body id="mateme">
   <div id="container">
     <div id="content">
 
       <form>
-
-        
-            <!-- BABY DETAILS -->
-           <!--  <input type="text" name="number_babies" id="number_babies" helpText="Number of babies" field_type="number" tt_onLoad=""
-            tt_pageStyleClass="Numeric NumbersOnly" 
-            /> -->
+            <input type="text" name="summary" id="apgar_one"
+            tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'one');"
+            tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> 
   
-            <!-- First Baby -->
-           <!--  <input type="text" name="first_name" id="first_name" helpText="First name of baby" field_type="text" tt_onLoad=""
-            tt_pageStyleClass="Numeric NumbersOnly" 
-            />
-            
-            <input type="text" name="last_name" id="last_name" helpText="Last name of baby" field_type="text" tt_onLoad=""
-            tt_pageStyleClass="Numeric NumbersOnly" 
-            /> -->
-
+       
+          <input type="text" name="summary" id="apgar_five"
+          tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(5,'five');"
+          tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> 
+  
             <input type="text" name="delivery_time" 
             id="delivery_time" field_type="advancedTime" 
             helpText="Baby Time of Delivery" /> 
@@ -129,15 +279,8 @@
           <option>Female</option>
           </select> 
         
-          <!-- <input type="text" name="summary" id="apgar_one"
-                 tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'one');"
-                 tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> -->
 
-            
-          <!-- <input type="text" name="summary" id="apgar_two"
-                 tt_onLoad="__$('keyboard').style.display = 'none'; buildBabyApgar('five');"
-                 tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> -->
-
+      
           <input type="text" name="weight" id="baby_weight" 
           helpText="Baby: Weight(Grams)" field_type="number" tt_onLoad = "timedEvent = self.setInterval(function(){weightAlert()}, 1000);" 
           tt_onUnload ="clearTimeout(timedEvent);"
@@ -147,14 +290,15 @@
           helpText="Baby: Length(CM)" field_type="number" tt_onLoad="changeNextButton();"
           tt_pageStyleClass="Numeric NumbersOnlyWithDecimal" /> 
        
-
-      </form>
+           </form>
 
    </div>
  </div>
 </body>
 
 <script>
+    var apgar_first_minute;
+    var apgar_fifth_minute;
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postBabyOutcome();")
@@ -325,11 +469,26 @@
         if(otherFacility !== '') {
             obs.observations.push( { concept_id: 5937, value_numeric: otherFacility } ); 
         }
+        if(apgar_first_minute !== '') {
+            obs.observations.push( { concept_id: 9140, value_numeric: apgar_first_minute } ); 
+        }
+        if(apgar_fifth_minute !== '') {
+            obs.observations.push( { concept_id: 9141, value_numeric: apgar_fifth_minute } ); 
+        }
 
         submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
         window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
+    }
+    function saveApgar(apgarScore,minute){
+        if(minute == 'one'){
+            apgar_first_minute = apgarScore;
+        }else{
+            apgar_fifth_minute = apgarScore;
+        }
+        console.log("Minute "+ minute);
+        console.log("apgar "+ apgarScore);
     }
 </script>

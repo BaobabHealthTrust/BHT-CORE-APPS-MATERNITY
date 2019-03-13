@@ -1311,7 +1311,6 @@ function loadInputWindow() {
       jQ("#shield, #popup").css("display", "block");
   
       var table = document.createElement("table");
-      table.style.marginLeft = "150px";
 
       var today = new Date();
       var h = today.getHours();
@@ -1326,6 +1325,7 @@ function loadInputWindow() {
       var button = document.createElement("button");
       button.innerHTML = "<span>+</span>";
       button.id = "hour_plus";
+      button.className = "time_btn";
       button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
       td.appendChild(button);
 
@@ -1334,6 +1334,7 @@ function loadInputWindow() {
       var button2 = document.createElement("button");
       button2.innerHTML = "<span>+</span>";
       button2.id = "minute_plus";
+      button2.className = "time_btn";
       button2.setAttribute("onmousedown","timeOperations('"+button2.id+"')");
       td.appendChild(button2)
 
@@ -1342,6 +1343,7 @@ function loadInputWindow() {
       var button3 = document.createElement("button");
       button3.innerHTML = "<span>+</span>";
       button3.id = "seconds_plus";
+      button3.className = "time_btn";
       button3.setAttribute("onmousedown","timeOperations('"+button3.id+"')");
       td.appendChild(button3);
 
@@ -1354,7 +1356,9 @@ function loadInputWindow() {
       var input = document.createElement("input");
       input.id = "hour";
       input.value = h;
-      input.style.width = "69px";
+      input.className = "input_btn";
+      input.style.width = "100px";
+      input.style.height = "40px";
       input.style.marginLeft = "10px";
       td.appendChild(input);
 
@@ -1363,7 +1367,9 @@ function loadInputWindow() {
       var input = document.createElement("input");
       input.value = m;
       input.id = "minutes";
-      input.style.width = "69px";
+      input.className = "input_btn";
+      input.style.width = "100px";
+      input.style.height = "40px";
       input.style.marginLeft = "10px";
       td.appendChild(input);
 
@@ -1372,7 +1378,9 @@ function loadInputWindow() {
       var input = document.createElement("input");
       input.value = s;
       input.id = "seconds";
-      input.style.width = "69px";
+      input.className = "input_btn";
+      input.style.width = "100px";
+      input.style.height = "40px";
       input.style.marginLeft = "10px";
       td.appendChild(input);
 
@@ -1385,6 +1393,7 @@ function loadInputWindow() {
       var button = document.createElement("button");
       button.innerHTML = "<span>-</span>";
       button.id = "hour_minus";
+      button.className = "time_btn";
       button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
       td.appendChild(button);
 
@@ -1393,6 +1402,7 @@ function loadInputWindow() {
       var button = document.createElement("button");
       button.innerHTML = "<span>-</span>";
       button.id = "minute_minus";
+      button.className = "time_btn";
       button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
       td.appendChild(button)
 
@@ -1401,6 +1411,7 @@ function loadInputWindow() {
       var button = document.createElement("button");
       button.innerHTML = "<span>-</span>";
       button.id = "seconds_minus";
+      button.className = "time_btn";
       button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
       td.appendChild(button);
 
