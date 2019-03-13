@@ -223,16 +223,7 @@
     <div id="content">
 
       <form>
-            <input type="text" name="summary" id="apgar_one"
-            tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'one');"
-            tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> 
-  
-       
-          <input type="text" name="summary" id="apgar_five"
-          tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(5,'five');"
-          tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> 
-  
-            <input type="text" name="delivery_time" 
+             <input type="text" name="delivery_time" 
             id="delivery_time" field_type="advancedTime" 
             helpText="Baby Time of Delivery" /> 
   
@@ -279,6 +270,16 @@
           <option>Female</option>
           </select> 
         
+          <input type="text" name="summary" id="apgar_one"
+          tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'one');"
+          tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> 
+
+     
+        <input type="text" name="summary" id="apgar_five"
+        tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(5,'five');"
+        tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/> 
+
+       
 
       
           <input type="text" name="weight" id="baby_weight" 
