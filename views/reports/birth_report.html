@@ -55,23 +55,4 @@
         window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 
-    function fetchMomDemographics() {
-        var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
-                var demographics = JSON.parse(this.responseText);
-                var names = demographics.person.names[0];
-                var addresses = demographics.person.addresses[0];
-                console.log(demographics);
-                return demographics;
-            }
-        };
-        xhttp.open("GET", url, true);
-        xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
-        xhttp.setRequestHeader('Content-type', "application/json");
-        xhttp.send();
-    }
-
 </script>
