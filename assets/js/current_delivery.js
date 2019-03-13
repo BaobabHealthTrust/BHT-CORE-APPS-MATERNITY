@@ -33,9 +33,8 @@ var parity;
 var parsedConceptName;
       
 var x = [];
-var num_of_babies = 0;
-
-
+var num_of_babies = 1;
+var d_time;
 var observations = [];
 
 concepts_hash = {
@@ -138,16 +137,15 @@ function postObstetricObs(encounter){
       obs.observations.push(
            // {concept_id: 1053, value_numeric: parseInt($('para').value)}
           );
+          var delivery_time =  d_time;
+          var delievery_date = d_date;
 
       for(key in data){
-
+    
         for(i in data[key]){
 
           var baby_status = data[key][i]["Baby status"];
-          
-          var delivery_time = data[key][i]["Time of delivery"];
-          
-          var delievery_date = data[key][i]["Date of delivery"];
+
 
           var baby_gender = data[key][i]["Baby gender"];
 
@@ -156,20 +154,19 @@ function postObstetricObs(encounter){
           var condition_at_birth = data[key][i]["Condition at birth"];
 
         
-
+          
           if (baby_status !== undefined && baby_status !== "?"){
         
             obs.observations.push({concept_id: 8398, value_text: baby_status});
 
           }
 
-          if (delivery_time !== undefined && delivery_time !== "?"){
-        
+          if (baby_status !== undefined && baby_status !== "?"){
             obs.observations.push({concept_id: 7434, value_text: delivery_time});
-
+            
           }
 
-          if (delievery_date !== undefined && delievery_date !== "?"){
+          if (baby_status !== undefined && baby_status !== "?"){
       
             obs.observations.push({concept_id: 7435, value_datetime: delievery_date});
 
@@ -282,8 +279,7 @@ function postObstetricObs(encounter){
 }
 
 function nextPage(){
-  window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
-
+  gotoNextPage();
 }
 
 function increment(pos) {
@@ -1143,7 +1139,361 @@ function loadInputWindow() {
 
 
     }
+
+
+    function showDate(id){
+      jQ("#shield, #popup").css("display", "block");
+
+     
+      var holder = document.createElement("div");
+      holder.id = "dateselector";
+      holder.className = "dateselector";
+      var dateNext = "dateselector_nextDay";
+      holder.innerHTML = "<table><tbody><tr><td><div style='display: inline;'><button id='dateselector_nextDay' onmousedown='incrementDay();'><span>+</span></button>"+
+      "<input id='dateselector_day' type='text'><button id='dateselector_preDay' onmousedown='decrementDay();'><span>-</span></button></div></td><td><div style='display: inline;'>"+ 
+      "<button id='dateselector_nextMonth' onmousedown='incrementMonth();'><span>+</span></button><input id='dateselector_month' type='text'>"+	
+      "<button id='dateselector_preMonth' onmousedown='decrementMonth();'><span>-</span></button>	</div> 			</td><td> <div style='display: inline;''>"+
+      "<button id='dateselector_nextYear' onmousedown='incrementYear();'><span>+</span></button>	<input id='dateselector_year' type='text'> <button id='dateselector_preYear' onmousedown='decrementYear();'>"+
+      "<span>-</span></button></div></td><td><button id='today' class='red' onmousedown='setToday()' style= 'width: 150px;'><span>Today</span></button> <!--button id='num' onmousedown='updateKeyColor(this);press(this.id);' style='width: 150px;'><span>Num</span></button--> "+	
+      "<button id='Unknown' onmousedown='updateKeyColor(this);press(this.id);' style='width: 150px;'><span>Unknown</span></button> 			</td></tr></tbody></table> 			</div>";
+
+      jQ(holder).css({
+
+        "width": "100%",
+
+        "border": "hidden"
+
+      });
+
+
+      var table = document.createElement("table");
+      table.style.marginLeft = "150px";
+
+      //Upper control
+      var tr = document.createElement("tr");
+      table.appendChild(tr);
+
+
+      //Control
+      var tr = document.createElement("tr");
+      table.appendChild(tr);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var input = document.createElement("select");
+      input.id = "days";
+      //input.style.width = "69px";
+      input.style.marginLeft = "10px";
+      td.appendChild(input);
+
+      //Adding options to select
+      // var x = document.getElementById("days");
+      // var option = document.createElement("option");
+      // option.text = "Kiwi";
+      // x.add(option); 
+
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var input = document.createElement("input");
+      input.id = "minutes";
+      input.style.width = "69px";
+      input.style.marginLeft = "10px";
+      td.appendChild(input);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var input = document.createElement("input");
+      input.id = "seconds";
+      input.style.width = "69px";
+      input.style.marginLeft = "10px";
+      td.appendChild(input);
+
+      //Upper control
+
+
+      var tr3 = document.createElement("tr");
+      var cl = document.createElement("div");
+
+      cl.className = "button_red cancel";
+
+      cl.innerHTML = "Cancel";
+
+      cl.onclick = function () {
+
+        jQ('#backButton, #nextButton').attr("disabled", false);
+
+        jQ("#shield, #popup").css("display", "none");
+
+      };
+
+      jQ(cl).css({
+
+        "float": "left",
+
+        "margin-top": "0px",
+
+        "margin-left": "150px"
+
+      });
+           
+      var ok = document.createElement('div');
+
+      ok.className = "button_green ok";
+
+      ok.innerHTML = "Ok";
+
+      jQ(ok).css({
+
+
+        'margin-right': '2px'
+
+      });
+
+     // tr3.appendChild(cl);
+      table.appendChild(tr3);
+
+
+      ok.onclick = function () {
+        
+
+        var row = __$(__$("popup").getAttribute("row_id"));
+
+        var name = row.getElementsByClassName("detail-row-label")[0].innerHTML;
+
+
+          if (row) {
+
+            var button = row.getElementsByClassName("input-button")[0];
+
+            var display = row.getElementsByClassName("display-space")[0];
+
+            var label = row.getElementsByClassName("detail-row-label")[0];
+
+            var n = __$("popup").getAttribute("n-tuple");
+
+            var p = __$("popup").getAttribute("p-tuple");
+
+            var a = __$("popup").getAttribute("a-tuple");
+
+            var dob_day  =  __$("dateselector_day").value;
+            var dob_month = __$("dateselector_month").value;
+            var dob_year = __$("dateselector_year").value;
+            var month = moment().month(dob_month).format("M");
+
+            if(month < 10){
+              d_date = dob_day + "-" + "0"+month + "-" +dob_year;
+            }else{
+              d_date = dob_day + "-" +month + "-" +dob_year;
+            }
+            display.innerHTML =   __$("dateselector_day").value + "-" + __$("dateselector_month").value + "-" +__$("dateselector_year").value;
+            jQ('#backButton, #nextButton').attr("disabled", false);
+
+            jQ("#shield, #popup").css("display", "none");
+
+          } else {
+
+            alertMessage("Failed to update input!");
+
+          }
+
+
+      };
+      
+
+     jQ("#popup").append(holder);
+      jQ("#popup").append(cl);
+      jQ("#popup").append(ok);
+    }
+
+
+    function showTime(id){
+      jQ("#shield, #popup").css("display", "block");
   
+      var table = document.createElement("table");
+      table.style.marginLeft = "150px";
+
+      var today = new Date();
+      var h = today.getHours();
+      var m = today.getMinutes();
+      var s = today.getSeconds();
+      //Upper control
+      var tr = document.createElement("tr");
+      table.appendChild(tr);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);  
+      var button = document.createElement("button");
+      button.innerHTML = "<span>+</span>";
+      button.id = "hour_plus";
+      button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
+      td.appendChild(button);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var button2 = document.createElement("button");
+      button2.innerHTML = "<span>+</span>";
+      button2.id = "minute_plus";
+      button2.setAttribute("onmousedown","timeOperations('"+button2.id+"')");
+      td.appendChild(button2)
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var button3 = document.createElement("button");
+      button3.innerHTML = "<span>+</span>";
+      button3.id = "seconds_plus";
+      button3.setAttribute("onmousedown","timeOperations('"+button3.id+"')");
+      td.appendChild(button3);
+
+      //Control
+      var tr = document.createElement("tr");
+      table.appendChild(tr);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var input = document.createElement("input");
+      input.id = "hour";
+      input.value = h;
+      input.style.width = "69px";
+      input.style.marginLeft = "10px";
+      td.appendChild(input);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var input = document.createElement("input");
+      input.value = m;
+      input.id = "minutes";
+      input.style.width = "69px";
+      input.style.marginLeft = "10px";
+      td.appendChild(input);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var input = document.createElement("input");
+      input.value = s;
+      input.id = "seconds";
+      input.style.width = "69px";
+      input.style.marginLeft = "10px";
+      td.appendChild(input);
+
+      //Upper control
+      var tr = document.createElement("tr");
+      table.appendChild(tr);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var button = document.createElement("button");
+      button.innerHTML = "<span>-</span>";
+      button.id = "hour_minus";
+      button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
+      td.appendChild(button);
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var button = document.createElement("button");
+      button.innerHTML = "<span>-</span>";
+      button.id = "minute_minus";
+      button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
+      td.appendChild(button)
+
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      var button = document.createElement("button");
+      button.innerHTML = "<span>-</span>";
+      button.id = "seconds_minus";
+      button.setAttribute("onmousedown","timeOperations('"+button.id+"')");
+      td.appendChild(button);
+
+      var tr2 = document.createElement("tr");
+      table.appendChild(tr2);
+
+      var tr3 = document.createElement("tr");
+      var cl = document.createElement("div");
+
+      cl.className = "button_red cancel";
+
+      cl.innerHTML = "Cancel";
+
+      cl.onclick = function () {
+
+        jQ('#backButton, #nextButton').attr("disabled", false);
+
+        jQ("#shield, #popup").css("display", "none");
+
+      };
+
+      jQ(cl).css({
+
+        "float": "left",
+
+        "margin-top": "0px",
+
+        "margin-left": "150px"
+
+      });
+           
+      var ok = document.createElement('div');
+
+      ok.className = "button_green ok";
+
+      ok.innerHTML = "Ok";
+
+      jQ(ok).css({
+
+
+        'margin-right': '2px'
+
+      });
+
+     // tr3.appendChild(cl);
+      table.appendChild(tr3);
+
+
+      ok.onclick = function () {
+        
+
+        var row = __$(__$("popup").getAttribute("row_id"));
+
+        var name = row.getElementsByClassName("detail-row-label")[0].innerHTML;
+
+
+          if (row) {
+
+            var button = row.getElementsByClassName("input-button")[0];
+
+            var display = row.getElementsByClassName("display-space")[0];
+
+            var label = row.getElementsByClassName("detail-row-label")[0];
+
+            var n = __$("popup").getAttribute("n-tuple");
+
+            var p = __$("popup").getAttribute("p-tuple");
+
+            var a = __$("popup").getAttribute("a-tuple");
+
+
+            d_time =  __$("hour").value + "-" + __$("minutes").value + "-" +__$("seconds").value;
+
+            display.innerHTML =   __$("hour").value + "-" + __$("minutes").value + "-" +__$("seconds").value;
+            jQ('#backButton, #nextButton').attr("disabled", false);
+
+            jQ("#shield, #popup").css("display", "none");
+
+          } else {
+
+            alertMessage("Failed to update input!");
+
+          }
+
+
+      };
+      
+
+      jQ("#popup").append(table);
+      jQ("#popup").append(cl);
+      jQ("#popup").append(ok);
+    }
+
 
     function showNumber(id, global_control, min, max, abs_max, type) {
 
@@ -2024,12 +2374,13 @@ function loadInputWindow() {
 
         var fields = {
           "Baby status": ["list", "Cried", "No cry"],
-          "Time of delivery": ["number"],
+          "Time of delivery": ["time"],
           "Date of delivery": ["date"],
           "Baby gender": ["list", "Male", "Female"],
           "Method of delivery": ["list", "Spontaneous Delivery", "Caesarean Section", "Breech Delivery", "Vacuum extraction delivery"],
           "Condition at birth": ["list", "Alive", "Macerated Still Birth (MSB)", "Fresh Still Birth (FSB)"]
         };
+
 
         var field_names = Object.keys(fields);
 
@@ -2078,7 +2429,11 @@ function loadInputWindow() {
         } else if (type == "time") {
             showTime("popup");
 
-        }
+        }else if (type == "date") {
+
+          showDate("popup");
+
+      }
 
       }
 

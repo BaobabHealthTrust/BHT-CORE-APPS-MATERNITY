@@ -43,8 +43,7 @@
 
             <input id="number_babies" optional="true"
                 helpText="Number of children"
-                tt_onLoad="loadSelections();
-                  jQuery('.dcimg').click(); showCategory2('Current delivery');" 
+                tt_onLoad="loadSelections(); jQuery('.dcimg').click(); showCategory2('Current delivery');" 
                 name="number_babies"
               />
 
@@ -75,3 +74,117 @@
     </div>
 </div>
 </body>
+<script>
+ function timeOperations(id){
+        switch(id){
+          case 'hour_plus':
+              var value = parseInt(__$("hour").value);
+                var v = value + 1;
+                if(v<10){
+              __$("hour").value = "0"+v;
+                }else{
+                    __$("hour").value = value + 1; 
+                }
+              _
+          break;
+          case 'hour_minus':
+              var value = parseInt(__$("hour").value);
+              var v = value - 1;
+              if(v < 10){
+              __$("hour").value = "0"+v;}
+              else{
+                __$("hour").value = value - 1;
+              }
+          break;
+          case 'minute_plus':
+            var value = parseInt(__$("minutes").value);
+            var v = value + 1;
+            if(v < 10){
+              __$("minutes").value = "0"+v;
+            }else{
+                __$("minutes").value = value +1;
+            }
+          break;
+          case 'minute_minus':
+            var value = parseInt(__$("minutes").value);
+            var v = value - 1;
+            if(v <10){
+              __$("minutes").value = "0"+v;
+            }else{
+                __$("minutes").value = value - 1;
+            }
+          case 'seconds_plus':
+              var value = parseInt(__$("seconds").value);
+              var v = value + 1;
+              if(v < 10){
+              __$("seconds").value = "0"+v;
+              }else{
+                __$("seconds").value = value + 1;
+              }
+          break;
+          case 'seconds_minus':
+              var value = parseInt(__$("seconds").value);
+              var v = value - 1;
+              if(v < 10){
+              __$("seconds").value = "0"+v;
+              }else{
+                __$("seconds").value = value - 1;
+              }
+          default:
+            break;
+        }
+    }
+function incrementDay(){
+  var value = parseInt(__$("dateselector_day").value);
+  var v = value + 1;
+  if(v<10){
+        __$("dateselector_day").value = "0"+v;
+      }else{
+        __$("dateselector_day").value = value + 1; 
+      }
+}
+function decrementDay(){
+  var value = parseInt(__$("dateselector_day").value);
+  var v = value - 1;
+  if(v<10){
+        __$("dateselector_day").value = "0"+v;
+      }else{
+        __$("dateselector_day").value = value - 1; 
+      }
+}
+function incrementYear(){
+  var value = parseInt(__$("dateselector_year").value);
+  __$("dateselector_year").value = value + 0001; 
+
+}
+var dob_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function decrementYear(){
+  var value = parseInt(__$("dateselector_year").value);
+  __$("dateselector_year").value = value - 0001; 
+      
+}
+
+function incrementMonth(){
+  var value = $("dateselector_month").value;
+  for(var i =0; i < dob_months.length; i++){
+    if(value == dob_months[i]){
+      console.log("Month is "+dob_months[i]);
+      __$("dateselector_month").value = dob_months[i+1];
+      break;
+        }
+  }
+}
+
+function decrementMonth(){
+  var value = $("dateselector_month").value;
+  for(var i =0; i < dob_months.length; i++){
+    if(value == dob_months[i]){
+      console.log("Month is "+dob_months[i]);
+      __$("dateselector_month").value = dob_months[i-1];
+      break;
+        }
+  }
+}
+  
+</script>
