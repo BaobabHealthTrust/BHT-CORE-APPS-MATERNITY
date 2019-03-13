@@ -20,6 +20,7 @@ var child_dob;
 var parent_district;
 var parent_ta;
 var parent_village;
+
 function fetchMotherDemographics() {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
     var xhttp = new XMLHttpRequest();
