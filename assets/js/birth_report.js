@@ -1,21 +1,26 @@
 var mother_first_name;
 var mother_second_name;
 var mother_surname;
+var mother_birthdate;
 var mother_district;
 var mother_ta;
 var mother_village;
 var father_first_name;
-var father_second_name;
+var father_middle_name;
 var father_surname;
 var father_district;
 var father_ta;
 var father_village;
+var father_birthdate;
 var child_first_name;
-var child_second_name;
+var child_middle_name;
+var child_surname;
 var child_gender;
 var child_dob;
 var parent_district;
+var parent_ta;
 var parent_village;
+
 function fetchMotherDemographics() {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
     var xhttp = new XMLHttpRequest();
@@ -27,6 +32,8 @@ function fetchMotherDemographics() {
             var mother_names = [names.given_name,names.middle_name,names.family_name];
             var mother_addresses= [addresses.address2,addresses.county_district,addresses.neighborhood_cell];
             var parent_addresses = [addresses.state_province,addresses.township_division,addresses.city_village]
+            mother_birthdate = demographics.person.birthdate;
+
             for(var i = 0 ; i < mother_names.length ; i++){
                 mother_first_name = mother_names[i];
                 mother_second_name = mother_names[i+1];
@@ -42,6 +49,7 @@ function fetchMotherDemographics() {
             }
             for(var i = 0 ; i < parent_addresses.length ; i++){
                 parent_district = parent_addresses[i];
+                parent_ta = parent_addresses[i+1];
                 parent_village =  parent_addresses[i+2]
                 break;
             }
@@ -49,7 +57,7 @@ function fetchMotherDemographics() {
                 mother_second_name = "N/A";
             }
 
-            fetchRelationDetails('child',sessionStorage.patientID);
+            fetchRelationDetails(sessionStorage.patientID);
 
         }
     };
@@ -59,7 +67,7 @@ function fetchMotherDemographics() {
     xhttp.send();
 }
 
-function fetchRelationDetails(relationship,motherID) {
+function fetchRelationDetails(motherID) {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/people/" + motherID + '/relationships';
 
     var xhttp = new XMLHttpRequest();
@@ -67,15 +75,39 @@ function fetchRelationDetails(relationship,motherID) {
         if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
             var demographics = JSON.parse(this.responseText);
 
-            var relation = demographics[0].relation
-            var gender = relation.gender;
-            var names = relation.names[0];
+            for (var i=0; i < demographics.length; i++) {
+                console.log(demographics[i]);
+                var relation_name;
+                var relation = demographics[i].relation
+                var gender = relation.gender;
+                var birthdate = relation.birthdate;
+                var names = relation.names[0];
 
-            child_first_name = names.given_name;
-            child_second_name = names.family_name;
-            child_gender = (gender=='F')?'Female':'Male';
+                var given_name = names.given_name;
+                var family_name = names.family_name;
+                var middle_name = names.middle_name;
+                gender = (gender=='F')?'Female':'Male';
 
-            console.log(relation);
+                switch (demographics[i].relationship) {
+                    case 3:
+                        relation_name = 'child';
+                        child_first_name = given_name;
+                        child_middle_name = middle_name
+                        child_surname = family_name;
+                        child_gender = gender;
+                        break;
+                    case 12:
+                        relation_name = 'father';
+                        father_first_name = given_name;
+                        father_middle_name = middle_name
+                        father_surname = family_name;
+                        father_birthdate = birthdate;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             buildBirthReport();
         }
     };
@@ -87,7 +119,7 @@ function fetchRelationDetails(relationship,motherID) {
 
 function buildBirthReport(){
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
-    frame.style.height = "100%";
+    frame.style.height = "90%";
     frame.style.overflowY = 'scroll';
     frame.style.backgroundColor ="#fff";
 
@@ -107,7 +139,7 @@ function buildBirthReport(){
         "</td></tr><tr> <td style='text-align: center; font-size: 1em; font-weight: bold;'><div style='float: none;'> HOSPITAL BIRTH REPORT  </div> <div style='float: right;'>FORM NR9</div></td></tr></table>"+
         " <tr><td><table width='95%' style='margin-top: 15px; margin-left: 40px;' cellspacing='10' cellpadding='2'><tr><td> 1. </td><td> Name of child:  </td><td id='fnc' style='text-align: center; padding-bottom: 0px;' class='cell'>"+
         child_first_name+"&nbsp;</td><td id='mnc' style='text-align: center; padding-bottom: 0px;' class='cell'>&nbsp; </td><td id='lnc' style='text-align: center; padding-bottom: 0px;' class='cell'>"+
-        child_second_name+"&nbsp;</td></tr> <tr><td> &nbsp;</td><td>&nbsp; </td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>First Name</sup> </td>"+
+        child_surname+"&nbsp;</td></tr> <tr><td> &nbsp;</td><td>&nbsp; </td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>First Name</sup> </td>"+
         "<td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>Middle Name</sup>  </td><td style='text-align: center; padding-top: 0px;'> <sup style='font-style: italic; font-size: 0.6em;'>"+
         "Surname</sup> </td><tr><td>2.</td><td>Date of birth:</td><td id='ddob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>02</td>"+
         "<td id='mdob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>03</td><td id='ydob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
@@ -119,8 +151,8 @@ function buildBirthReport(){
         mother_first_name+"</td><td id='mnm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+mother_second_name+"</td><td id='lnm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
         mother_surname+"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>First Name</sup>"+
         "</td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>Middle Name</sup></td><td style='text-align: center; padding-top: 0px;'>"+
-        "<sup style='font-style: italic; font-size: 0.6em;'>Surname</sup></td> </tr><tr><td> &nbsp;</td><td style='text-align: left; padding-left: 20px; padding-top: 9px;'> Father (if known):</td><td id='fnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
-        "Humphrey</td><td id='mnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'> Bright</td><td id='lnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>Moyo</td></tr> <tr>"+
+        "<sup style='font-style: italic; font-size: 0.6em;'>Surname</sup></td> </tr><tr><td> &nbsp;</td><td style='text-align: left; padding-left: 20px; padding-top: 9px;'> Father (if known):</td><td id='fnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>" +
+        father_first_name +"</td><td id='mnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'> " + father_middle_name + "</td><td id='lnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>" + father_surname + "</td></tr> <tr>"+
         "<td style='text-align: left; padding-top: 10px;'> 5.</td><td colspan='4' style='text-align: left; padding-top: 9px;'>  Nationality of parents:</td> </tr>"+
         "<tr><td> &nbsp;</td><td style='text-align: right; padding-left: 20px; padding-top: 9px;'> Mother:</td><td id='ntm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
         "Zambian </td>  <td id='idm' style='text-align: left; padding-bottom: 0px; padding-top: 9px; padding-left: 9px;'> ID No: <div class='cell' style='float: right;'>&nbsp;</div> </td><td style='text-align: center; padding-bottom: 0px; padding-top: 9px;'>"+
@@ -143,6 +175,137 @@ function buildBirthReport(){
     div_for_table.appendChild(div_table);
 
 }
+
+function sendToEBRS() {
+
+    var ebrsHost;
+    var ebrsPort;
+    var ebrsProtocol;
+    var ebrsURL;
+    var ebrsPath;
+
+    var ebrsConfig = '/apps/MATERNITY/application.json';
+
+    jQuery.getJSON(ebrsConfig)
+        .done((configurations) => {
+            var ebrs = configurations.ebrs;
+            ebrsHost = ebrs.ebrsHost;
+            ebrsPort = ebrs.ebrsPort;
+            ebrsProtocol = ebrs.ebrsProtocol;
+            ebrsURL = ebrs.ebrsURL;
+            ebrsPath = ebrsProtocol + '://' + ebrsHost + ':' + ebrsPort + ebrsURL;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+                    showMessage('Report successfully sent. Please Wait...');
+                    setTimeout(window.location = '/views/patient_dashboard.html?patient_id=' + patientID,5000);
+                } else if (this.status == 400) {
+                    showMessage('Report not sent. Error: Bad request.')
+                } else if (this.status == 500) {
+                    showMessage('Report successfully sent without Patient ID. Please Wait...')
+                    setTimeout(window.location = '/views/patient_dashboard.html?patient_id=' + patientID,5000);
+                }
+            };
+            xhttp.open("POST", ebrsPath, true);
+            xhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+
+            /**
+             * mandatory parameters
+             * Child Details
+             * -------------
+             * first_name,surname,dob,gender
+             *
+             * Mother Details
+             * --------------
+             * first_name,maiden_surname,
+             * */
+            var parameters = {
+                "person": {
+                    "place_of_birth": "",
+                    "hospital_of_birth": "",
+                    "birth_district": "",
+                    "relationship": "",
+                    "duplicate": "",
+                    "is_exact_duplicate": "",
+                    "first_name": child_first_name,
+                    "last_name": child_surname,
+                    "birthdate": "2019-02-28",
+                    "gender": child_gender,
+                    "birth_weight": "",
+                    "type_of_birth": "",
+                    "parents_married_to_each_other": "",
+                    "court_order_attached": "",
+                    "mother": {
+                        "first_name": mother_first_name,
+                        "last_name": mother_surname,
+                        "maiden_name": "",
+                        "birthdate": mother_birthdate,
+                        "citizenship": "Malawian",
+                        "residential_country": "Malawi",
+                        "home_district": mother_district,
+                        "home_ta": mother_ta,
+                        "home_village": mother_village,
+                        "current_district": parent_district,
+                        "current_ta": parent_ta,
+                        "current_village": parent_village
+                    },
+                    "mode_of_delivery": "Vaccum Extraction",
+                    "level_of_education": "Primary",
+                    "father": {
+                        "first_name": father_first_name,
+                        "last_name": father_surname,
+                        "birthdate": father_birthdate,
+                        "citizenship": "Malawian",
+                        "residential_country": "Malawi",
+                        "home_district": father_district,
+                        "home_ta": father_ta,
+                        "home_village": father_village,
+                        "current_district": "",
+                        "current_ta": "",
+                        "current_village": ""
+                    },
+                    "informant": {
+                        "first_name": mother_first_name,
+                        "last_name": mother_surname,
+                        "birthdate": mother_birthdate,
+                        "citizenship": "Malawian",
+                        "residential_country": "Malawi",
+                        "other_informant_relationship_to_person": "",
+                        "home_district": mother_district,
+                        "home_ta": mother_ta,
+                        "home_village": mother_village,
+                        "current_district": parent_district,
+                        "current_ta": parent_ta,
+                        "current_village": parent_village,
+                        "phone_number": "Unknown"
+                    },
+                    "form_signed": "Yes"
+                },
+                "mother_barcode": "",
+                "gestation_at_birth": "",
+                "number_of_prenatal_visits": "",
+                "month_prenatal_care_started": "",
+                "number_of_children_born_alive_inclusive": "",
+                "number_of_children_born_still_alive": "",
+                "father_barcode": "",
+                "informant_same_as_mother": "Yes",
+                "date_reported": "",
+                "copy_mother_name": "No",
+                "controller": "person",
+                "action": "create"
+            };
+
+            var json = JSON.stringify(parameters);
+            xhttp.send(json);
+        })
+        .fail((error) => {
+            console.error(error)
+            showMessage('There was an error sending data to eBRS.')
+        })
+
+}
+
 function fetchPersonDemographics() {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
 

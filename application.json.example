@@ -1,9 +1,9 @@
 {
   "ebrs": {
     "ebrsProtocol": "http",
-    "ebrsHost": "192.168.41.224",
+    "ebrsHost": "127.0.0.1",
     "ebrsPort": "8001",
-    "ebrsURL": "/person/create"
+    "ebrsURL": "/maternity/create_from_maternity"
   },
   "encounters": {
     "social history": {
@@ -139,7 +139,7 @@
       "available": false,
       "activitiesIcon": "/assets/images/edit.png",
       "url": "/views/patient/edit_demographics.html",
-      "activitiesDescription": "Print Patient Demographics",
+      "activitiesDescription": "Edit Patient Demographics",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     },
     {
@@ -168,8 +168,8 @@
       "activitiesName": "Register father",
       "available": false,
       "activitiesIcon": "/assets/images/edit.png",
-      "url": "/apps/MATERNITY/views/encounters/register_father.html",
-      "activitiesDescription": "Change session date (for retrospective entry)",
+      "url": "/views/patient/father_demographics/search.html",
+      "activitiesDescription": "Add demographics to the child in relation to the mother/patient.",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     },
     {
@@ -177,7 +177,7 @@
       "available": false,
       "activitiesIcon": "/assets/images/edit.png",
       "url": "/apps/MATERNITY/views/ebrs_tools/associated_demographics.html",
-      "activitiesDescription": "Change session date (for retrospective entry)",
+      "activitiesDescription": "View and edit ebrs related activities.",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     }
 
