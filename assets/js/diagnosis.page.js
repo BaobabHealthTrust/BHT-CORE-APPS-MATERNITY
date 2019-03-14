@@ -447,8 +447,9 @@ function postDiagnosisObs(encounter) {
   submitParameters(obs, "/observations", "nextPage")  
 }
 
-function nextPage(){
-  window.location.href = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
+function nextPage(obs){
+    nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+  // window.location.href = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
 }
 
 

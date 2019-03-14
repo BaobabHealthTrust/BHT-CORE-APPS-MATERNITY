@@ -135,8 +135,12 @@
 
         addAssociationTools();
         var nextButton = document.getElementById('nextButton');
-        nextButton.setAttribute('onmousedown', 'enroll();');
+        nextButton.setAttribute('onmousedown', 'gotoDashboard();');
         nextButton.innerHTML = '<span>Finish</span>';
+    }
+
+    function gotoDashboard() {
+        window.location = tt_cancel_destination;
     }
 
     var programsHash = {};
