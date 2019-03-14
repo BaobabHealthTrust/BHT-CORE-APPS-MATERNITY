@@ -139,16 +139,21 @@
                 <option>Niggling</option>
             </select>
 
-
             <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number"
                    tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
            __$('fundus').value != 'N/A' && __$('contraction_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" tt_onLoad="showCategory2('Physical examination');" />
 
-            <input type="text" name="station"
-                   id="station" field_type="alpha"
-                   key="station" helpText="Station"
-                   allowFreeText="true" tt_onLoad="showCategory2('Physical examination');"
-            />
+            <select id="station" name="station" helpText="Station" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');">
+                <option></option>
+                <option>-3</option>
+                <option>-2</option>
+                <option>-1</option>
+                <option>0</option>
+                <option>+1</option>
+                <option>+2</option>
+                <option>+3</option>
+                <option>N/A</option>
+            </select>
 
             <select id="moulding" name="moulding" helpText="Moulding" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
@@ -223,7 +228,7 @@
         var membranes = document.getElementById('membranes').value;
         var descent = document.getElementById('descent').value;
         var contractions_level =  document.getElementById('contractions_level').value;
-        console.log("Contractions is "+ contractions);
+
         var conceptAnswers = [
             /*Lie*/
             {
@@ -284,6 +289,17 @@
                 "strong": 1409,
                 "niggling": 9700
             },
+            // station
+            {
+                "3minus": 9701,
+                "2minus": 9702,
+                "1minus": 9703,
+                "zero": 1101,
+                "1plus": 7129,
+                "2plus": 7130,
+                "3plus": 7131,
+                "na": 1175
+            },
             /* Moulding */
             {
                 "zero": 1101,
@@ -326,6 +342,7 @@
         var shoulderAnswer;
         var contractionsAnswer;
         var contractionsIntensityAnswers;
+        var stationAnswer;
         var mouldingAnswer;
         var membranesAnswer;
         var descentAnswer;
@@ -459,6 +476,34 @@
                 break;
             case 'NIGGLING':
                 contractionsIntensityAnswers = conceptAnswers[7].niggling;
+                break;
+            default:
+                break;
+        }
+        switch(station) {
+            case '-3':
+                stationAnswer = conceptAnswers[1]["3minus"];
+                break;
+            case '-2':
+                stationAnswer = conceptAnswers[1]["2minus"];
+                break;
+            case '-1':
+                stationAnswer = conceptAnswers[1]["1minus"];
+                break;
+            case '0':
+                stationAnswer = conceptAnswers[1].zero;
+                break;
+            case '+1':
+                stationAnswer = conceptAnswers[1]["1plus"];
+                break;
+            case '+2':
+                stationAnswer = conceptAnswers[1]["2plus"];
+                break;
+            case '+3':
+                stationAnswer = conceptAnswers[1]["3plus"];
+                break;
+            case 'N/A':
+                stationAnswer = conceptAnswers[1].na;
                 break;
             default:
                 break;
