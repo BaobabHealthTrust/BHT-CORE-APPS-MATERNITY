@@ -136,7 +136,7 @@ function buildBirthReport(){
         "</td> </tr><tr style='position:relative;top:-45%;'><td style='text-align: center; font-size: 0.8em;>REPUBLIC OF MALAWI</td> </tr>"+
         "<tr><td style='text-align: center; font-size: 1.2em; font-weight: bold;'>NATIONAL REGISTRATION ACT </td> </tr> <tr>"+
         "<td style='text-align: center; font-size: 1.2em; font-weight: bold;'>NATIONAL REGISTRATION ACT</td> </tr> <tr><td style='text-align: right; font-size: 1em; padding-right: 30px;'>"+
-        "</td></tr><tr> <td style='text-align: center; font-size: 1em; font-weight: bold;'><div style='float: none;'> HOSPITAL BIRTH REPORT  </div> <div style='float: right;'>FORM NR9</div></td></tr></table>"+
+        "</td></tr><tr> <td style='text-align: center; font-size: 1em; font-weight: bold;'><div style='float: none;'> HOSPITAL BIRTH REPORT  </div> <div style='float: right;'>FORM NR8</div></td></tr></table>"+
         " <tr><td><table width='95%' style='margin-top: 15px; margin-left: 40px;' cellspacing='10' cellpadding='2'><tr><td> 1. </td><td> Name of child:  </td><td id='fnc' style='text-align: center; padding-bottom: 0px;' class='cell'>"+
         child_first_name+"&nbsp;</td><td id='mnc' style='text-align: center; padding-bottom: 0px;' class='cell'>&nbsp; </td><td id='lnc' style='text-align: center; padding-bottom: 0px;' class='cell'>"+
         child_surname+"&nbsp;</td></tr> <tr><td> &nbsp;</td><td>&nbsp; </td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>First Name</sup> </td>"+
@@ -155,7 +155,7 @@ function buildBirthReport(){
         father_first_name +"</td><td id='mnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'> " + father_middle_name + "</td><td id='lnf' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>" + father_surname + "</td></tr> <tr>"+
         "<td style='text-align: left; padding-top: 10px;'> 5.</td><td colspan='4' style='text-align: left; padding-top: 9px;'>  Nationality of parents:</td> </tr>"+
         "<tr><td> &nbsp;</td><td style='text-align: right; padding-left: 20px; padding-top: 9px;'> Mother:</td><td id='ntm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
-        "Zambian </td>  <td id='idm' style='text-align: left; padding-bottom: 0px; padding-top: 9px; padding-left: 9px;'> ID No: <div class='cell' style='float: right;'>&nbsp;</div> </td><td style='text-align: center; padding-bottom: 0px; padding-top: 9px;'>"+
+        "Malawian </td>  <td id='idm' style='text-align: left; padding-bottom: 0px; padding-top: 9px; padding-left: 9px;'> ID No: <div class='cell' style='float: right;'>&nbsp;</div> </td><td style='text-align: center; padding-bottom: 0px; padding-top: 9px;'>"+
         "&nbsp; </td></tr><tr><td> &nbsp;</td><td style='text-align: right; padding-left: 20px; padding-top: 9px;'> Father:</td><td id='ntm' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
         "Malawian </td>  <td id='idm' style='text-align: left; padding-bottom: 0px; padding-top: 9px; padding-left: 9px;'> ID No: <div class='cell' style='float: right;'>&nbsp;</div> </td><td style='text-align: center; padding-bottom: 0px; padding-top: 9px;'>"+
         "&nbsp; </td></tr><tr> <td style='text-align: left; padding-top: 9px;'> 6. </td> <td colspan='4' style='text-align: left; padding-top: 9px;'>Physical Residential:  </td> </tr>"+
