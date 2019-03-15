@@ -118,7 +118,7 @@
             if (http.readyState == 4) {
                 if (http.status == 201) {
                     var v = JSON.parse(http.responseText);
-                    window.location.href = "/apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
+                    window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
                 } else if (http.status == 409) {
 
                 } else {
@@ -130,7 +130,7 @@
     }
 
     function nextPage(){
-        window.location.href = "../../apps/MATERNITY/views/encounters/baby_outcome.html?patient_id=" + patientID;
+        window.location.href = "/views/patient_dashboard.html?patient_id=" + patientID;
     }
 
 
@@ -153,11 +153,6 @@
     </style>
 
       <form>
-            <!-- BABY DETAILS -->
-            <input type="text" name="number_babies" id="number_babies" helpText="Number of babies" field_type="number" tt_onLoad=""
-            tt_pageStyleClass="Numeric NumbersOnly" 
-            />
-  
             <!-- First Baby -->
             <input type="text" name="given_name" id="given_name" key="given_name" helpText="Baby first name" field_type="alpha" tt_onLoad='validateName();' tt_onUnload="getInput();" condition="" allowFreeText="true" ajaxURL="/search/given_name?search_string=" />
             

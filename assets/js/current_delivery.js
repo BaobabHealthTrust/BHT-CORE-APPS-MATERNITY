@@ -260,7 +260,10 @@ function postBabyDeliveryObs(encounter){
 }
 
 function nextPage(){
-    nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    // var redirectUrl = "/views/patient_dashboard.html?patient_id=" + patientID;
+    // nextEncounter(sessionStorage.patientID, sessionStorage.programID, redirectUrl);
+    sessionStorage.setItem("numberOfBabies",num_of_babies);
+    window.location = "/apps/MATERNITY/views/encounters/baby_demographics.html";
 }
 
 function increment(pos) {
