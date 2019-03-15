@@ -63,15 +63,22 @@
               optional="true" />
 
         
-            <select id="place_delivery" name="place_delivery" helpText="Place of delivery">
+            <select id="place_delivery" name="place_delivery" helpText="Place of delivery" tt_onUnLoad="checkDeliveryPlace();">
                 <option></option>
-                <option>Home</option>
-                <option>Transit</option>
-                <option>TBA</option>
-                <option>Other</option>
+                <option>This facility</option>
+                <option>In transit</option>
+                <option>Other facility</option>
+                <option>Home/TBA</option>
             </select>
 
-            <select id="birth_attended_by" name="birth_attended_by" tt_onLoad="changeSubmitFunction();" helpText="Birth attended by">
+            <input type="text" name="health_facility" objectType="location"
+                   id="health_facility" field_type="alpha"
+                   key="health_facility" helpText="Specify Health Facility"
+                   ajaxURL="/locations?name="
+                   key="health_facility" allowFreeText="true"
+                   condition = "$('place_delivery').value == 'Other facility'" tt_onLoad="changeSubmitFunction();" />
+
+            <select id="birth_attended_by" name="birth_attended_by" tt_onLoad="changeSubmitFunction();" helpText="Birth attended by" condition = "($('place_delivery').value == 'Home/TBA' || $('place_delivery').value == 'In transit' )">
                 <option></option>
                 <option>Self</option>
                 <option>TBA</option>
@@ -84,6 +91,11 @@
 </div>
 </body>
 <script>
+    function checkDeliveryPlace() {
+        if ($('place_delivery').value.toUpperCase() == 'THIS FACILITY') {
+            submitCurrentDeliveryEncounter();
+        }
+    }
  function timeOperations(id){
         switch(id){
           case 'hour_plus':
