@@ -454,11 +454,11 @@ function postDiagnosisObs(encounter) {
 
 function nextPage(obs){
     // var redirectUrl = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
-    // nextEncounter(sessionStorage.patientID, sessionStorage.programID, redirectUrl);
-
-    sessionStorage.setItem("nextEncounter", "None");
-    sessionStorage.setItem("nextEncounterAvailable", "Unavailable");
-    window.location.href = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
+    nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+    //
+    // sessionStorage.setItem("nextEncounter", "None");
+    // sessionStorage.setItem("nextEncounterAvailable", "Unavailable");
+    // window.location.href = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
 }
 
 
