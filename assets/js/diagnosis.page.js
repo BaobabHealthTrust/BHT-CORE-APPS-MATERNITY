@@ -444,8 +444,6 @@ function postDiagnosisObs(encounter) {
         observations: observations
     };
 
-
-    console.log(considerPatientAdmissions);
     if(considerPatientAdmissions == true) {
         submitParameters(obs, "/observations", "postPatientAdmissions")
     } else {
@@ -455,8 +453,12 @@ function postDiagnosisObs(encounter) {
 }
 
 function nextPage(obs){
-    nextEncounter(sessionStorage.patientID, sessionStorage.programID);
-    // window.location.href = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
+    // var redirectUrl = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
+    // nextEncounter(sessionStorage.patientID, sessionStorage.programID, redirectUrl);
+
+    sessionStorage.setItem("nextEncounter", "None");
+    sessionStorage.setItem("nextEncounterAvailable", "Unavailable");
+    window.location.href = "/views/patient_dashboard.html?patient_id=" + sessionStorage.patientID;
 }
 
 

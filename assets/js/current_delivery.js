@@ -50,6 +50,28 @@ concepts_hash = {
     'Incomplete abortion' : 905
 }
 
+var placeOfDelivery;
+var placeOfDeliveryAnswer;
+
+var birthAttendedBy;
+var birthAttendedByAnswer;
+
+var healthFacility;
+
+var conceptAnswers = [
+    // place of delivery
+    {
+        "thisFacility": 8847,
+        "home_tba": 8850,
+        "inTransit": 8848,
+        "otherFacility": 8849
+    },
+    // birth attended by
+    {
+        "self": 9726
+    }
+];
+
 var last_visit = "";
 
 var birth_date = new Date(patientDOB);
@@ -124,20 +146,74 @@ function postBabyDeliveryObs(encounter){
 
     pushed = [];
 
+    placeOfDelivery = document.getElementById('place_delivery').value;
+
+    birthAttendedBy = document.getElementById('birth_attended_by').value;
+
+    healthFacility = document.getElementById('health_facility').value;
+
+    switch(placeOfDelivery.toUpperCase()) {
+        case 'THIS FACILITY':
+            placeOfDeliveryAnswer = conceptAnswers[0].thisFacility;
+            break;
+        case 'IN TRANSIT':
+            placeOfDeliveryAnswer = conceptAnswers[0].inTransit;
+            break;
+        case 'HOME/TBA':
+            placeOfDeliveryAnswer = conceptAnswers[0].home_tba;
+            break;
+        case 'OTHER FACILITY':
+            placeOfDeliveryAnswer = conceptAnswers[0].otherFacility;
+        default:
+            break;
+    }
+
+    switch(birthAttendedBy.toUpperCase()) {
+        case 'SELF':
+            birthAttendedByAnswer = conceptAnswers[1].self;
+            break;
+        case 'TBA':
+            birthAttendedByAnswer = conceptAnswers[0].home_tba;
+            break;
+        case 'OTHER':
+            birthAttendedByAnswer = conceptAnswers[0].other;
+        default:
+          break;
+    }
+
     var obs = {
         encounter_id: encounter.encounter_id,
         observations: [
-            {concept_id: 7430, value_numeric: num_of_babies}
+            {concept_id: 7430, value_numeric: num_of_babies},
+            {concept_id: 8397, value_coded: placeOfDeliveryAnswer}
         ]
     };
 
+    if (birthAttendedBy !== "") {
+        obs.observations.push({concept_id: 8396, value_coded: birthAttendedByAnswer});
+    }
+
+    if (healthFacility !== "") {
+        obs.observations.push({concept_id: 5937, value_numeric: healthFacility}); // facility code
+    }
+
     try{
 
-        // obs.observations.push(
-        //     // {concept_id: 1053, value_numeric: parseInt($('para').value)}
-        // );
         var delivery_time =  d_time;
         var delievery_date = d_date;
+
+        // if (observations.length > 0){
+        //
+        //
+        //     for(var i = 0; i < observations.length; i++){
+        //
+        //         pushed.push(observations[i]["concept_id"]);
+        //
+        //         obs.observations.push(observations[i]);
+        //
+        //     }
+        //
+        // }
 
         for(key in data){
 
@@ -152,124 +228,32 @@ function postBabyDeliveryObs(encounter){
                 var condition_at_birth = data[key][i]["Condition at birth"];
 
                 if (baby_status !== undefined && baby_status !== "?"){
-
                     obs.observations.push({concept_id: 8398, value_text: baby_status});
-
                 }
 
                 if (baby_status !== undefined && baby_status !== "?"){
                     obs.observations.push({concept_id: 7434, value_text: delivery_time});
-
                 }
 
                 if (baby_status !== undefined && baby_status !== "?"){
-
                     obs.observations.push({concept_id: 7435, value_datetime: delievery_date});
-
                 }
 
                 if (baby_gender !== undefined && baby_gender !== "?"){
-
                     obs.observations.push({concept_id: 8846, value_text: baby_gender});
-
                 }
 
                 if (delivery_method !== undefined && delivery_method !== "?"){
-
                     obs.observations.push({concept_id: 7438, value_text: delivery_method});
-
                 }
 
                 if (condition_at_birth !== undefined && condition_at_birth !== "?") {
-
                     obs.observations.push({concept_id: 1053, value_text: condition_at_birth});
-
                 }
-
             }
-
         }
-
-        var placeOfDelivery = document.getElementById('place_delivery').value;
-        var birthAttendedBy = document.getElementById('birth_attended_by').value;
-        var healthFacility = document.getElementById('health_facility').value;
-
-        var conceptAnswers = [
-            // place of delivery
-            {
-                "home_tba": 8850,
-                "transit": 8848,
-                "other": 6408
-            },
-            // birth attended by
-            {
-                "self": 9726
-            }
-        ];
-
-        var placeOfDeliveryAnswer;
-        var birthAttendedByAnswer;
-
-        switch(placeOfDelivery.toUpperCase()) {
-            case 'HOME':
-                placeOfDeliveryAnswer = conceptAnswers[0].home_tba;
-                break;
-            case 'TRANSIT':
-                placeOfDeliveryAnswer = conceptAnswers[0].transit;
-                break;
-            case 'TBA':
-                placeOfDeliveryAnswer = conceptAnswers[0].home_tba;
-                break;
-            case 'OTHER':
-                placeOfDeliveryAnswer = conceptAnswers[0].other;
-            default:
-                break;
-        }
-
-        switch(birthAttendedBy.toUpperCase()) {
-            case 'SELF':
-                birthAttendedByAnswer = conceptAnswers[1].self;
-                break;
-            case 'TBA':
-                birthAttendedByAnswer = conceptAnswers[0].home_tba;
-                break;
-            case 'OTHER':
-                birthAttendedByAnswer = conceptAnswers[0].other;
-        }
-
-        if (placeOfDelivery !== "") {
-
-            obs.observations.push({concept_id: 8397, value_coded: placeOfDeliveryAnswer});
-
-        }
-
-        if (birthAttendedBy !== "") {
-
-            obs.observations.push({concept_id: 8396, value_coded: birthAttendedByAnswer});
-
-        }
-
-        if (healthFacility !== "") {
-            obs.observations.push({concept_id: 5937, value_numeric: healthFacility}); // facility code
-        }
-        //
-        // if (observations.length > 0){
-        //
-        //
-        //     for(var i = 0; i < observations.length; i++){
-        //
-        //         pushed.push(observations[i]["concept_id"]);
-        //
-        //         obs.observations.push(observations[i]);
-        //
-        //     }
-        //
-        // }
-
-    }catch(e){
-
+    } catch(e) {
         console.log(e);
-
     }
 
     submitParameters(obs, "/observations", "nextPage");
