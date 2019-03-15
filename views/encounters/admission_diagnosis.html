@@ -26,7 +26,7 @@
 
         <form>
             <input type="text" name="summary"
-                   tt_onLoad="__$('keyboard').style.display = 'none';buildAdmissionDiagnosisPage();"
+                   tt_onLoad="__$('keyboard').style.display = 'none';considerPatientAdmissions();buildAdmissionDiagnosisPage();"
                    tt_pageStyleClass= "NoControls" helpText="Diagnosis" optional = "true"/>
 
         </form>
@@ -34,4 +34,14 @@
     </div>
 </div>
 </body>
+
+<script>
+    var considerPatientAdmissions;
+
+    function considerPatientAdmissions() {
+        // to remember to submit obstretic history when submitting admissions
+        considerPatientAdmissions = false;
+    }
+
+</script>
 
