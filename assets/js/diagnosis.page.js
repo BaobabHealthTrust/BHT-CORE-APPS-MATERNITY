@@ -13,7 +13,7 @@ function buildAdmissionDiagnosisPage() {
     container_row.setAttribute('id','main-container-row');
     container.appendChild(container_row);
 
-    var cells = [['Admission','left'],['Next','right']];
+    var cells = [['Low Risk','left'],['High Risk','right']];
     for(var i = 0 ; i < cells.length; i++) {
         var container_cell = document.createElement('div');
         container_cell.setAttribute('class','main-container-header-cell');
@@ -373,7 +373,7 @@ function removeDig(e) {
 
 function submitDiagnosis() {
     if(isHashEmpty(selectedDiagnosis)) {
-        showMessage("Please select one / more diagnosis by clicking;<br/><b>Admission</b> or <b>Next</b>");
+        showMessage("Please select one / more diagnosis by clicking;<br/><b>Low Risk</b> or <b>High Risk</b>");
         return;
     }
 
@@ -391,7 +391,7 @@ function submitDiagnosis() {
     }
 
     if(isHashEmpty(secondary_obs) && isHashEmpty(primary_obs)) {
-        showMessage("Please select one / more diagnosis by clicking;<br/><b>Admission</b> or <b>Next</b>");
+        showMessage("Please select one / more diagnosis by clicking;<br/><b>Low Risk</b> or <b>High Risk</b>");
         return;
     }
 
