@@ -131,44 +131,16 @@
             tt_pageStyleClass= "NoControls" helpText="Contractions" optional = "true"/>
       
 
-            <select id="contraction_intensity" name="contraction_intensity" helpText="Contraction Intensity" condition ="__$('contractions').value.trim().toUpperCase() != 'NO' && __$('fundus').value != 'N/A';" tt_onLoad="showCategory2('Physical examination');" >
+            <select id="contraction_intensity" name="contraction_intensity" helpText="Contraction Intensity" condition ="yesNo_Hash['PHYSICAL EXAMINATION']['Contractions'] == 'Yes';" tt_onLoad="showCategory2('Physical examination');" >
                 <option></option>
                 <option>Mild</option>
                 <option>Moderate</option>
                 <option>Strong</option>
-                <option>Niggling</option>
             </select>
 
             <input type="text" name="contractions_level" id="contractions_level" helpText="Contraction Frequency" field_type="number"
                    tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
-           __$('fundus').value != 'N/A' && __$('contraction_intensity').value != 'Niggling';" absoluteMax = "5" absoluteMin = "1" tt_onLoad="showCategory2('Physical examination');" />
-
-            <select id="station" name="station" helpText="Station" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');">
-                <option></option>
-                <option>-3</option>
-                <option>-2</option>
-                <option>-1</option>
-                <option>0</option>
-                <option>+1</option>
-                <option>+2</option>
-                <option>+3</option>
-                <option>N/A</option>
-            </select>
-
-            <select id="moulding" name="moulding" helpText="Moulding" tt_onLoad="showCategory2('Physical examination');">
-                <option></option>
-                <option>0</option>
-                <option>1+</option>
-                <option>2+</option>
-                <option>3+</option>
-                <option>N/A</option>
-            </select>
-
-            <select id="membranes" name="membranes" helpText="Membranes" tt_onLoad="showCategory2('Physical examination');">
-                <option></option>
-                <option>Intact</option>
-                <option>Raptured</option>
-            </select>
+           __$('fundus').value != 'N/A';" absoluteMax = "5" absoluteMin = "1" tt_onLoad="showCategory2('Physical examination');" />
 
             <select id="descent" name="descent" helpText="Descent" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');submitButton();" condition = "__$('fundus').value != 'N/A'" >
                 <option></option>
@@ -223,9 +195,6 @@
         var shoulder = document.getElementById('shoulder').value;
         var contractions = yesNo_Hash['PHYSICAL EXAMINATION']['Contractions'];
         var contractions_intensity = document.getElementById('contraction_intensity').value;
-        var station = document.getElementById('station').value;
-        var moulding = document.getElementById('moulding').value;
-        var membranes = document.getElementById('membranes').value;
         var descent = document.getElementById('descent').value;
         var contractions_level =  document.getElementById('contractions_level').value;
 
@@ -286,32 +255,7 @@
             {
                 "mild": 1901,
                 "moderate": 1900,
-                "strong": 1409,
-                "niggling": 9700
-            },
-            // station
-            {
-                "3minus": 9701,
-                "2minus": 9702,
-                "1minus": 9703,
-                "zero": 1101,
-                "1plus": 7129,
-                "2plus": 7130,
-                "3plus": 7131,
-                "na": 1175
-            },
-            /* Moulding */
-            {
-                "zero": 1101,
-                "one_plus": 7129,
-                "two_plus": 7130,
-                "three_plus": 7131,
-                "na": 1175
-            },
-            /* Membranes answer */
-            {
-                "intact": 9707,
-                "raptured": 8653,
+                "strong": 1409
             },
             /* descent */
             {
@@ -342,9 +286,6 @@
         var shoulderAnswer;
         var contractionsAnswer;
         var contractionsIntensityAnswers;
-        var stationAnswer;
-        var mouldingAnswer;
-        var membranesAnswer;
         var descentAnswer;
         var faceAnswer;
 
@@ -474,100 +415,41 @@
             case 'STRONG':
                 contractionsIntensityAnswers = conceptAnswers[7].strong;
                 break;
-            case 'NIGGLING':
-                contractionsIntensityAnswers = conceptAnswers[7].niggling;
-                break;
             default:
                 break;
         }
-        switch(station) {
-            case '-3':
-                stationAnswer = conceptAnswers[1]["3minus"];
-                break;
-            case '-2':
-                stationAnswer = conceptAnswers[1]["2minus"];
-                break;
-            case '-1':
-                stationAnswer = conceptAnswers[1]["1minus"];
-                break;
-            case '0':
-                stationAnswer = conceptAnswers[1].zero;
-                break;
-            case '+1':
-                stationAnswer = conceptAnswers[1]["1plus"];
-                break;
-            case '+2':
-                stationAnswer = conceptAnswers[1]["2plus"];
-                break;
-            case '+3':
-                stationAnswer = conceptAnswers[1]["3plus"];
-                break;
-            case 'N/A':
-                stationAnswer = conceptAnswers[1].na;
-                break;
-            default:
-                break;
-        }
-        switch (moulding) {
-            case '0':
-                mouldingAnswer = conceptAnswers[8].zero;
-                break;
-            case '1+':
-                mouldingAnswer = conceptAnswers[8].one_plus;
-                break;
-            case '2+':
-                mouldingAnswer = conceptAnswers[8].two_plus;
-                break;
-            case '3+':
-                mouldingAnswer = conceptAnswers[8].three_plus;
-                break;
-            case 'N/A':
-                mouldingAnswer = conceptAnswers[8].na;
-                break;
-            default:
-                break;
-        }
-        switch (membranes.toUpperCase()) {
-            case 'INTACT':
-                membranesAnswer = conceptAnswers[9].intact;
-                break;
-            case 'RAPTURED':
-                membranesAnswer = conceptAnswers[9].raptured;
-                break;
-            default:
-                break;
-        }
+
         switch (descent) {
             case 'N/A':
-                descentAnswer = conceptAnswers[10].na;
+                descentAnswer = conceptAnswers[8].na;
                 break;
             case '5/5':
-                descentAnswer = conceptAnswers[10].five_over_five;
+                descentAnswer = conceptAnswers[8].five_over_five;
                 break;
             case '4/5':
-                descentAnswer = conceptAnswers[10].four_over_five;
+                descentAnswer = conceptAnswers[8].four_over_five;
                 break;
             case '3/5':
-                descentAnswer = conceptAnswers[10].three_over_five;
+                descentAnswer = conceptAnswers[8].three_over_five;
                 break;
             case '2/5':
-                descentAnswer = conceptAnswers[10].two_over_five;
+                descentAnswer = conceptAnswers[8].two_over_five;
                 break;
             case '1/5':
-                descentAnswer = conceptAnswers[10].one_over_five;
+                descentAnswer = conceptAnswers[8].one_over_five;
                 break;
             case '0/5':
-                descentAnswer = conceptAnswers[10].zero_over_five;
+                descentAnswer = conceptAnswers[8].zero_over_five;
                 break;
             default:
                 break;
         }
         switch (presentation.toUpperCase()) {
             case 'COMPOUND':
-                presentationAnswer = conceptAnswers[11].compound;
+                presentationAnswer = conceptAnswers[9].compound;
                 break;
             case 'CEPHALIC':
-                presentationAnswer = conceptAnswers[11].cephalic;
+                presentationAnswer = conceptAnswers[9].cephalic;
                 break;
             case 'BREECH':
                 presentationAnswer = conceptAnswers[1].breech;
@@ -576,13 +458,13 @@
                 presentationAnswer = conceptAnswers[1].face;
                 break;
             case 'FOOTLING':
-                presentationAnswer = conceptAnswers[11].footling;
+                presentationAnswer = conceptAnswers[9].footling;
                 break;
             case 'Cord':
-                presentationAnswer = conceptAnswers[11].cord;
+                presentationAnswer = conceptAnswers[9].cord;
                 break;
             case 'BROW':
-                presentationAnswer = conceptAnswers[11].brow;
+                presentationAnswer = conceptAnswers[9].brow;
                 break;
             case 'SHOULDER':
                 presentationAnswer = conceptAnswers[1].shoulder;
@@ -599,11 +481,7 @@
                 { concept_id: 7836, value_coded: lieAnswer },
                 { concept_id: 7837, value_coded: positionAnswer },
                 { concept_id: 7838, value_coded: contractionsAnswer },
-                { concept_id: 7842, value_text: station },
-                { concept_id: 7840, value_coded: descentAnswer }, 
-                { concept_id: 7944, value_coded: mouldingAnswer }, 
-                { concept_id: 7845, value_coded: membranesAnswer }
-
+                { concept_id: 7840, value_coded: descentAnswer }
             ]
         };
 
