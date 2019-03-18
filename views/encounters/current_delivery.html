@@ -214,7 +214,7 @@
             <!-- Details of the Babies -->
             <input name="baby_details" type="text"
                    id="input_page" helptext="Baby details"
-                   tt_onLoad="getNumberOfBabies();jQuery('#clearButton').css('display', 'none');parsedConceptName = '';
+                   tt_onLoad="assignNumberOfBabies();jQuery('#clearButton').css('display', 'none');parsedConceptName = '';
               loadInputWindow();showCategory2('Current delivery');"
                    optional="true" />
 
@@ -289,7 +289,7 @@
     var apgar_first_minute;
     var apgar_fifth_minute;
 
-    function getNumberOfBabies() {
+    function assignNumberOfBabies() {
         numberOfBabies = sessionStorage.getItem('numberOfBabies');
     }
     function checkDeliveryPlace() {
