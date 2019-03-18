@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/apps/MATERNITY/assets/css/current_delivery.css" type="text/css"/>
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <script type="text/javascript" src="/assets/js/moment.js"></script>
 <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
 <script type="text/javascript" src="/apps/MATERNITY/assets/js/current_delivery.js"></script>
@@ -168,9 +168,6 @@
         background: white;
     }
 
-
-
-
 </style>
 <style>
 
@@ -195,42 +192,71 @@
 </script>
 <style>
 
-.time_btn{
-  width:100px;
-}
-.time_input{
-  width:100px;
-}
+    .time_btn{
+        width:100px;
+    }
+    .time_input{
+        width:100px;
+    }
 </style>
 <body id="mateme">
 <div id="container">
     <div id="content">
         <form id="has_dynamic_fields">
 
+            <!-- Number of Babies -->
             <input id="number_babies" optional="true"
-                helpText="Number of Babies Born"
-                tt_onLoad="loadSelections(); jQuery('.dcimg').click(); showCategory2('Current delivery');" 
-                name="number_babies"
-              />
+                   helpText="Number of Babies Born" tt_onUnload = "sessionStorage.setItem('numberOfBabies',document.getElementById('input_1').value);"
+                   tt_onLoad="loadSelections(); jQuery('.dcimg').click();showCategory2('Current delivery');"
+                   name="number_babies"
+            />
 
-              <input name="baby_details" type="text"
-              id="input_page" helptext="Baby details" 
-              tt_onLoad="jQuery('#clearButton').css('display', 'none');parsedConceptName = ''; 
-              loadInputWindow(); showCategory2('Current delivery'); "
-              optional="true" />
+            <!-- Details of the Babies -->
+            <input name="baby_details" type="text"
+                   id="input_page" helptext="Baby details"
+                   tt_onLoad="getNumberOfBabies();jQuery('#clearButton').css('display', 'none');parsedConceptName = '';
+              loadInputWindow();showCategory2('Current delivery');"
+                   optional="true" />
 
+            <!-- Baby 1 Apgar -->
             <input type="text" name="summary" id="apgar_one"
-                   tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(1,'one');"
-                   tt_pageStyleClass= "NoControls" helpText="Baby 1st Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
-
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(1,'one');showCategory2('Current delivery');"
+                   tt_pageStyleClass= "NoControls" helpText="1<sup>st</sup> Baby: 1<sup>st</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
 
             <input type="text" name="summary" id="apgar_five"
-                   tt_onLoad="__$('keyboard').style.display = 'none'; showApgarControl(5,'five');"
-                   tt_pageStyleClass= "NoControls" helpText="Baby 5th Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(5,'five');showCategory2('Current delivery');"
+                   tt_pageStyleClass= "NoControls" helpText="1<sup>st</sup> Baby: 5<sup>th</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+
+            <!-- Baby 2 Apgar -->
+            <input type="text" name="summary" id="apgar_one_two"
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(1,'one');showCategory2('Current delivery');" condition="(numberOfBabies == 2 || numberOfBabies == 3 || numberOfBabies == 4)"
+                   tt_pageStyleClass= "NoControls" helpText="2<sup>nd</sup> Baby: 1<sup>st</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+
+            <input type="text" name="summary" id="apgar_five_two"
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(5,'five');showCategory2('Current delivery');" condition="(numberOfBabies == 2 || numberOfBabies == 3 || numberOfBabies == 4)"
+                   tt_pageStyleClass= "NoControls" helpText="2<sup>nd</sup> Baby: 5<sup>th</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+
+            <!-- Baby 3 Apgar -->
+            <input type="text" name="summary" id="apgar_one_three"
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(1,'one');showCategory2('Current delivery');" condition="(numberOfBabies == 3 || numberOfBabies == 4)"
+                   tt_pageStyleClass= "NoControls" helpText="3<sup>rd</sup> Baby: 1<sup>st</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
 
 
+            <input type="text" name="summary" id="apgar_five_three"
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(5,'five');showCategory2('Current delivery');" condition="(numberOfBabies == 3 || numberOfBabies == 4)"
+                   tt_pageStyleClass= "NoControls" helpText="3<sup>rd</sup> Baby: 5<sup>th</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
 
-            <select id="place_delivery" name="place_delivery" helpText="Place of delivery" tt_onUnLoad="checkDeliveryPlace();">
+            <!-- Baby 4 Apgar -->
+            <input type="text" name="summary" id="apgar_one_four"
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(1,'one');showCategory2('Current delivery');" condition="(numberOfBabies == 4)"
+                   tt_pageStyleClass= "NoControls" helpText="4<sup>th</sup> Baby: 1<sup>st</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+
+            <input type="text" name="summary" id="apgar_five_four"
+                   tt_onLoad="__$('keyboard').style.display = 'none';showApgarControl(5,'five');showCategory2('Current delivery');" condition="(numberOfBabies == 4)"
+                   tt_pageStyleClass= "NoControls" helpText="4<sup>th</sup> Baby: 5<sup>th</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
+
+            <!-- Apgar ends -->
+            <select id="place_delivery" name="place_delivery" helpText="Place of delivery" tt_onUnLoad="showCategory2('Current delivery');checkDeliveryPlace();">
                 <option></option>
                 <option>This facility</option>
                 <option>In transit</option>
@@ -243,9 +269,9 @@
                    key="health_facility" helpText="Specify Health Facility"
                    ajaxURL="/locations?name="
                    key="health_facility" allowFreeText="true"
-                   condition = "$('place_delivery').value == 'Other facility'" tt_onLoad="changeSubmitFunction();" />
+                   condition = "$('place_delivery').value == 'Other facility'" tt_onLoad="changeSubmitFunction();showCategory2('Current delivery');" />
 
-            <select id="birth_attended_by" name="birth_attended_by" tt_onLoad="changeSubmitFunction();" helpText="Birth attended by" condition = "($('place_delivery').value == 'Home/TBA' || $('place_delivery').value == 'In transit' )">
+            <select id="birth_attended_by" name="birth_attended_by" tt_onLoad="changeSubmitFunction();showCategory2('Current delivery');" helpText="Birth attended by" condition = "($('place_delivery').value == 'Home/TBA' || $('place_delivery').value == 'In transit' )">
                 <option></option>
                 <option>Self</option>
                 <option>TBA</option>
@@ -258,122 +284,128 @@
 </div>
 </body>
 <script>
+    var baby;
+    var numberOfBabies;
     var apgar_first_minute;
     var apgar_fifth_minute;
+
+    function getNumberOfBabies() {
+        numberOfBabies = sessionStorage.getItem('numberOfBabies');
+    }
     function checkDeliveryPlace() {
         if ($('place_delivery').value.toUpperCase() == 'THIS FACILITY') {
             submitCurrentDeliveryEncounter();
         }
     }
- function timeOperations(id){
+    function timeOperations(id){
         switch(id){
-          case 'hour_plus':
-              var value = parseInt(__$("hour").value);
+            case 'hour_plus':
+                var value = parseInt(__$("hour").value);
                 var v = value + 1;
                 if(v<10){
-              __$("hour").value = "0"+v;
+                    __$("hour").value = "0"+v;
                 }else{
-                    __$("hour").value = value + 1; 
+                    __$("hour").value = value + 1;
                 }
-              _
-          break;
-          case 'hour_minus':
-              var value = parseInt(__$("hour").value);
-              var v = value - 1;
-              if(v < 10){
-              __$("hour").value = "0"+v;}
-              else{
-                __$("hour").value = value - 1;
-              }
-          break;
-          case 'minute_plus':
-            var value = parseInt(__$("minutes").value);
-            var v = value + 1;
-            if(v < 10){
-              __$("minutes").value = "0"+v;
-            }else{
-                __$("minutes").value = value +1;
-            }
-          break;
-          case 'minute_minus':
-            var value = parseInt(__$("minutes").value);
-            var v = value - 1;
-            if(v <10){
-              __$("minutes").value = "0"+v;
-            }else{
-                __$("minutes").value = value - 1;
-            }
-          case 'seconds_plus':
-              var value = parseInt(__$("seconds").value);
-              var v = value + 1;
-              if(v < 10){
-              __$("seconds").value = "0"+v;
-              }else{
-                __$("seconds").value = value + 1;
-              }
-          break;
-          case 'seconds_minus':
-              var value = parseInt(__$("seconds").value);
-              var v = value - 1;
-              if(v < 10){
-              __$("seconds").value = "0"+v;
-              }else{
-                __$("seconds").value = value - 1;
-              }
-          default:
-            break;
+                _
+                break;
+            case 'hour_minus':
+                var value = parseInt(__$("hour").value);
+                var v = value - 1;
+                if(v < 10){
+                    __$("hour").value = "0"+v;}
+                else{
+                    __$("hour").value = value - 1;
+                }
+                break;
+            case 'minute_plus':
+                var value = parseInt(__$("minutes").value);
+                var v = value + 1;
+                if(v < 10){
+                    __$("minutes").value = "0"+v;
+                }else{
+                    __$("minutes").value = value +1;
+                }
+                break;
+            case 'minute_minus':
+                var value = parseInt(__$("minutes").value);
+                var v = value - 1;
+                if(v <10){
+                    __$("minutes").value = "0"+v;
+                }else{
+                    __$("minutes").value = value - 1;
+                }
+            case 'seconds_plus':
+                var value = parseInt(__$("seconds").value);
+                var v = value + 1;
+                if(v < 10){
+                    __$("seconds").value = "0"+v;
+                }else{
+                    __$("seconds").value = value + 1;
+                }
+                break;
+            case 'seconds_minus':
+                var value = parseInt(__$("seconds").value);
+                var v = value - 1;
+                if(v < 10){
+                    __$("seconds").value = "0"+v;
+                }else{
+                    __$("seconds").value = value - 1;
+                }
+            default:
+                break;
         }
     }
-function incrementDay(){
-  var value = parseInt(__$("dateselector_day").value);
-  var v = value + 1;
-  if(v<10){
-        __$("dateselector_day").value = "0"+v;
-      }else{
-        __$("dateselector_day").value = value + 1; 
-      }
-}
-function decrementDay(){
-  var value = parseInt(__$("dateselector_day").value);
-  var v = value - 1;
-  if(v<10){
-        __$("dateselector_day").value = "0"+v;
-      }else{
-        __$("dateselector_day").value = value - 1; 
-      }
-}
-function incrementYear(){
-  var value = parseInt(__$("dateselector_year").value);
-  __$("dateselector_year").value = value + 0001; 
+    function incrementDay(){
+        var value = parseInt(__$("dateselector_day").value);
+        var v = value + 1;
+        if(v<10){
+            __$("dateselector_day").value = "0"+v;
+        }else{
+            __$("dateselector_day").value = value + 1;
+        }
+    }
+    function decrementDay(){
+        var value = parseInt(__$("dateselector_day").value);
+        var v = value - 1;
+        if(v<10){
+            __$("dateselector_day").value = "0"+v;
+        }else{
+            __$("dateselector_day").value = value - 1;
+        }
+    }
+    function incrementYear(){
+        var value = parseInt(__$("dateselector_year").value);
+        __$("dateselector_year").value = value + 0001;
 
-}
-var dob_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    }
+    var dob_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-function decrementYear(){
-  var value = parseInt(__$("dateselector_year").value);
-  __$("dateselector_year").value = value - 0001; 
-      
-}
+    function decrementYear(){
+        var value = parseInt(__$("dateselector_year").value);
+        __$("dateselector_year").value = value - 0001;
 
-function incrementMonth(){
-  var value = $("dateselector_month").value;
-  var value = $("dateselector_month").value;
-  var value_index = dob_months.indexOf(value);
-  __$("dateselector_month").value = dob_months[(value_index+1) % dob_months.length];
-}
+    }
 
-function decrementMonth(){
-  var value = $("dateselector_month").value;
-  var value_index = dob_months.indexOf(value);
-  if ((value_index-1) < 0){
-    __$("dateselector_month").value = dob_months[(dob_months.length-1) % dob_months.length];
-  }else{
-    __$("dateselector_month").value = dob_months[(value_index-1) % dob_months.length];
-  }
-  
+    function incrementMonth(){
+        var value = $("dateselector_month").value;
+        var value = $("dateselector_month").value;
+        var value_index = dob_months.indexOf(value);
+        __$("dateselector_month").value = dob_months[(value_index+1) % dob_months.length];
+    }
 
-}
-function saveApgar(apgarScore,minute){
+    function decrementMonth(){
+        var value = $("dateselector_month").value;
+        var value_index = dob_months.indexOf(value);
+        if ((value_index-1) < 0){
+            __$("dateselector_month").value = dob_months[(dob_months.length-1) % dob_months.length];
+        }else{
+            __$("dateselector_month").value = dob_months[(value_index-1) % dob_months.length];
+        }
+
+
+    }
+    function saveApgar(apgarScore,minute){
         if(minute == 'one'){
             apgar_first_minute = apgarScore;
         }else{
@@ -382,5 +414,5 @@ function saveApgar(apgarScore,minute){
         console.log("Minute "+ minute);
         console.log("apgar "+ apgarScore);
     }
-  
+
 </script>
