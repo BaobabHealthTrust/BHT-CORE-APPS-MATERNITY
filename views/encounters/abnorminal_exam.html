@@ -6,7 +6,7 @@
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 
 <style>
@@ -22,13 +22,13 @@
   <div id="container">
     <div id="content">
       <form>
-         <select id="uterus" name="uterus" tt_onLoad="changeNextBTN();" helpText="Uterus"> 
+         <select id="uterus" name="uterus" tt_onLoad="showCategory2('Abdorminal Examination');" helpText="Uterus" >
           <option>Well contracted</option>
           <option>Not contracted (boggy)</option>
           </select>
-          <select id="status_of_placenta" name="uterus" tt_onLoad="changeNextButton();" helpText="Status of Placenta"> 
-            <option>Delivered</option>
-            <option>Not delivered</option>
+          <select id="status_of_placenta" name="uterus" tt_onLoad="showCategory2('Abdorminal Examination');changeNextButton();" helpText="Status of Placenta" >
+            <option>Complete</option>
+            <option>Incomplete</option>
           </select>
          
       </form>
@@ -73,8 +73,8 @@
             },
             /*Placenta*/
             {
-                "delivered": 7377,
-                "notDelivered": 9722
+                "complete": 1267,
+                "incomplete": 7170
             }
         ];
 
@@ -92,11 +92,11 @@
                 break;
         }
         switch (statusOfPlancenta.toUpperCase()) {
-            case 'DELIVERED':
-                placentaAnswer = conceptAnswers[1].delivered;
+            case 'COMPLETE':
+                placentaAnswer = conceptAnswers[1].complete;
                 break;
-            case 'NOT DELIVERED':
-                placentaAnswer = conceptAnswers[1].notDelivered;
+            case 'INCOMPLETE':
+                placentaAnswer = conceptAnswers[1].incomplete;
                 break;
             default:
                 break;
@@ -105,7 +105,7 @@
             encounter_id: encounter["encounter_id"],
             observations: [
                 { concept_id: 8394, value_coded: uterusAnswer }, 
-                { concept_id: 8395, value_text: placentaAnswer }
+                { concept_id: 8395, value_coded: placentaAnswer }
             ]
         };
 
