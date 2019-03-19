@@ -142,7 +142,7 @@
                    tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
            __$('fundus').value != 'N/A';" absoluteMax = "5" absoluteMin = "1" tt_onLoad="showCategory2('Physical examination');" />
 
-            <select id="descent" name="descent" helpText="Descent" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Physical examination');submitButton();" condition = "__$('fundus').value != 'N/A'" >
+            <select id="descent" name="descent" helpText="Descent" tt_pageStyleClass="NoKeyboard"  condition = "__$('fundus').value != 'N/A'" >
                 <option></option>
                 <option>N/A</option>
                 <option>5/5</option>
@@ -153,6 +153,9 @@
                 <option>0/5</option>
             </select>
 
+            <input type="text" name="fetal_heart_rate" id="fetal_heart_rate" helpText="Fetal Heart rate"
+           field_type="number" tt_onLoad="showCategory2('Physical examination');changeNextButton();" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" min ="0"  max="200"
+           />
 
         </form>
 
@@ -197,6 +200,7 @@
         var contractions_intensity = document.getElementById('contraction_intensity').value;
         var descent = document.getElementById('descent').value;
         var contractions_level =  document.getElementById('contractions_level').value;
+        var fetalHeartRate =  document.getElementById('fetal_heart_rate').value;
 
         var conceptAnswers = [
             /*Lie*/
@@ -481,10 +485,11 @@
                 { concept_id: 7836, value_coded: lieAnswer },
                 { concept_id: 7837, value_coded: positionAnswer },
                 { concept_id: 7838, value_coded: contractionsAnswer },
+                { concept_id: 7839, value_numeric: fetalHeartRate },
                 { concept_id: 7840, value_coded: descentAnswer }
+               
             ]
         };
-
         if(breech !== '') {
             obs.observations.push( { concept_id: 9425, value_coded: breechAnswer });
         }
@@ -503,11 +508,12 @@
         if(contractions_level !== '') {
             obs.observations.push( { concept_id: 7943, value_numeric: contractions_level });
         }
-
+        console.log("Fetal "+fetalHeartRate);
+        console.log(obs);
         submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
-        nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+       // nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>

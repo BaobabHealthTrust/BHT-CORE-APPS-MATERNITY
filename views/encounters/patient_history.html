@@ -1,17 +1,29 @@
-<script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
-<link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>Admission details</title>
+    <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/yes_no_ctrls.js"></script>
 
-<script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
-<script type="text/javascript" src="/assets/js/post_parameters.js"></script>
-<script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
-<script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
-<script type="text/javascript" src="/assets/js/moment.js"></script>
-<script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
-<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
-<link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
-<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/yes_no_ctrls.css" type="text/css">
+    <script type="text/javascript" src="/assets/js/post_parameters.js"></script>
+    <script type="text/javascript" src="/assets/js/generic_ajaxrequest.js"></script>
+    <script type="text/javascript" src="/assets/js/moment.js"></script>
+    <script type="text/javascript" src="/assets/js/httpUtils.js"></script>
+    <script type="text/javascript" src="/assets/js/alertifyjs/alertify.js"></script>
+    <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
+    <script type="text/javascript" src="/assets/js/moment.js"></script>
+      <script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
+    <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+    
 <script type="text/javascript" src="/apps/MATERNITY/assets/js/patient_history.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
+
+</head>
+
 
 <style>
 
@@ -22,7 +34,7 @@
 
 <script>
 var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
-
+var deliveries;
   function validateInput(){
     try{
       var ttv_status = $('touchscreenInput'+tstCurrentPage).value;
@@ -47,6 +59,23 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
       }
   }
 
+  function calculateAbortions() {
+        
+        updateDeliveries();
+              
+        if ($('gravida').value > 1) {
+                
+          $('abortions').value = parseInt(__$('gravida').value) - parseInt(__$('para').value) - 1
+              
+        }
+            
+      }
+
+      function updateDeliveries() {
+        
+        deliveries = __$('para').value;
+            
+      }
 </script>
 <body id="mateme">
   <div id="container">
@@ -54,19 +83,39 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
 
       <form>
-    
-     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="12" field_type="number" tt_onLoad="showCategory2('Obstretic history'); jQuery('#zero').hide();" tt_pageStyleClass="Numeric NumbersOnly" />
+
+     <input type="text" name="gravida" id="gravida" helpText="Gravida" AbsoluteMax="12" field_type="number" 
+     tt_onLoad="showCategory2('Obstretic history'); jQuery('#zero').hide();" tt_pageStyleClass="Numeric NumbersOnly" 
+     absoluteMin="1" max="9" absoluteMax="19"
+    validationRule="^[0-9]+$"
+    validationMessage="Enter the valid number."
+    tt_onUnload="__$('gravida').value == __$('touchscreenInput'+tstCurrentPage).value"/>
+     
+     <input type="text" name="para" id="para" helpText="Parity" AbsoluteMax="12" field_type="number" 
+     condition="$('gravida').value > 1;" tt_onLoad="$('nextButton').onmousedown = function(){ gotoNextPage(); };
+     showCategory2('Obstetric history');data = {};
+     $('touchscreenInput' + tstCurrentPage).setAttribute('absoluteMax', (__$('gravida').value - 1)); 
+     details_available = []"
+     tt_onUnload="if($('para').value == 0){}; 
+     $('abortions').setAttribute('absoluteMax', (parseInt(__$('gravida').value - parseInt(__$('para').value) -1 )));
+     $('abortions').setAttribute('absoluteMin', (parseInt(__$('gravida').value - parseInt(__$('para').value) -1 )));
+     $('abortions').setAttribute('validationRule', '[' + (parseInt(__$('gravida').value) -
+     parseInt(__$('para').value) - 1) + ']');
+     $('abortions').setAttribute('validationMessage', 'Expected value is ' + (parseInt(__$('gravida').value) -
+     parseInt($('para').value) - 1));$('abortions').removeAttribute('validationRule'); 
+     $('abortions').removeAttribute('validationMessage'); calculateAbortions();"
+    tt_pageStyleClass="Numeric NumbersOnly" />
       
+    
+    <input name="number of abortions" id="abortions"
+    helpText="Number of abortions" tt_pageStyleClass="NumbersOnly"
+    condition="false" validationRule="[0-5]"
+    validationMessage="Check your value"  condition = "$('gravida').value > 1"
+  />
      <input type="text" name="multiple_pregnancy" 
       id="multiple_pregnancy"
       tt_onLoad="__$('keyboard').style.display = 'none';addYesNo();"
       tt_pageStyleClass= "NoControls" helpText="Multiple pregnancies" optional = "true"/>
-
-      <input type="text" name="num_of_deliveries" id="num_of_deliveries" helpText="Number of deliveries" tt_onLoad="showCategory2('Obstretic history');" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" 
-      condition = "$('gravida').value > 1"/>
-      
-      <input type="text" name="num_of_abortions" id="num_of_abortions" helpText="Number of abortions" field_type="number" tt_onLoad="showCategory2('Obstretic history');" tt_pageStyleClass="Numeric NumbersOnly" 
-      condition = "$('gravida').value > 1"/>
      
       <select id="delivery_mode" name="delivery_mode" tt_onLoad="showCategory2('Obstetric history');changeNextBTN();" helpText="Select Delivery Mode" condition = "$('gravida').value > 1"> 
             <option>Spontaneous Delivery</option>
@@ -74,8 +123,11 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
             <option>Breech Delivery</option>
       </select>
 
+      
       <input type="text" name="menstruation_date" id="menstruation_date" tt_onLoad="showCategory2('Obstetric history');changeNextBTN();" helpText="Last Menstruation Date" field_type="date"
       tt_pageStyleClass="date" />
+
+  
 
       <input type="text" name="ttv_status" id="ttv_status" helpText="TTV Status" max="5" field_type="number"  tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="showCategory2('Obstetric history');submitButton();" />
 
@@ -119,8 +171,7 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
 
       var gravida = document.getElementById('gravida').value;
       var multiple_pregnancy = yesNo_Hash['OBSTETRIC HISTORY']['Ever had multiple pregnancies'];
-      var num_of_deliveries = document.getElementById('num_of_deliveries').value;
-      var num_of_abortions = document.getElementById('num_of_abortions').value;
+      var num_of_abortions = $('abortions').value;
       var delivery_mode = document.getElementById('delivery_mode').value;
       var ttv_status = document.getElementById('touchscreenInput' + tstCurrentPage).value;
       var menstruation_date = document.getElementById('menstruation_date').value;
@@ -170,11 +221,10 @@ var tstCurrentDate = moment(tstCurrentDate).format("YYYY-MM-DD");
           observations: [
               { concept_id: 7142, value_coded: multiplePregnancyAnswer }, 
               { concept_id: 1755, value_text: gravida },
-              { concept_id: 1053, value_numeric: num_of_deliveries },
+              { concept_id: 1053, value_numeric: deliveries },
               { concept_id: 7942, value_numeric: num_of_abortions }, 
               { concept_id: 7438, value_coded: deliveryModeAnswer },
-              { concept_id: 7124, value_numeric: ttv_status } 
-              
+              { concept_id: 7124, value_numeric: ttv_status }              
              ]
       };
       if(menstruation_date !== '') {

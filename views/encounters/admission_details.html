@@ -46,7 +46,7 @@
             <input type="text" name="admission_time"
                    id="admission_time" field_type="advancedTime"
                    key="admission_time" helpText="Admission Time"
-                   allowFreeText="true" tt_onLoad="showCategory2('Patient admissions'); jQuery('#nextButton').show();"
+                   allowFreeText="true" tt_onLoad=" displayTime();showCategory2('Patient admissions'); jQuery('#nextButton').show();"
                    condition = "timeButton();$('admission_date').value.trim().length > 0;"/>
 
             <select id="observation" name="observations" helpText="General condition" tt_pageStyleClass="NoKeyboard" tt_requireNextClick='false' tt_onLoad="jQuery('#nextButton').hide(); showCategory2('Patient admissions');" >
@@ -90,6 +90,16 @@
       validateDate();
       }
     }
+
+    function displayTime(){
+        console.log("Vaaaaaaaaaak");
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        var timeValue = h+":"+m+":"+s;
+        document.getElementById("admission_time").setAttribute('value', timeValue); 
+      }
 
     function timeButton(){
     var nextButton = document.getElementById('nextButton');
