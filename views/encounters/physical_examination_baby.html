@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/assets/js/does_connection_exist.js"></script>
 <link rel="stylesheet" href="/assets/css/alertifyjs/css/alertify.css" type="text/css">
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/apps/MATERNITY/assets/js/common.js"></script>
 <script type="text/javascript" src="/apps/MATERNITY/assets/js/physical_exam_baby.js"></script>
 
 <style>
@@ -23,7 +24,7 @@
 
 
          <form>
-       <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onLoad="changeButtonDead();" > 
+       <select id="baby_condition" name="baby_condition" helpText="Baby: Condition at admission" tt_onLoad="showCategory2('Baby Physical Exam');changeButtonDead();" >
             <option></option>
             <option>Stable</option>
             <option >Critical</option>
@@ -32,26 +33,26 @@
 
           <input type="text" name="baby_temperature"
           id="baby_temperature" helpText="Baby: Temperature"  min="20" max ="45"
-          field_type="number" tt_onLoad="checkDead();" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" 
+          field_type="number" tt_onLoad="showCategory2('Baby Physical Exam');checkDead();" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal"
           condition = "__$('baby_condition').value != 'Dead'"/>
 
 
           <input type="text" name="baby_respiratory_rate"
            id="baby_respiratory_rate" helpText="Baby: Respiratory rate"  min="0" max ="80"
-           field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" 
+           field_type="number" tt_onLoad="showCategory2('Baby Physical Exam');" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal"
            condition = "__$('baby_condition').value != 'Dead'"/>
           
 
           <input type="text" name="baby_heart_rate" id="baby_heart_rate" helpText="Baby: Heart rate"
-           field_type="number" tt_onLoad="" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" min ="0"  max="200"
+           field_type="number" tt_onLoad="showCategory2('Baby Physical Exam');" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" min ="0"  max="200"
            condition = "__$('baby_condition').value != 'Dead'"/>
 
           <input type="text" name="baby_weight" id="baby_weight" 
-          helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad="" min="2.5" max="5" validationMessage = "You must enter a decimal between 0 and 9 (for example: 2<b>.6</b>)"
+          helpText="Baby: Weight(Kg)" field_type="number" tt_onLoad="showCategory2('Baby Physical Exam');" min="2.5" max="5" validationMessage = "You must enter a decimal between 0 and 9 (for example: 2<b>.6</b>)"
           absoluteMax= "10"
           tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal"  condition = "__$('baby_condition').value != 'Dead'"/>
 
-          <select id="baby_abdomen" name="baby_abdomen" tt_onLoad="changeNextBTN();" helpText="Baby: Abdomen"
+          <select id="baby_abdomen" name="baby_abdomen" tt_onLoad="showCategory2('Baby Physical Exam');" helpText="Baby: Abdomen"
           condition = "__$('baby_condition').value != 'Dead'"> 
             <option></option>   
             <option>Distended</option>
@@ -59,13 +60,13 @@
            </select>
 
            <input type="text" name="summary"
-           tt_onLoad="__$('keyboard').style.display = 'none';changeNextButton();addYesNo();"
+           tt_onLoad="showCategory2('Baby Physical Exam');__$('keyboard').style.display = 'none';changeNextButton();addYesNo();"
            tt_pageStyleClass= "NoControls" helpText="Baby examination" optional = "true"/>
 
           <input name="baby_abnormalities" 
           id="baby_abnormalities" field_type="alpha" 
           helpText="Specify any abnormalities" 
-          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'" tt_onLoad="changeNextButton();"/> 
+          condition = "__$('baby_condition').value != 'Dead' && __$('baby_abnormals').value == 'Yes'" tt_onLoad="showCategory2('Baby Physical Exam');changeNextButton();"/>
 
       </form>
 
