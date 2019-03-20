@@ -29,7 +29,7 @@
 
          <form>
             <select id="blood_loss" name="blood_loss" helpText="Blood Loss"
-            tt_onLoad="showCategory2('Vaginal examination');clearInput(); jQuery('#nextButton').hide();"
+            tt_onLoad="showCategory2('Vaginal exam - Postnatal');clearInput(); jQuery('#nextButton').hide();"
             tt_onUnload="jQuery('#nextButton').show(); "
             tt_requireNextClick='false'
             tt_pageStyleClass="NoKeyboard"> 
@@ -39,7 +39,7 @@
           </select>
 
            <select id="tear" name="tear"  helpText="Tear"
-           tt_onLoad="showCategory2('Vaginal examination');clearInput(); jQuery('#nextButton').hide();"
+           tt_onLoad="showCategory2('Vaginal exam - Postnatal');clearInput(); jQuery('#nextButton').hide();"
             tt_onUnload="jQuery('#nextButton').show(); "
             tt_requireNextClick='false'
             tt_pageStyleClass="NoKeyboard"> 
@@ -47,7 +47,7 @@
             <option>No</option>
           </select>
 
-          <select id="third_stage" name="third_stage" tt_onLoad="changeNextButton();" helpText="Third Stage"> 
+          <select id="third_stage" name="third_stage" tt_onLoad="showCategory2('Vaginal exam - Postnatal');changeNextButton();" helpText="Third Stage">
             <option>Complete</option>
             <option>Incomplete</option>
           </select>
