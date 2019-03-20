@@ -128,7 +128,6 @@
 </body>
 
 <script>
-    var fundus;
     var genetaliaInspection;
     var station;
     var cervicalDilation;
@@ -191,7 +190,6 @@
 
     function postVaginalObs(encounter) {
 
-        fundus = document.getElementById('fundus').value;
         genetaliaInspection = document.getElementById('genetalia_inspection').value;
         station = document.getElementById('station').value;
         cervicalDilation = document.getElementById('cervical_dilation').value;
@@ -450,7 +448,6 @@
         var obs = {
             encounter_id: encounter["encounter_id"],
             observations: [
-                { concept_id: 7835, value_numeric: fundus}, // fundus
                 { concept_id: 7841, value_coded: genetaliaInspectionAnswer}, // genetalia inspection
                 { concept_id: 7842, value_coded: stationAnswer}, // station
                 { concept_id: 7843, value_coded: cervicalDilationAnswer}, // cervical dilation
