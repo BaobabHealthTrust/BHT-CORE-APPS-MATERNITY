@@ -194,7 +194,7 @@ function postBabyDeliveryObs(encounter){
     }
 
     if (healthFacility !== "") {
-        obs.observations.push({concept_id: 5937, value_numeric: healthFacility}); // facility code
+        obs.observations.push({concept_id: 5937, value_text: healthFacility}); // facility code
     }
 
     try{
@@ -202,18 +202,6 @@ function postBabyDeliveryObs(encounter){
         var delivery_time =  d_time;
         var delievery_date = d_date;
 
-        // if (observations.length > 0){
-        //
-        //
-        //     for(var i = 0; i < observations.length; i++){
-        //
-        //         pushed.push(observations[i]["concept_id"]);
-        //
-        //         obs.observations.push(observations[i]);
-        //
-        //     }
-        //
-        // }
 
         for(key in data){
 
@@ -255,13 +243,10 @@ function postBabyDeliveryObs(encounter){
     } catch(e) {
         console.log(e);
     }
-
     submitParameters(obs, "/observations", "nextPage");
 }
 
 function nextPage(){
-    // var redirectUrl = "/views/patient_dashboard.html?patient_id=" + patientID;
-    // nextEncounter(sessionStorage.patientID, sessionStorage.programID, redirectUrl);
     sessionStorage.setItem("numberOfBabies",num_of_babies);
     window.location = "/apps/MATERNITY/views/encounters/baby_demographics.html";
 }

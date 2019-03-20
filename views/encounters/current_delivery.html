@@ -255,7 +255,7 @@
                    tt_pageStyleClass= "NoControls" helpText="4<sup>th</sup> Baby: 5<sup>th</sup> Minute APGAR" optional="true" absoluteMin="0" absoluteMax="10"/>
 
             <!-- Apgar ends -->
-            <select id="place_delivery" name="place_delivery" helpText="Place of delivery" tt_onUnLoad="showCategory2('Current delivery');checkDeliveryPlace();">
+            <select id="place_delivery" name="place_delivery" helpText="Place of delivery" tt_onUnLoad="showCategory2('Current delivery');">
                 <option></option>
                 <option>This facility</option>
                 <option>In transit/BBA</option>
@@ -270,7 +270,8 @@
                    key="health_facility" allowFreeText="true"
                    condition = "$('place_delivery').value == 'Other facility'" tt_onLoad="changeSubmitFunction();showCategory2('Current delivery');" />
 
-            <select id="birth_attended_by" name="birth_attended_by" tt_onLoad="changeSubmitFunction();showCategory2('Current delivery');" helpText="Birth attended by" condition = "($('place_delivery').value == 'Home/TBA' || $('place_delivery').value == 'In transit' )">
+            <select id="birth_attended_by" name="birth_attended_by" tt_onLoad="changeSubmitFunction();showCategory2('Current delivery');" helpText="Birth attended by"
+            >
                 <option></option>
                 <option>Self</option>
                 <option>TBA</option>
@@ -291,11 +292,7 @@
     function assignNumberOfBabies() {
         numberOfBabies = sessionStorage.getItem('numberOfBabies');
     }
-    function checkDeliveryPlace() {
-        if ($('place_delivery').value.toUpperCase() == 'THIS FACILITY') {
-            submitCurrentDeliveryEncounter();
-        }
-    }
+
     function timeOperations(id){
         switch(id){
             case 'hour_plus':
@@ -410,8 +407,6 @@
         }else{
             apgar_fifth_minute = apgarScore;
         }
-        console.log("Minute "+ minute);
-        console.log("apgar "+ apgarScore);
     }
 
 </script>
