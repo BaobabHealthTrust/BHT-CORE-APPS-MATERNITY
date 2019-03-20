@@ -57,7 +57,7 @@
 
 
         <form>
-            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" min="1" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" tt_onLoad="showCategory2('Physical examination');" />
+            <input type="text" name="fundus" id="fundus" helpText="Fundus (weeks)" min="1" field_type="number" tt_pageStyleClass="Numeric NumbersOnly" absoluteMax = "45" tt_onLoad="showCategory2('Physical examination');" />
 
             <select id="lie" name="lie" helpText="Lie" condition ="__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');">
                 <option></option>
@@ -142,7 +142,7 @@
                    tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
            __$('fundus').value != 'N/A';" absoluteMax = "5" absoluteMin = "1" tt_onLoad="showCategory2('Physical examination');" />
 
-           <input type="text" name="fetal" id="fetal" helpText="Fetal Heart Rate" min ="0"  max="200" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="showCategory2('Physical examination');" />
+           <input type="text" name="fetal" id="fetal" helpText="Fetal Heart Rate" min ="120"  max="160" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="showCategory2('Physical examination');" />
 
             <select id="descent" name="descent" helpText="Descent" tt_pageStyleClass="NoKeyboard"  condition = "__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');changeNextButton();">
                 <option></option>
