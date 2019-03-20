@@ -142,7 +142,9 @@
                    tt_pageStyleClass="Numeric NumbersOnly" condition = "__$('contractions').value.trim().toUpperCase() == 'YES' &&
            __$('fundus').value != 'N/A';" absoluteMax = "5" absoluteMin = "1" tt_onLoad="showCategory2('Physical examination');" />
 
-            <select id="descent" name="descent" helpText="Descent" tt_pageStyleClass="NoKeyboard"  condition = "__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');" >
+           <input type="text" name="fetal" id="fetal" helpText="Fetal Heart Rate" min ="0"  max="200" field_type="number"tt_pageStyleClass="Numeric NumbersOnly" tt_onLoad="showCategory2('Physical examination');" />
+
+            <select id="descent" name="descent" helpText="Descent" tt_pageStyleClass="NoKeyboard"  condition = "__$('fundus').value != 'N/A'" tt_onLoad="showCategory2('Physical examination');changeNextButton();">
                 <option></option>
                 <option>N/A</option>
                 <option>5/5</option>
@@ -152,11 +154,6 @@
                 <option>1/5</option>
                 <option>0/5</option>
             </select>
-
-            <input type="text" name="fetal_heart_rate" id="fetal_heart_rate" helpText="Fetal Heart rate"
-           field_type="number" tt_onLoad="showCategory2('Physical examination');changeNextButton();" tt_pageStyleClass="Numeric NumbersWithUnknownAndDecimal" min ="120"  max="160"
-           />
-
         </form>
 
     </div>
@@ -167,7 +164,6 @@
     function changeNextButton() {
         var nextButton =  document.getElementById('nextButton');
         nextButton.setAttribute("onmousedown","postPhysicalExam();");
-        submitTreatmentEncounter();
     }
 
     function postPhysicalExam() {
@@ -200,7 +196,7 @@
         var contractions_intensity = document.getElementById('contraction_intensity').value;
         var descent = document.getElementById('descent').value;
         var contractions_level =  document.getElementById('contractions_level').value;
-        var fetalHeartRate =  document.getElementById('fetal_heart_rate').value;
+        var fetalHeartRate =  document.getElementById('fetal').value;
 
         var conceptAnswers = [
             /*Lie*/
@@ -508,12 +504,10 @@
         if(contractions_level !== '') {
             obs.observations.push( { concept_id: 7943, value_numeric: contractions_level });
         }
-        console.log("Fetal "+fetalHeartRate);
-        console.log(obs);
         submitParameters(obs, "/observations", "nextPage")
     }
 
     function nextPage(){
-       // nextEncounter(sessionStorage.patientID, sessionStorage.programID);
+       nextEncounter(sessionStorage.patientID, sessionStorage.programID);
     }
 </script>
