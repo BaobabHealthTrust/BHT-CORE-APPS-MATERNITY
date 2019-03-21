@@ -243,6 +243,7 @@ function postBabyDeliveryObs(encounter){
     } catch(e) {
         console.log(e);
     }
+    console.log(obs);
     submitParameters(obs, "/observations", "nextPage");
 }
 
