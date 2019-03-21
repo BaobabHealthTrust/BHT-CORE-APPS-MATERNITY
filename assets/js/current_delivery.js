@@ -202,6 +202,7 @@ function postBabyDeliveryObs(encounter){
         var delivery_time =  d_time;
         var delievery_date = d_date;
 
+        sessionStorage.setItem('deliveryDate',d_date);
 
         for(key in data){
 
