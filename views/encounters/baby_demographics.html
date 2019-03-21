@@ -47,6 +47,8 @@
       var given_name = $('given_name').value;
       var family_name = $('family_name').value;
       var gender = $('gender').value;
+      var birthdate = sessionStorage.getItem('deliveryDate');
+
       hash = {}
         if (given_name !== ""){
             hash['given_name'] = given_name;
@@ -54,6 +56,8 @@
           hash['family_name'] = family_name;
         }if (gender !== ""){1
           hash['gender'] = gender;
+        } if (birthdate !== ""){
+            hash['birthdate'] = birthdate;
         }
   
         var parametersPassed = {

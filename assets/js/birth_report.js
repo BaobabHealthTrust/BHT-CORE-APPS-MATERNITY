@@ -1,25 +1,25 @@
-var mother_first_name;
-var mother_second_name;
-var mother_surname;
-var mother_birthdate;
-var mother_district;
-var mother_ta;
-var mother_village;
-var father_first_name;
-var father_middle_name;
-var father_surname;
-var father_district;
-var father_ta;
-var father_village;
-var father_birthdate;
-var child_first_name;
-var child_middle_name;
-var child_surname;
-var child_gender;
-var child_dob;
-var parent_district;
-var parent_ta;
-var parent_village;
+var mother_first_name = '';
+var mother_second_name = '';
+var mother_surname = '';
+var mother_birthdate = '';
+var mother_district = '';
+var mother_ta = '';
+var mother_village = '';
+var father_first_name = '';
+var father_middle_name = '';
+var father_surname = '';
+var father_district = '';
+var father_ta = '';
+var father_village = '';
+var father_birthdate = '';
+var child_first_name = '';
+var child_middle_name = '';
+var child_surname = '';
+var child_gender = '';
+var child_dob = '';
+var parent_district = '';
+var parent_ta = '';
+var parent_village = '';
 
 function fetchMotherDemographics() {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
@@ -95,6 +95,7 @@ function fetchRelationDetails(motherID) {
                         child_middle_name = middle_name
                         child_surname = family_name;
                         child_gender = gender;
+                        child_dob = demographics[i].relation.birthdate;
                         break;
                     case 12:
                         relation_name = 'father';
@@ -137,7 +138,11 @@ function fetchRelationDetails(motherID) {
 }
 
 function buildBirthReport(){
-    console.log(father_village);
+    var birthDateArray = child_dob.split('-');
+    var dayOfBirth = birthDateArray[2];
+    var monthOfBirth = birthDateArray[1];
+    var yearOfBirth = birthDateArray[0];
+
     var frame = document.getElementById('inputFrame' + tstCurrentPage);
     frame.style.height = "90%";
     frame.style.overflowY = 'scroll';
@@ -161,9 +166,8 @@ function buildBirthReport(){
         child_first_name+"&nbsp;</td><td id='mnc' style='text-align: center; padding-bottom: 0px;' class='cell'>N/A</td><td id='lnc' style='text-align: center; padding-bottom: 0px;' class='cell'>"+
         child_surname+"&nbsp;</td></tr> <tr><td> &nbsp;</td><td>&nbsp; </td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>First Name</sup> </td>"+
         "<td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>Middle Name</sup>  </td><td style='text-align: center; padding-top: 0px;'> <sup style='font-style: italic; font-size: 0.6em;'>"+
-        "Surname</sup> </td><tr><td>2.</td><td>Date of birth:</td><td id='ddob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>02</td>"+
-        "<td id='mdob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>03</td><td id='ydob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>"+
-        "1997 </td> </tr><tr><td>&nbsp;</td><td> &nbsp;</td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>Date</sup></td><td style='text-align: center; padding-top: 0px;'>"+
+        "Surname</sup> </td><tr><td>2.</td><td>Date of birth:</td><td id='ddob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>" + dayOfBirth + "</td>"+
+        "<td id='mdob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>" + monthOfBirth + "</td><td id='ydob' style='text-align: center; padding-bottom: 0px; padding-top: 9px;' class='cell'>" + yearOfBirth + " </td> </tr><tr><td>&nbsp;</td><td> &nbsp;</td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>Date</sup></td><td style='text-align: center; padding-top: 0px;'>"+
         "<sup style='font-style: italic; font-size: 0.6em;'>Month</sup></td><td style='text-align: center; padding-top: 0px;'><sup style='font-style: italic; font-size: 0.6em;'>Year</sup>"+
         " </td> </tr><tr><td>3. </td><td> Sex (Male/Female):</td><td id='sex' style='text-align: center; padding-top: 9px;' class='cell'> " + child_gender + " </td><td colspan='2'>  &nbsp; </td> </tr>"+
         "<tr><td style='text-align: left; padding-top: 10px;'>4.</td><td colspan='4' style='text-align: left; padding-top: 10px;'>Name of parents: </td></tr>"+
@@ -219,12 +223,12 @@ function sendToEBRS() {
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
                     showMessage('Report successfully sent. Please Wait...');
-                    setTimeout(window.location = '/views/patient_dashboard.html?patient_id=' + patientID,5000);
+                    window.location = '/views/patient_dashboard.html?patient_id=' + patientID;
                 } else if (this.status == 400) {
-                    showMessage('Report not sent. Error: Bad request.')
+                    showMessage('Report not sent. Error: Bad request.');
                 } else if (this.status == 500) {
-                    showMessage('Report successfully sent without Patient ID. Please Wait...')
-                    setTimeout(window.location = '/views/patient_dashboard.html?patient_id=' + patientID,5000);
+                    showMessage('Report successfully sent without Patient ID. Please Wait...');
+                    window.location = '/views/patient_dashboard.html?patient_id=' + patientID;
                 }
             };
             xhttp.open("POST", ebrsPath, true);
@@ -250,7 +254,7 @@ function sendToEBRS() {
                     "is_exact_duplicate": "",
                     "first_name": child_first_name,
                     "last_name": child_surname,
-                    "birthdate": "2019-02-28",
+                    "birthdate": child_dob,
                     "gender": child_gender,
                     "birth_weight": "",
                     "type_of_birth": "",
@@ -270,7 +274,7 @@ function sendToEBRS() {
                         "current_ta": parent_ta,
                         "current_village": parent_village
                     },
-                    "mode_of_delivery": "Vaccum Extraction",
+                    "mode_of_delivery": "Spontaneous Delivery",
                     "level_of_education": "Primary",
                     "father": {
                         "first_name": father_first_name,
