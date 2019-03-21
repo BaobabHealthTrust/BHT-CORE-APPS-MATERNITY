@@ -363,15 +363,42 @@ function getChildDetails(related_person,td,table) {
         if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
             var demographics = JSON.parse(this.responseText);
 
-            console.log(demographics.names[0]);
             var names = demographics.names[0];
-            // var addresses = demographics.person.addresses[0];
 
             buildNames(td, [names.given_name,names.middle_name,names.family_name], table);
-            // buildHomeAddresses(td, [addresses.address2,addresses.county_district,addresses.neighborhood_cell], table);
-            // buildCurrentAddresses(td, [addresses.state_province,addresses.township_division,addresses.city_village], table);
-            buildHomeAddresses(td, ['na','na','na'], table);
-            buildCurrentAddresses(td, ['na','na','na'], table);
+
+            // fetch father addresses
+            var fatherHomeDistrict;
+            var fatherHomeTA;
+            var fatherHomeVillage;
+            var fatherCurrentDistrict;
+            var fatherCurrentTA;
+            var fatherCurrentVillage;
+
+            // get same as mother addresses
+            var fatherAddUrl = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + sessionStorage.patientID;
+            var fatherXhttp = new XMLHttpRequest();
+            fatherXhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+
+                    var fatherDetails = JSON.parse(this.responseText);
+                    var addresses = fatherDetails.person.addresses[0];
+                    fatherHomeDistrict = addresses.address2;
+                    fatherHomeTA = addresses.county_district;
+                    fatherHomeVillage = addresses.city_village;
+                    fatherCurrentDistrict = addresses.state_province;
+                    fatherCurrentTA = addresses.township_division;
+                    fatherCurrentVillage = addresses.neighborhood_cell;
+
+                    buildHomeAddresses(td, [fatherHomeDistrict,fatherHomeTA,fatherHomeVillage], table);
+                    buildCurrentAddresses(td, [fatherCurrentDistrict,fatherCurrentTA,fatherCurrentVillage], table);
+                }
+            };
+            fatherXhttp.open('GET', fatherAddUrl, true);
+            fatherXhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+            fatherXhttp.setRequestHeader('Content-type', "application/json");
+            fatherXhttp.send();
+            // ----------------------
         }
     };
     xhttp.open("GET", url, true);
@@ -383,22 +410,46 @@ function getChildDetails(related_person,td,table) {
 function getFatherDetails(related_person,td,table) {
     var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/people/" + related_person;
 
-    console.log(url);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
             var demographics = JSON.parse(this.responseText);
 
-            console.log(demographics.names[0]);
             var names = demographics.names[0];
-            // var addresses = demographics.person.addresses[0];
 
-            console.log(demographics);
             buildNames(td, [names.given_name,names.middle_name,names.family_name], table);
-            // buildHomeAddresses(td, [addresses.address2,addresses.county_district,addresses.neighborhood_cell], table);
-            // buildCurrentAddresses(td, [addresses.state_province,addresses.township_division,addresses.city_village], table);
-            buildHomeAddresses(td, ['na','na','na'], table);
-            buildCurrentAddresses(td, ['na','na','na'], table);
+
+            // fetch father addresses
+            var fatherHomeDistrict;
+            var fatherHomeTA;
+            var fatherHomeVillage;
+            var fatherCurrentDistrict;
+            var fatherCurrentTA;
+            var fatherCurrentVillage;
+
+            var fatherAddUrl = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1/patients/" + demographics.person_id;
+            var fatherXhttp = new XMLHttpRequest();
+            fatherXhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+
+                    var fatherDetails = JSON.parse(this.responseText);
+                    var addresses = fatherDetails.person.addresses[0];
+                    fatherHomeDistrict = addresses.address2;
+                    fatherHomeTA = addresses.county_district;
+                    fatherHomeVillage = addresses.city_village;
+                    fatherCurrentDistrict = addresses.state_province;
+                    fatherCurrentTA = addresses.township_division;
+                    fatherCurrentVillage = addresses.neighborhood_cell;
+
+                    buildHomeAddresses(td, [fatherHomeDistrict,fatherHomeTA,fatherHomeVillage], table);
+                    buildCurrentAddresses(td, [fatherCurrentDistrict,fatherCurrentTA,fatherCurrentVillage], table);
+                }
+            };
+            fatherXhttp.open('GET', fatherAddUrl, true);
+            fatherXhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+            fatherXhttp.setRequestHeader('Content-type', "application/json");
+            fatherXhttp.send();
+            // ----------------------
         }
     };
     xhttp.open("GET", url, true);
