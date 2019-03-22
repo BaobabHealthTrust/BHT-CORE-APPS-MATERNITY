@@ -59,6 +59,12 @@
             <option>Soft</option>
            </select>
 
+           <select id="baby_color" name="baby_color" helpText="Color of baby" tt_onLoad="showCategory2('Baby Physical Exam');" >
+            <option></option>
+            <option>Stable</option>
+            <option >Critical</option>
+            </select>
+
            <input type="text" name="summary"
            tt_onLoad="showCategory2('Baby Physical Exam');__$('keyboard').style.display = 'none';changeNextButton();addYesNo();"
            tt_pageStyleClass= "NoControls" helpText="Baby examination" optional = "true"/>

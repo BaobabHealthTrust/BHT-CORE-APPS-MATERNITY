@@ -107,7 +107,7 @@ var hash = {
     "Small Baby (Less than 2.5kg)" : "< 2.5kg"
 }
 
-var fields = ["Baby status", "Time of delievery", "Date of delivery", "Baby gender", "Method of delivery","Condition at birth"];
+var fields = ["Baby status", "Time of delivery", "Date of delivery", "Baby gender", "Method of delivery","Condition at birth"];
 
 var $$ = {};
 
