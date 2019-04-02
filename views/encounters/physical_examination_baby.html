@@ -114,12 +114,11 @@
             encounter_datetime += currentTime;
 
             var encounter = {
-                encounter_type_name: 'PMTCT HISTORY',
-                encounter_type_id:  129,
+                encounter_type_name: 'PHYSICAL EXAMINATION BABY',
+                encounter_type_id:  117,
                 patient_id: sessionStorage.patientID,
                 encounter_datetime: encounter_datetime
-            };
-
+          };
             submitParameters(encounter, "/encounters", "postPhysicalExamDeadObs");
 
         } else {
@@ -135,11 +134,11 @@
             encounter_datetime += currentTime;
 
             var encounter = {
-                encounter_type_name: 'PMTCT HISTORY',
-                encounter_type_id:  129,
+                encounter_type_name: 'PHYSICAL EXAMINATION BABY',
+                encounter_type_id:  117,
                 patient_id: sessionStorage.patientID,
                 encounter_datetime: encounter_datetime
-            };
+          };
 
             submitParameters(encounter, "/encounters", "postPhysicalExamObs");
 
