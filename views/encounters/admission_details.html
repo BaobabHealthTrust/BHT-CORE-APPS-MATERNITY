@@ -25,10 +25,6 @@
     .inputFrameClass {
         width: 96% !important;
     }
-
-
- 
-
 </style>
 <body id="mateme">
 <div id="container">
@@ -68,8 +64,8 @@
             </select>
             
             <select id="oedema" name="oedema" tt_onLoad="changeNextButton();" helpText="Oedema" tt_onLoad="showCategory2('Patient admissions');">
-                <option>None</option>
                 <option></option>
+                <option>None</option>
                 <option>1+</option>
                 <option>2+</option>
                 <option>3+</option>
@@ -92,7 +88,6 @@
     }
 
     function displayTime(){
-        console.log("Vaaaaaaaaaak");
         var today = new Date();
         var h = today.getHours();
         var m = today.getMinutes();

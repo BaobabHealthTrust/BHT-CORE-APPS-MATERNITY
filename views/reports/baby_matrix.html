@@ -4,9 +4,10 @@
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
-    <script type="text/javascript" src="/public/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js" defer="true"></script>
-
     <link rel="stylesheet" href="../../../../assets/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/maindashboard/footer.css">
+    <link rel="stylesheet" href="/apps/MATERNITY/assets/css/custom.css">
+
     <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/fixedHeader.dataTables.min.css">
     <style type="text/css">
@@ -40,16 +41,16 @@
         th{
           text-align: center;
         }
-        .blue{
+        .blue2{
           background-color: #8cb4ff;
         }
         .orange{
           background-color: #f60;
         }
-        .red{
+        .red2{
             background-color: #f00;
         }
-        .green{
+        .green2{
             background-color: #6c6;
         }
         .grey{
@@ -90,9 +91,9 @@
 
           <tr>
             <td class="grey"><=1499</td>
-            <td class="blue">0</td>
-            <td class="blue">0</td>
-            <td class="blue">0</td>
+            <td class="blue2">0</td>
+            <td class="blue2">0</td>
+            <td class="blue2">0</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
@@ -100,8 +101,8 @@
           <tr>
             <td class="grey">1500-2449</td>
             <td class="orange">0</td>
-            <td class="red">0</td>
-            <td class="green">0</td>
+            <td class="red2">0</td>
+            <td class="green2">0</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
@@ -109,8 +110,8 @@
            <tr>
             <td class="grey"><=2500</td>
             <td class="orange">0</td>
-            <td class="red">0</td>
-            <td class="green">0</td>
+            <td class="red2">0</td>
+            <td class="green2">0</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
@@ -136,11 +137,20 @@
           </tbody>
         </table>
   </div>
-        <div id="footer">
-        </div>
         </div>
       </div>
     </div>
+    <footer class="footer">
+      <div class="container-footer">
+          <button id="btnNext" class="green right" style="margin: 5px 0px 0px; padding: 0px; float: right;" onclick="location='/';">
+              <span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Finish &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;</span>
+          </button>
+          <button id="activities" class="btn btn-success buttons blue" style="margin-right: 5px;" onmousedown="" >
+              <span>&nbsp; &nbsp; &nbsp; Print &nbsp; &nbsp; &nbsp;</span>
+          </button>
+    
+      </div>
+  </footer>
   </body>
 </html>
 

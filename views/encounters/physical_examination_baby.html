@@ -59,6 +59,12 @@
             <option>Soft</option>
            </select>
 
+           <select id="baby_color" name="baby_color" helpText="Color of baby" tt_onLoad="showCategory2('Baby Physical Exam');" >
+            <option></option>
+            <option>Pink</option>
+            <option >Blue</option>
+            </select>
+
            <input type="text" name="summary"
            tt_onLoad="showCategory2('Baby Physical Exam');__$('keyboard').style.display = 'none';changeNextButton();addYesNo();"
            tt_pageStyleClass= "NoControls" helpText="Baby examination" optional = "true"/>
@@ -108,13 +114,12 @@
             encounter_datetime += currentTime;
 
             var encounter = {
-                encounter_type_name: 'PMTCT HISTORY',
-                encounter_type_id:  129,
+                encounter_type_name: 'PHYSICAL EXAMINATION BABY',
+                encounter_type_id:  117,
                 patient_id: sessionStorage.patientID,
                 encounter_datetime: encounter_datetime
-            };
-
-            submitParameters(encounter, "/encounters", "postPhysicalExamObs");
+          };
+            submitParameters(encounter, "/encounters", "postPhysicalExamDeadObs");
 
         } else {
             gotoNextPage();
@@ -129,11 +134,11 @@
             encounter_datetime += currentTime;
 
             var encounter = {
-                encounter_type_name: 'PMTCT HISTORY',
-                encounter_type_id:  129,
+                encounter_type_name: 'PHYSICAL EXAMINATION BABY',
+                encounter_type_id:  117,
                 patient_id: sessionStorage.patientID,
                 encounter_datetime: encounter_datetime
-            };
+          };
 
             submitParameters(encounter, "/encounters", "postPhysicalExamObs");
 
@@ -157,6 +162,40 @@
 
           submitParameters(encounter, "/encounters", "postPhysicalExamObs");
       }
+      function postPhysicalExamDeadObs(encounter) {
+        var condition = document.getElementById('baby_condition').value; 
+        var conceptAnswers = [
+
+            /*Condition*/
+            {
+                "stable": 9723,
+                "critical": 9724,
+                "dead": 6540
+            }];
+    var conditionAnswer
+        switch (condition.toUpperCase()) {
+        case 'STABLE':
+            conditionAnswer = conceptAnswers[0].stable;
+            break;
+        case 'CRITICAL':
+            conditionAnswer = conceptAnswers[0].critical;
+            break;
+        case 'DEAD':
+            conditionAnswer = conceptAnswers[0].dead;
+        break;
+        default:
+            break;
+    }
+        var obs = {
+            encounter_id: encounter["encounter_id"],
+            observations: [
+                { concept_id: 8399, value_coded: conditionAnswer } //saving
+                ]
+        };
+    
+        submitParameters(obs, "/observations", "nextPage")
+    }
+
 
       function postPhysicalExamObs(encounter) {
         var condition = document.getElementById('baby_condition').value;
@@ -165,6 +204,7 @@
         var heart = document.getElementById('baby_heart_rate').value;
         var weight = document.getElementById('baby_weight').value;
         var abdomen = document.getElementById('baby_abdomen').value;
+        var babyColor = document.getElementById('baby_color').value;
         var cordTied = responseTied;
         var cordClean = responseClean;
         var abnormals = responseAbnormalities;
@@ -194,6 +234,10 @@
           {
             "yes": 1065,
             "no": 1066
+        },
+        {
+            "pink": 9741,
+            "blue": 9742
         }
     ];
 
@@ -202,6 +246,7 @@
     var tiedAnswer;
     var cleanAnswer;
     var abnormalsAnswer;
+    var babyColorAnswer;
 
     switch (condition.toUpperCase()) {
         case 'STABLE':
@@ -256,13 +301,22 @@
       default:
           break;
     }
+    switch (babyColor.toUpperCase()) {
+      case 'PINK':
+          babyColorAnswer = conceptAnswers[5].yes;
+          break;
+      case 'BLUE':
+          babyColorAnswer = conceptAnswers[5].no;
+          break;
+      default:
+          break;
+    }
     var obs = {
         encounter_id: encounter["encounter_id"],
         observations: [
             { concept_id: 8399, value_coded: conditionAnswer } //saving
               ]
     };
-    console.log("abnormalities are "+abnormalities);
         if(temperature !== '') {
             obs.observations.push( { concept_id: 5088, value_numeric: temperature } ); //saving
         }
@@ -289,6 +343,9 @@
         }
         if(abnormalities !== '') {
             obs.observations.push(  { concept_id: 8404, value_text: abnormalities } ); 
+        }
+        if(babyColor !== '') {
+            obs.observations.push(  { concept_id: 9255, value_coded: babyColorAnswer } ); 
         }
         submitParameters(obs, "/observations", "nextPage")
     }

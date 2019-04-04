@@ -75,10 +75,25 @@
             <select id="cervical_dilation" name="cervical_dilation" tt_pageStyleClass="NoKeyboard" helpText="Cervical Dilation" tt_onLoad="showCategory2('Vaginal examination');">
                 <option></option>
                 <option>Not done</option>
-                <option>Finger tip</option>
                 <option>Open</option>
                 <option>Closed</option>
             </select>
+
+            <select id="open_values" name="open_values" helpText="Cervical Dilation (cm)" tt_pageStyleClass="NoKeyboard" tt_onLoad="showCategory2('Vaginal examination');"
+            condition = "__$('cervical_dilation').value == 'Open'">
+                <option></option>
+                <option>Finger tip</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8<option>
+                <option>9<option>
+                <option>10<option>
+            </select>
+
 
             <select id="caput" name="caput"tt_pageStyleClass="NoKeyboard" helpText="Caput" tt_onLoad="showCategory2('Vaginal examination');">
                 <option></option>
@@ -220,7 +235,6 @@
             },
             // cervical dilation
             {
-                "fingerTip": 9704,
                 "open": 9705,
                 "closed": 9706
             },
@@ -249,6 +263,19 @@
                 "shoulder": 7915,
                 "cord": 7916
             }
+            // {
+            //     "fingerTip":,
+            //     "one":,
+            //     "two":,
+            //     "three":,
+            //     "four":,
+            //     "five":,
+            //     "six":,
+            //     "seven",
+            //     "eight":,
+            //     "nine":,
+            //     "ten":
+            // }
         ];
 
         var genetaliaInspectionAnswer;
@@ -324,9 +351,6 @@
         switch (cervicalDilation.toUpperCase()) {
             case 'NOT DONE':
                 cervicalDilationAnswer = conceptAnswers[0].notDone;
-                break;
-            case 'FINGER TIP':
-                cervicalDilationAnswer = conceptAnswers[2].fingerTip;
                 break;
             case 'OPEN':
                 cervicalDilationAnswer = conceptAnswers[2].open;

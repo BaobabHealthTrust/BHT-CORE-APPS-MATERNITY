@@ -1,22 +1,22 @@
 {
   "ebrs": {
     "ebrsProtocol": "http",
-    "ebrsHost": "127.0.0.1",
+    "ebrsHost": "192.168.41.224",
     "ebrsPort": "8001",
-    "ebrsURL": "/maternity/create_from_maternity"
+    "ebrsURL": "/person/create"
   },
   "encounters": {
-    "social history": {
-      "available": true,
-      "encountersName": "social history",
-      "activitiesIcon": "/assets/images/social_history.png",
-      "url": "/apps/MATERNITY/views/encounters/social_history.html"
-    },
     "vitals": {
       "available": true,
       "encountersName": "vitals",
       "activitiesIcon": "/assets/images/vitals.png",
       "url": "/views/patient/vitals.html"
+    },
+    "social history": {
+      "available": true,
+      "encountersName": "social history",
+      "activitiesIcon": "/assets/images/social_history.png",
+      "url": "/apps/MATERNITY/views/encounters/social_history.html"
     },
     "patient admissions": {
       "available": true,
@@ -114,6 +114,7 @@
       ["Maternity Examination","maternity examination"],
       ["Obstetric History","obstetric history"],
       ["Patient Admissions","patient admissions"],
+      ["Current Delivery","current delivery "],
       ["Admission Diagnosis","admission diagnosis"]
     ]
     
@@ -138,7 +139,7 @@
       "available": false,
       "activitiesIcon": "/assets/images/edit.png",
       "url": "/views/patient/edit_demographics.html",
-      "activitiesDescription": "Edit Patient Demographics",
+      "activitiesDescription": "Print Patient Demographics",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     },
     {
@@ -167,8 +168,8 @@
       "activitiesName": "Register father",
       "available": false,
       "activitiesIcon": "/assets/images/edit.png",
-      "url": "/views/patient/father_demographics/search.html",
-      "activitiesDescription": "Add demographics to the child in relation to the mother/patient.",
+      "url": "/apps/MATERNITY/views/encounters/register_father.html",
+      "activitiesDescription": "Change session date (for retrospective entry)",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     },
     {
@@ -176,7 +177,7 @@
       "available": false,
       "activitiesIcon": "/assets/images/edit.png",
       "url": "/apps/MATERNITY/views/ebrs_tools/associated_demographics.html",
-      "activitiesDescription": "View and edit ebrs related activities.",
+      "activitiesDescription": "Change session date (for retrospective entry)",
       "comment": "these are examples, add another application with this template at the end of these curly braces by adding a comma and copying this template"
     }
 
