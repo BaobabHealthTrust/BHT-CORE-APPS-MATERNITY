@@ -319,6 +319,7 @@ function sendToEBRS() {
                 "controller": "person",
                 "action": "create"
             };
+            console.log(parameters);
 
             var json = JSON.stringify(parameters);
             xhttp.send(json);
