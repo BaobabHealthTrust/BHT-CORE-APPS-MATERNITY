@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
+<head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
     <link rel="stylesheet" href="../../../../assets/css/bootstrap/bootstrap.min.css">
@@ -11,487 +11,503 @@
     <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="../../../../assets/css/datatables/fixedHeader.dataTables.min.css">
     <style type="text/css">
-        
+
         thead{
-          background-color:#6281A7;
-          font-size: 16px;
-          font-weight: 800;
-          color:#fff;
+            background-color:#6281A7;
+            font-size: 16px;
+            font-weight: 800;
+            color:#fff;
         }
 
-      .head_td{
+        .head_td{
             font-weight: 800;
             font-size :16px;
-      }
-      .sub_td{
-          font-size: 16px;
-          padding-left: 15px;
-      }
-      .scrollit {
-        overflow:scroll;
-        height:100px;
-    }
-      .width1{
-        width: 60%;
-    }
-      .width2{
-        width: 20%;
+        }
+        .sub_td{
+            font-size: 16px;
+            padding-left: 15px;
+        }
+        .scrollit {
+            overflow:scroll;
+            height:100px;
+        }
+        .width1{
+            width: 60%;
+        }
+        .width2{
+            width: 20%;
         }
         .green2{
-           color: #6c6;
-           font-weight:800; 
+            color: #6c6;
+            font-weight:800;
         }
 
-    table{
-        border-collapse: collapse;
-    }
-    .tableData{
-        width:98%;
-        margin-left: 3%;
-    }
-    .tableHeading{
-        margin-left: 3%;
-    }
+        table{
+            border-collapse: collapse;
+        }
+        .tableData{
+            width:98%;
+            margin-left: 3%;
+        }
+        .tableHeading{
+            margin-left: 3%;
+        }
     </style>
-  </head>
-  <body id="mateme" style="font-size: 30px;">
-    <div id="container">
-      <div class="panel panel-defaul">
+</head>
+<body id="mateme" style="font-size: 30px;">
+<div id="container">
+    <div class="panel panel-defaul">
         <div class="panel-heading">
-        <h4 style="text-align: center; font-weight: 600; ">MATERNITY CLINCIC -- FACILITY MONTHLY REPORT- VERSION 4, JAN, 2017</h4>
+            <h4 style="text-align: center; font-weight: 600; ">MATERNITY CLINIC -- FACILITY MONTHLY REPORT- VERSION 4, JAN, 2017</h4>
         </div>
-    <div>
-   <div class="panel-body">
-    <table  class="table table-bordered" style="font-size:16px;">
-        <tbody>
-        <tr>
-          <td class="width1" style="border-bottom:0;">Facility Name</td>
-         <td class="width2" colspan="3">Ngoni Health centre</td>
-        </tr>
-        
-        <tr>
-          <td class="width1">Reporting Year</td>
-          <td class="width2">2019</td>
-          <td class="width2">Reporting month</td>
-          <td class="width2">March</td>
-        </tr>
-        
-        <tr>
-          <td class="width1">Was any client served at this site during this month?If no, still submit this report</td>
-          <td class="width2"colspan="3">Yes</td>
-        </tr>
+        <div>
+            <div class="panel-body">
+                <table  class="table table-bordered" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;">Facility Name</td>
+                        <td class="width2" colspan="3">Ngoni Health centre</td>
+                    </tr>
 
-        </tbody>
-      </table>
+                    <tr>
+                        <td class="width1">Reporting Year</td>
+                        <td class="width2">2019</td>
+                        <td class="width2">Reporting month</td>
+                        <td class="width2">March</td>
+                    </tr>
 
-     <h4 style="font-weight: 600;" class="tableHeading">HIV test result</h4>
-     <table  class="table table-bordered tableData" style="font-size:16px;">
-        <tbody>
-        <tr>
-        <td class="width1" style="border-bottom:0;" rowspan="4">Previous positive <br> <br>New negative
-        <br><br>New positive <br><br>Not done <br><br>
-        
-        </td>
-        <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-        <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-        <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-        <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-        <td class="width1">Total women</td>
-        <td class="width2">0</td>
-        </tr>
-        <tr>
-        <td class="width1">Total HIV(1+3)</td>
-        <td class="width2">0</td>
-        </tr>
+                    <tr>
+                        <td class="width1">Was any client served at this site during this month?If no, still submit this report</td>
+                        <td class="width2"colspan="3">Yes</td>
+                    </tr>
 
-        </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">ART mother out of total women</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-        <tbody>
-        <tr>
-          <td class="width1" style="border-bottom:0;" rowspan="5">Not on ART (inct HIV...)
-            <br><br> Start before pregnancy (Prev. ART) <br><br> Start in 1<sup>st</sup> or 2<sup>nd</sup>trim (0.27w ART)
-        <br><br>Start in 3<sup>rd</sup> trimester(28+w ART) <br><br>Start during labour(Lab ART)
-        </td>
-          <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-          <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-          <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-          <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-          <td class="width2">0</td>
-        </tr>
-        </tbody>
-      </table>
-      <h4 style="font-weight: 600;" class="tableHeading">Obstretic complications</h4>
-      <table  class="table table-bordered tableData" style="font-size:16px;">
-       <tbody>
-       <tr>
-         <td class="width1" style="border-bottom:0;" rowspan="11">Number of mothers with no complications
-        <br><br>Ante partum.haem <br><br>Post-partum haem. (APH)<br><br>Obstructed/Prolonged labour (OPL)
-        <br><br>(pre) Eclampsia<br><br>Sepsis (Sep)<br><br>Raptured Uterus (RU) <br><br>Retained placenta(Rp)
-        <br><br>Premature labour (PL)<br><br>Foetal distress<br><br>Others (Oth)</td>
-         <td class="width2">0</td>
-       </tr>
-       
-       <tr>
-         <td class="width2">0</td>
-       </tr>
-       
-       <tr>
-         <td class="width2">0</td>
-       </tr>
-       
-       <tr>
-         <td class="width2">0</td>
-       </tr>
-       <tr>
-         <td class="width2">0</td>
-       </tr>
-       <tr>
-         <td class="width2">0</td>
-       </tr>
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-       </tbody>
-     </table>
-     <h4 style="font-weight: 600;" class="tableHeading">Emergency obstretic care</h4>
-     <table  class="table table-bordered tableData" style="font-size:16px;">
-      <tbody>
-      <tr>
-        <td class="width1" style="border-bottom:0;" rowspan="3">Oxytocin (Ox) <br><br>Anticonvulsants (AC)
-        <br><br> Antibiotics (Abx)</td>
-        <td class="width2">0</td>
-      </tr>
-      
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      
-      <tr>
-        <td class="width1" rowspan="5">Antenatal corticosteroids (Acs)<br><br>Blood Transfusion<br><br>Manual removal of Placenta (MRP)
-        <br><br>Non pneumatic Anti-Shock Garment(NASG) <br><br>Evacuation of Retained Products
-        </td>
-        <td class="width2">0</td>
-      </tr>
-      
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      <tr>
-        <td class="width2">0</td>
-      </tr>
-      </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Referred out</h4>
-        <table  class="table  table-bordered tableData" style="font-size:16px;">
-        <tbody>
-        <tr>
-        <td class="width1" style="border-bottom:0;" rowspan="2">No <br><br> Yes</td>
-        <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-        <td class="width2">0</td>
-        </tr>
-        </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Staff conduction delivery</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-    <tr>
-        <td class="width1" style="border-bottom:0;" rowspan="2">Skilled attendant (MD/CO/MA/Nurse/MW <br><br>
-            Unskilled birth attendant (PA/WA/HSA/Other/None)</td>
-        <td class="width2">0</td>
-    </tr>
-    
-    <tr>
-        <td class="width2">0</td>
-    </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Vitamin A given</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="2">No <br><br> Yes</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Mother's status</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="2">Mother alive <br><br>
-                Mother brought in dead (BID)</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width1">Mother died before discharge</td>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Twins ALL staff and live born babies</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="2">Singletons <br><br>Twins/Triplets</td>
-            <td class="width2">0</td>
-          </tr>    
-        <tr>
-            <td class="width2">0</td>
-            
-        </tr>
-    </tbody>
-    </table>
+                    </tbody>
+                </table>
 
-    <h4 style="font-weight: 600;" class="tableHeading">Babies</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;">Total number of babies</td>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Delivery place</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="4">Spontaneous vertex <br><br>Vacuum extraction
-            <br><br>Breech<br><br>Caesarean section</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Newborn complications</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="6">Newborns with no complications<br><br>Weight less 2500g
-            <br><br>Prematurity<br><br>Asphyoda<br><br>Sepsis<br><br>Other newborn complications</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Newborn complications management</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="4">Kangaroo mother care (KMC)
-            <br><br>Resuscititation<br><br>Antibiotics <br><br>Other</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Newborn survival and PMTCT </h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="6">Alive, not HIV exposed<br><br>Alive, exposed no NVP
-            <br><br>Alive, exp, NVP started<br><br>Alive, unknown exp <br><br>Fresh stillbirth
-        <br><br>Neonatal death</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    <h4 style="font-weight: 600;" class="tableHeading">Breastfeeding initiated</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="2">Never/later than 60min <br><br>
-                Started Breastfeeding within 60 minutes</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    
-    <h4 style="font-weight: 600;" class="tableHeading">Routine care</h4>
-    <table  class="table table-bordered tableData" style="font-size:16px;">
-    <tbody>
-        <tr>
-            <td class="width1" style="border-bottom:0;" rowspan="2">Tetracycline ointment given <br><br>Vitamin K given</td>
-            <td class="width2">0</td>
-        </tr>
-        
-        <tr>
-            <td class="width2">0</td>
-        </tr>
-        <tr>
-            <td class="width1">ITN given</td>
-            <td class="width2">0</td>
-        </tr>
-    </tbody>
-    </table>
-    </tbody>
-    </table>
-    </div>
-      </div>
+                <h4 style="font-weight: 600;" class="tableHeading">HIV test result</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="4">Previous positive <br> <br>New negative
+                            <br><br>New positive <br><br>Not done <br><br>
+
+                        </td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width1">Total women</td>
+                        <td class="width2" id="total_women">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width1">Total HIV(1+3)</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">ART mother out of total women</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="5">Not on ART (incl HIV...)
+                            <br><br> Start before pregnancy (Prev. ART) <br><br> Start in 1<sup>st</sup> or 2<sup>nd</sup>trim (0.27w ART)
+                            <br><br>Start in 3<sup>rd</sup> trimester(28+w ART) <br><br>Start during labour(Lab ART)
+                        </td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Obstretic complications</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="11">Number of mothers with no complications
+                            <br><br>Ante partum.haem <br><br>Post-partum haem. (APH)<br><br>Obstructed/Prolonged labour (OPL)
+                            <br><br>(pre) Eclampsia<br><br>Sepsis (Sep)<br><br>Raptured Uterus (RU) <br><br>Retained placenta(Rp)
+                            <br><br>Premature labour (PL)<br><br>Foetal distress<br><br>Others (Oth)</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Emergency obstretic care</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="3">Oxytocin (Ox) <br><br>Anticonvulsants (AC)
+                            <br><br> Antibiotics (Abx)</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width1" rowspan="5">Antenatal corticosteroids (Acs)<br><br>Blood Transfusion<br><br>Manual removal of Placenta (MRP)
+                            <br><br>Non pneumatic Anti-Shock Garment(NASG) <br><br>Evacuation of Retained Products
+                        </td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Referred out</h4>
+                <table  class="table  table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="2">No <br><br> Yes</td>
+                        <td class="width2" id="referred_out_no">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2" id="referred_out_yes">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Staff conduction delivery</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="2">Skilled attendant (MD/CO/MA/Nurse/MW <br><br>
+                            Unskilled birth attendant (PA/WA/HSA/Other/None)</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Vitamin A given</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="2">No <br><br> Yes</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Mother's status</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="2">Mother alive <br><br>
+                            Mother brought in dead (BID)</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width1">Mother died before discharge</td>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Twins ALL staff and live born babies</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="2">Singletons <br><br>Twins/Triplets</td>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="font-weight: 600;" class="tableHeading">Babies</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;">Total number of babies</td>
+                        <td class="width2" id="number_of_babies">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Delivery mode</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="4">Spontaneous vertex <br><br>Vacuum extraction
+                            <br><br>Breech<br><br>Caesarean section</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4 style="font-weight: 600;" class="tableHeading">Newborn complications</h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="2">Newborns with no complications<br>
+                            <br>Weight less 2500g<br>
+                            <!--<br>Prematurity<br>-->
+                            <!--<br>Asphyoda<br>-->
+                            <!--<br>Sepsis<br>-->
+                            <!--<br>Other newborn complications-->
+                        </td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    </tbody>
+                </table>
+                <!--<h4 style="font-weight: 600;" class="tableHeading">Newborn complications management</h4>-->
+                <!--<table  class="table table-bordered tableData" style="font-size:16px;">-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                        <!--<td class="width1" style="border-bottom:0;" rowspan="4">Kangaroo mother care (KMC)-->
+                            <!--<br><br>Resuscititation<br><br>Antibiotics <br><br>Other</td>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+                <h4 style="font-weight: 600;" class="tableHeading">Newborn survival and PMTCT </h4>
+                <table  class="table table-bordered tableData" style="font-size:16px;">
+                    <tbody>
+                    <tr>
+                        <td class="width1" style="border-bottom:0;" rowspan="6">Alive, not HIV exposed<br><br>Alive, exposed no NVP
+                            <br><br>Alive, exp, NVP started<br><br>Alive, unknown exp <br><br>Fresh stillbirth
+                            <br><br>Neonatal death</td>
+                        <td class="width2">-</td>
+                    </tr>
+
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    <tr>
+                        <td class="width2">-</td>
+                    </tr>
+                    </tbody>
+                <!--</table>-->
+                <!--<h4 style="font-weight: 600;" class="tableHeading">Breastfeeding initiated</h4>-->
+                <!--<table  class="table table-bordered tableData" style="font-size:16px;">-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                        <!--<td class="width1" style="border-bottom:0;" rowspan="2">Never/later than 60min <br><br>-->
+                            <!--Started Breastfeeding within 60 minutes</td>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+
+                <!--<h4 style="font-weight: 600;" class="tableHeading">Routine care</h4>-->
+                <!--<table  class="table table-bordered tableData" style="font-size:16px;">-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                        <!--<td class="width1" style="border-bottom:0;" rowspan="2">Tetracycline ointment given <br><br>Vitamin K given</td>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+
+                    <!--<tr>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="width1">ITN given</td>-->
+                        <!--<td class="width2">-</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+                </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <footer class="footer">
-      <div class="container-footer">
-          <button id="btnNext" class="green right" style="margin: 5px 0px 0px; padding: 0px; float: right;" onclick="location='/';">
-              <span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Finish &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;</span>
-          </button>
-          <button id="activities" class="btn btn-success buttons blue" style="margin-right: 5px;" onmousedown="javascript:printPDF();" >
-              <span>&nbsp; &nbsp; &nbsp; Print &nbsp; &nbsp; &nbsp;</span>
-          </button>
-      </div>
-  </footer>
-  </body>
+        <div class="container-footer">
+            <button id="btnNext" class="green right" style="margin: 5px 0px 0px; padding: 0px; float: right;" onclick="location='/';">
+                <span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Finish &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;</span>
+            </button>
+            <button id="activities" class="btn btn-success buttons blue" style="margin-right: 5px;" onmousedown="javascript:printPDF();" >
+                <span>&nbsp; &nbsp; &nbsp; Print &nbsp; &nbsp; &nbsp;</span>
+            </button>
+        </div>
+    </footer>
+</body>
 </html>
 
 <script type="text/javascript">
-function goBack(){
-  window.location = "http://127.0.0.1:8080/";
 
-}
+    var apiProtocol = sessionStorage.apiProtocol;
+    var apiURL = sessionStorage.apiURL;
+    var apiPort = sessionStorage.apiPort;
+    var programID = sessionStorage.programID;
 
-  function changeNextButton(){
-    __$("nextButton").removeAttribute("onmousedown")
-    __$("nextButton").onmousedown = function(){
+    function loadData(data) {
+        console.log(data);
+        var totalWomen = data['registration'].stats_this_month;
+        var numberOfBabies = data['number_of_babies'].stats_this_month;
 
-  value = $('touchscreenInput' + tstCurrentPage).value;
- if (value.length  > 0) {
-
-           submitSearchResults();
- }else {
-   showMessage("You must enter a value to continue");
- }
+        document.getElementById('total_women').innerHTML = totalWomen;
+        document.getElementById('number_of_babies').innerHTML = numberOfBabies;
+        // for (stats in data) {
+        //     console.log(stats);
+        //     console.log(data[stats]);
+        //     var statistics = data[stats];
+        //
+        //     var statThisMonth = statistics.stats_this_month;
+        //     var total_women_delivered = data['baby_delivery'];
+        //     console.log(total_women_delivered.stats_this_month);
+        //
+        //     //
+        //     // document.getElementById(stat + '_user').innerHTML = statUser;
+        //     // document.getElementById(stat + '_today').innerHTML = statToday;
+        //     // document.getElementById(stat + '_this_year').innerHTML = statThisYear;
+        //     //
+        //     // document.getElementById(stat + '_total_to_date').innerHTML = statistics.stats_total_to_date;
+        //
+        // }
 
     }
-  }
 
-  var patientID = ''
-  jQuery(document).ready(function(){
+    function fetchData() {
+        var url = apiProtocol + "://" + apiURL + ":" + apiPort + "/api/v1";
+        url += "/monthly_report?date=" + sessionStorage.sessionDate;
+        url += "&program_id=" + sessionStorage.programID;
 
-    var checkExist = setInterval(function() {
-      if (jQuery('#cancelButton').length) {
-        jQuery('#cancelButton').click(function () {
-          yesButton = jQuery("#messageBar button")[0];
-          yesButton.onmousedown = function(){
-            hideMessage();
-            if (patientID.length > 0){
-              window.top.location.href = "/patients/show/" + patientID;
-            } else {
-              window.top.location.href = "/";
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && (this.status == 201 || this.status == 200)) {
+                var obj = JSON.parse(this.responseText);
+                loadData(obj);
             }
-            
-          }
-        });
-        clearInterval(checkExist);
-      }
-    }, 100); // check every 100ms
-  });
+        };
+        xhttp.open("GET", url, true);
+        xhttp.setRequestHeader('Authorization', sessionStorage.getItem("authorization"));
+        xhttp.setRequestHeader('Content-type', "application/json");
+        xhttp.send();
+    }
+
+    setTimeout("fetchData()", 200);
 
 </script>
 <script src="../../../../assets/js/jquery.min.js"></script>
@@ -499,13 +515,13 @@ function goBack(){
 <script src="../../../../assets/js/datatables/jquery.dataTables.min.js"></script>
 <script src="../../../../assets/js/datatables/dataTables.fixedHeader.min.js"></script>
 <script type="text/javascript">
-  $('#shiftTable').DataTable( {
+    $('#shiftTable').DataTable( {
         fixedHeader: true,
         searching: false,
         ordering: false,
         paging: false,
         "bInfo" : false,
 
-} );
+    } );
 </script>
 
