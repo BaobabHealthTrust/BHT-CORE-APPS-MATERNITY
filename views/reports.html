@@ -52,14 +52,11 @@
     ["Cohort Survival Analysis","","/cohort_tool/revised_cohort_survival_analysis_menu"],
     ["Supervision","","/clinic/supervision_tab"],
     ["Data Cleaning Tools", "","/clinic/data_cleaning_tab"],
-
     ["Drug dispensation","","/report/drug_menu"],
     ["Pre-ART","","/cohort_tool/cohort_menu?type=pre_art"],
     ["View appointments","","/properties/select_date"],
     ["Missed Appointments", "","/report/missed_appointment_duration?type=missed"],
     ["Defaulted patients", "","/report/missed_appointment_duration?type=defaulter"],
-    //["Avg ART clinic duration for patients", "","/report/avg_waiting_time_for_art_patients"],
-    //["Flat tables reports", "","/cohort_tool/flat_tables_revised_cohort_menu"],
     ["HTN Reports", "","/cohort_tool/select_htn_date"],
     ["Fast Track Reports", "","/cohort_tool/select_fast_track_date"],
     ["PEPFAR disaggregated report","","/report/missed_appointment_duration?type=disaggregated"],
@@ -71,7 +68,7 @@ function reportGrouping(group) {
     return [
       ['MoH','/assets/images/login-logos/Malawi-Coat_of_arms_of_arms.png','MoH', 'function'],
       ["Clinic", "","Clinic",'function'],
-      ["UNION","/assets/images/login-logos/PEPFAR.png","#",'link']
+      ["UNION","/assets/images/union.png","#",'link']
     ];
   }else if(group == 'MoH'){
     return [
